@@ -1,0 +1,14 @@
+Beedle's Sky Home:
+  region: Sky
+  force-tod: Night # only area requiring force night
+  locations:
+    Beedle's Crystals: Horned Colossus Beetle
+    Crystal on Beedles Ship: Nighttime & Beetle
+  exits:
+    Beedle's Shop (Night): Nothing
+    Beedle Island Cage: Nothing
+
+Beedle Island Cage:
+  region: Sky
+  locations:
+    Beedle's Island Cage Goddess Chest: Goddess Cube on top of Skyview
