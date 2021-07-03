@@ -1,0 +1,138 @@
+# macros, for logic snippets used in lots of different areas
+
+Practice Sword:
+  Progressive Sword x1
+
+Goddess Sword:
+  Progressive Sword x2
+
+Goddess Longsword:
+  Progressive Sword x3
+
+Goddess White Sword:
+  Progressive Sword x4
+
+Master Sword:
+  Progressive Sword x5
+
+True Master Sword:
+  Progressive Sword x6
+
+Beetle:
+  Progressive Beetle x1
+
+Hook Beetle:
+  Progressive Beetle x2
+
+Digging Mitts:
+  Progressive Mitts x1
+
+Mogma Mitts:
+  Progressive Mitts x2
+
+Medium Wallet:
+  Progressive Wallet x1
+
+Big Wallet:
+  Progressive Wallet x2
+
+Giant Wallet:
+  Progressive Wallet x3
+
+Tycoon Wallet:
+  Progressive Wallet x4
+
+Song of the Hero:
+  Faron Song of the Hero Part & Eldin Song of the Hero Part & Lanayru Song of the Hero Part
+
+Bottle:
+  Progressive Pouch & Empty Bottle
+
+5 Gratitude Crystals:
+  Gratitude Crystal x5 | Gratitude Crystal Pack
+
+10 Gratitude Crystals:
+  Gratitude Crystal x10 |
+  (Gratitude Crystal x5 & Gratitude Crystal Pack) |
+  Gratitude Crystal Pack x2
+
+30 Gratitude Crystals:
+  (Gratitude Crystal x15 & Gratitude Crystal Pack x3) |
+  (Gratitude Crystal x10 & Gratitude Crystal Pack x4) |
+  (Gratitude Crystal x5 & Gratitude Crystal Pack x5) |
+  Gratitude Crystal Pack x6
+
+40 Gratitude Crystals:
+  (Gratitude Crystal x15 & Gratitude Crystal Pack x5) |
+  (Gratitude Crystal x10 & Gratitude Crystal Pack x6) |
+  (Gratitude Crystal x5 & Gratitude Crystal Pack x7) |
+  Gratitude Crystal Pack x8
+
+50 Gratitude Crystals:
+  (Gratitude Crystal x15 & Gratitude Crystal Pack x7) |
+  (Gratitude Crystal x10 & Gratitude Crystal Pack x8) |
+  (Gratitude Crystal x5 & Gratitude Crystal Pack x9) |
+  Gratitude Crystal Pack x10
+
+70 Gratitude Crystals:
+  (Gratitude Crystal x15 & Gratitude Crystal Pack x11) |
+  (Gratitude Crystal x10 & Gratitude Crystal Pack x12) |
+  (Gratitude Crystal x5 & Gratitude Crystal Pack x13)
+
+80 Gratitude Crystals:
+  Gratitude Crystal x15 & Gratitude Crystal Pack x13
+
+Sword:
+  Practice Sword
+
+Long Range Skyward Strike:
+  (Goddess Sword & Option "hero-mode" Enabled) | True Master Sword
+
+Damaging Item:
+  Sword | Bomb Bag | Bow
+
+Projectile Item:
+  Slingshot | Beetle | Bow
+
+Distance Activator:
+  Slingshot | Beetle | Clawshots | Bow
+
+Can Cut Tree:
+  Sword | Bomb Bag
+
+Can Unlock Combination Lock:
+  Sword | Whip | Clawshots | Bow
+
+# Can defeat enemy
+
+Can Defeat Bokoblins:
+  Damaging Item
+
+Can Defeat Moblins:
+  Damaging Item
+
+Can Defeat Keeses:
+  Sword | Slingshot | Beetle | Whip | Clawshots | Bow | Bomb Bag
+
+Can Defeat Lezalfos:
+  Sword | Bomb Bag
+  # With bombs, let them attack you while you have a bomb in your hands. Takes one bomb for normal lezalfos, two for dark lezalfos
+
+Can Defeat Ampilus:
+  Damaging Item
+
+Can Defeat Armos:
+  Gust Bellows & Sword
+  # Only a sword seems to be able to destroy their crystals, even the bow phases through
+
+Can Defeat Beamos:
+  Sword | Bow
+
+Can Defeat Cursed Bokoblins:
+  Sword | Bomb Bag
+
+Can Defeat Stalfos:
+  Sword
+
+Can Defeat Stalmaster:
+  Sword
