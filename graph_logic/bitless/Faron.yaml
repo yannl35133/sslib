@@ -1,0 +1,165 @@
+# SEALED GROUNDS
+
+Sealed Grounds Spiral Upper:
+  region: Sealed Grounds
+  events:
+    Sealed Grounds Statue: Nothing
+  exits:
+    Sealed Grounds Spiral Lower: Nothing
+    Sky: Nothing
+
+Sealed Grounds Spiral Lower:
+  region: Sealed Grounds
+  events:
+    Defeat Imprisoned 2: Start Imprisoned 2 & Goddess Sword
+  exits:
+    Sealed Grounds Spiral Upper: Beat Required Dungeons & Raise GoT
+    Sealed Temple: Nothing
+
+Sealed Temple:
+  region: Sealed Grounds
+  events:
+    Start Imprisoned 2: Raise GoT & Beat Required Dungeons & Sword Requirement Met
+    Raise GoT: Goddess Harp
+  locations:
+    Inside Sealed Temple: Nothing
+    Ballad of the Goddess: Goddess Harp
+  exits:
+    Sealed Grounds Spiral Lower: Nothing
+    Behind the Temple: Nothing
+
+Behind the Temple:
+  region: Sealed Grounds
+  events:
+    Behind the Temple Statue: Nothing
+  locations:
+    Gorko's Goddess Wall Reward: Goddess Harp & Goddess Sword & Goddess Wall Trigger in SV
+  exits:
+    Faron Woods Entry: Nothing
+    Sealed Grounds Spiral Upper: Nothing
+    Sealed Temple: Nothing
+
+Faron Woods Entry:
+  region: Faron Woods
+  events:
+    Faron Woods Entry Statue: Nothing
+  exits:
+    Faron Woods Main: Sword | Bomb Bag | Clawshots # either cut trees or clawshot vines
+    Behind the Temple: Nothing
+
+Faron Woods Main:
+  region: Faron Woods
+  events:
+    Viewing Platform Statue: Nothing
+    In the Woods Statue: Nothing
+    Retrieve Oolo: Bomb Bag # to kill bokos and cut grass, also rock spawns in front of the crawlspace on layer 5
+  exits:
+    Deep Woods Entry: Distance Activator
+    Faron Woods Entry: Nothing
+    # Lake Floria: Yerbal my man
+    Faron Woods Clawshot Target Branch: Clawshots
+  locations:
+    HP on Tree: Nothing
+    Slingshot: Bomb Bag | Sword # to kill bokos and cut grass
+    HP behind Bombable Wall: Bomb Bag
+    Chest behind Bombable Wall: Bomb Bag
+
+Faron Woods Clawshot Target Branch:
+  region: Faron Woods
+  events:
+    Goddess Cube on East Great Tree with Clawshots Target: Goddess Sword
+
+# DEEP WOODS
+
+Deep Woods Entry:
+  region: Faron Woods
+  exits:
+    Faron Woods Main: Nothing
+    Deep Woods Main: Distance Activator | Goddess Sword # bomb bag?
+
+Deep Woods Main:
+  region: Faron Woods
+  events:
+    Deep Woods Statue: Nothing
+    Skyview Temple Statue: Nothing
+    Initial Goddess Cube: Goddess Sword
+    Goddess Cube in Deep Woods: Goddess Sword
+    Goddess Cube on top of Skyview: Goddess Sword & Clawshots
+  exits:
+    Deep Woods Entry: Nothing
+    Skyview Entry: Distance Activator
+  locations:
+    Deep Woods Chest: Nothing
+
+# GREAT TREE
+
+Great Tree Outside Platforms:
+  region: Faron Woods
+  events:
+    Goddess Cube on West Great Tree near Exit: Goddess Sword
+  exits:
+    Lower Great Tree Interior: Nothing
+    Upper Great Tree Interior: Nothing
+
+Great Tree Entrance:
+  region: Faron Woods
+  exits:
+    Faron Woods Main: Water Scale
+    Lower Great Tree: Water Scale
+
+Lower Great Tree Interior: # down in the water
+  region: Faron Woods
+  exits:
+    Great Tree Entrance: Water Scale
+    Great Tree Outside Platforms: Gust Bellows
+
+Middle Great Tree Interior: # area around the chest
+  region: Faron Woods
+  locations:
+    Great Tree Chest: Nothing
+  exits:
+    Great Tree Outside Platforms: Nothing
+    Lower Great Tree Interior: Nothing
+
+Upper Great Tree Interior: # top with the moblin
+  region: Faron Woods
+  exits:
+    Middle Great Tree Interior: Can Defeat Moblins
+    Great Tree Outside Platforms: Nothing
+    Top of Great Tree Outside: Nothing
+
+Great Tree Outside Platforms:
+  region: Faron Woods
+  events:
+    Goddess Cube on East Great Tree with Rope: Goddess Sword # it's very far down from the top, but for logic you need to reach this area so it's put here
+    Great Tree Statue: Nothing
+    Talk to Yerbal: Slingshot | Beetle # only those 2 items (and their upgrades) work
+  exits:
+    Upper Great Tree Interior: Nothing
+    Faron Woods Clawshot Target Branch: Nothing
+    Great Tree Outside Platforms: Nothing
+
+# LAKE FLORIA
+
+Lake Floria Entrance:
+  region: Lake Floria
+  exit:
+    Lake Floria Statue Spot: Water Scale
+
+Lake Floria Statue Spot: # idk how this area should be named, cause it encapsulates not needing scale from statue to cube and chest
+  region: Lake Floria
+  locations:
+    Lake Floria Chest: Nothing
+  events:
+    Goddess Cube in Lake Floria: Goddess Sword
+    Lake Floria Statue: Nothing
+  exits:
+    Farore's Lair: Water Scale
+
+Farore's Lair:
+  region: Lake Floria
+  locations:
+    Lair South Chest: Water Scale
+    Lair East Chest: Nothing
+  exits:
+    Lake Floria Waterfall:

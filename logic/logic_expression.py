@@ -41,21 +41,21 @@ class Inventory:
         return str(self.owned_items)
 
 
+positive_boolean_re = re.compile(r"^Option \"([^\"]+)\" Enabled$")
+negative_boolean_re = re.compile(r"^Option \"([^\"]+)\" Disabled$")
+positive_dropdown_re = re.compile(r"^Option \"([^\"]+)\" Is \"([^\"]+)\"$")
+negative_dropdown_re = re.compile(r"^Option \"([^\"]+)\" Is Not \"([^\"]+)\"$")
+positive_list_re = re.compile(r"^Option \"([^\"]+)\" Contains \"([^\"]+)\"$")
+negative_list_re = re.compile(r"^Option \"([^\"]+)\" Does Not Contain \"([^\"]+)\"$")
+
+
 def check_option_enabled_requirement(options, req_name):
-    positive_boolean_match = re.search(r"^Option \"([^\"]+)\" Enabled$", req_name)
-    negative_boolean_match = re.search(r"^Option \"([^\"]+)\" Disabled$", req_name)
-    positive_dropdown_match = re.search(
-        r"^Option \"([^\"]+)\" Is \"([^\"]+)\"$", req_name
-    )
-    negative_dropdown_match = re.search(
-        r"^Option \"([^\"]+)\" Is Not \"([^\"]+)\"$", req_name
-    )
-    positive_list_match = re.search(
-        r"^Option \"([^\"]+)\" Contains \"([^\"]+)\"$", req_name
-    )
-    negative_list_match = re.search(
-        r"^Option \"([^\"]+)\" Does Not Contain \"([^\"]+)\"$", req_name
-    )
+    positive_boolean_match = positive_boolean_re.search(req_name)
+    negative_boolean_match = negative_boolean_re.search(req_name)
+    positive_dropdown_match = positive_dropdown_re.search(req_name)
+    negative_dropdown_match = negative_dropdown_re.search(req_name)
+    positive_list_match = positive_list_re.search(req_name)
+    negative_list_match = negative_list_re.search(req_name)
     if positive_boolean_match:
         option_name = positive_boolean_match.group(1)
         return not not options.get(option_name)
@@ -98,11 +98,36 @@ class LogicExpression:
         raise NotImplementedError("abstract")
 
 
+class FixedLogicExpression(LogicExpression):
+    def __init__(self, value):
+        self.value = value
+
+    def is_true(self, options: Options, inventory: Inventory, macros):
+        return self.value
+
+    def simplify(self, options, macros) -> LogicExpression:
+        return self
+
+    def get_items_needed(
+        self, options: Options, inventory: Inventory, macros
+    ) -> OrderedDict:  # itemname, count
+        if self.value:
+            return OrderedDict()
+        else:
+            return
+
+    def __str__(self):
+        return str(self.value)
+
+
 class BaseLogicExpression(LogicExpression):
     def __init__(self, req_name):
         self.req_name = req_name
+        self.cached_result = None
 
     def is_true(self, options: Options, inventory: Inventory, macros):
+        if self.cached_result is not None:
+            return self.cached_result
         match = ITEM_WITH_COUNT_REGEX.match(self.req_name)
         if match:
             item_name = match.group(1)
@@ -110,7 +135,10 @@ class BaseLogicExpression(LogicExpression):
 
             return inventory.has_countable_item(item_name, num_required)
         elif self.req_name.startswith('Option "'):
-            return check_option_enabled_requirement(options, self.req_name)
+            self.cached_result = check_option_enabled_requirement(
+                options, self.req_name
+            )
+            return self.cached_result
         elif self.req_name.endswith(" Trick"):
             trickname = self.req_name[: -len(" Trick")]
             if options["logic-mode"] == "BiTless":
@@ -121,7 +149,10 @@ class BaseLogicExpression(LogicExpression):
                 self.req_name = (
                     f'Option "enabled-tricks-glitched" Contains "{trickname}"'
                 )
-            return check_option_enabled_requirement(options, self.req_name)
+            self.cached_result = check_option_enabled_requirement(
+                options, self.req_name
+            )
+            return self.cached_result
         elif self.req_name in ALL_ITEM_NAMES:
             return inventory.has_item(self.req_name)
         elif self.req_name in macros:
@@ -132,6 +163,33 @@ class BaseLogicExpression(LogicExpression):
             return False
         else:
             raise Exception("Unknown requirement name: " + self.req_name)
+
+    def simplify(self, options, macros) -> LogicExpression:
+        if self.req_name.startswith('Option "'):
+            return FixedLogicExpression(
+                check_option_enabled_requirement(options, self.req_name)
+            )
+        elif self.req_name.endswith(" Trick"):
+            trickname = self.req_name[: -len(" Trick")]
+            if options["logic-mode"] == "BiTless":
+                self.req_name = (
+                    f'Option "enabled-tricks-bitless" Contains "{trickname}"'
+                )
+            else:
+                self.req_name = (
+                    f'Option "enabled-tricks-glitched" Contains "{trickname}"'
+                )
+            return FixedLogicExpression(
+                check_option_enabled_requirement(options, self.req_name)
+            )
+        elif self.req_name in macros:
+            return macros[self.req_name].simplify(options, macros)
+        elif self.req_name == "Nothing":
+            return FixedLogicExpression(True)
+        elif self.req_name == "Impossible":
+            return FixedLogicExpression(False)
+        else:
+            return self
 
     def get_items_needed(
         self, options: Options, inventory: Inventory, macros
@@ -177,8 +235,43 @@ class AndLogicExpression(LogicExpression):
             self.recursion_flag = False
         return res
 
+    def simplify(self, options, macros) -> LogicExpression:
+        if self.recursion_flag:
+            return self  # TODO: fuck mutual recursion
+        else:
+            self.recursion_flag = True
+            new_requirements = []
+            for req in self.requirements:
+                req = req.simplify(options, macros)
+                if isinstance(req, FixedLogicExpression):
+                    # if one value is false, this can never be true. We can ignore always true values
+                    if req.value == False:
+                        self.recursion_flag = False
+                        return FixedLogicExpression(False)
+                elif isinstance(req, AndLogicExpression):
+                    # flatten out multiple nested ands
+                    new_requirements.extend(req.requirements)
+                else:
+                    new_requirements.append(req)
+            # if there are no remaining requirements, we can assume true
+            if len(new_requirements) == 0:
+                self.recursion_flag = False
+                return FixedLogicExpression(True)
+            if len(new_requirements) == 1:
+                self.recursion_flag = False
+                return new_requirements[0]
+            self.requirements = new_requirements
+            self.recursion_flag = False
+            return self
+
     def __str__(self):
-        return "(" + (" & ".join((str(req) for req in self.requirements))) + ")"
+        if self.recursion_flag:
+            return "blame NULL"
+        else:
+            self.recursion_flag = True
+            ret = "(" + (" & ".join((str(req) for req in self.requirements))) + ")"
+            self.recursion_flag = False
+            return ret
 
     def get_items_needed(
         self, options: Options, inventory: Inventory, macros
@@ -220,8 +313,43 @@ class OrLogicExpression(LogicExpression):
             self.recursion_flag = False
         return res
 
+    def simplify(self, options, macros) -> LogicExpression:
+        if self.recursion_flag:
+            return self  # TODO: fuck mutual recursion
+        else:
+            self.recursion_flag = True
+            new_requirements = []
+            for req in self.requirements:
+                req = req.simplify(options, macros)
+                if isinstance(req, FixedLogicExpression):
+                    # if one value is true, this can never be false. We can ignore always false values
+                    if req.value == True:
+                        self.recursion_flag = False
+                        return FixedLogicExpression(True)
+                elif isinstance(req, OrLogicExpression):
+                    # flatten out multiple nested ors
+                    new_requirements.extend(req.requirements)
+                else:
+                    new_requirements.append(req)
+            # if there are no more requirements, it's always false
+            if len(new_requirements) == 0:
+                self.recursion_flag = False
+                return FixedLogicExpression(False)
+            if len(new_requirements) == 1:
+                self.recursion_flag = False
+                return new_requirements[0]
+            self.requirements = new_requirements
+            self.recursion_flag = False
+            return self
+
     def __str__(self):
-        return "(" + (" | ".join((str(req) for req in self.requirements))) + ")"
+        if self.recursion_flag:
+            return "blame NULL more"
+        else:
+            self.recursion_flag = True
+            ret = "(" + (" | ".join((str(req) for req in self.requirements))) + ")"
+            self.recursion_flag = False
+            return ret
 
     def get_items_needed(
         self, options: Options, inventory: Inventory, macros
