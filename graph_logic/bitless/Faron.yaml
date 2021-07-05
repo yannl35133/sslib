@@ -5,6 +5,7 @@ Sealed Grounds Spiral Upper:
   events:
     Sealed Grounds Statue: Nothing
   exits:
+    Sky (Sealed Grounds Statue): Nothing
     Sealed Grounds Spiral Lower: Nothing
     Sky: Nothing
 
@@ -35,6 +36,7 @@ Behind the Temple:
   locations:
     Gorko's Goddess Wall Reward: Goddess Harp & Goddess Sword & Goddess Wall Trigger in SV
   exits:
+    Sky (Behind the Temple Statue): Nothing
     Faron Woods Entry: Nothing
     Sealed Grounds Spiral Upper: Nothing
     Sealed Temple: Nothing
@@ -44,6 +46,7 @@ Faron Woods Entry:
   events:
     Faron Woods Entry Statue: Nothing
   exits:
+    Sky (Faron Woods Entry Statue): Nothing
     Faron Woods Main: Sword | Bomb Bag | Clawshots # either cut trees or clawshot vines
     Behind the Temple: Nothing
 
@@ -54,9 +57,11 @@ Faron Woods Main:
     In the Woods Statue: Nothing
     Retrieve Oolo: Bomb Bag # to kill bokos and cut grass, also rock spawns in front of the crawlspace on layer 5
   exits:
+    Sky (Viewing Platform Statue): Nothing
+    Sky (In the Woods Statue): Nothing
     Deep Woods Entry: Distance Activator
     Faron Woods Entry: Nothing
-    # Lake Floria: Yerbal my man
+    Lake Floria Entrance: Talk to Yerbal & Goddess Sword & Water Scale
     Faron Woods Clawshot Target Branch: Clawshots
   locations:
     HP on Tree: Nothing
@@ -81,11 +86,13 @@ Deep Woods Main:
   region: Faron Woods
   events:
     Deep Woods Statue: Nothing
-    Skyview Temple Statue: Nothing
+    Forest Temple Statue: Nothing
     Initial Goddess Cube: Goddess Sword
     Goddess Cube in Deep Woods: Goddess Sword
     Goddess Cube on top of Skyview: Goddess Sword & Clawshots
   exits:
+    Sky (Deep Woods Statue): Nothing
+    Sky (Forest Temple Statue): Nothing
     Deep Woods Entry: Nothing
     Skyview Entry: Distance Activator
   locations:
@@ -128,13 +135,14 @@ Upper Great Tree Interior: # top with the moblin
     Great Tree Outside Platforms: Nothing
     Top of Great Tree Outside: Nothing
 
-Great Tree Outside Platforms:
+Top of Great Tree Outside:
   region: Faron Woods
   events:
     Goddess Cube on East Great Tree with Rope: Goddess Sword # it's very far down from the top, but for logic you need to reach this area so it's put here
     Great Tree Statue: Nothing
     Talk to Yerbal: Slingshot | Beetle # only those 2 items (and their upgrades) work
   exits:
+    Sky (Great Tree Statue): Nothing
     Upper Great Tree Interior: Nothing
     Faron Woods Clawshot Target Branch: Nothing
     Great Tree Outside Platforms: Nothing
@@ -154,6 +162,7 @@ Lake Floria Statue Spot: # idk how this area should be named, cause it encapsula
     Goddess Cube in Lake Floria: Goddess Sword
     Lake Floria Statue: Nothing
   exits:
+    Sky (Lake Floria Statue): Nothing
     Farore's Lair: Water Scale
 
 Farore's Lair:
@@ -162,4 +171,16 @@ Farore's Lair:
     Lair South Chest: Water Scale
     Lair East Chest: Nothing
   exits:
-    Lake Floria Waterfall:
+    Lake Floria Waterfall: Nothing
+    Lake Floria Statue Spot: Water Scale
+
+Lake Floria Waterfall:
+  region: Lake Floria
+  events:
+    Floria Waterfall Statue: Nothing
+    Goddess Cube in Floria Waterfall: Clawshots & Goddess Sword
+  exits:
+    Sky (Floria Waterfall Statue): Nothing
+    Farore's Lair: Nothing
+    Ancient Cistern Main: Water Scale
+    Faron Woods Main: Nothing
