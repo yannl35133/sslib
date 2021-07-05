@@ -12,3 +12,107 @@ Beedle Island Cage:
   region: Sky
   locations:
     Beedle's Island Cage Goddess Chest: Goddess Cube on top of Skyview
+
+Sky:
+  region: Sky
+  force-tod: Day
+  locations:
+    Lumpy Pumpkin Roof Goddess Chest: Goddess Cube in Skyview Spring
+    Goddess Chest Outside Volcanic Island: Goddess Cube in Sand Oasis
+    # Normally you would need clawshots, but you can skip them with a good dive
+    Goddess Chest Inside Volcanic Island: Goddess Cube on East Great Tree with Clawshots Target &
+      (Clawshots | Sky - Volcanic Island Dive Trick)
+    # Gossip Stone in Volcanic Island: Nothing
+    Orielle's Crystals: Bottle
+    Dodoh Crystals: Can Retrieve Party Wheel
+    Fun Fun Island Minigame: Can Retrieve Party Wheel
+    Goddess Chest Under Fun Fun Island: Goddess Cube in Floria Waterfall
+    Southwest Triple Island Upper Goddess Chest: Goddess Cube at Eldin Entrance
+    Southwest Triple Island Lower Goddess Chest: Goddess Cube near Hook Beetle Fight
+    Southwest Triple Island Cage Goddess Chest: Goddess Cube in Skipper's Retreat & Clawshots
+    Breakable Boulder near Fun Fun island: Spiral Charge
+    Breakable Boulder near Lumpy Pumpkin: Spiral Charge
+    Goddess Chest on Island Closest to Faron Pillar: Goddess Cube in Deep Woods
+    Beedle's Island Goddess Chest: Goddess Cube at Ride near Temple of Time
+    Northeast Island Goddess Chest Behind Bombable Rocks: Goddess Cube at Lanayru Mines Entrance & Bomb Bag
+    Northeast Island Cage Goddess Chest: Goddess Cube East of Earth Temple Entrance
+  events:
+    High Rupee Farm: Can Retrieve Party Wheel
+  exits:
+    Skyloft Central Outside: Nothing
+    Outside Lumpy Pumpkin: Nothing
+    Inside Bamboo Island: Nothing
+    Inside Thunderhead: Ballad of the Goddess & Option "open-thunderhead" Enabled
+    # Faron Entrances
+    Sealed Grounds Spiral Upper (Sealed Grounds Statue): Emerald Tablet & Sealed Grounds Statue
+    Behind the Temple (Behind the Temple Statue): Emerald Tablet & Behind the Temple Statue
+    Faron Woods Entry (Faron Woods Entry Statue): Emerald Tablet & Faron Woods Entry Statue
+    Faron Woods Main (Viewing Platform Statue): Emerald Tablet & Viewing Platform Statue
+    Faron Woods Main (In the Woods Statue): Emerald Tablet & In the Woods Statue
+    Deep Woods Main (Deep Woods Statue): Emerald Tablet & Deep Woods Statue
+    Deep Woods Main (Forest Temple Statue): Emerald Tablet & Forest Temple Statue
+    Top of Great Tree Outside (Great Tree Statue): Emerald Tablet & Great Tree Statue
+    Lake Floria Statue Spot (Lake Floria Statue): Emerald Tablet & Lake Floria Statue
+    Lake Floria Waterfall (Floria Waterfall Statue): Emerald Tablet & Floria Waterfall Statue
+
+Outside Lumpy Pumpkin:
+  region: Sky
+  locations:
+    Crystal outside Lumpy Pumpkin: Nighttime
+    Crystal inside Lumpy Pumpkin: Nighttime
+    Kina's Crystals: Pumpkin Carrying & Goddess Harp & Retrieve Mogma
+    Lumpy Pumpkin Goddess Chest: Initial Goddess Cube
+  events:
+    # assumption: delivering hot soup requires lumpy pumpkin quest start, so there is no need requiring reaching the bartender here as well
+    Pumpkin Carrying: Delivered Hot Soup
+  exits:
+    Inside Lumpy Pumpkin (South): Nothing
+    Inside Lumpy Pumpkin (North): Nothing
+    Sky: Daytime
+
+Inside Lumpy Pumpkin:
+  region: Sky
+  locations:
+    Harp Minigame: Pumpkin Carrying & Goddess Harp
+    Chandelier: Nothing
+    Crystal inside Lumpy Pumpkin: Nighttime
+  events:
+    Lumpy Pumpkin Quest Start: Bottle
+    Pick up Levia's Soup: Spiral Charge
+  exits:
+    Outside Lumpy Pumpkin (South): Nothing
+    Outside Lumpy Pumpkin (North): Nothing
+
+Inside Bamboo Island:
+  region: Sky
+  events:
+    Clean Cut Minigame: Sword
+
+Inside Thunderhead:
+  region: Thunderhead
+  locations:
+    Levias: Pick up Levia's Soup & Spiral Charge
+    ## Isle of Songs
+    Goddess Chest on top of Isle of Song: Goddess Cube near FS Entrance
+    ## East Island
+    East Island Goddess Chest: Goddess Cube on East Great Tree with Rope
+    East Island Chest: Digging Mitts | Thunderhead - East Island Dive Trick
+    ## Mogma Mitts Island
+    First Goddess Chest on Mogma Mitts Island: Goddess Cube inside Volcano Summit & Mogma Mitts
+    # Inaccessible Goddess Cube
+    # Second Goddess Chest on Mogma Mitts Island: Goddess Cube in Lanayru Gorge & Mogma Mitts
+    ## Bug Rock
+    Bug Island minigame: Bug Net
+    Bug Island Goddess Chest: Goddess Cube in Summit Waterfall
+  exits:
+    Sky: Nothing
+    Isle of Songs: Sword # if this works like sword combo locks, other items work too
+
+Isle of Songs:
+  region: Thunderhead
+  locations:
+    Farore's Courage: Goddess Sword
+    Nayru's Wisdom: Goddess Longsword
+    Din's Power: Goddess White Sword
+  exits:
+    Inside Thunderhead: Nothing
