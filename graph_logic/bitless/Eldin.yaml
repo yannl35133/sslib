@@ -1,0 +1,156 @@
+Eldin First Room:
+  region: Eldin
+  locations:
+    Behind Bombable Wall in First Room: Nothing
+  events:
+    Goddess Cube at Eldin Entrance: Goddess Sword
+    Eldin Entrance Statue: Nothing
+  exits:
+    Sky (Eldin Entrance Statue): Nothing
+    Eldin Volcano Ascent: Bomb Bag
+    Eldin Pre Mogma Turf: Nothing
+
+Eldin Pre Mogma Turf:
+  region: Eldin
+  locations:
+    After Crawlspace: Nothing
+    Behind Bombable Wall Near HP: Nothing
+    Heart Piece on Cliff: Nothing
+  events:
+    Goddess Cube near Mogma Turf Entrance: Goddess Sword
+    Volcano East Statue: Nothing
+  exits:
+    Sky (Volcano East Statue): Nothing
+    Mogma Turf (Skydive): Nothing
+    Eldin First Room: Bomb Bag # can probably also use hook beetle
+    Eldin Past Mogma Turf: Bomb Bag | Hook Beetle
+
+Mogma Turf: # when randomizing this, need to find a way to force the skydiving animation
+  region: Mogma Turf
+  locations:
+    Free Fall Chest: Nothing
+    Behind Bombable Wall at Entrance: Nothing
+    Sand Slide Chest: Digging Mitts
+    Digging Mitts: Can defeat Bokoblins
+    Behind Bombable Wall in Lava Maze: Digging Mitts
+  events:
+    Pick up Guld: Nothing # access to kina is required to start and end the quest
+    Goddess Cube in Mogma Turf: Goddess Sword
+  exits:
+    Eldin Pre Mogma Turf (Vent): Nothing
+    Eldin Past Mogma Turf: Digging Mitts
+
+Eldin Past Mogma Turf:
+  region: Eldin
+  events:
+    Goddess Cube near Mogma Turf Entrance: Goddess Sword
+  exits:
+    Eldin Pre Mogma Turf: Nothing
+    Eldin Volcano Ascent: Nothing
+
+Eldin Volcano Ascent:
+  region: Eldin
+  locations:
+    Behind Bombable Wall Near Volcano Ascent: Nothing
+  events:
+    Volcano Ascent Statue: Nothing
+  exits:
+    Sky (Volcano Ascent Statue): Nothing
+    Eldin Trial: Din's Power & Goddess Harp
+    Eldin First Room: Nothing
+    Eldin Near Thrill Digger: Bow | Slingshot | Beetle | Stuttersprint Trick
+    Eldin Past Slide: Bomb Bag | Hook Beetle # Whip and trick to blow up the bolder maybe?
+
+Eldin Near Thrill Digger:
+  region: Eldin
+  exits:
+    Eldin Volcano Ascent: Nothing
+    Eldin Outside ET: Nothing
+    Thrill Digger Cave: Nothing
+
+Thrill Digger Cave:
+  region: Eldin
+  events:
+    High Rupee Farm: Digging Mitts
+    # Thrill Digger Gossip Stone: Nothing
+  exits:
+    Eldin Near Thrill Digger: Nothing
+
+Eldin Outside ET:
+  region: Eldin
+  events:
+    Sparrot's Crystal Ball: Clawshots
+    Goddess Cube West of Earth Temple Entrance: Digging Mitts
+    # Gossip Stone next to Earth Temple: Digging Mitts
+    Goddess Cube East of Earth Temple Entrance: Nothing
+    Temple Entrance Statue: Nothing
+  exits:
+    Earth Temple Start: Key Piece x5
+    Hot Cave Area: Nothing
+    Sky (Temple Entrance Statue): Nothing
+  locations:
+    Key Piece in Front of ET: Digging Mitts
+    Key Piece Below Tower: Digging Mitts
+    Key Piece Behind Boulder on Sandy Slope: Digging Mitts
+
+Hot Cave Area:
+  region: Eldin
+  exits:
+    Inside Volcano Summit: Fireshield Earrings
+    # Eldin Outside ET: Bomb Throw Trick
+    Eldin Sand Slide: Nothing
+
+Eldin Sand Slide:
+  region: Eldin
+  events:
+    Goddess Cube in Eldin Slide: Goddess Sword
+  locations:
+    Key Piece After Vents: Digging Mitts
+  exits:
+    Eldin Past Slide: Nothing
+
+Eldin Past Slide:
+  region: Eldin
+  locations:
+    Key Piece After Draining Lava: Digging Mitts
+  exits:
+    Eldin Volcano Ascent: Nothing
+    Hot Cave Area: Nothing
+
+# VOLCANO SUMMIT
+Inside Volcano Summit:
+  region: Volcano Summit
+  events:
+    Goddess Cube inside Volcano Summit: (Goddess Sword & Option "hero-mode" Enabled) | True Master Sword
+  exits:
+    Hot Cave Area: Fireshield Earrings
+    Volcano Summit Waterfall: Fireshield Earrings
+    Start Volcano Summit near FS: Fireshield Earrings
+
+Volcano Summit Waterfall:
+  region: Volcano Summit
+  locations:
+    Behind Bombable Wall in Waterfall Area: Clawshots
+  events:
+    Goddess Cube in Summit Waterfall: Goddess Sword
+    # Gossip Stone in Waterfall Area: Clawshots
+  exits:
+    Inside Volcano Summit: Nothing
+
+Start Volcano Summit near FS:
+  region: Volcano Summit
+  locations:
+    Heart Piece Behind Digging: Mogma Mitts & Bottle # & Fill With Water
+  events:
+    Gossip Stone outside Fire Sanctuary: Bottle # & Fill With Water
+  exits:
+    Volcano Summit Near FS: Clawshots & Bottle # & Fill With Water
+
+Volcano Summit Near FS:
+  region: Volcano Summit
+  events:
+    Goddess Cube near FS Entrance: Clawshots & Goddess Sword
+    Inside the Volcano Statue: Nothing
+  exits:
+    Sky (Inside the Volcano Statue): Nothing
+    Fire Sanctuary Entry: Nothing
