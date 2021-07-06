@@ -54,13 +54,19 @@ Sky:
     Top of Great Tree Outside (Great Tree Statue): Emerald Tablet & Great Tree Statue
     Lake Floria Statue Spot (Lake Floria Statue): Emerald Tablet & Lake Floria Statue
     Lake Floria Waterfall (Floria Waterfall Statue): Emerald Tablet & Floria Waterfall Statue
+    # Eldin Entrances
+    Eldin First Room (Eldin Entrance Statue): Ruby Tablet & Eldin Entrance Statue
+    Eldin Pre Mogma Turf (Volcano East Statue): Ruby Tablet & Volcano East Statue
+    Eldin Volcano Ascent (Volcano Ascent Statue): Ruby Tablet & Volcano Ascent Statue
+    Eldin Outside ET (Temple Entrance Statue): Ruby Tablet & Temple Entrance Statue
+    Volcano Summit near FS (Inside the Volcano Statue): Ruby Tablet & Inside the Volcano Statue
 
 Outside Lumpy Pumpkin:
   region: Sky
   locations:
     Crystal outside Lumpy Pumpkin: Nighttime
     Crystal inside Lumpy Pumpkin: Nighttime
-    Kina's Crystals: Pumpkin Carrying & Goddess Harp & Retrieve Mogma
+    Kina's Crystals: Pumpkin Carrying & Goddess Harp & Pick up Guld
     Lumpy Pumpkin Goddess Chest: Initial Goddess Cube
   events:
     # assumption: delivering hot soup requires lumpy pumpkin quest start, so there is no need requiring reaching the bartender here as well
