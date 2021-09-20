@@ -34,12 +34,29 @@ from functools import reduce
 #     ALL_TYPES,
 # )
 # from .logic_expression import LogicExpression, parse_logic_expression, Inventory, item_with_count_re
-from .logic_expression import LogicExpression
 
 
-AllowedTimeOfDay = Enum("AllowedTimeOfDay", "DayOnly", "NightOnly", "Both")
+from .logic_expression import LogicExpression, Inventory, RevInventory
+from .inventory import (
+    EXTENDED_ITEM as _EXTENDED_ITEM,
+    INVENTORY_ITEMS as _INVENTORY_ITEMS,
+)
 
-forgotten_entrances: List[Tuple[List[str], Dict[str, LogicExpression]]] = []
+
+class keydefaultdict(defaultdict):
+    default_factory: Any
+
+    def __missing__(self, key):
+        if self.default_factory is None:
+            raise KeyError(key)
+        else:
+            ret = self[key] = self.default_factory(key)
+            return ret
+
+
+AllowedTimeOfDay = Enum("AllowedTimeOfDay", ("DayOnly", "NightOnly", "Both"))
+
+events: List[str] = []
 
 
 @dataclass
@@ -50,55 +67,59 @@ class Area:
     can_save: bool = False
     sub_areas: "Dict[str, Area]" = {}
     locations: Dict[str, LogicExpression] = {}
-    logical_exits: Dict[str, LogicExpression] = {}
-    map_exits: Dict[str, LogicExpression] = {}
+    exits: Dict[str, LogicExpression] = {}
 
     @classmethod
     def of_dict(cls, args):
         return cls(**args)
 
     @classmethod
-    def of_yaml(cls, prefix: List[str], name: str, raw_dict: Dict[str, Any]):
+    def of_yaml(
+        cls,
+        name: str,
+        raw_dict: Dict[str, Any],
+        parent: Optional[Area] = None,
+    ):
         area = cls(name)
+
         if (v := raw_dict.get("allowed-time-of-day")) is not None:
             area.allowed_time_of_day = AllowedTimeOfDay[v]
         if (b := raw_dict.get("can-sleep")) is not None:
             area.can_sleep = b
         if (b := raw_dict.get("can-save")) is not None:
             area.can_save = b
+
         if (d := raw_dict.get("locations")) is not None:
             area.locations = {k: LogicExpression.parse(v) for k, v in d.items()}
-        if (d := raw_dict.get("logical-exits")) is not None:
-            area.logical_exits = {k: LogicExpression.parse(v) for k, v in d.items()}
-        if (d := raw_dict.get("map-exits")) is not None:
-            area.map_exits = {k: LogicExpression.parse(v) for k, v in d.items()}
-        if (d := raw_dict.get("logical-entrances")) is not None:
-            forgotten_entrances.append(
-                (prefix + [name], {k: LogicExpression.parse(v) for k, v in d.items()})
-            )
+            for k in d:
+                if k not in _INVENTORY_ITEMS:
+                    events.append(name + "/" + k)
+
+        if (d := raw_dict.get("exits")) is not None:
+            area.exits = {k: LogicExpression.parse(v) for k, v in d.items()}
+
+        if (v := raw_dict.get("entrance")) is not None:
+            if parent is None:
+                raise ValueError("An entrance was given but no parent to give it to")
+            parent.exits[name] = LogicExpression.parse(v)
 
         area.sub_areas = {
-            k: cls.of_yaml(prefix + [name], k, v)
+            k: cls.of_yaml(name + "/" + k, v, area)
             for k, v in raw_dict.items()
             if "A" <= k[0] <= "Z"
         }
         return area
 
-    def map(self, f, prefix):
-        prefix = prefix + [self.name]
-        for d in [self.locations, self.logical_exits, self.map_exits]:
+    def map(self, f):
+        for d in [self.locations, self.exits]:
             for k, v in d.items():
-                d[k] = f(prefix, v)
+                d[k] = f(self.name, v)
         for sub_area in self.sub_areas:
-            sub_area.map(f, prefix)
+            sub_area.map(f)
 
 
 class Areas:
     areas: Dict[str, Area]
-
-    checks: Dict[str, Any]
-    gossip_stones: Dict[str, Any]
-    map_exits: Dict[str, Any]
 
     @staticmethod
     def subname(lst1, lst2, i=0, j=0):
@@ -111,37 +132,33 @@ class Areas:
                 i += 1
             j += 1
 
-    def get_assoc_list(self) -> List[str, List[str]]:
-        def get_pairs(database, full_addresses):
+    def get_assoc_list(self, checks, gossip_stones, map_exits) -> List[str, str]:
+        def get_pairs(area_name: str, element_names: Dict[str, Any], database):
             res = []
-            for addr in full_addresses:
+            area_list = area_name.split("/")
+            for name in element_names:
+                full_address = area_name + "/" + name
+                full_address_list = area_list + [name]
                 candidates = filter(
-                    lambda name: self.subname(name.split(" - "), addr), database
+                    lambda name: self.subname(name.split(" - "), full_address_list),
+                    database,
                 )
-                try:
-                    res.append(next(candidates), addr)  # Takes the first one
-                except StopIteration:  # No first one to take
-                    res.append("/".join(addr), addr)
+                for winner in candidates:
+                    res.append((winner, full_address))
+                    break
+                    # Takes the first one
+                else:  # No first one to take
+                    res.append((full_address, full_address))
 
             return res
 
-        def get_assoc_list(prefix: List[str], area: Area):
-            prefix = prefix + [area.name]
-            return (
-                get_pairs(self.checks | self.gossip_stones, area.locations)
-                + get_pairs(self.map_exits, area.map_exits)
-                + reduce(
-                    list.append,
-                    (get_assoc_list(prefix, sub_area) for sub_area in area.sub_areas),
-                    [],
-                )
-            )
+        res = []
+        locations_db = checks | gossip_stones
+        for area in self.areas:
+            res.extend(get_pairs(area.name, area.locations, locations_db))
+            res.extend(get_pairs(area.name, area.exits, map_exits))
 
-        return reduce(
-            list.append,
-            (get_assoc_list([], area) for area in self.areas),
-            [],
-        )
+        return res
 
     def search_area(
         self, base_address: List[str], partial_address: List[str]
@@ -166,36 +183,23 @@ class Areas:
 
         return search_area(0, 0, self.areas)
 
-    def update_area_names(self):
-        def update_area_names(prefix, area):
-            prefix = prefix + [area.name]
-            area.logical_exits = {
-                "/".join(self.search_area(prefix, k.split(" - "))): v
-                for k, v in area.logical_exits.items()
-            }
-            for sub_area in area.sub_areas.values():
-                update_area_names(prefix, sub_area)
+    def update_exit_names(self, map_exits):
+        def updated_names_generator(prefix, exits):
+            for k, v in exits.items():
+                if k in map_exits:
+                    yield k, v
+                else:
+                    addr = self.search_area(prefix, k.split(" - "))
+                    yield "/".join(addr), v
 
         for area in self.areas:
-            update_area_names([], area)
+            area.exits = set(updated_names_generator(area.name.split("/"), area.exits))
 
-    def __getitem__(self, addr: List[str]):
-        a = self.areas
-        for step in addr[:-1]:
-            a = a[step].sub_areas
-        return a[addr[-1]]
+    def __getitem__(self, addr):
+        self.areas[addr]
 
-    def __setitem__(self, addr: List[str], value: Area):
-        a = self.areas
-        for step in addr[:-1]:
-            a = a[step].sub_areas
-        a[addr[-1]] = value
-
-    def add_forgotten_entrances(self):
-        for base, dict in forgotten_entrances:
-            for partial_dst, exp in dict.items():
-                dst = self.search_area(base, partial_dst)
-                self[dst].logical_exits["/".join(base)] = exp
+    def __setitem__(self, addr, value: Area):
+        self.areas[addr] = value
 
     def __init__(
         self,
@@ -203,39 +207,105 @@ class Areas:
         checks: Dict[str, Any],
         gossip_stones: Dict[str, Any],
         map_exits: Dict[str, Any],
-        macros: Dict[str, Any],
     ):
-        self.areas = {k: Area.of_yaml([], k, v) for k, v in areas.items()}
-        self.checks = checks
-        self.gossip_stones = gossip_stones
-        self.map_exits = map_exits
+        self.areas = {k: Area.of_yaml("", k, v) for k, v in areas.items()}
+        _EXTENDED_ITEM.items_list.extend(events)
 
-        def localizer(base_prefix, text):
+        def flatten(areas):
+            for area in areas:
+                self.areas[area.name] = area
+                flatten(area.sub_areas)
+
+        for area in self.areas:
+            flatten(area.sub_areas)
+
+        def localizer(base_prefix: List[str], text):
             dest_prefix, dest = text.rsplit(" - ", 1)
-            dest_prefix = dest_prefix.split(" - ")
-            res = self.search_area(base_prefix, dest_prefix)
+            res = self.search_area(base_prefix.split("/"), dest_prefix.split(" - "))
             if res is None:
                 return None
             return res, dest
 
-        for k, v in macros.items():
-            macros[k] = (
-                LogicExpression.parse(v)
-                .localize(lambda t: localizer([], t))
-                .inline(macros)
-            )
-
         for area in self.areas:
-            area.map(
-                lambda prefix, v: v.localize(lambda t: localizer(prefix, t)).inline(
-                    macros
-                )
-            )
+            area.map(lambda prefix, v: v.localize(lambda t: localizer(prefix, t)))
 
-        self.short_to_full = self.get_assoc_list()
+        self.short_full = self.get_assoc_list(checks, gossip_stones, map_exits)
+
+        def assoc(lst, elt, reverse=False):
+            if reverse:
+                for (a, b) in lst:
+                    if b == elt:
+                        return a
+            else:
+                for (a, b) in lst:
+                    if a == elt:
+                        return b
+            raise ValueError("Error: association list")
+
+        self.short_to_full = lambda x: assoc(self.short_full, x)
+        self.full_to_short = lambda x: assoc(self.short_full, x, True)
+
+
+@dataclass
+class Placement:
+    checks: Dict[str, str]
+    map_transitions: Dict[str, str]
+
+    hints: Dict[str, "Hint"]
+
+    item_placement_limit: Dict[str, str]  # item, area where it must be placed
+
+    def copy(self):
+        return Placement(
+            self.checks.copy(),
+            self.map_transitions.copy(),
+            self.hints.copy(),
+            self.item_placement_limit.copy(),
+        )
 
 
 class World:
-    areas: Dict[str, Area]
+    areas: Areas
 
-    accessible_areas: Dict[str, bool]
+    placement: Placement
+
+    accessible_areas: Dict[str, (bool, bool)]  # At day / at night
+    inventory: Inventory
+
+    unfilled_checks: List[str]
+    unmapped_transitions: List[str]
+
+    def __init__(
+        self,
+        areas: Areas,
+        placement=None,
+        inv_default=False,
+        acc_areas_default=False,
+    ):
+        self.areas = areas
+        self.short_to_full = areas.short_to_full
+
+        self.placement = placement.copy()
+
+        # def init_accessible_areas(area_short):
+        #     area_long = self.short_to_full(area_short)
+        #     area = self.areas[area_long]
+        #     if area.allowed_time_of_day == AllowedTimeOfDay.Both:
+        #         return acc_areas_default, acc_areas_default
+        #     elif area.allowed_time_of_day == AllowedTimeOfDay.DayOnly:
+        #         return acc_areas_default, False
+        #     else:
+        #         return False, acc_areas_default
+
+        self.accessible_areas = defaultdict(lambda: False, False)
+        self.inventory = Inventory()  # if not inv_default else RevInventory()
+
+    # def recompute_plus(self):
+    #     for area, (acc0, acc1) in accessible_areas:
+    #         if acc0 or acc1:
+    #             for
+
+    # def give_item(self, item):
+    #     self.inventory |= item
+    #     for area, (acc0, acc1) in accessible_areas:
+    #         if (not acc0) or (not acc1):
