@@ -8,36 +8,25 @@ from typing import (
     Iterable,
     Tuple,
     Optional,
+    Set,
 )
 from dataclasses import dataclass
 from functools import reduce
+from enum import IntEnum
 from collections import OrderedDict, defaultdict
 from abc import ABC
 import re
+from itertools import product
 
-from .item_types import ALL_ITEM_NAMES
+from .item_types import ALL_ITEM_NAMES, INVENTORY_ITEMS
+from .inventory import Inventory, RevInventory
 
 from options import Options, OPTIONS
 
 Macros = "Dict[str, LogicExpression]"
 
 # LocationName = NewType("LocationName", str)
-# ItemName = NewType("ItemName", str)
-
-
-class Inventory(DefaultDict[str, int]):
-    def __init__(self):
-        super().__init__(int)
-
-    def add(self, item):
-        self[item] += 1
-
-    def remove(self, item):
-        if self[item] > 0:
-            self[item] -= 1
-
-    def all_owned_unique_items(self):
-        return set((item for item, count in self.items() if count >= 1))
+ItemName = NewType("ItemName", str)
 
 
 class LogicExpression(ABC):
@@ -46,47 +35,40 @@ class LogicExpression(ABC):
     ) -> "LogicExpression":
         raise NotImplementedError
 
-    def inline(self, macros: Macros) -> "LogicExpression":
-        raise NotImplementedError
-
     def specialize(self, options: Options) -> "LogicExpression":
         raise NotImplementedError
 
     def eval(self, inventory: Inventory, world: "World") -> bool:
         raise NotImplementedError
 
-    # def get_items_needed(
-    #     self, options: Options, inventory: Inventory, macros
-    # ) -> OrderedDict:  # itemname -> count
-    #     raise NotImplementedError("abstract")
+    def get_items_needed(
+        self,
+    ) -> Set[Inventory]:
+        raise NotImplementedError
 
     # def __str__(self):
     #     raise NotImplementedError("abstract")
 
 
 @dataclass
-class ConstantAtom(LogicExpression):
-    value: bool
+class DNFInventory(LogicExpression):
+    disjunction: Set[Inventory]
 
-    def eval(self, *args):
-        return self.value
+    def eval(self, inventory: Inventory):
+        return any(req_items | inventory == inventory for req_items in self.disjunction)
 
     def specialize(self, *args):
-        return self
-
-    def inline(self, *args):
         return self
 
     def localize(self, *args):
         return self
 
-    # def get_items_needed(
-    #     self, options: Options, inventory: Inventory, macros
-    # ) -> OrderedDict:  # itemname, count
-    #     if self.value:
-    #         return OrderedDict()
-    #     else:
-    #         return
+
+def ConstantAtom(value: bool) -> LogicExpression:
+    if value:
+        return DNFInventory(set(Inventory()))
+    else:
+        return DNFInventory(set())
 
 
 @dataclass
@@ -101,9 +83,6 @@ class OptionAtom(LogicExpression):
 
     def specialize(self, options: Options):
         return ConstantAtom(self.predicate(options[self.option_name]))
-
-    def inline(self, *args):
-        return self
 
     def localize(self, *args):
         return self
@@ -121,72 +100,17 @@ class TrickAtom(LogicExpression):
     def specialize(self, options: Options):
         return ConstantAtom(self.trick_name in options.get("enabled-tricks", []))
 
-    def inline(self, *args):
-        return self
-
     def localize(self, *args):
         return self
 
 
-@dataclass
-class InventoryAtom(LogicExpression):
-    item_name: str
-    quantity: int
-
-    def eval(self, inventory: Inventory, world):
-        return inventory[self.item_name] >= self.quantity
-
-    def specialize(self, *args):
-        return self
-
-    def inline(self, *args):
-        return self
-
-    def localize(self, *args):
-        return self
-
-    # def get_items_needed(
-    #     self, options: Options, inventory: Inventory, macros
-    # ) -> OrderedDict:  # itemname, count
-    #     return OrderedDict({self.item_name: self.quantity})
+def InventoryAtom(item_name: str, quantity: int) -> LogicExpression:
+    return DNFInventory(Inventory((item_name, quantity)))
 
 
-@dataclass
-class EventAtom(LogicExpression):
-    event_address: List[str]
-    event_name: str
-
-    def eval(self, inventory: Inventory, world: "World"):
-        return world.is_event_accessible(self.event_address, self.event_name, inventory)
-
-    def specialize(self, *args):
-        return self
-
-    def inline(self, *args):
-        return self
-
-    def localize(self, *args):
-        return self
-
-
-@dataclass
-class MacroAtom(LogicExpression):
-    macro_name: str
-
-    def eval(self, *args):
-        raise TypeError("Macros must be inlined to be evaluated")
-
-    def specialize(self, *args):
-        return self
-
-    def inline(self, macros: Macros):
-        res = macros[self.macro_name]
-        if res is None:
-            raise ValueError(f"Unknown {self.macro_name} macro")
-        return res
-
-    def localize(self, *args):
-        return self
+def EventAtom(event_address: List[str], event_name: str) -> LogicExpression:
+    name = "/".join(event_address) + "/" + event_name
+    return DNFInventory(Inventory((name, 1)))
 
 
 @dataclass
@@ -199,13 +123,9 @@ class BasicTextAtom(LogicExpression):
     def specialize(self, *args):
         return self
 
-    def inline(self, *args):
-        raise TypeError("Text must be localized to inline macros")
-
     def localize(self, localizer):
-        v = localizer(self.text)
-        if v is None:
-            return MacroAtom(self.text)
+        if (v := localizer(self.text)) is None:
+            raise ValueError(f"Unknown event {self.text}")
         else:
             return EventAtom(*v)
 
@@ -215,27 +135,15 @@ class AndCombination(LogicExpression):
     arguments: List[LogicExpression]
 
     @staticmethod
-    def extract_and(arg: LogicExpression) -> List[LogicExpression]:
-        if isinstance(arg, AndCombination):
-            return arg.arguments
-        elif arg == ConstantAtom(True):
-            return []
-        else:
-            return [arg]
-
-    @staticmethod
     def simplify(arguments: Iterable[LogicExpression]) -> LogicExpression:
-        if ConstantAtom(False) in arguments:
-            return ConstantAtom(False)
-        conjunction_lists = map(AndCombination.extract_and, arguments)
-        flattened = reduce(list.append, conjunction_lists)
-        if len(flattened):
-            return AndCombination(flattened)
+        if all(map(lambda x: isinstance(x, DNFInventory), arguments)):
+            disjunctions = map(lambda x: x.disjunction, arguments)
+            bigset = set()
+            for conjunction_tuple in product(*disjunctions):
+                bigset.add(reduce(Inventory.__and__, conjunction_tuple, RevInventory()))
+            return DNFInventory(Inventory.simplify_invset(bigset))
         else:
-            return ConstantAtom(True)
-
-    def inline(self, macros: Macros):
-        self.simplify(arg.inline(macros) for arg in self.arguments)
+            return AndCombination(arguments)
 
     def specialize(self, options: Options):
         self.simplify(arg.specialize(options) for arg in self.arguments)
@@ -243,28 +151,10 @@ class AndCombination(LogicExpression):
     def localize(self, localizer):
         self.simplify(arg.localize(localizer) for arg in self.arguments)
 
-    def eval(self, inventory: Inventory):
-        return all(arg.eval(inventory) for arg in self.arguments)
-
-    # def get_items_needed(
-    #     self, options: Options, inventory: Inventory, macros
-    # ) -> OrderedDict:  # itemname, count
-    #     items_needed = OrderedDict()
-
-    #     if not len(self.arguments):  # Bad practice, this should have been simplified
-    #         return None
-    #     for subresult in (
-    #         arg.get_items_needed(options, inventory, macros) for arg in self.arg
-    #     ):
-    #         if subresult is None:  # if one is unreachable, all of this is
-    #             return None
-
-    #         for item_name, num_required in subresult.items():
-    #             items_needed[item_name] = max(
-    #                 num_required, items_needed.setdefault(item_name, 0)
-    #             )
-
-    #     return items_needed
+    def eval(self, *args):
+        raise TypeError(
+            f"Some argument of this {type(self).__name__} cannot be evaluated, or something has gone wrong"
+        )
 
 
 @dataclass
@@ -272,27 +162,12 @@ class OrCombination(LogicExpression):
     arguments: List[LogicExpression]
 
     @staticmethod
-    def extract_or(arg):
-        if isinstance(arg, OrCombination):
-            return arg.arguments
-        elif arg == ConstantAtom(False):
-            return []
-        else:
-            [arg]
-
-    @staticmethod
     def simplify(arguments: Iterable[LogicExpression]) -> LogicExpression:
-        if ConstantAtom(True) in arguments:
-            return ConstantAtom(True)
-        conjunction_lists = map(OrCombination.extract_or, arguments)
-        flattened = reduce(list.append, conjunction_lists)
-        if len(flattened):
-            return OrCombination(flattened)
+        if all(map(lambda x: isinstance(x, DNFInventory), arguments)):
+            bigset = reduce(set.union, map(lambda x: x.disjunction, arguments), set())
+            return DNFInventory(Inventory.simplify_invset(bigset))
         else:
-            return ConstantAtom(False)
-
-    def inline(self, macros: Macros):
-        self.simplify(arg.inline(macros) for arg in self.arguments)
+            return OrCombination(arguments)
 
     def specialize(self, options: Options):
         self.simplify(arg.specialize(options) for arg in self.arguments)
@@ -300,14 +175,10 @@ class OrCombination(LogicExpression):
     def localize(self, localizer):
         self.simplify(arg.localize(localizer) for arg in self.arguments)
 
-    def eval(self, inventory: Inventory):
-        return any(arg.eval(inventory) for arg in self.arguments)
-
-    # def get_items_needed(
-    #     self, options: Options, inventory: Inventory, macros
-    # ) -> OrderedDict:  # itemname, count
-    #     items_needed = OrderedDict()
-    #     raise NotImplementedError
+    def eval(self, *args):
+        raise TypeError(
+            f"Some argument of this {type(self).__name__} cannot be evaluated, or something has gone wrong"
+        )
 
 
 # Parsing
@@ -360,7 +231,6 @@ class MakeExpression(Transformer):
             return AndCombination([left, right])
 
     def mk_atom(self, text):
-        print(text)
         text = text.strip()
 
         # Test for option
@@ -414,7 +284,7 @@ class MakeExpression(Transformer):
             return InventoryAtom(text, 1)
 
         else:
-            return MacroAtom(text)
+            return BasicTextAtom(text)
 
 
 exp_parser = Lark(exp_grammar, parser="lalr", transformer=MakeExpression())
