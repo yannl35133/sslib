@@ -1,5 +1,54 @@
 # if not specified otherwise, options are put in the permalink
 # cosmetic options should have `permalink: false` as well
+
+# General and setup options
+
+- name: No GUI
+  command: noui
+  type: boolean
+  default: false
+  permalink: false
+  help: Don't launch the randomizer UI, just read command line params
+
+- name: Seed
+  command: seed
+  type: int
+  default: -1
+  permalink: false
+  help: Specify a seed to use for randomization, leave empty for random seed
+  ui: seed
+
+
+- name: Output Path
+  command: output-folder
+  type: dirpath
+  default: "."
+  permalink: false
+  help: Path to folder, where to write the patched wbfs and the spoiler log
+
+- name: No Spoiler Log
+  command: no-spoiler-log
+  type: boolean
+  default: false
+  help: If activated, no spoiler log will be generated. This is highly discouraged
+    to activate, as it makes debugging issues much harder.
+  ui: option_no_spoiler_log
+
+- name: JSON spoiler log
+  command: json
+  type: boolean
+  default: false
+  permalink: false
+  help: If set, outputs the spoiler log in json format
+
+- name: Output placement file
+  command: out-placement-file
+  type: boolean
+  default: false
+  permalink: false
+  help: If enabled, writes a placement json file that can be modified for plandomizer purposes
+  ui: option_out_placement_file
+
 - name: Dry Run
   command: dry-run
   type: boolean
@@ -7,82 +56,51 @@
   permalink: false
   help: Only generate a spoiler log, doesn't attempt to patch any game files
   ui: option_dry_run
-- name: Output Path
-  command: output-folder
-  type: dirpath
-  default: "."
-  permalink: false
-  help: Path to folder, where to write the patched wbfs and the spoiler log
-- name: JSON spoiler log
-  command: json
+
+- name: Tunic Swap
+  command: tunic-swap
   type: boolean
   default: false
   permalink: false
-  help: If set, outputs the spoiler log in json format
-- name: No GUI
-  command: noui
-  type: boolean
-  default: false
-  permalink: false
-  help: Don't launch the randomizer UI, just read command line params
-- name: Starting Tablet Count
-  command: starting-tablet-count
-  type: int
-  default: 3
-  min: 0
-  max: 3
-  bits: 2
-  help: Number of tablets to start with. Tablets are selected randomly, and the remainder
-    are randomized
-  ui: option_starting_tablet_count
-- name: Open Thunderhead
-  command: open-thunderhead
+  cosmetic: true
+  help: Swaps Link's casual clothes for the hero's tunic and vice versa
+  ui: option_tunic_swap
+
+- name: Randomize Music
+  command: music-rando
   type: singlechoice
   bits: 2
   choices:
-    - Ballad
-    # - Harp and Ballad
-    - Open
-  default: Ballad
-  help: Controls the starting state of the Thunderhead.
-  ui: option_open_thunderhead
-- name: Starting Sword
-  command: starting-sword
-  type: singlechoice
-  bits: 3
-  choices:
-    - Swordless
-    - Practice Sword
-    - Goddess Sword
-    - Goddess Longsword
-    - Goddess White Sword
-    - Master Sword
-    - True Master Sword
-  default: Goddess Sword
-  help: Select which sword to start with. The remaining upgrades will be shuffled into
-    the item pool
-  ui: option_starting_sword
-- name: Required Dungeon Count
-  command: required-dungeon-count
-  type: int
-  default: 2
-  min: 0
-  max: 6
-  bits: 3
-  help: The number of dungeons that are required, to beat the seed
-  ui: option_required_dungeon_count
-- name: Imp 2
-  command: imp2-skip
-  type: boolean
-  default: true
-  help: Skips the requirement to beat Imp 2 in order to beat the seed
-  ui: option_imp_2
-- name: Empty unrequired Dungeons
-  command: empty-unrequired-dungeons
+    - None
+    - Shuffled
+    - Shuffled (Limit Vanilla)
+  default: None
+  permalink: false
+  cosmetic: true
+  help: If enabled, music will be randomized. Limit Vanilla means, the randomizer will attempt to prevent vanilla music. Note that some music can still be vanilla.
+  ui: option_music_rando
+
+- name: Allow Custom Music
+  command: allow-custom-music
   type: boolean
   default: false
-  help: If activated, only the required dungeons will contain progression items
-  ui: option_empty_unrequired_dungeons
+  permalink: false
+  cosmetic: true
+  help: If enabled, the WZSound.brsar file will be patched to allow custom music. Custom music must be installed manually.
+  ui: option_allow_custom_music
+
+- name: Cutoff Game Over Music
+  command: cutoff-gameover-music
+  type: boolean
+  default: false
+  permalink: false
+  cosmetic: true
+  help: If enabled, the game over music will cutoff when it normally would. If disabled, the music will continue to play until the end of the song, even after pressing continue.
+  ui: option_cutoff_gameover_music
+
+
+# Progress locations
+
 - name: Banned Types
   command: banned-types
   type: multichoice
@@ -131,58 +149,6 @@
     scrapper, peatrice, goddess, faron goddess, eldin goddess, lanayru goddess, floria
     goddess, summit goddess, sand sea goddess'
   ui: option_banned_types
-- name: Skip Sky Keep
-  command: skip-skykeep
-  type: boolean
-  default: false
-  help: If activated, skips the requirement to beat Sky Keep in order to access the
-    horde in the past
-  ui: option_skip_skykeep
-- name: Seed
-  command: seed
-  type: int
-  default: -1
-  permalink: false
-  help: Specify a seed to use for randomization, leave empty for random seed
-  ui: seed
-- name: Hero Mode
-  command: hero-mode
-  type: boolean
-  default: true
-  help: If activated, play the game on Hero Mode
-  ui: option_hero_mode
-- name: Randomize Entrances
-  command: randomize-entrances
-  type: singlechoice
-  bits: 2
-  choices:
-    - None
-    - Required Dungeons Separately
-    - All Dungeons
-    - All Dungeons + Sky Keep
-  default: None
-  help: "Shuffles entrances with one another. The Required Dungeons Separately option will also shuffle Sky Keep if Skip Sky Keep is disabled, and shuffles unrequired dungeons among each other."
-  ui: option_randomize_entrances
-- name: Randomize Silent Realms
-  command: randomize-trials
-  type: boolean
-  default: false
-  help: "Shuffles the trials. If checked, entering a trial gate will send you to a randomized trial."
-  ui: option_randomize_trials
-- name: Start with Adventure Pouch
-  command: start-with-pouch
-  type: boolean
-  default: false
-  help: If activated, you will start with the adventure pouch unlocked. The remaining four
-    progressive pouches will still be shuffled.
-  ui: option_start_pouch
-- name: No Spoiler Log
-  command: no-spoiler-log
-  type: boolean
-  default: false
-  help: If activated, no spoiler log will be generated. This is highly discouraged
-    to activate, as it makes debugging issues much harder.
-  ui: option_no_spoiler_log
 - name: Max Batreaux Reward
   command: max-batreaux-reward
   type: singlechoice
@@ -200,6 +166,7 @@
   help: Enables progression items to appear in all Batreaux rewards up to and including
     the specified amount.
   ui: option_max_batreaux_reward
+
 - name: Shop Mode
   command: shop-mode
   type: singlechoice
@@ -213,21 +180,10 @@
     items. Always Junk will randomize the shops, but will not place progression items in shops.
     Randmomized will apply standard randomization to shops.
   ui: option_shopsanity
-- name: Rupoor Mode
-  command: rupoor-mode
-  type: singlechoice
-  default: "Off"
-  choices:
-    - "Off"
-    - Added
-    - Rupoor Mayhem
-    - Rupoor Insanity
-  bits: 2
-  help: Adds or replaces items in the junk item pool with Rupoors. Added adds 15 rupoors to the pool
-    (not replacing existing items), Mayhem replaces half of the junk pool and Insanity replaces the entire
-    pool. All modes also add ruppors to the backup, duplicatable pool for when all other items have been
-    placed
-  ui: option_rupoor_mode
+
+
+# Additional settings
+
 - name: Gate of Time Starting State
   command: got-start
   type: singlechoice
@@ -238,6 +194,7 @@
   default: Lowered
   help: Sets the starting state of the Gate of Time
   ui: option_got_starting_state
+
 - name: Gate of Time Sword Requirement
   command: got-sword-requirement
   type: singlechoice
@@ -251,6 +208,7 @@
   default: Master Sword
   help: Sets the sword requirement for opening the Gate of Time
   ui: option_got_sword_requirement
+
 - name: Gate of Time Dungeon Requirements
   command: got-dungeon-requirement
   type: singlechoice
@@ -262,6 +220,45 @@
   help: Enables dungeon requirements for opening the Gate of Time. When disabled, dungeons will
     open the horde door instead.
   ui: option_got_dungeon_requirement
+
+- name: Required Dungeon Count
+  command: required-dungeon-count
+  type: int
+  default: 2
+  min: 0
+  max: 6
+  bits: 3
+  help: The number of dungeons that are required, to beat the seed
+  ui: option_required_dungeon_count
+
+- name: Skip Sky Keep
+  command: skip-skykeep
+  type: boolean
+  default: false
+  help: If activated, skips the requirement to beat Sky Keep in order to access the
+    horde in the past
+  ui: option_skip_skykeep
+
+
+- name: Open Thunderhead
+  command: open-thunderhead
+  type: singlechoice
+  bits: 2
+  choices:
+    - Ballad
+    # - Harp and Ballad
+    - Open
+  default: Ballad
+  help: Controls the starting state of the Thunderhead.
+  ui: option_open_thunderhead
+
+- name: Open Earth Temple
+  command: open-et
+  type: boolean
+  default: false
+  help: If activated, the door requiring 5 key pieces to access the dungeon is removed
+  ui: option_open_et
+
 - name: Open LMF
   command: open-lmf
   type: singlechoice
@@ -274,25 +271,39 @@
   help: Controls the conditions for opening LMF. Nodes requires activating the 3 nodes as in vanilla,
     Hook Beetle will raise LMF once the Hook Beetle is obtained.
   ui: option_open_lmf
-- name: Skip Horde
-  command: skip-horde
+
+- name: Starting Tablet Count
+  command: starting-tablet-count
+  type: int
+  default: 3
+  min: 0
+  max: 3
+  bits: 2
+  help: Number of tablets to start with. Tablets are selected randomly, and the remainder
+    are randomized
+  ui: option_starting_tablet_count
+
+
+- name: Randomize Entrances
+  command: randomize-entrances
+  type: singlechoice
+  bits: 2
+  choices:
+    - None
+    - Dungeons
+    - Dungeons + Sky Keep
+  default: None
+  help: "Shuffles entrances with one another"
+  ui: option_randomize_entrances
+
+- name: Randomize Silent Realms
+  command: randomize-trials
   type: boolean
   default: false
-  help: When enabled, the horde fight will be skipped
-  ui: option_horde
-- name: Skip Ghirahim 3
-  command: skip-g3
-  type: boolean
-  default: false
-  help: When enabled, the Ghirahim 3 fight will be skipped
-  ui: option_g3
-- name: Skip Demise
-  command: skip-demise
-  type: boolean
-  default: false
-  help: When enabled, the Demise fight will be skipped. Entering the portal in the
-    spiral will play the credits
-  ui: option_demise
+  help: "Shuffles the trials. If checked, entering a trial gate will send you to a randomized trial."
+  ui: option_randomize_trials
+
+
 - name: Map Mode
   command: map-mode
   type: singlechoice
@@ -310,6 +321,7 @@
   help: Controls the placement of maps. Restricted means that maps cannot be placed on the
     Boss Heart Container or ending check of the dungeon
   ui: option_map_mode
+
 - name: Small Key Mode
   command: small-key-mode
   type: singlechoice
@@ -328,6 +340,7 @@
     within their own dungeons. Restricted decreases the number of locations keys can appear in some
     dungeons, depending on logic settings. Lanayru Caves Key only shuffles the Lanayru Caves Small Key.
   ui: option_small_key_mode
+
 - name: Boss Key Mode
   command: boss-key-mode
   type: singlechoice
@@ -342,6 +355,119 @@
   help: Controls the placement of boss keys. Vanilla means they will always be in their vanilla locations.
     Own Dungeon means the boss key can only appear within its own dungeon.
   ui: option_boss_key_mode
+
+- name: Empty unrequired Dungeons
+  command: empty-unrequired-dungeons
+  type: boolean
+  default: false
+  help: If activated, only the required dungeons will contain progression items
+  ui: option_empty_unrequired_dungeons
+
+- name: Force Sword Dungeon Reward
+  command: sword-dungeon-reward
+  type: boolean
+  default: false
+  help: If activated, the final check of a required dungeon will be a sword (if possible). If there aren't enough swords to place, or there are more than 4 swords to place, some required dungeons will not force a sword at the end.
+  ui: option_sword_dungeon_reward
+
+
+- name: Imp 2
+  command: imp2-skip
+  type: boolean
+  default: true
+  help: Skips the requirement to beat Imp 2 in order to beat the seed
+  ui: option_imp_2
+
+- name: Skip Horde
+  command: skip-horde
+  type: boolean
+  default: false
+  help: When enabled, the horde fight will be skipped
+  ui: option_horde
+
+- name: Skip Ghirahim 3
+  command: skip-g3
+  type: boolean
+  default: false
+  help: When enabled, the Ghirahim 3 fight will be skipped
+  ui: option_g3
+
+- name: Skip Demise
+  command: skip-demise
+  type: boolean
+  default: false
+  help: When enabled, the Demise fight will be skipped. Entering the portal in the
+    spiral will play the credits
+  ui: option_demise
+
+- name: Demise Count
+  command: demise-count
+  type: int
+  default: 1
+  min: 1
+  max: 10
+  bits: 4
+  help: How many demises you want to fight at the end of the game
+  ui: option_demise_count
+
+- name: Starting Sword
+  command: starting-sword
+  type: singlechoice
+  bits: 3
+  choices:
+    - Swordless
+    - Practice Sword
+    - Goddess Sword
+    - Goddess Longsword
+    - Goddess White Sword
+    - Master Sword
+    - True Master Sword
+  default: Goddess Sword
+  help: Select which sword to start with. The remaining upgrades will be shuffled into
+    the item pool
+  ui: option_starting_sword
+
+- name: Start with Adventure Pouch
+  command: start-with-pouch
+  type: boolean
+  default: false
+  help: If activated, you will start with the adventure pouch unlocked. The remaining four
+    progressive pouches will still be shuffled.
+  ui: option_start_pouch
+
+- name: Rupoor Mode
+  command: rupoor-mode
+  type: singlechoice
+  default: "Off"
+  choices:
+    - "Off"
+    - Added
+    - Rupoor Mayhem
+    - Rupoor Insanity
+  bits: 2
+  help: Adds or replaces items in the junk item pool with Rupoors. Added adds 15 rupoors to the pool
+    (not replacing existing items), Mayhem replaces half of the junk pool and Insanity replaces the entire
+    pool. All modes also add ruppors to the backup, duplicatable pool for when all other items have been
+    placed
+  ui: option_rupoor_mode
+
+- name: Fix BiT crashes
+  command: fix-bit-crashes
+  type: boolean
+  default: false
+  help: If enabled, does not load some arcs in BiT when all file slots are filled to make all areas accessible in BiT
+  ui: option_fix_bit_crashes
+
+- name: Hero Mode
+  command: hero-mode
+  type: boolean
+  default: true
+  help: If activated, play the game on Hero Mode
+  ui: option_hero_mode
+
+
+# Logic settings
+
 - name: Logic Mode
   command: logic-mode
   type: singlechoice
@@ -357,6 +483,7 @@
     Standard may require minor tricks, such as whipping bombflowers. BiTless may require basic non-BiT tricks
     such as Fence Hop. Glitched may require BiT. No logic may be unbeatable
   ui: option_logic_mode
+
 - name: Enabled Tricks BiTless
   command: enabled-tricks-bitless
   type: multichoice
@@ -420,6 +547,7 @@
   default: []
   help: Enable specific tricks to be considered in logic
   ui: enabled_tricks
+
 - name: Enabled Tricks Glitched
   command: enabled-tricks-glitched
   type: multichoice
@@ -435,6 +563,24 @@
   default: []
   help: Enable specific tricks to be considered in logic
   ui: enabled_tricks
+
+
+# Hints
+
+- name: Precise Item Hints
+  command: precise-item
+  type: boolean
+  default: false
+  help: If enabled, item hints will indicate exactly which check the item lies, otherwise, it will just indicate the region.
+  ui: option_precise_item
+
+- name: Separate Cube SotS
+  command: cube-sots
+  type: boolean
+  default: false
+  help: If enabled, when a SotS hint points to a goddess chest, the hint will change to reflect that it points to a cube & display which of the six cube progress regions it falls into.
+  ui: option_cube_sots
+
 - name: Song Hints
   command: song-hints
   type: singlechoice
@@ -449,95 +595,13 @@
     Basic tells if the reward item is any progress item. Advanced tells if the trial is WotH, Barren, or potentially required.
     Direct tells the item on the trial directly.
   ui: option_song_hints
-- name: Fix BiT crashes
-  command: fix-bit-crashes
-  type: boolean
-  default: false
-  help: If enabled, does not load some arcs in BiT when all file slots are filled to make all areas accessible in BiT
-  ui: option_fix_bit_crashes
-- name: Output placement file
-  command: out-placement-file
-  type: boolean
-  default: false
-  permalink: false
-  help: If enabled, writes a placement json file that can be modified for plandomizer purposes
-  ui: option_out_placement_file
+
 - name: Past Impa Stone of Trials Hint
   command: impa-sot-hint
   type: boolean
   default: true
   help: Enables Impa in the Past to give a hint to the location of the Stone of Trials
   ui: option_impa_sot_hint
-- name: Tunic Swap
-  command: tunic-swap
-  type: boolean
-  default: false
-  permalink: false
-  cosmetic: true
-  help: Swaps Link's casual clothes for the hero's tunic and vice versa
-  ui: option_tunic_swap
-- name: Force Sword Dungeon Reward
-  command: sword-dungeon-reward
-  type: boolean
-  default: false
-  help: If activated, the final check of a required dungeon will be a sword (if possible). If there aren't enough swords to place, or there are more than 4 swords to place, some required dungeons will not force a sword at the end.
-  ui: option_sword_dungeon_reward
-- name: Open Earth Temple
-  command: open-et
-  type: boolean
-  default: false
-  help: If activated, the door requiring 5 key pieces to access the dungeon is removed
-  ui: option_open_et
-- name: Demise Count
-  command: demise-count
-  type: int
-  default: 1
-  min: 1
-  max: 10
-  bits: 4
-  help: How many demises you want to fight at the end of the game
-  ui: option_demise_count
-- name: Randomize Music
-  command: music-rando
-  type: singlechoice
-  bits: 2
-  choices:
-    - None
-    - Shuffled
-    - Shuffled (Limit Vanilla)
-  default: None
-  permalink: false
-  cosmetic: true
-  help: If enabled, music will be randomized. Limit Vanilla means, the randomizer will attempt to prevent vanilla music. Note that some music can still be vanilla.
-  ui: option_music_rando
-- name: Cutoff Game Over Music
-  command: cutoff-gameover-music
-  type: boolean
-  default: false
-  permalink: false
-  cosmetic: true
-  help: If enabled, the game over music will cutoff when it normally would. If disabled, the music will continue to play until the end of the song, even after pressing continue.
-  ui: option_cutoff_gameover_music
-- name: Allow Custom Music
-  command: allow-custom-music
-  type: boolean
-  default: false
-  permalink: false
-  cosmetic: true
-  help: If enabled, the WZSound.brsar file will be patched to allow custom music. Custom music must be installed manually.
-  ui: option_allow_custom_music
-- name: Separate Cube SotS
-  command: cube-sots
-  type: boolean
-  default: false
-  help: If enabled, when a SotS hint points to a goddess chest, the hint will change to reflect that it points to a cube & display which of the six cube progress regions it falls into.
-  ui: option_cube_sots
-- name: Precise Item Hints
-  command: precise-item
-  type: boolean
-  default: false
-  help: If enabled, item hints will indicate exactly which check the item lies, otherwise, it will just indicate the region.
-  ui: option_precise_item
 # make this always last for maximum cross version permalink support
 - name: Hint Distribution
   command: hint-distribution
