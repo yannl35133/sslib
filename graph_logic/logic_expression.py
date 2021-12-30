@@ -1,116 +1,99 @@
-from typing import (
-    List,
-    NewType,
-    DefaultDict,
-    Dict,
-    Callable,
-    Any,
-    Iterable,
-    Tuple,
-    Optional,
-    Set,
-)
+from typing import List, Callable, Any, Iterable, Optional, Set, Union
 from dataclasses import dataclass
 from functools import reduce
-from enum import IntEnum
-from collections import OrderedDict, defaultdict
 from abc import ABC
 import re
-from itertools import product
+from itertools import product, combinations
 
-from .item_types import ALL_ITEM_NAMES, INVENTORY_ITEMS
-from .inventory import Inventory, RevInventory
-
-from options import Options, OPTIONS
-
-Macros = "Dict[str, LogicExpression]"
-
-# LocationName = NewType("LocationName", str)
-ItemName = NewType("ItemName", str)
+from .item_types import ALL_ITEM_NAMES
+from .inventory import EXTENDED_ITEM, Inventory
+from .constants import number, ITEM_COUNTS
 
 
 class LogicExpression(ABC):
-    def localize(
-        self, localizer: Callable[str, Optional[Tuple[List[str], str]]]
-    ) -> "LogicExpression":
+    def localize(self, localizer: Callable[str, Optional[str]]) -> "LogicExpression":
         raise NotImplementedError
 
-    def specialize(self, options: Options) -> "LogicExpression":
+    def eval(self, inventory: Inventory) -> bool:
         raise NotImplementedError
 
-    def eval(self, inventory: Inventory, world: "World") -> bool:
-        raise NotImplementedError
 
-    def get_items_needed(
-        self,
-    ) -> Set[Inventory]:
-        raise NotImplementedError
-
-    # def __str__(self):
-    #     raise NotImplementedError("abstract")
-
-
-@dataclass
 class DNFInventory(LogicExpression):
     disjunction: Set[Inventory]
 
+    def __init__(
+        self,
+        v: Optional[Union[Set[Inventory], Inventory, Any]] = None,
+    ):
+        if v is None:
+            self.disjunction = set()
+        elif isinstance(v, set):
+            self.disjunction = v
+        elif isinstance(v, bool):
+            if v:
+                self.disjunction = {Inventory()}
+            else:
+                self.disjunction = set()
+        else:
+            self.disjunction = {Inventory(v)}
+
     def eval(self, inventory: Inventory):
-        return any(req_items | inventory == inventory for req_items in self.disjunction)
-
-    def specialize(self, *args):
-        return self
+        return any(req_items <= inventory for req_items in self.disjunction)
 
     def localize(self, *args):
         return self
 
+    def __or__(self, other):
+        if isinstance(other, DNFInventory):
+            return DNFInventory(
+                Inventory.simplify_invset(self.disjunction | other.disjunction)
+            )
+        else:
+            raise ValueError
 
-def ConstantAtom(value: bool) -> LogicExpression:
-    if value:
-        return DNFInventory(set(Inventory()))
-    else:
-        return DNFInventory(set())
+    def __and__(self, other):
+        if isinstance(other, DNFInventory):
+            return AndCombination.simplify(self, other)  # Can be optimised
+        else:
+            raise ValueError
 
+    def remove(self, item):
+        if isinstance(item, EXTENDED_ITEM):
+            return DNFInventory({inv for inv in self.disjunction if not inv[item]})
+        else:
+            raise ValueError
 
-@dataclass
-class OptionAtom(LogicExpression):
-    option_name: str
-    predicate: Callable[[Any], bool]
-
-    def eval(self, *args):
-        raise TypeError(
-            "f{self.__class__.__name__} must be specialized to be evaluated"
+    def day_only(self):
+        return DNFInventory(
+            {
+                inv.remove(EXTENDED_ITEM.day_bit())
+                for inv in self.disjunction
+                if not inv[EXTENDED_ITEM.night_bit()]
+            }
         )
 
-    def specialize(self, options: Options):
-        return ConstantAtom(self.predicate(options[self.option_name]))
-
-    def localize(self, *args):
-        return self
-
-
-@dataclass
-class TrickAtom(LogicExpression):
-    trick_name: str
-
-    def eval(self, *args):
-        raise TypeError(
-            "f{self.__class__.__name__} must be specialized to be evaluated"
+    def night_only(self):
+        return DNFInventory(
+            {
+                inv.remove(EXTENDED_ITEM.night_bit())
+                for inv in self.disjunction
+                if not inv[EXTENDED_ITEM.day_bit()]
+            }
         )
-
-    def specialize(self, options: Options):
-        return ConstantAtom(self.trick_name in options.get("enabled-tricks", []))
-
-    def localize(self, *args):
-        return self
 
 
 def InventoryAtom(item_name: str, quantity: int) -> LogicExpression:
-    return DNFInventory(Inventory((item_name, quantity)))
+    disjunction = set()
+    for comb in combinations(range(ITEM_COUNTS[item_name]), quantity):
+        i = Inventory()
+        for index in comb:
+            i |= EXTENDED_ITEM[number(item_name, index)]
+        disjunction.add(i)
+    return DNFInventory(disjunction)
 
 
-def EventAtom(event_address: List[str], event_name: str) -> LogicExpression:
-    name = "/".join(event_address) + "/" + event_name
-    return DNFInventory(Inventory((name, 1)))
+def EventAtom(event_address: str) -> LogicExpression:
+    return DNFInventory(event_address)
 
 
 @dataclass
@@ -120,14 +103,11 @@ class BasicTextAtom(LogicExpression):
     def eval(self, *args):
         raise TypeError("Text must be localized to be evaluated")
 
-    def specialize(self, *args):
-        return self
-
     def localize(self, localizer):
         if (v := localizer(self.text)) is None:
             raise ValueError(f"Unknown event {self.text}")
         else:
-            return EventAtom(*v)
+            return EventAtom(v)
 
 
 @dataclass
@@ -135,21 +115,18 @@ class AndCombination(LogicExpression):
     arguments: List[LogicExpression]
 
     @staticmethod
-    def simplify(arguments: Iterable[LogicExpression]) -> LogicExpression:
+    def simplify(arguments: List[LogicExpression]) -> LogicExpression:
         if all(map(lambda x: isinstance(x, DNFInventory), arguments)):
             disjunctions = map(lambda x: x.disjunction, arguments)
             bigset = set()
             for conjunction_tuple in product(*disjunctions):
-                bigset.add(reduce(Inventory.__and__, conjunction_tuple, RevInventory()))
+                bigset.add(reduce(Inventory.__and__, conjunction_tuple))
             return DNFInventory(Inventory.simplify_invset(bigset))
         else:
             return AndCombination(arguments)
 
-    def specialize(self, options: Options):
-        self.simplify(arg.specialize(options) for arg in self.arguments)
-
     def localize(self, localizer):
-        self.simplify(arg.localize(localizer) for arg in self.arguments)
+        self.simplify([arg.localize(localizer) for arg in self.arguments])
 
     def eval(self, *args):
         raise TypeError(
@@ -162,18 +139,15 @@ class OrCombination(LogicExpression):
     arguments: List[LogicExpression]
 
     @staticmethod
-    def simplify(arguments: Iterable[LogicExpression]) -> LogicExpression:
+    def simplify(arguments: List[LogicExpression]) -> LogicExpression:
         if all(map(lambda x: isinstance(x, DNFInventory), arguments)):
             bigset = reduce(set.union, map(lambda x: x.disjunction, arguments), set())
             return DNFInventory(Inventory.simplify_invset(bigset))
         else:
             return OrCombination(arguments)
 
-    def specialize(self, options: Options):
-        self.simplify(arg.specialize(options) for arg in self.arguments)
-
     def localize(self, localizer):
-        self.simplify(arg.localize(localizer) for arg in self.arguments)
+        self.simplify([arg.localize(localizer) for arg in self.arguments])
 
     def eval(self, *args):
         raise TypeError(
@@ -182,18 +156,6 @@ class OrCombination(LogicExpression):
 
 
 # Parsing
-
-option_re = re.compile(r"^Option .*$")
-positive_boolean_re = re.compile(r"^Option \"([^\"]+)\" Enabled$")
-negative_boolean_re = re.compile(r"^Option \"([^\"]+)\" Disabled$")
-positive_dropdown_re = re.compile(r"^Option \"([^\"]+)\" Is \"([^\"]+)\"$")
-negative_dropdown_re = re.compile(r"^Option \"([^\"]+)\" Is Not \"([^\"]+)\"$")
-positive_list_re = re.compile(r"^Option \"([^\"]+)\" Contains \"([^\"]+)\"$")
-negative_list_re = re.compile(r"^Option \"([^\"]+)\" Does Not Contain \"([^\"]+)\"$")
-
-trick_re = re.compile(r"^Trick (.*)$")
-item_with_count_re = re.compile(r"^(.+) ×[ ]*(\d+)$")
-
 
 from lark import Lark, Transformer, v_args
 
@@ -215,6 +177,8 @@ exp_grammar = """
     %ignore WS
 """
 
+item_with_count_re = re.compile(r"^(.+) ×[ ]*(\d+)$")
+
 
 @v_args(inline=True)  # Affects the signatures of the methods
 class MakeExpression(Transformer):
@@ -232,55 +196,18 @@ class MakeExpression(Transformer):
 
     def mk_atom(self, text):
         text = text.strip()
+        if text == "Nothing":
+            return DNFInventory(True)
+        if text == "Impossible":
+            return DNFInventory(False)
 
-        # Test for option
-        if option_re.search(text):
-            if match := positive_boolean_re.search(text):
-                option_name = match.group(1)
-                predicate = lambda b: bool(b)
-            elif match := negative_boolean_re.search(text):
-                option_name = match.group(1)
-                predicate = lambda b: not b
-            elif match := positive_dropdown_re.search(text):
-                option_name = match.group(1)
-                value = match.group(2)
-                predicate = lambda v, value=value: v == value
-            elif match := negative_dropdown_re.search(text):
-                option_name = match.group(1)
-                value = match.group(2)
-                predicate = lambda v, value=value: v != value
-            elif match := positive_list_re.search(text):
-                option_name = match.group(1)
-                value = match.group(2)
-                predicate = (
-                    lambda lst, value=value: value in lst if lst is not None else False
-                )
-            elif match := negative_list_re.search(text):
-                option_name = match.group(1)
-                value = match.group(2)
-                predicate = (
-                    lambda lst, value=value: value not in lst
-                    if lst is not None
-                    else True
-                )
-            else:
-                raise ValueError(f"Option pattern not recognized: {text}")
-
-            if option_name not in OPTIONS:
-                raise ValueError(f"Unknown option {option_name}")
-            return OptionAtom(option_name, predicate)
-
-        elif match := trick_re.search(text):
-            # Check validity of trick name
-            return TrickAtom(match.group(1))
-
-        elif match := item_with_count_re.search(text):
+        if match := item_with_count_re.search(text):
             item_name = match.group(1)
             if item_name not in ALL_ITEM_NAMES:
                 raise ValueError(f"Unknown item {item_name}")
             return InventoryAtom(item_name, int(match.group(2)))
 
-        elif text in ALL_ITEM_NAMES:
+        elif text in ALL_ITEM_NAMES or text in EXTENDED_ITEM:
             return InventoryAtom(text, 1)
 
         else:
@@ -289,21 +216,3 @@ class MakeExpression(Transformer):
 
 exp_parser = Lark(exp_grammar, parser="lalr", transformer=MakeExpression())
 LogicExpression.parse = exp_parser.parse
-
-
-# def check_option_enabled_requirement(options: Options, exp: str) -> bool:
-#     exp = LogicExpression.parse(exp)
-#     exp = exp.specialize(options)
-#     return exp.eval(Inventory())
-
-
-# def test():
-#     import yaml
-
-#     with open("SS Rando Logic - Requirements.yaml") as f:
-#         locations = yaml.safe_load(f)
-#     for loc in locations:
-#         req_str = locations[loc]
-#         print(f"{loc}: {req_str}")
-#         print(f"-> {LogicExpression.parse(req_str)}")
-#         print()

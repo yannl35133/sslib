@@ -1,311 +1,516 @@
-# taken from https://github.com/LagoLunatic/wwrando/blob/master/logic/logic.py
+from typing import Any, Dict, List, Tuple
+from collections import defaultdict
+from dataclasses import dataclass, field
 
-# import yaml
-# import re
-from collections import defaultdict  # OrderedDict,
-
-# import copy
-# from pathlib import Path
-from typing import Any, Optional, Dict, List, Tuple
-from dataclasses import dataclass
-from enum import Enum
-from functools import reduce
-
-# import os
-
-# from .item_types import (
-#     PROGRESS_ITEMS,
-#     NONPROGRESS_ITEMS,
-#     CONSUMABLE_ITEMS,
-#     DUPLICABLE_ITEMS,
-#     DUNGEON_PROGRESS_ITEMS,
-#     MAPS,
-#     SMALL_KEYS,
-#     BOSS_KEYS,
-# )
-# from .constants import (
-#     DUNGEON_NAME_TO_SHORT_DUNGEON_NAME,
-#     DUNGEON_NAMES,
-#     SHOP_CHECKS,
-#     MAP_CHECKS,
-#     SMALL_KEY_CHECKS,
-#     BOSS_KEY_CHECKS,
-#     POTENTIALLY_REQUIRED_DUNGEONS,
-#     ALL_TYPES,
-# )
-# from .logic_expression import LogicExpression, parse_logic_expression, Inventory, item_with_count_re
-
-
-from .logic_expression import LogicExpression, Inventory, RevInventory
-from .inventory import (
-    EXTENDED_ITEM as _EXTENDED_ITEM,
-    INVENTORY_ITEMS as _INVENTORY_ITEMS,
-)
-
-
-class keydefaultdict(defaultdict):
-    default_factory: Any
-
-    def __missing__(self, key):
-        if self.default_factory is None:
-            raise KeyError(key)
-        else:
-            ret = self[key] = self.default_factory(key)
-            return ret
-
-
-AllowedTimeOfDay = Enum("AllowedTimeOfDay", ("DayOnly", "NightOnly", "Both"))
-
-events: List[str] = []
+from .logic_input import Area, Areas, AllowedTimeOfDay, DayOnly, NightOnly, Both
+from .logic_expression import DNFInventory
+from .inventory import Inventory, EXTENDED_ITEM
 
 
 @dataclass
-class Area:
-    name: str
-    allowed_time_of_day: AllowedTimeOfDay = AllowedTimeOfDay.DayOnly
-    can_sleep: bool = False
-    can_save: bool = False
-    sub_areas: "Dict[str, Area]" = {}
-    locations: Dict[str, LogicExpression] = {}
-    exits: Dict[str, LogicExpression] = {}
-
-    @classmethod
-    def of_dict(cls, args):
-        return cls(**args)
-
-    @classmethod
-    def of_yaml(
-        cls,
-        name: str,
-        raw_dict: Dict[str, Any],
-        parent: Optional[Area] = None,
-    ):
-        area = cls(name)
-
-        if (v := raw_dict.get("allowed-time-of-day")) is not None:
-            area.allowed_time_of_day = AllowedTimeOfDay[v]
-        if (b := raw_dict.get("can-sleep")) is not None:
-            area.can_sleep = b
-        if (b := raw_dict.get("can-save")) is not None:
-            area.can_save = b
-
-        if (d := raw_dict.get("locations")) is not None:
-            area.locations = {k: LogicExpression.parse(v) for k, v in d.items()}
-            for k in d:
-                if k not in _INVENTORY_ITEMS:
-                    events.append(name + "/" + k)
-
-        if (d := raw_dict.get("exits")) is not None:
-            area.exits = {k: LogicExpression.parse(v) for k, v in d.items()}
-
-        if (v := raw_dict.get("entrance")) is not None:
-            if parent is None:
-                raise ValueError("An entrance was given but no parent to give it to")
-            parent.exits[name] = LogicExpression.parse(v)
-
-        area.sub_areas = {
-            k: cls.of_yaml(name + "/" + k, v, area)
-            for k, v in raw_dict.items()
-            if "A" <= k[0] <= "Z"
-        }
-        return area
-
-    def map(self, f):
-        for d in [self.locations, self.exits]:
-            for k, v in d.items():
-                d[k] = f(self.name, v)
-        for sub_area in self.sub_areas:
-            sub_area.map(f)
+class PoolEntrance:
+    entrance: str
+    constraint: List[Any] = None
 
 
-class Areas:
-    areas: Dict[str, Area]
-
-    @staticmethod
-    def subname(lst1, lst2, i=0, j=0):
-        while True:
-            if len(lst1) - i == 0 or len(lst2) - j == 0:
-                return False
-            if len(lst1) - i == 1 == len(lst2) - j:
-                return lst1[i] == lst2[j]
-            if lst1[i] == lst2[j]:
-                i += 1
-            j += 1
-
-    def get_assoc_list(self, checks, gossip_stones, map_exits) -> List[str, str]:
-        def get_pairs(area_name: str, element_names: Dict[str, Any], database):
-            res = []
-            area_list = area_name.split("/")
-            for name in element_names:
-                full_address = area_name + "/" + name
-                full_address_list = area_list + [name]
-                candidates = filter(
-                    lambda name: self.subname(name.split(" - "), full_address_list),
-                    database,
-                )
-                for winner in candidates:
-                    res.append((winner, full_address))
-                    break
-                    # Takes the first one
-                else:  # No first one to take
-                    res.append((full_address, full_address))
-
-            return res
-
-        res = []
-        locations_db = checks | gossip_stones
-        for area in self.areas:
-            res.extend(get_pairs(area.name, area.locations, locations_db))
-            res.extend(get_pairs(area.name, area.exits, map_exits))
-
-        return res
-
-    def search_area(
-        self, base_address: List[str], partial_address: List[str]
-    ) -> Optional[List[str]]:
-        def search_area(i, j, areas):
-            if len(partial_address) - j == 0:  # We've arrived
-                return []
-            hd = partial_address[j]
-            if hd in areas:  # Abandon the base address, we've branched off
-                return [hd] + search_area(len(base_address), j + 1, areas[hd].sub_areas)
-
-            if len(base_address) - i > 0:  # Let's follow the base address some more
-                hd2 = base_address[i]
-                return [hd2] + search_area(i + 1, j, areas[hd2].sub_areas)
-
-            # Now we search everywhere
-            for area in areas.values():
-                if (res := search_area(i, j, area.sub_areas)) is not None:
-                    return [area.name] + res
-            else:
-                return None
-
-        return search_area(0, 0, self.areas)
-
-    def update_exit_names(self, map_exits):
-        def updated_names_generator(prefix, exits):
-            for k, v in exits.items():
-                if k in map_exits:
-                    yield k, v
-                else:
-                    addr = self.search_area(prefix, k.split(" - "))
-                    yield "/".join(addr), v
-
-        for area in self.areas:
-            area.exits = set(updated_names_generator(area.name.split("/"), area.exits))
-
-    def __getitem__(self, addr):
-        self.areas[addr]
-
-    def __setitem__(self, addr, value: Area):
-        self.areas[addr] = value
-
-    def __init__(
-        self,
-        areas: Dict[str, Any],
-        checks: Dict[str, Any],
-        gossip_stones: Dict[str, Any],
-        map_exits: Dict[str, Any],
-    ):
-        self.areas = {k: Area.of_yaml("", k, v) for k, v in areas.items()}
-        _EXTENDED_ITEM.items_list.extend(events)
-
-        def flatten(areas):
-            for area in areas:
-                self.areas[area.name] = area
-                flatten(area.sub_areas)
-
-        for area in self.areas:
-            flatten(area.sub_areas)
-
-        def localizer(base_prefix: List[str], text):
-            dest_prefix, dest = text.rsplit(" - ", 1)
-            res = self.search_area(base_prefix.split("/"), dest_prefix.split(" - "))
-            if res is None:
-                return None
-            return res, dest
-
-        for area in self.areas:
-            area.map(lambda prefix, v: v.localize(lambda t: localizer(prefix, t)))
-
-        self.short_full = self.get_assoc_list(checks, gossip_stones, map_exits)
-
-        def assoc(lst, elt, reverse=False):
-            if reverse:
-                for (a, b) in lst:
-                    if b == elt:
-                        return a
-            else:
-                for (a, b) in lst:
-                    if a == elt:
-                        return b
-            raise ValueError("Error: association list")
-
-        self.short_to_full = lambda x: assoc(self.short_full, x)
-        self.full_to_short = lambda x: assoc(self.short_full, x, True)
+@dataclass
+class PoolExit:
+    exit: str
+    constraint: List[Any] = None
 
 
 @dataclass
 class Placement:
-    checks: Dict[str, str]
-    map_transitions: Dict[str, str]
+    item_placement_limit: Dict[str, str] = field(
+        default_factory=lambda: defaultdict(str)
+    )
 
-    hints: Dict[str, "Hint"]
+    map_transitions: Dict[str, str] = field(default_factory=dict)
+    reverse_map_transitions: Dict[str, str] = field(default_factory=dict)
 
-    item_placement_limit: Dict[str, str]  # item, area where it must be placed
+    locations: Dict[str, str] = field(default_factory=dict)
+    items: Dict[str, str] = field(default_factory=dict)
+    hints: Dict[str, "Hint"] = field(default_factory=dict)
 
     def copy(self):
         return Placement(
-            self.checks.copy(),
-            self.map_transitions.copy(),
-            self.hints.copy(),
             self.item_placement_limit.copy(),
+            self.map_transitions.copy(),
+            self.locations.copy(),
+            self.items.copy(),
+            self.hints.copy(),
+        )
+
+    def __or__(self, other):
+        if not isinstance(other, Placement):
+            raise ValueError
+        for k, v in other.item_placement_limit:
+            if k in self.item_placement_limit and v != self.item_placement_limit[k]:
+                raise ValueError
+        for k, v in other.map_transitions:
+            if k in self.map_transitions and v != self.map_transitions[k]:
+                raise ValueError
+        for k, v in other.locations:
+            if k in self.locations and v != self.locations[k]:
+                raise ValueError
+        for k, v in other.items:
+            if k in self.items and v != self.items[k]:
+                raise ValueError
+        for k, v in other.hints:
+            if k in self.hints and v != self.hints[k]:
+                raise ValueError
+        return Placement(
+            self.item_placement_limit | other.self.item_placement_limit,
+            self.map_transitions | other.self.map_transitions,
+            self.locations | other.self.locations,
+            self.items | other.self.items,
+            self.hints | other.self.hints,
         )
 
 
-class World:
-    areas: Areas
+@dataclass
+class LogicSettings:
+    exit_pools: List[Tuple[List[PoolEntrance], List[PoolExit]]]
+    starting_inventory: Inventory
+    starting_area: str
+    additional_requirements: Dict[str, DNFInventory]
 
-    placement: Placement
 
-    accessible_areas: Dict[str, (bool, bool)]  # At day / at night
-    inventory: Inventory
-
-    unfilled_checks: List[str]
-    unmapped_transitions: List[str]
+class Logic:
+    @staticmethod
+    def is_entrance(exit):
+        if exit[-len("ENTRANCE") :] == "ENTRANCE":
+            return True
+        if exit[-len("EXIT") :] == "EXIT":
+            return False
+        raise ValueError("Neither an entrance nor an exit")
 
     def __init__(
         self,
         areas: Areas,
+        logic_settings: LogicSettings,
         placement=None,
-        inv_default=False,
-        acc_areas_default=False,
+        # remove_placed_from_inv=False,
+        # acc_areas_default=False,
     ):
         self.areas = areas
+        self.map_exits = areas.map_exits
+        self.checks = areas.checks
+        self.pools = logic_settings.exit_pools
         self.short_to_full = areas.short_to_full
+        self.full_to_short = areas.full_to_short
 
-        self.placement = placement.copy()
+        self.requirements = areas.requirements.copy()
+        self.opaque = areas.opaque
+        self.entrance_to_area = areas.entrance_to_area
+        self.entrance_allowed_time_of_day = areas.entrance_allowed_time_of_day
+        self.exit_to_area = areas.exit_to_area
 
-        # def init_accessible_areas(area_short):
-        #     area_long = self.short_to_full(area_short)
-        #     area = self.areas[area_long]
-        #     if area.allowed_time_of_day == AllowedTimeOfDay.Both:
-        #         return acc_areas_default, acc_areas_default
-        #     elif area.allowed_time_of_day == AllowedTimeOfDay.DayOnly:
-        #         return acc_areas_default, False
-        #     else:
-        #         return False, acc_areas_default
+        for loc, req in logic_settings.additional_requirements:
+            self.requirements[EXTENDED_ITEM[self.short_to_full(loc)]] &= req
+        self.placement = placement.copy() if placement is not None else Placement()
 
-        self.accessible_areas = defaultdict(lambda: False, False)
-        self.inventory = Inventory()  # if not inv_default else RevInventory()
+        self.inventory = logic_settings.starting_inventory.add(
+            logic_settings.starting_area
+        )
+        self.accessibility_check_bit = EXTENDED_ITEM[logic_settings.starting_area]
 
-    # def recompute_plus(self):
-    #     for area, (acc0, acc1) in accessible_areas:
-    #         if acc0 or acc1:
-    #             for
+        for i, (entrances, exits) in enumerate(self.pools):
+            EXTENDED_ITEM.items_list.append(f"Exit pool #{i}")
+            self.requirements.append(DNFInventory())
+            self.opaque.append(True)
+            pool_as_req = DNFInventory(f"Exit pool #{i}")
+            for entrance in entrances:
+                full_entrance = self.short_to_full(entrance.entrance)
+                if self.entrance_allowed_time_of_day[full_entrance] == Both:
+                    bits = [
+                        EXTENDED_ITEM[make_day(full_entrance)],
+                        EXTENDED_ITEM[make_night(full_entrance)],
+                    ]
+                else:
+                    bits = [EXTENDED_ITEM[full_entrance]]
+                for entrance_bit in bits:
+                    self.requirements[entrance_bit] = pool_as_req
+                    self.opaque[entrance_bit] = True
 
-    # def give_item(self, item):
-    #     self.inventory |= item
-    #     for area, (acc0, acc1) in accessible_areas:
-    #         if (not acc0) or (not acc1):
+            pool_as_loc = EXTENDED_ITEM[f"Exit pool #{i}"]
+            for exit in exits:
+                self.requirements[pool_as_loc] |= DNFInventory(
+                    self.short_to_full(exit.exit)
+                )
+        assert len(self.placement.map_transitions) == len(
+            self.placement.reverse_map_transitions
+        )
+        for exit, entrance in self.placement.map_transitions.items():
+            assert self.placement.reverse_map_transitions[entrance] == exit
+            pool = None
+            for i, (ent_pool, exit_pool) in enumerate(self.pools):
+                if exit in exit_pool:
+                    pool = i
+                    break
+            self._link_connection(entrance, exit, pool)
+
+        for k, v in self.placement.locations.items():
+            self.place_item(k, v)
+
+        self.backup_requirements = self.requirements.copy()
+
+    def add_item(self, item):
+        self.inventory |= item
+        self.fill_inventory(monotonic=True)
+
+    def remove_item(self, item):
+        self.inventory = self.inventory.remove(item)
+        self.fill_inventory()
+
+    @staticmethod
+    def _deep_simplify(requirements, opaques):
+        simplified = [False for _ in requirements]
+        visited = [False for _ in requirements]
+        hit_a_visited = False
+
+        def simplify(item):
+            if opaques[item]:
+                return DNFInventory(item)
+
+            if visited[item]:
+                hit_a_visited = True
+                return DNFInventory(item)
+
+            if simplified[item]:
+                return requirements[item]
+
+            visited[item] = True
+            simplified_disj = []
+            for possibility in requirements[item].disjunction:
+                simplified_conj = []
+                for req_item in possibility.intset:
+                    simplified_conj.append(simplify(req_item))
+                simplified_disj.append(AndCombination.simplify(simplified_conj))
+
+            result = OrCombination.simplify(simplified_disj).remove(item)
+            if not hit_a_visited:
+                requirements[item] = result
+                simplified[item] = True
+            visited[item] = False
+            return result
+
+        for item in range(len(requirements)):
+            hit_a_visited = False
+            requirements[item] = simplify(item)
+            simplified[item] = True
+
+    def deep_simplify(self):
+        self._deep_simplify(self.requirements, self.opaque)
+
+    @staticmethod
+    def _shallow_simplify(requirements, opaques):
+        simplifiables = Inventory(
+            {item for item, req in enumerate(requirements) if len(req.disjunction) <= 1}
+        )
+
+        for item, req in enumerate(requirements):
+            if opaques[item]:
+                continue
+            new_req = DNFInventory()
+            for conj in req.disjunction:
+                if conj & simplifiables:
+                    new_conj = []
+                    for req_item in conj.intset:
+                        if opaques[req_item] or not simplifiables[req_item]:
+                            new_conj.append(DNFInventory(req_item))
+                        else:
+                            new_conj.append(requirements[req_item])
+                    new_req |= AndCombination.simplify(new_conj)
+                else:
+                    new_req |= conj
+            requirements[item] = new_req
+
+    def shallow_simplify(self):
+        self._shallow_simplify(self.requirements, self.opaque)
+
+    @staticmethod
+    def aggregate_required_items(requirements, inventory):
+        full_inventory = self._fill_inventory(requirements, inventory)
+        aggregate = Inventory()
+
+        for item in range(len(requirements)):
+            if full_inventory[item]:
+                for conj in requirements[item].disjunction:
+                    aggregate |= conj
+
+        return aggregate
+
+    @staticmethod
+    def _fill_inventory(requirements, inventory):
+        keep_going = True
+        inventory = inventory.copy()
+        while keep_going:
+            keep_going = False
+            for i, req in requirements:
+                if not inventory[i] and req.eval(inventory):
+                    inventory |= i
+                    keep_going = True
+        return inventory
+
+    def fill_inventory(self, monotonic=False):
+        self.shallow_simplify(self.requirements)
+        inventory = self.full_inventory if monotonic else self.inventory
+        self.full_inventory = self._fill_inventory(self.requirements, inventory)
+
+    def accessible_checks(self, placement_limit: str):
+        def explore(area):
+            for loc in area.locations:
+                loc_full = area.name + "/" + loc
+                if loc_full in self.checks:
+                    if self.full_inventory[EXTENDED_ITEM[loc_full]]:
+                        yield self.full_to_short(loc_full)
+            for sub_area in area.sub_areas:
+                yield from explore(sub_area)
+
+        if placement_limit in self.checks:
+            placement_limit, loc = placement_limit.rsplit("/", 1)
+            locations = self.areas[placement_limit].locations
+            assert loc in locations
+            yield placement_limit
+        else:
+            yield from explore(self.areas[placement_limit])
+
+    def accessible_exits(self, exit_pool):
+        for exit in exit_pool:
+            exit_full = self.short_to_full(exit.exit)
+            if exit_full in self.map_exits:
+                if self.full_inventory[EXTENDED_ITEM[exit_full]]:
+                    yield exit
+
+    @staticmethod
+    def order_entrance_exit(exit, entrance):
+        if self.is_entrance(entrance):
+            if self.is_entrance(exit):
+                raise ValueError("Two entrances")
+            else:
+                return entrance, exit
+        else:
+            if self.is_entrance(exit):
+                return exit, entrance
+            else:
+                raise ValueError("Two exits")
+
+    def _link_connection(self, exit: str, entrance: str, pool=None, requirements=None):
+        exit, entrance = self.order_entrance_exit(exit, entrance)
+        full_entrance = self.short_to_full(entrance)
+        allowed_times = self.entrance_allowed_time_of_day[full_entrance]
+        full_exit = self.short_to_full(exit)
+        exit_bit = EXTENDED_ITEM[full_exit]
+        exit_area = self.exit_to_area[full_exit]
+        exit_as_req = DNFInventory(exit_bit)
+
+        if exit_area.allowed_time_of_day == Both:
+            day_req = exit_as_req & DNFInventory(
+                EXTENDED_ITEM[make_day(exit_area.name)]
+            )
+            night_req = exit_as_req & DNFInventory(
+                EXTENDED_ITEM[make_night(exit_area.name)]
+            )
+        elif exit_area.allowed_time_of_day == DayOnly:
+            day_req = exit_as_req & DNFInventory(EXTENDED_ITEM[exit_area.name])
+            night_req = DNFInventory()
+        else:
+            day_req = DNFInventory()
+            night_req = exit_as_req & DNFInventory(EXTENDED_ITEM[exit_area.name])
+
+        if allowed_times == Both:
+            bit_req = [
+                (EXTENDED_ITEM[make_day(full_entrance)], day_req),
+                (EXTENDED_ITEM[make_night(full_entrance)], night_req),
+            ]
+        elif allowed_times == DayOnly:
+            bit_req = [(EXTENDED_ITEM[full_entrance], day_req)]
+        else:
+            bit_req = [(EXTENDED_ITEM[full_entrance], night_req)]
+
+        if requirements is None:
+            self.placement.map_transitions[exit] = entrance
+            self.placement.reverse_map_transitions[entrance] = exit
+            for bit, req in bit_req:
+                self.opaque[bit] = False
+                self.requirements[bit] = req
+                self.backup_requirements[bit] = req
+        else:
+            for bit, req in bit_req:
+                requirements[bit] = req
+
+        if pool is None:
+            return
+        index = EXTENDED_ITEM[f"Exit pool #{pool}"]
+        if requirements is None:
+            self.requirements[index] = self.requirements[index].remove(exit_bit)
+            self.backup_requirements[index] = self.backup_requirements[index].remove(
+                exit_bit
+            )
+        else:
+            requirements[index] = requirements[index].remove(exit_bit)
+
+    def _link_connection_group(
+        self, exit: PoolExit, entrance: PoolEntrance, pool=None, requirements=None
+    ):
+        self._link_connection(exit.exit, entrance.entrance, pool, requirements)
+        for exit, entrance in zip(exit.constraint, entrance.constraint):
+            exit, entrance = self.order_entrance_exit(exit, entrance)
+            self._link_connection(exit, entrance, pool, requirements)
+
+    def can_link(exit, entrance, requirements_linked, check_already_linked=True):
+        exit, entrance = self.order_entrance_exit(exit, entrance)
+        if not check_already_linked:
+            if (
+                entrance in self.placement.reverse_map_transitions
+                or exit in self.placement.map_transitions
+            ):
+                return False
+
+        exit_area = self.exit_to_area[self.short_to_full(exit)]
+        full_inventory = self._fill_inventory(requirements_linked, Inventory(exit_area))
+
+        return full_inventory[self.accessibility_check_bit]
+
+    def link_connection(self, exit: PoolExit, entrance: PoolEntrance, pool: int):
+        """Assumes that the poll is restrictive enough that constraints are always compatible"""
+        requirements_linked = self.requirements.copy()
+        self._link_connection_group(exit, entrance, pool, requirements_linked)
+
+        if not (
+            can_link(exit.exit, entrance.entrance, requirements_linked)
+            and all(
+                can_link(exit, entrance, requirements_linked)
+                for exit, entrance in zip(exit.constraint, entrance.constraint)
+            )
+        ):
+            return False
+        self._link_connection_group(exit, entrance, poll)
+        return True
+
+    def relink_connection(self, exit: PoolExit, entrance: PoolEntrance, pool: int):
+        """Link occupied exit to entrance, returning old linked entrance"""
+        requirements_linked = self.requirements.copy()
+        self._link_connection_group(exit, entrance, pool, requirements_linked)
+
+        if not (
+            can_link(
+                exit.exit,
+                entrance.entrance,
+                requirements_linked,
+                check_already_linked=False,
+            )
+            and all(
+                can_link(
+                    exit, entrance, requirements_linked, check_already_linked=False
+                )
+                for exit, entrance in zip(exit.constraint, entrance.constraint)
+            )
+        ):
+            return False  # raise ValueError("Cannot link these")
+
+        def all_entrance_bits(full_entrance):
+            if self.entrance_allowed_time_of_day[full_entrance] == Both:
+                return [
+                    EXTENDED_ITEM[make_day(full_entrance)],
+                    EXTENDED_ITEM[make_night(full_entrance)],
+                ]
+            else:
+                return [EXTENDED_ITEM[full_entrance]]
+
+        old_entrance = self.placement.map_transitions[exit.exit]
+        del self.placement.map_transitions[exit.exit]
+        del self.placement.reverse_map_transitions[old_entrance]
+        for old_entrance_bit in all_entrance_bits(self.short_to_full(old_entrance)):
+            self.opaque[old_entrance_bit] = True
+            self.backup_requirements[old_entrance_bit] = DNFInventory(
+                f"Exit pool #{pool}"
+            )
+        old_entrance_full = self.pools[pool][0][old_entrance]
+        pool_as_loc = EXTENDED_ITEM[f"Exit pool #{pool}"]
+        for other_entrance in old_entrance_full.constraints:
+            other_entrance = self.short_to_full(other_entrance)
+            if self.is_entrance(other_entrance):
+                assoc_exit = self.placement.reverse_map_transitions[other_entrance]
+                del self.placement.reverse_map_transitions[other_entrance]
+                del self.placement.map_transitions[assoc_exit]
+
+                for other_entrance_bit in all_entrance_bits(other_entrance):
+                    self.opaque[other_entrance_bit] = True
+                    self.backup_requirements[other_entrance_bit] = DNFInventory(
+                        f"Exit pool #{pool}"
+                    )
+            else:
+                other_exit = other_entrance
+                assoc_entrance = self.placement.map_transitions[other_exit]
+                del self.placement.reverse_map_transitions[assoc_entrance]
+                del self.placement.map_transitions[other_exit]
+
+                self.requirements[pool_as_loc] |= DNFInventory(
+                    self.short_to_full(other_exit)
+                )
+        self.requirements = self.backup_requirements.copy()
+        self.fill_inventory()
+        self._link_connection_group(exit, entrance, poll)
+
+        return old_entrance_full
+
+    def _place_item(self, location, item):
+        full_location = self.short_to_full(location)
+        if (
+            item in self.placement.item_placement_limit
+            and not full_location.startswith(
+                self.areas.search_area("", self.placement.item_placement_limit[item])
+            )
+        ):
+            raise ValueError(
+                "This item cannot be placed in this area, "
+                f"it must be placed in {self.placement.item_placement_limit[item]}"
+            )
+        if item in EXTENDED_ITEM:
+            item_bit = EXTENDED_ITEM[item]
+            self.requirements[item_bit] = DNFInventory(full_location)
+            self.backup_requirements[item_bit] = DNFInventory(full_location)
+            self.opaque[item_bit] = False
+            self.fill_inventory(monotonic=True)
+
+        self.placement.locations[location] = item
+        self.placement.items[item] = location
+
+    def place_item(self, location, item):
+        if location in self.placement.locations:
+            raise ValueError(f"Location {location} is already taken")
+        if item in self.placement.items:
+            raise ValueError(f"Item {item} is already placed")
+        self._place_item(location, item)
+        return True
+
+    def replace_item(self, location, item):
+        if location not in self.placement.locations:
+            raise ValueError(f"Location {location} is not taken")
+        if item in self.placement.items:
+            raise ValueError(f"Item {item} is already placed")
+        old_item = self.placement.locations[location]
+        del self.placement.locations[location]
+        del self.placement.items[old_item]
+
+        if old_item in EXTENDED_ITEM:
+            # We should always be in this case
+            old_item_bit = EXTENDED_ITEM[old_item]
+            self.opaque[old_item_bit] = True
+            self.backup_requirements[old_item_bit] = DNFInventory()
+            self.requirements = self.backup_requirements.copy()
+            self.fill_inventory()
+
+        self.place_item(location, item)
+        return old_item
+
+    def restricted_test(self, banned_indices, test_index):
+        custom_requirements = self.requirements.copy()
+        for index in banned_indices:
+            custom_requirements[index] = DNFInventory(False)
+
+        restricted_full = self._fill_inventory(custom_requirements, self.inventory)
+
+        return restricted_full[test_index]
