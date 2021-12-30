@@ -1,0 +1,219 @@
+# this logic assumes, that you can always reach outside skyloft
+
+# UPPER SKYLOFT
+
+Knight Academy:
+  region: Upper Skyloft
+  can-sleep: true
+  locations:
+    Fledge: Nothing
+    Crystal in Link's Room: Night
+    Crystal in Knight Academy Plant: Night
+    Owlan's Crystals: Impossible & Day
+    Cawlin's Letter: Goddess Harp & Night & Day
+    Ghost/Pipit's Crystals: Cawlin's Letter & Day
+    Crystal in Zelda's Room: Unlocked Zelda's Room & Night
+    Zelda Heartpiece: Unlocked Zelda's Room
+    Fledge's Crystals: Endurance Potion & Night
+  exits:
+    Outside Goddess Statue (Upper Doors): Nothing
+    Outside Goddess Statue (Lower Doors): Day
+
+Above Zelda's Room:
+  region: Upper Skyloft
+  exits:
+    Knight Academy: Nothing
+  locations:
+    Unlocked Zelda's Room: Nothing # the only way to get to this area logically is via the chimney entrance, which opens the door to zelda's room
+
+Outside Goddess Statue: # border is 2 bridges leading from main to academy area
+  region: Upper Skyloft
+  locations:
+    Owlan's Shield: Day
+    Small Chest on Cliffs Near Goddess Statue: Nothing
+    Pumpkin Archery - 600 Points: Bow & Day
+  exits:
+    Knight Academy (Upper Doors): Nothing
+    Knight Academy (Lower Doors): Day
+    Above Zelda's Room: Clawshots
+    Inside Goddess Statue: Nothing
+    Sparring Hall: Nothing
+    Outside Skyloft Central: Nothing
+
+Sparring Hall:
+  region: Upper Skyloft
+  locations:
+    Crystal in Sparring Hall: Progressive Beetle & Night
+    Practice Sword: Nothing
+    Delivered Hot Soup: Impossible
+  exits:
+    Outside Goddess Statue: Nothing
+
+Inside Goddess Statue:
+  region: Upper Skyloft
+  locations:
+    Goddess Sword: Nothing
+  exits:
+   Outside Goddess Statue: Nothing
+
+# SKYLOFT CENTRAL
+
+Outside Skyloft Central:
+  region: Skyloft Central
+  locations:
+    Crystal inbetween wooden Planks: Night
+    Crystal on West Cliff: Night
+    Crystal on Light Tower: Night
+    Crystal on Waterfall Island: Night & Clawshots
+    West Cliff Goddess Chest: Impossible
+    Parrow's Bottle: Impossible & Day # we can ignore parrow in his house. Talking to orielle requires sky access
+    Parrow's Crystals: Impossible & Day
+    Shed Chest: Water Scale
+    Shed Goddess Chest: Water Scale & Impossible
+    Baby Rattle: (Clawshots & Gust Bellows) | (Progressive Beetle & Baby Rattle from Beedle's Shop Trick & Gust Bellows)
+    Waterfall Goddess Chest: Impossible & Clawshots
+    Floating Island Goddess Chest: Impossible & Clawshots
+  exits:
+    Outside Goddess Statue: Nothing
+    Outside Skyloft Village: Nothing
+    Sky: Day
+    Waterfall Cave: Progressive Sword | Bomb Bag
+    Parrow and Orielle's House: Nothing
+    Peatrice's House: Nothing
+    Wryna's House: Nothing
+    Skyloft Trial: Impossible & Goddess Harp
+    Beedle's Shop (Day): Day & (Impossible | (Impossible & Bomb Bag))
+    Bazaar (North): Day
+    Bazaar (East): Day
+    Bazaar (South): Day
+    Waterfall Cave Crystals: Progressive Beetle
+
+Bazaar:
+  force-tod: Day
+  region: Skyloft Central
+  locations:
+    Bazaar Potion Lady: Nothing
+    Bazaar Goddess Chest: Impossible
+    Endurance Potion: Impossible & Empty Bottle
+    Talk to Peatrice in Bazaar: Nothing
+  exits:
+    Outside Skyloft Central (North): Nothing
+    Outside Skyloft Central (East): Nothing
+    Outside Skyloft Central (South): Nothing
+
+Parrow and Orielle's House:
+  region: Skyloft Central
+  locations:
+    Crystal in Parrow and Orielle's House: Nothing
+  exits:
+    Outside Skyloft Central: Nothing
+
+Peatrice's House:
+  region: Skyloft Central
+  locations:
+    Peater/Peatrice's Crystals: Talk to Peatrice in Bazaar & Night
+  exits:
+    Outside Skyloft Central: Nothing
+
+Wryna's House:
+  region: Skyloft Central
+  locations:
+    Wryna's Crystals: Nothing
+  exits:
+    Outside Skyloft Central: Nothing
+
+Waterfall Cave:
+  region: Skyloft Center
+  locations:
+    First Chest: Nothing
+    Second Chest: Nothing
+  exits:
+    Outside Skyloft Central: Nothing
+    Skyloft Past Waterfall Cave: Nothing
+
+Skyloft Past Waterfall Cave:
+  exits:
+    Waterfall Cave Crystals: Nothing
+    Sky: Day
+    Waterfall Cave: Nothing
+
+Waterfall Cave Crystals:
+  region: Skyloft Center
+  locations:
+    Crystal Past Waterfall Cave: Night
+    Crystal in Loftwing Prison: Night
+
+# START OF SKYLOFT VILLAGE
+
+Outside Skyloft Village:
+  region: Skyloft Village
+  locations:
+    Crystal near Pumpkin Patch: Night
+    Opened Shed: Night
+  exits:
+    Outside Skyloft Central: Nothing
+    Skyloft Past Waterfall Cave: Waterfall Cave Jump Trick & Day
+    Betrie's House: Nothing
+    Sparrot's House: Nothing
+    Mallara's House: Nothing
+    Batreaux' House: Opened Shed # is encoded in event cause entering batreaux house is possible at day after opening the shed door
+
+Bertie's House:
+  region: Skyloft Village
+  locations:
+    Bertie's Crystals: Baby Rattle & Night
+  exits:
+    Outside Skyloft Central: Nothing
+
+Sparrot's House:
+  region: Skyloft Village
+  locations:
+    Sparrot's Crystals: Impossible
+  exits:
+    Outside Skyloft Central: Nothing
+
+Mallara's House:
+  region: Skyloft Village
+  locations:
+    Mallara's Crystals: Gust Bellows
+  exits:
+    Outside Skyloft Central: Nothing
+
+Batreaux' House:
+  region: Batreaux
+  locations:
+    5 Crystals: Impossible
+    10 Crystals: Impossible
+    30 Crystals: Impossible
+    30 Crystals Chest: Impossible
+    50 Crystals: Impossible
+    70 Crystals: Impossible
+    70 Crystals Second Reward: Impossible
+    80 Crystals: Impossible
+  exits:
+    Outside Skyloft Central: Nothing
+
+# BEEDLES SHOP
+
+Beedle's Shop:
+  region: Beedle
+  can-sleep: true
+  locations:
+    50 Rupee Item: Nothing
+    First 100 Rupee Item: Nothing
+    Second 100 Rupee Item: Nothing
+    # To reduce necessary rupee-farming at the start, the third item logically needs an efficient rupee-farming method
+    Third 100 Rupee Item: Impossible
+    300 Rupee Item: Impossible
+    600 Rupee Item: Impossible
+    800 Rupee Item: Impossible
+    1000 Rupee Item: Impossible
+    1200 Rupee Item: Impossible
+    1600 Rupee Item: Impossible
+  exits:
+    Beedle's Sky Home (Night): Night
+    Outside Skyloft Central (Day): Day
+
+Sealed Grounds:
+  locations:
+    Song from Impa: Goddess Harp
