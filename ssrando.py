@@ -9,8 +9,11 @@ import json
 import yaml
 import subprocess
 
-from logic.logic import Logic
-from logic.hints import Hints
+# from logic.logic import Logic
+from graph_logic.randomize import Rando
+
+# from logic.hints import Hints
+from graph_logic.hints import Hints
 import logic.constants as constants
 from logic.placement_file import PlacementFile
 from gamepatches import GamePatcher, GAMEPATCH_TOTAL_STEP_COUNT
@@ -74,42 +77,35 @@ class Randomizer(BaseRandomizer):
     def __init__(self, options: Options, progress_callback=dummy_progress_callback):
         super().__init__(progress_callback)
         self.options = options
-        # hack: if shops are vanilla, disable them as banned types because of bug net and progressive pouches
-        if self.options["shop-mode"] == "Vanilla":
-            banned_types = self.options["banned-types"]
-            for unban_shop_item in ["beedle", "cheap", "medium", "expensive"]:
-                if unban_shop_item in banned_types:
-                    banned_types.remove(unban_shop_item)
-            self.options.set_option("banned-types", banned_types)
+        # # hack: if shops are vanilla, disable them as banned types because of bug net and progressive pouches
+        # if self.options["shop-mode"] == "Vanilla":
+        #     banned_types = self.options["banned-types"]
+        #     for unban_shop_item in ["beedle", "cheap", "medium", "expensive"]:
+        #         if unban_shop_item in banned_types:
+        #             banned_types.remove(unban_shop_item)
+        #     self.options.set_option("banned-types", banned_types)
 
-        self.dry_run = bool(self.options["dry-run"])
         self.no_logs = self.options["no-spoiler-log"]
+
         self.seed = self.options["seed"]
         if self.seed == -1:
             self.seed = random.randint(0, 1000000)
         self.options.set_option("seed", self.seed)
 
-        self.randomizer_hash = self._get_rando_hash()
         self.rng = random.Random()
         self.rng.seed(self.seed)
         if self.no_logs:
             for _ in range(100):
                 self.rng.random()
+
+        self.logic = Rando(self.options, self.rng)
+        self.hints = Hints(
+            self.stonehint_definitions, self.options, self.rng, self.logic
+        )
+
+        self.dry_run = bool(self.options["dry-run"])
         self.banned_types = self.options["banned-types"]
-
-        self.logic = Logic(self)
-        self.hints = Hints(self.logic)
-
-        # self.logic.set_prerandomization_item_location("Beedle - Second 100 Rupee Item", "Rare Treasure")
-        # self.logic.set_prerandomization_item_location("Beedle - Third 100 Rupee Item", "Rare Treasure")
-        # self.logic.set_prerandomization_item_location("Beedle - 1000 Rupee Item", "Rare Treasure")
-        # self.logic.set_prerandomization_item_location("Knight Academy - Fledge's Gift", "SV Small Key")
-        # self.logic.set_prerandomization_item_location("Knight Academy - Owlan's Gift", "ET Map")
-        # self.logic.set_prerandomization_item_location("Skyloft - Skyloft above waterfall", "Farore's Courage")
-        # self.logic.set_prerandomization_item_location("Skyloft - Shed normal chest", "Potion Medal")
-        # self.logic.set_prerandomization_item_location("Skyloft - Skyloft Archer minigame", "Heart Medal")
-        # self.logic.set_prerandomization_item_location("Central Skyloft - Item in Bird Nest", "Sea Chart")
-        # self.logic.set_prerandomization_item_location("Knight Academy - Sparring Hall Chest", "LanayruCaves Small Key")
+        self.randomizer_hash = self._get_rando_hash()
 
     def _get_rando_hash(self):
         # hash of seed, options, version
@@ -160,8 +156,8 @@ class Randomizer(BaseRandomizer):
 
     def randomize(self):
         self.progress_callback("randomizing items...")
-        self.logic.randomize_items()
-        self.sots_locations, self.goal_locations = self.logic.get_sots_goal_locations()
+        self.logic.randomize()
+        self.sots_locations = self.logic.get_sots_locations()
         self.hints.do_hints()
         if self.no_logs:
             self.progress_callback("writing anti spoiler log...")
