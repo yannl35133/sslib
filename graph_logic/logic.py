@@ -1,36 +1,39 @@
-from typing import Any, Dict, List, Tuple
+from __future__ import annotations
+from typing import Any, Dict, Iterable, List, Tuple
 from collections import defaultdict
 from dataclasses import dataclass, field
 
-from .logic_input import Area, Areas, AllowedTimeOfDay, DayOnly, NightOnly, Both
-from .logic_expression import DNFInventory
+from constants import *
+from .logic_input import Areas, DayOnly, NightOnly, Both
+from .logic_expression import DNFInventory, AndCombination, OrCombination
 from .inventory import Inventory, EXTENDED_ITEM
 
 
 @dataclass
 class PoolEntrance:
-    entrance: str
-    constraint: List[Any] = None
+    entrance: EXTENDED_ITEM_NAME
+    constraints: List[EXTENDED_ITEM_NAME] = []
 
 
 @dataclass
 class PoolExit:
-    exit: str
-    constraint: List[Any] = None
+    exit: EXTENDED_ITEM_NAME
+    constraints: List[EXTENDED_ITEM_NAME] = []
 
 
 @dataclass
 class Placement:
-    item_placement_limit: Dict[str, str] = field(
-        default_factory=lambda: defaultdict(str)
+    item_placement_limit: Dict[EXTENDED_ITEM_NAME, EXTENDED_ITEM_NAME] = field(
+        default_factory=lambda: defaultdict(lambda: EIN(str()))
     )
 
-    map_transitions: Dict[str, str] = field(default_factory=dict)
-    reverse_map_transitions: Dict[str, str] = field(default_factory=dict)
+    map_transitions: Dict[EIN, EIN] = field(default_factory=dict)
+    reverse_map_transitions: Dict[EIN, EIN] = field(default_factory=dict)
 
-    locations: Dict[str, str] = field(default_factory=dict)
-    items: Dict[str, str] = field(default_factory=dict)
-    hints: Dict[str, "Hint"] = field(default_factory=dict)
+    locations: Dict[EIN, EIN] = field(default_factory=dict)
+    items: Dict[EXTENDED_ITEM_NAME, EXTENDED_ITEM_NAME] = field(default_factory=dict)
+    hints: Dict[EXTENDED_ITEM_NAME, Any] = field(default_factory=dict)
+    # hints: Dict[str, "Hint"] = field(default_factory=dict)
 
     def copy(self):
         return Placement(
@@ -44,52 +47,52 @@ class Placement:
     def __or__(self, other):
         if not isinstance(other, Placement):
             raise ValueError
-        for k, v in other.item_placement_limit:
+        for k, v in other.item_placement_limit.items():
             if k in self.item_placement_limit and v != self.item_placement_limit[k]:
                 raise ValueError
-        for k, v in other.map_transitions:
+        for k, v in other.map_transitions.items():
             if k in self.map_transitions and v != self.map_transitions[k]:
                 raise ValueError
-        for k, v in other.locations:
+        for k, v in other.locations.items():
             if k in self.locations and v != self.locations[k]:
                 raise ValueError
-        for k, v in other.items:
+        for k, v in other.items.items():
             if k in self.items and v != self.items[k]:
                 raise ValueError
-        for k, v in other.hints:
+        for k, v in other.hints.items():
             if k in self.hints and v != self.hints[k]:
                 raise ValueError
         return Placement(
-            self.item_placement_limit | other.self.item_placement_limit,
-            self.map_transitions | other.self.map_transitions,
-            self.locations | other.self.locations,
-            self.items | other.self.items,
-            self.hints | other.self.hints,
+            self.item_placement_limit | other.item_placement_limit,
+            self.map_transitions | other.map_transitions,
+            self.locations | other.locations,
+            self.items | other.items,
+            self.hints | other.hints,
         )
 
 
 @dataclass
 class LogicSettings:
-    exit_pools: List[Tuple[List[PoolEntrance], List[PoolExit]]]
+    exit_pools: List[
+        Tuple[
+            Dict[EXTENDED_ITEM_NAME, PoolEntrance], Dict[EXTENDED_ITEM_NAME, PoolExit]
+        ]
+    ]
     starting_inventory: Inventory
     starting_area: str
     additional_requirements: Dict[str, DNFInventory]
 
 
-class Logic:
-    @staticmethod
-    def is_entrance(exit):
-        if exit[-len("ENTRANCE") :] == "ENTRANCE":
-            return True
-        if exit[-len("EXIT") :] == "EXIT":
-            return False
-        raise ValueError("Neither an entrance nor an exit")
+def make_exit_pool(i: int) -> EXTENDED_ITEM_NAME:
+    return EIN(f"Exit pool {i}")
 
+
+class Logic:
     def __init__(
         self,
         areas: Areas,
         logic_settings: LogicSettings,
-        placement=None,
+        placement: Placement | None = None,
         # remove_placed_from_inv=False,
         # acc_areas_default=False,
     ):
@@ -106,7 +109,7 @@ class Logic:
         self.entrance_allowed_time_of_day = areas.entrance_allowed_time_of_day
         self.exit_to_area = areas.exit_to_area
 
-        for loc, req in logic_settings.additional_requirements:
+        for loc, req in logic_settings.additional_requirements.items():
             self.requirements[EXTENDED_ITEM[self.short_to_full(loc)]] &= req
         self.placement = placement.copy() if placement is not None else Placement()
 
@@ -116,12 +119,12 @@ class Logic:
         self.accessibility_check_bit = EXTENDED_ITEM[logic_settings.starting_area]
 
         for i, (entrances, exits) in enumerate(self.pools):
-            EXTENDED_ITEM.items_list.append(f"Exit pool #{i}")
+            EXTENDED_ITEM.items_list.append(make_exit_pool(i))
             self.requirements.append(DNFInventory())
             self.opaque.append(True)
-            pool_as_req = DNFInventory(f"Exit pool #{i}")
+            pool_as_req = DNFInventory(make_exit_pool(i))
             for entrance in entrances:
-                full_entrance = self.short_to_full(entrance.entrance)
+                full_entrance = self.short_to_full(entrance)
                 if self.entrance_allowed_time_of_day[full_entrance] == Both:
                     bits = [
                         EXTENDED_ITEM[make_day(full_entrance)],
@@ -133,11 +136,9 @@ class Logic:
                     self.requirements[entrance_bit] = pool_as_req
                     self.opaque[entrance_bit] = True
 
-            pool_as_loc = EXTENDED_ITEM[f"Exit pool #{i}"]
+            pool_as_loc = EXTENDED_ITEM[make_exit_pool(i)]
             for exit in exits:
-                self.requirements[pool_as_loc] |= DNFInventory(
-                    self.short_to_full(exit.exit)
-                )
+                self.requirements[pool_as_loc] |= DNFInventory(self.short_to_full(exit))
         assert len(self.placement.map_transitions) == len(
             self.placement.reverse_map_transitions
         )
@@ -155,11 +156,11 @@ class Logic:
 
         self.backup_requirements = self.requirements.copy()
 
-    def add_item(self, item):
-        self.inventory |= item
+    def add_item(self, item: EXTENDED_ITEM | str):
+        self.inventory.add(item)
         self.fill_inventory(monotonic=True)
 
-    def remove_item(self, item):
+    def remove_item(self, item: EXTENDED_ITEM | str):
         self.inventory = self.inventory.remove(item)
         self.fill_inventory()
 
@@ -170,6 +171,7 @@ class Logic:
         hit_a_visited = False
 
         def simplify(item):
+            nonlocal hit_a_visited
             if opaques[item]:
                 return DNFInventory(item)
 
@@ -186,9 +188,9 @@ class Logic:
                 simplified_conj = []
                 for req_item in possibility.intset:
                     simplified_conj.append(simplify(req_item))
-                simplified_disj.append(AndCombination.simplify(simplified_conj))
+                simplified_disj.append(AndCombination.simplifyDNF(simplified_conj))
 
-            result = OrCombination.simplify(simplified_disj).remove(item)
+            result = OrCombination.simplifyDNF(simplified_disj).remove(item)
             if not hit_a_visited:
                 requirements[item] = result
                 simplified[item] = True
@@ -206,7 +208,11 @@ class Logic:
     @staticmethod
     def _shallow_simplify(requirements, opaques):
         simplifiables = Inventory(
-            {item for item, req in enumerate(requirements) if len(req.disjunction) <= 1}
+            {
+                item
+                for item in EXTENDED_ITEM.items()
+                if len(requirements[item].disjunction) <= 1
+            }
         )
 
         for item, req in enumerate(requirements):
@@ -230,8 +236,10 @@ class Logic:
         self._shallow_simplify(self.requirements, self.opaque)
 
     @staticmethod
-    def aggregate_required_items(requirements, inventory):
-        full_inventory = self._fill_inventory(requirements, inventory)
+    def aggregate_required_items(
+        requirements: List[DNFInventory], inventory: Inventory
+    ):
+        full_inventory = Logic._fill_inventory(requirements, inventory)
         aggregate = Inventory()
 
         for item in range(len(requirements)):
@@ -242,23 +250,22 @@ class Logic:
         return aggregate
 
     @staticmethod
-    def _fill_inventory(requirements, inventory):
+    def _fill_inventory(requirements: List[DNFInventory], inventory: Inventory):
         keep_going = True
-        inventory = inventory.copy()
         while keep_going:
             keep_going = False
-            for i, req in requirements:
+            for i, req in enumerate(requirements):
                 if not inventory[i] and req.eval(inventory):
                     inventory |= i
                     keep_going = True
         return inventory
 
     def fill_inventory(self, monotonic=False):
-        self.shallow_simplify(self.requirements)
+        self.shallow_simplify()
         inventory = self.full_inventory if monotonic else self.inventory
         self.full_inventory = self._fill_inventory(self.requirements, inventory)
 
-    def accessible_checks(self, placement_limit: str):
+    def accessible_checks(self, placement_limit: str) -> Iterable[str]:
         def explore(area):
             for loc in area.locations:
                 loc_full = area.name + "/" + loc
@@ -276,7 +283,7 @@ class Logic:
         else:
             yield from explore(self.areas[placement_limit])
 
-    def accessible_exits(self, exit_pool):
+    def accessible_exits(self, exit_pool: Iterable[PoolExit]) -> Iterable[PoolExit]:
         for exit in exit_pool:
             exit_full = self.short_to_full(exit.exit)
             if exit_full in self.map_exits:
@@ -284,20 +291,20 @@ class Logic:
                     yield exit
 
     @staticmethod
-    def order_entrance_exit(exit, entrance):
-        if self.is_entrance(entrance):
-            if self.is_entrance(exit):
+    def order_entrance_exit(exit: EIN, entrance: EIN):
+        if is_entrance(entrance):
+            if is_entrance(exit):
                 raise ValueError("Two entrances")
             else:
                 return entrance, exit
         else:
-            if self.is_entrance(exit):
+            if is_entrance(exit):
                 return exit, entrance
             else:
                 raise ValueError("Two exits")
 
-    def _link_connection(self, exit: str, entrance: str, pool=None, requirements=None):
-        exit, entrance = self.order_entrance_exit(exit, entrance)
+    def _link_connection(self, exit: EIN, entrance: EIN, pool=None, requirements=None):
+        exit, entrance = Logic.order_entrance_exit(exit, entrance)
         full_entrance = self.short_to_full(entrance)
         allowed_times = self.entrance_allowed_time_of_day[full_entrance]
         full_exit = self.short_to_full(exit)
@@ -355,12 +362,12 @@ class Logic:
         self, exit: PoolExit, entrance: PoolEntrance, pool=None, requirements=None
     ):
         self._link_connection(exit.exit, entrance.entrance, pool, requirements)
-        for exit, entrance in zip(exit.constraint, entrance.constraint):
-            exit, entrance = self.order_entrance_exit(exit, entrance)
-            self._link_connection(exit, entrance, pool, requirements)
+        for conn1, conn2 in zip(exit.constraints, entrance.constraints):
+            exit_str, entrance_str = Logic.order_entrance_exit(conn1, conn2)
+            self._link_connection(exit_str, entrance_str, pool, requirements)
 
-    def can_link(exit, entrance, requirements_linked, check_already_linked=True):
-        exit, entrance = self.order_entrance_exit(exit, entrance)
+    def can_link(self, exit, entrance, requirements_linked, check_already_linked=True):
+        exit, entrance = Logic.order_entrance_exit(exit, entrance)
         if not check_already_linked:
             if (
                 entrance in self.placement.reverse_map_transitions
@@ -374,19 +381,19 @@ class Logic:
         return full_inventory[self.accessibility_check_bit]
 
     def link_connection(self, exit: PoolExit, entrance: PoolEntrance, pool: int):
-        """Assumes that the poll is restrictive enough that constraints are always compatible"""
+        """Assumes that the poll is restrictive enough that constraintss are always compatible"""
         requirements_linked = self.requirements.copy()
         self._link_connection_group(exit, entrance, pool, requirements_linked)
 
         if not (
-            can_link(exit.exit, entrance.entrance, requirements_linked)
+            self.can_link(exit.exit, entrance.entrance, requirements_linked)
             and all(
-                can_link(exit, entrance, requirements_linked)
-                for exit, entrance in zip(exit.constraint, entrance.constraint)
+                self.can_link(exit, entrance, requirements_linked)
+                for exit, entrance in zip(exit.constraints, entrance.constraints)
             )
         ):
             return False
-        self._link_connection_group(exit, entrance, poll)
+        self._link_connection_group(exit, entrance, pool)
         return True
 
     def relink_connection(self, exit: PoolExit, entrance: PoolEntrance, pool: int):
@@ -395,17 +402,17 @@ class Logic:
         self._link_connection_group(exit, entrance, pool, requirements_linked)
 
         if not (
-            can_link(
+            self.can_link(
                 exit.exit,
                 entrance.entrance,
                 requirements_linked,
                 check_already_linked=False,
             )
             and all(
-                can_link(
+                self.can_link(
                     exit, entrance, requirements_linked, check_already_linked=False
                 )
-                for exit, entrance in zip(exit.constraint, entrance.constraint)
+                for exit, entrance in zip(exit.constraints, entrance.constraints)
             )
         ):
             return False  # raise ValueError("Cannot link these")
@@ -425,13 +432,13 @@ class Logic:
         for old_entrance_bit in all_entrance_bits(self.short_to_full(old_entrance)):
             self.opaque[old_entrance_bit] = True
             self.backup_requirements[old_entrance_bit] = DNFInventory(
-                f"Exit pool #{pool}"
+                make_exit_pool(pool)
             )
         old_entrance_full = self.pools[pool][0][old_entrance]
         pool_as_loc = EXTENDED_ITEM[f"Exit pool #{pool}"]
         for other_entrance in old_entrance_full.constraints:
             other_entrance = self.short_to_full(other_entrance)
-            if self.is_entrance(other_entrance):
+            if is_entrance(other_entrance):
                 assoc_exit = self.placement.reverse_map_transitions[other_entrance]
                 del self.placement.reverse_map_transitions[other_entrance]
                 del self.placement.map_transitions[assoc_exit]
@@ -439,7 +446,7 @@ class Logic:
                 for other_entrance_bit in all_entrance_bits(other_entrance):
                     self.opaque[other_entrance_bit] = True
                     self.backup_requirements[other_entrance_bit] = DNFInventory(
-                        f"Exit pool #{pool}"
+                        make_exit_pool(pool)
                     )
             else:
                 other_exit = other_entrance
@@ -452,7 +459,7 @@ class Logic:
                 )
         self.requirements = self.backup_requirements.copy()
         self.fill_inventory()
-        self._link_connection_group(exit, entrance, poll)
+        self._link_connection_group(exit, entrance, pool)
 
         return old_entrance_full
 

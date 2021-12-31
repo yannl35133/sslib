@@ -1,11 +1,8 @@
-from typing import NewType, Union, Optional, Tuple
-from enum import IntEnum
-from functools import cache
+from __future__ import annotations
+from typing import List, Tuple
 
 from options import OPTIONS_LIST
 from .constants import *
-
-ItemName = NewType("ItemName", str)
 
 
 def extended_item_generator():
@@ -24,17 +21,17 @@ def extended_item_generator():
 
 class MetaContainer(type):
     def __getitem__(self, arg):
-        return self.getitem(arg)
+        return self.getitem(arg)  # type: ignore
 
     def __len__(self):
-        return self.len()
+        return self.len()  # type: ignore
 
     def __iter__(self):
-        return self.iter()
+        return self.iter()  # type: ignore
 
 
 class EXTENDED_ITEM(int, metaclass=MetaContainer):
-    items_list = list(extended_item_generator())
+    items_list: List[EXTENDED_ITEM_NAME] = list(extended_item_generator())  # type: ignore
 
     @classmethod
     def day_bit(cls):
@@ -66,7 +63,7 @@ class EXTENDED_ITEM(int, metaclass=MetaContainer):
         return iter(cls.items_list)
 
     @classmethod
-    def getitem(cls, name):
+    def getitem(cls, name: EXTENDED_ITEM_NAME) -> EXTENDED_ITEM:
         return cls(cls.items_list.index(name))
 
     @classmethod
@@ -76,16 +73,17 @@ class EXTENDED_ITEM(int, metaclass=MetaContainer):
 
 class Inventory:
     bitset: int
+    intset: Set[EXTENDED_ITEM]
 
     def __init__(
         self,
-        v: Optional[Union[int, Tuple[ItemName, int]]] = None,
-        intset: Optional[Set[EXTENDED_ITEM]] = None,
+        v: None
+        | Tuple[int, Set[EXTENDED_ITEM]]
+        | Tuple[str, int]
+        | EXTENDED_ITEM_NAME
+        | Set[EXTENDED_ITEM]
+        | EXTENDED_ITEM = None,
     ):
-        if intset is not None:
-            assert isinstance(v, int)
-            self.bitset = v
-            self.intset = intset
         if v is None:
             self.bitset = 0
             self.intset = set()
@@ -104,18 +102,24 @@ class Inventory:
             self.intset = {bit}
         elif isinstance(v, tuple):  # Item, count
             item, count = v
-            assert count <= ITEM_COUNTS[item]
-            if ITEM_COUNTS[item] == 1:
-                bit = EXTENDED_ITEM[item]
-                self.bitset = 1 << bit
-                self.intset = {bit}
+            if isinstance(item, int):  # bitset, intset
+                assert isinstance(count, set)
+                self.bitset = item
+                self.intset = count
             else:
-                self.bitset = 0
-                self.intset = set()
-                for i in range(count):
-                    bit = EXTENDED_ITEM[f"{item} #{i}"]
-                    self.bitset |= 1 << bit
-                    self.intset.add(bit)
+                assert isinstance(count, int)
+                assert count <= ITEM_COUNTS[item]
+                if ITEM_COUNTS[item] == 1:
+                    bit = EXTENDED_ITEM[item]
+                    self.bitset = 1 << bit
+                    self.intset = {bit}
+                else:
+                    self.bitset = 0
+                    self.intset = set()
+                    for i in range(count):
+                        bit = EXTENDED_ITEM[number(item, i)]
+                        self.bitset |= 1 << bit
+                        self.intset.add(bit)
 
     def __getitem__(self, index):
         if isinstance(index, EXTENDED_ITEM):
@@ -125,15 +129,15 @@ class Inventory:
 
     def __or__(self, other):
         if isinstance(other, EXTENDED_ITEM):
-            return Inventory(self.bitset | (1 << other), self.intset | {other})
+            return Inventory((self.bitset | (1 << other), self.intset | {other}))
         elif isinstance(other, Inventory):
-            return Inventory(self.bitset | other.bitset, self.intset | other.intset)
+            return Inventory((self.bitset | other.bitset, self.intset | other.intset))
         else:
             raise ValueError
 
     def __and__(self, other):
         if isinstance(other, Inventory):
-            return Inventory(self.bitset & other.bitset, self.intset & other.intset)
+            return Inventory((self.bitset & other.bitset, self.intset & other.intset))
         else:
             raise ValueError
 
@@ -141,8 +145,7 @@ class Inventory:
         """Define inclusion"""
         return self.bitset | other.bitset == other.bitset
 
-    @staticmethod
-    def add(self, item):
+    def add(self, item: EXTENDED_ITEM | str):
         if isinstance(item, EXTENDED_ITEM) or isinstance(item, Inventory):
             return self | item
         elif isinstance(item, str):
@@ -154,16 +157,19 @@ class Inventory:
                         return self | item_bit
         raise ValueError
 
-    @staticmethod
-    def remove(self, item):
+    def remove(self, item: EXTENDED_ITEM | str):
         if isinstance(item, EXTENDED_ITEM):
-            return Inventory(self.bitset & ~(1 << item), self.intset.difference({item}))
+            return Inventory(
+                (self.bitset & ~(1 << item), self.intset.difference({item}))
+            )
         elif isinstance(item, str):
             for i in reversed(range(ITEM_COUNTS[item])):
                 if self[(item_bit := EXTENDED_ITEM[f"{item} #{i}"])]:
                     return Inventory(
-                        self.bitset & ~(1 << item_bit),
-                        self.intset.difference({item_bit}),
+                        (
+                            self.bitset & ~(1 << item_bit),
+                            self.intset.difference({item_bit}),
+                        )
                     )
         raise ValueError
 

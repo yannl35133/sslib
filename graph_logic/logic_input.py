@@ -1,8 +1,9 @@
-from typing import Any, Optional, Dict, List, Tuple
+from __future__ import annotations
+from typing import Dict, List, Any, Tuple
 from enum import Enum
 from dataclasses import dataclass, field
 
-from .logic_expression import LogicExpression
+from .logic_expression import DNFInventory, LogicExpression
 from .inventory import EXTENDED_ITEM
 from .constants import *
 
@@ -12,8 +13,8 @@ DayOnly = AllowedTimeOfDay.DayOnly
 NightOnly = AllowedTimeOfDay.NightOnly
 Both = AllowedTimeOfDay.Both
 
-events: List[str] = []
-areas_list: "List[Area]" = []
+events: List[EXTENDED_ITEM_NAME] = []
+areas_list: List[Area] = []
 
 
 @dataclass
@@ -22,7 +23,7 @@ class Area:
     allowed_time_of_day: AllowedTimeOfDay = AllowedTimeOfDay.DayOnly
     can_sleep: bool = False
     can_save: bool = False
-    sub_areas: "Dict[str, Area]" = field(default_factory=dict)
+    sub_areas: Dict[str, Area] = field(default_factory=dict)
     locations: Dict[str, LogicExpression] = field(default_factory=dict)
     exits: Dict[str, LogicExpression] = field(default_factory=dict)
 
@@ -35,7 +36,7 @@ class Area:
         cls,
         name: str,
         raw_dict: Dict[str, Any],
-        parent: "Optional[Area]" = None,
+        parent: Area | None = None,
     ):
         area = cls(name)
 
@@ -86,17 +87,31 @@ class Area:
             sub_area.map(floc, fexit)
 
 
+@dataclass
+class LocalizedArea(Area):
+    name: str
+    allowed_time_of_day: AllowedTimeOfDay = AllowedTimeOfDay.DayOnly
+    can_sleep: bool = False
+    can_save: bool = False
+    sub_areas: Dict[str, LocalizedArea] = field(default_factory=dict)
+    locations: Dict[str, DNFInventory] = field(default_factory=dict)
+    exits: Dict[str, DNFInventory] = field(default_factory=dict)
+
+
 class Areas:
-    areas: Dict[str, Area]
+    areas: Dict[str, LocalizedArea]
+
+    def __getitem__(self, loc):
+        return self.areas[loc]
 
     def search_area(
         self, base_address_str: str, partial_address_str: str
-    ) -> Optional[str]:
+    ) -> EXTENDED_ITEM_NAME:
         """Computes the thing referred by [partial_address] when located at [base_address]"""
         base_address = base_address_str.split("/")
         partial_address = partial_address_str.split(" - ")
 
-        def search_area(i, j, area):
+        def search_area(i, j, area: Area):
             if len(partial_address) - j == 0:  # We've arrived
                 return ""
 
@@ -135,7 +150,7 @@ class Areas:
             raise ValueError(
                 f"Could not find '{partial_address_str}' from '{base_address_str}'"
             )
-        return res
+        return EIN(res)
 
     def __init__(
         self,
@@ -144,12 +159,14 @@ class Areas:
         gossip_stones: Dict[str, Any],
         map_exits: Dict[str, Any],
     ):
-        self.parent_area = Area(
+        self.parent_area = LocalizedArea(
             name="",
             allowed_time_of_day=Both,
-            sub_areas={k: Area.of_yaml(k, v) for k, v in areas.items()},
+            sub_areas={k: Area.of_yaml(k, v) for k, v in areas.items()},  # type: ignore
         )
-        self.areas = {area.name: area for area in areas_list}
+        res: Dict[str, LocalizedArea] = {area.name: area for area in areas_list}  # type: ignore
+        self.areas = res
+        # The type will we true after localization, for now we'll just ignore it
         self.areas[""] = self.parent_area
 
         EXTENDED_ITEM.items_list.extend(events)
@@ -158,7 +175,7 @@ class Areas:
                 EXTENDED_ITEM.items_list.append(make_day(area.name))
                 EXTENDED_ITEM.items_list.append(make_night(area.name))
             else:
-                EXTENDED_ITEM.items_list.append(area.name)
+                EXTENDED_ITEM.items_list.append(EIN(area.name))
 
         self.map_exit_suffixes = {
             exit_name.rsplit(" - ", 1)[-1] for exit_name in map_exits
@@ -175,7 +192,7 @@ class Areas:
             ),
         )
 
-        self.short_full = []
+        self.short_full: List[Tuple[str, EXTENDED_ITEM_NAME]] = []
         self.checks = set()
         self.gossip_stones = set()
         self.map_exits = set()
@@ -220,26 +237,27 @@ class Areas:
                 )
                 self.map_exits.add(make_exit(full_address))
 
-        def assoc(lst, elt, reverse=False):
-            if reverse:
-                for (a, b) in lst:
-                    if b == elt:
-                        return a
-            else:
-                for (a, b) in lst:
-                    if a == elt:
-                        return b
+        def short_to_full(elt: str):
+            for (a, b) in self.short_full:
+                if a == elt:
+                    return b
             raise ValueError("Error: association list")
 
-        self.short_to_full = lambda x: assoc(self.short_full, x)
-        self.full_to_short = lambda x: assoc(self.short_full, x, True)
+        def full_to_short(elt: EXTENDED_ITEM_NAME):
+            for (a, b) in self.short_full:
+                if b == elt:
+                    return a
+            raise ValueError("Error: association list")
+
+        self.short_to_full = short_to_full
+        self.full_to_short = full_to_short
 
         self.exit_to_area = {}
         self.entrance_to_area = {}
         self.entrance_allowed_time_of_day = {}
 
-        self.requirements = [DNFInventory() for i in EXTENDED_ITEM.items()]
-        self.opaque = [True for i in EXTENDED_ITEM.items()]
+        self.requirements = [DNFInventory() for _ in EXTENDED_ITEM.items()]
+        self.opaque = [True for _ in EXTENDED_ITEM.items()]
 
         reqs = self.requirements  # Local alias
         DNFInv = DNFInventory
@@ -261,9 +279,9 @@ class Areas:
                         req.night_only() & DNFInv(make_night(area_name))
                     )
                 elif area.allowed_time_of_day == DayOnly:
-                    timed_req = req.day_only() & DNFInv(area_name)
+                    timed_req = req.day_only() & DNFInv(EIN(area_name))
                 else:
-                    timed_req = req.night_only() & DNFInv(area_name)
+                    timed_req = req.night_only() & DNFInv(EIN(area_name))
                 loc_bit = EXTENDED_ITEM[area_name + "/" + loc]
                 reqs[loc_bit] = timed_req
                 self.opaque[loc_bit] = False
@@ -285,9 +303,9 @@ class Areas:
                                 make_night(area_name)
                             )
                         elif area.allowed_time_of_day == DayOnly:
-                            reqs[darea_bit] |= req.day_only() & DNFInv(area_name)
+                            reqs[darea_bit] |= req.day_only() & DNFInv(EIN(area_name))
                         elif area.allowed_time_of_day == NightOnly:
-                            reqs[narea_bit] |= req.night_only() & DNFInv(area_name)
+                            reqs[narea_bit] |= req.night_only() & DNFInv(EIN(area_name))
                     else:
                         area_bit = EXTENDED_ITEM[area_dest.name]
                         self.opaque[area_bit] = False
@@ -300,12 +318,12 @@ class Areas:
                         if area.allowed_time_of_day == Both:
                             reqs[area_bit] |= timed_req & DNFInv(timed_area)
                         elif area.allowed_time_of_day == area_dest.allowed_time_of_day:
-                            reqs[area_bit] |= timed_req & DNFInv(area_name)
+                            reqs[area_bit] |= timed_req & DNFInv(EIN(area_name))
                         else:
                             raise ValueError("Time makes this exit impossible")
 
                 else:  # Map exit
-                    exit = area_name + "/" + exit
+                    exit = EIN(area_name + "/" + exit)
                     exit_type = map_exits[self.full_to_short(exit)].get(
                         "exit_type", "Both"
                     )
