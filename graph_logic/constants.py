@@ -1,5 +1,8 @@
 from collections import defaultdict
-from typing import Set
+from typing import Set, NewType, Dict, Callable
+
+EXTENDED_ITEM_NAME = NewType("EXTENDED_ITEM_NAME", str)
+EIN = EXTENDED_ITEM_NAME
 
 sep = " - "
 
@@ -21,10 +24,18 @@ LOGIC_OPTIONS = {
 
 # Locations
 
-make_day = lambda s: s + "_DAY"
-make_night = lambda s: s + "_NIGHT"
-make_entrance = lambda s: s + "_ENTRANCE"
-make_exit = lambda s: s + "_EXIT"
+make_day = lambda s: EIN(s + "_DAY")
+make_night = lambda s: EIN(s + "_NIGHT")
+make_entrance = lambda s: EIN(s + "_ENTRANCE")
+make_exit = lambda s: EIN(s + "_EXIT")
+
+
+def is_entrance(exit: EXTENDED_ITEM_NAME):
+    if exit[-len("ENTRANCE") :] == "ENTRANCE":
+        return True
+    if exit[-len("EXIT") :] == "EXIT":
+        return False
+    raise ValueError("Neither an entrance nor an exit")
 
 
 SV = "Skyview"
@@ -40,57 +51,55 @@ ALL_DUNGEONS = REGULAR_DUNGEONS + [SK]
 
 # Items
 
-ITEM_COUNTS = defaultdict(lambda: 1)
+ITEM_COUNTS: Dict[str, int] = defaultdict(lambda: 1)
 
 
-def number(name: str, index: int) -> str:
+def number(name: str, index: int) -> EXTENDED_ITEM_NAME:
     if index >= ITEM_COUNTS[name]:
         raise ValueError("Index too high")
     if ITEM_COUNTS[name] == 1:
-        return name
-    return f"{name} #{index}"
+        return EIN(name)
+    return EIN(f"{name} #{index}")
 
 
-def strip_item_number(item) -> str:
+def strip_item_number(item: EXTENDED_ITEM_NAME) -> str:
     if "#" not in item:
         return item
     return item[: item.index("#")]
 
 
-def group(name: str, count: int) -> Set[str]:
+def group(name: str, count: int) -> Set[EXTENDED_ITEM_NAME]:
     ITEM_COUNTS[name] = count
-    if count == 1:
-        return {name}
-    return {f"{name} #{i}" for i in range(count)}
+    return {number(name, i) for i in range(count)}
 
 
-SLINGSHOT = "Slingshot"
-BOMB_BAG = "Bomb Bag"
-GUST_BELLOWS = "Gust Bellows"
-WHIP = "Whip"
-BOW = "Bow"
-BUG_NET = "Bug Net"
-CLAWSHOTS = "Clawshots"
-WATER_SCALE = "Water Scale"
-FIRESHIELD_EARRINGS = "Fireshield Earrings"
-SEA_CHART = "Sea Chart"
-EMERALD_TABLET = "Emerald Tablet"
-RUBY_TABLET = "Ruby Tablet"
-AMBER_TABLET = "Amber Tablet"
-STONE_OF_TRIALS = "Stone of Trials"
+SLINGSHOT = EIN("Slingshot")
+BOMB_BAG = EIN("Bomb Bag")
+GUST_BELLOWS = EIN("Gust Bellows")
+WHIP = EIN("Whip")
+BOW = EIN("Bow")
+BUG_NET = EIN("Bug Net")
+CLAWSHOTS = EIN("Clawshots")
+WATER_SCALE = EIN("Water Scale")
+FIRESHIELD_EARRINGS = EIN("Fireshield Earrings")
+SEA_CHART = EIN("Sea Chart")
+EMERALD_TABLET = EIN("Emerald Tablet")
+RUBY_TABLET = EIN("Ruby Tablet")
+AMBER_TABLET = EIN("Amber Tablet")
+STONE_OF_TRIALS = EIN("Stone of Trials")
 
-BABY_RATTLE = "Baby Rattle"
-CAWLINS_LETTER = "Cawlin's Letter"
-HORNED_COLOSSUS_BEETLE = "Horned Colossus Beetle"
-GODDESS_HARP = "Goddess Harp"
-BALLAD_OF_THE_GODDESS = "Ballad of the Goddess"
-FARORES_COURAGE = "Farore's Courage"
-NAYRUS_WISDOM = "Nayru's Wisdom"
-DINS_POWER = "Din's Power"
-FARON_SOTH_PART = "Faron Song of the Hero Part"
-ELDIN_SOTH_PART = "Eldin Song of the Hero Part"
-LANAYRU_SOTH_PART = "Lanayru Song of the Hero Part"
-SPIRAL_CHARGE = "Spiral Charge"
+BABY_RATTLE = EIN("Baby Rattle")
+CAWLINS_LETTER = EIN("Cawlin's Letter")
+HORNED_COLOSSUS_BEETLE = EIN("Horned Colossus Beetle")
+GODDESS_HARP = EIN("Goddess Harp")
+BALLAD_OF_THE_GODDESS = EIN("Ballad of the Goddess")
+FARORES_COURAGE = EIN("Farore's Courage")
+NAYRUS_WISDOM = EIN("Nayru's Wisdom")
+DINS_POWER = EIN("Din's Power")
+FARON_SOTH_PART = EIN("Faron Song of the Hero Part")
+ELDIN_SOTH_PART = EIN("Eldin Song of the Hero Part")
+LANAYRU_SOTH_PART = EIN("Lanayru Song of the Hero Part")
+SPIRAL_CHARGE = EIN("Spiral Charge")
 
 GRATITUDE_CRYSTAL_PACK = "Gratitude Crystal Pack"
 GRATITUDE_CRYSTAL = "Gratitude Crystal"
@@ -132,7 +141,7 @@ SSH_BOSS_KEY = boss_key(SSH)
 FS_BOSS_KEY = boss_key(FS)
 SK_BOSS_KEY = boss_key(SK)
 
-map = lambda d: d + " Map"
+map = lambda d: EIN(d + " Map")
 SV_MAP = map(SV)
 ET_MAP = map(ET)
 LMF_MAP = map(LMF)
@@ -141,7 +150,7 @@ SSH_MAP = map(SSH)
 FS_MAP = map(FS)
 SK_MAP = map(SK)
 
-CAVES_KEY = "LanayruCaves Small Key"
+CAVES_KEY = EIN("LanayruCaves Small Key")
 
 SV_SMALL_KEYS = group(SV_SMALL_KEY, 2)
 ET_SMALL_KEYS = group(ET_SMALL_KEY, 0)
@@ -159,15 +168,15 @@ SSH_BOSS_KEYS = group(SSH_BOSS_KEY, 1)
 FS_BOSS_KEYS = group(FS_BOSS_KEY, 1)
 SK_BOSS_KEYS = group(SK_BOSS_KEY, 0)
 
-WOODEN_SHIELD = "Wooden Shield"
-HYLIAN_SHIELD = "Hylian Shield"
-CURSED_MEDAL = "Cursed Medal"
-TREASURE_MEDAL = "Treasure Medal"
-POTION_MEDAL = "Potion Medal"
-SMALL_SEED_SATCHEL = "Small Seed Satchel"
-SMALL_BOMB_BAG = "Small Bomb Bag"
-SMALL_QUIVER = "Small Quiver"
-BUG_MEDAL = "Bug Medal"
+WOODEN_SHIELD = EIN("Wooden Shield")
+HYLIAN_SHIELD = EIN("Hylian Shield")
+CURSED_MEDAL = EIN("Cursed Medal")
+TREASURE_MEDAL = EIN("Treasure Medal")
+POTION_MEDAL = EIN("Potion Medal")
+SMALL_SEED_SATCHEL = EIN("Small Seed Satchel")
+SMALL_BOMB_BAG = EIN("Small Bomb Bag")
+SMALL_QUIVER = EIN("Small Quiver")
+BUG_MEDAL = EIN("Bug Medal")
 
 HEART_MEDAL = "Heart Medal"
 RUPEE_MEDAL = "Rupee Medal"
@@ -200,9 +209,15 @@ RED_RUPEES = group(RED_RUPEE, 25)
 SILVER_RUPEES = group(SILVER_RUPEE, 12)
 GOLD_RUPEES = group(GOLD_RUPEE, 10)
 SEMI_RARE_TREASURES = group(SEMI_RARE_TREASURE, 10)
+GOLDEN_SKULLS = group(GOLDEN_SKULL, 1)
 RARE_TREASURES = group(RARE_TREASURE, 12)
 EVIL_CRYSTALS = group(EVIL_CRYSTAL, 2)
 ELDIN_ORES = group(ELDIN_ORE, 2)
+GODDESS_PLUMES = group(GODDESS_PLUME, 1)
+DUSK_RELICS = group(DUSK_RELIC, 1)
+TUMBLEWEEDS = group(TUMBLEWEED, 1)
+FIVE_BOMBS_GROUP = group(FIVE_BOMBS, 1)
+
 
 RUPOOR = "Rupoor"
 
@@ -267,20 +282,19 @@ NONPROGRESS_ITEMS = (
 )
 
 CONSUMABLE_ITEMS = (
-    {
-        GOLDEN_SKULL,
-        RARE_TREASURE,
-        EVIL_CRYSTAL,
-        ELDIN_ORE,
-    }
-    | BLUE_RUPEES
+    BLUE_RUPEES
     | RED_RUPEES
     | SILVER_RUPEES
     | GOLD_RUPEES
     | SEMI_RARE_TREASURES
+    | GOLDEN_SKULLS
     | RARE_TREASURES
     | EVIL_CRYSTALS
     | ELDIN_ORES
+    | GODDESS_PLUMES
+    | DUSK_RELICS
+    | TUMBLEWEEDS
+    | FIVE_BOMBS_GROUP
 )
 
 # Once all the items that have a fixed number per seed are used up, this list is used.
