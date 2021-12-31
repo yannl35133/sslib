@@ -1,15 +1,17 @@
 from dataclasses import dataclass
 import random  # Only for typing purposes
-from typing import Set
+from typing import List, Set
 
+
+from .constants import *
 from .logic import Logic
 from .inventory import EXTENDED_ITEM
 
 
 @dataclass
 class RandomizationSettings:
-    must_be_placed_items: Set[str]
-    may_be_placed_items: Set[str]
+    must_be_placed_items: Set[EXTENDED_ITEM_NAME]
+    may_be_placed_items: List[str | EXTENDED_ITEM_NAME]
     duplicable_items: Set[str]
 
 
@@ -23,14 +25,14 @@ class BFA:
         self.randosettings = randosettings
 
         truly_progress_item = self.logic.aggregate_required_items(
-            self.logic.requirements, self.inventory
+            self.logic.requirements, self.logic.inventory
         )
 
         # Initialize item related attributes.
-        self.progress_items = {
+        self.progress_items: Set[EIN] = {  # type: ignore
             item
             for item in randosettings.must_be_placed_items
-            | randosettings.may_be_placed_items
+            | set(randosettings.may_be_placed_items)
             if truly_progress_item[EXTENDED_ITEM[item]]
         }
 
@@ -42,21 +44,23 @@ class BFA:
         for item in progress_list:
             self.place_item(item)
 
-        for i, (e, _) in self.logic.pools:
+        for i, (e, _) in enumerate(self.logic.pools):
             for _ in range(len(e)):
                 self.link(i)
 
         must_be_placed_items = list(
             self.randosettings.must_be_placed_items - self.progress_items
         )
-        may_be_placed_items = list(
-            self.randosettings.may_be_placed_items - self.progress_items
-        )
+        may_be_placed_items = [
+            item
+            for item in self.randosettings.may_be_placed_items
+            if item not in self.progress_items
+        ]
         self.rng.shuffle(must_be_placed_items)
         self.rng.shuffle(may_be_placed_items)
 
         self.logic.add_item(EXTENDED_ITEM.banned_bit())
-        self.fill_inventory()
+        self.logic.fill_inventory()
         for item in must_be_placed_items:
             self.place_item(item)
         for item in may_be_placed_items:
@@ -67,7 +71,7 @@ class BFA:
     def fill_with_junk(self, junk):
         empty_locations = [
             loc
-            for loc in self.logic.accessible_checks(self.areas[""])
+            for loc in self.logic.accessible_checks("")
             if loc not in self.logic.placement.locations
         ]
 
@@ -75,9 +79,10 @@ class BFA:
             result = self.logic.place_item(location, self.rng.choice(junk))
             assert result
 
-    def place_item(self, item, depth=0, force=True):
-        self.logic.remove_item(item)
-        placement_limit = self.logic.placement.item_placement_limit.get(item, "")
+    def place_item(self, item: EXTENDED_ITEM_NAME | str, depth=0, force=True):
+        if item in EXTENDED_ITEM:
+            self.logic.remove_item(item)
+        placement_limit: EIN = self.logic.placement.item_placement_limit.get(item, "")  # type: ignore
         accessible_locations = list(self.logic.accessible_checks(placement_limit))
 
         empty_locations = [
@@ -102,7 +107,7 @@ class BFA:
         entrance_pool, exit_pool = self.logic.pools[pool]
         unassigned_entrances = [
             entrance
-            for entrance in entrance_pool
+            for entrance in entrance_pool.values()
             if entrance.entrance not in self.logic.placement.reverse_map_transitions
         ]
         if entrance is None:
@@ -110,10 +115,10 @@ class BFA:
         else:
             assert entrance in unassigned_entrances
 
-        accessible_exits = list(self.logic.accessible_exits(exit_pool))
+        accessible_exits = list(self.logic.accessible_exits(exit_pool.values()))
         unassigned_exits, assigned_exits = [], []
         for exit in accessible_exits:
-            if exit.exit in self.logic.placement.map_transitions:
+            if exit in self.logic.placement.map_transitions:
                 assigned_exits.append(exit)
             else:
                 unassigned_exits.append(exit)
