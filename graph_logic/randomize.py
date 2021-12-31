@@ -1,10 +1,11 @@
-import random  # Only for typing purposes
+import random
+from typing import List  # Only for typing purposes
 
 from options import Options, OPTIONS
 from .backwards_filled_algorithm import BFA, RandomizationSettings
 from .logic import Logic, Placement, LogicSettings
 from .logic_input import Areas
-from .logic_expression import DNFInventory, InventoryAtom
+from .logic_expression import DNFInventory, InventoryAtom, LogicExpression
 from .inventory import Inventory, EXTENDED_ITEM
 from yaml_files import graph_requirements, checks, hints, map_exits
 from .constants import *
@@ -19,14 +20,18 @@ class Rando:
         self.rng = rng
 
         self.areas = Areas(graph_requirements, checks, hints, map_exits)
-        self.short_to_full = self.areas.short_full
+        self.short_to_full = self.areas.short_to_full
 
         self.placement: Placement = self.options.get("placement", Placement())
         self.parse_options()
         self.initial_placement = self.placement.copy()
 
         starting_inventory_BFA = Inventory(
-            {item for item in INVENTORY_ITEMS if item not in self.placement.items}
+            {
+                item
+                for item in EXTENDED_ITEM.items()
+                if item in INVENTORY_ITEMS and item not in self.placement.items
+            }
         )
         starting_area = LINKS_ROOM
         exit_pools = DUNGEON_ENTRANCES_COMPLETE_POOLS + SILENT_REALMNS_COMPLETE_POOLS
@@ -89,7 +94,7 @@ class Rando:
         )
 
         for tablet in self.rng.sample(TABLETS, k=self.options["starting-tablet-count"]):
-            starting_items |= Inventory(tablet)
+            starting_items |= Inventory((tablet, 1))
 
         # if self.options.get('start-with-sailcloth', True):
         #   starting_items |= Inventory('Sailcloth')
@@ -131,14 +136,14 @@ class Rando:
             PROGRESSIVE_SWORD, SWORD_COUNT[self.options["got-sword-requirement"]]
         )
         horde_door_requirement = (
-            DNFInventory(DUNGEON_FINAL_CHECK[SK])
+            DNFInventory(self.short_to_full(DUNGEON_FINAL_CHECK[SK]))
             if not self.options["skip-skykeep"]
             else DNFInventory(True)
         )
 
         dungeons_req = Inventory()
         for dungeon in self.required_dungeons:
-            dungeons_req |= Inventory(DUNGEON_FINAL_CHECK[dungeon])
+            dungeons_req |= Inventory(self.short_to_full(DUNGEON_FINAL_CHECK[dungeon]))
 
         if self.options["got-dungeon-requirement"] == "Required":
             got_opening_requirement &= DNFInventory(dungeons_req)
@@ -156,21 +161,21 @@ class Rando:
         must_be_placed_items = (
             PROGRESS_ITEMS | NONPROGRESS_ITEMS | SMALL_KEYS | BOSS_KEYS
         )
-        if self.rando.options["map-mode"] != "Removed":
-            self.all_nonprogress_items |= MAPS
+        if self.options["map-mode"] != "Removed":
+            must_be_placed_items |= MAPS
 
-        for item in self.starting_items.bitset:
+        for item in self.starting_items.intset:
             item_name = EXTENDED_ITEM.get_item_name(item)
             must_be_placed_items.remove(item_name)
 
-        may_be_placed_items = CONSUMABLE_ITEMS.copy()
+        may_be_placed_items: List[EIN | str] = list(CONSUMABLE_ITEMS)
         duplicable_items = DUPLICABLE_ITEMS
 
         rupoor_mode = self.options["rupoor-mode"]
         if rupoor_mode != "Off":
             duplicable_items = DUPLICABLE_COUNTERPROGRESS_ITEMS  # Rupoors
             if rupoor_mode == "Added":
-                may_be_placed_items += ["Rupoor"] * 15
+                may_be_placed_items += [RUPOOR] * 15
             else:
                 self.rng.shuffle(may_be_placed_items)
                 replace_end_index = len(may_be_placed_items)
@@ -186,11 +191,11 @@ class Rando:
         shop_mode = self.options["shop-mode"]
 
         self.logic_options_requirements = {
-            OPEN_THUNDERHEAD_OPTION: self.option["open-thunderhead"] == "Open",
-            OPEN_LMF_OPTION: self.option["open-lmf"] == "Open",
+            OPEN_THUNDERHEAD_OPTION: self.options["open-thunderhead"] == "Open",
+            OPEN_LMF_OPTION: self.options["open-lmf"] == "Open",
             ENABLED_BEEDLE_OPTION: shop_mode != "Always Junk",
-            HERO_MODE: self.option["fix-bit-crashes"],
-            NO_BIT_CRASHES: self.option["hero-mode"],
+            HERO_MODE: self.options["fix-bit-crashes"],
+            NO_BIT_CRASHES: self.options["hero-mode"],
         }
 
         self.placement |= SINGLE_CRYSTAL_PLACEMENT
@@ -204,9 +209,10 @@ class Rando:
             dungeons = self.required_dungeons.copy()
             self.rng.shuffle(dungeons)
             for dungeon, sword in zip(dungeons, swords_to_place):
+                final_check = self.short_to_full(DUNGEON_FINAL_CHECK[dungeon])
                 self.placement |= Placement(
-                    items={sword: DUNGEON_FINAL_CHECK[dungeon]},
-                    locations={DUNGEON_FINAL_CHECK[dungeon]: sword},
+                    items={sword: final_check},
+                    locations={final_check: sword},
                 )
 
         enabled_tricks = set(self.options["enabled-tricks-bitless"])
@@ -282,10 +288,8 @@ class Rando:
 
     def all_progress_items(self):
         return self.logic.aggregate_required_items(
-            self.logic.requirements, self.rando_algo.inventory
+            self.logic.requirements, self.logic.inventory
         )
-
-    from .logic_expression import LogicExpression
 
     def parse_logic_expression(self, exp):
         return LogicExpression.parse(exp)
