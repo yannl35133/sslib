@@ -1,0 +1,218 @@
+# this logic assumes, that you can always reach outside skyloft
+
+Upper Skyloft:
+  Knight Academy:
+    region: Upper Skyloft
+    can-sleep: true
+    locations:
+      Fledge: Nothing
+      Crystal in Link's Room: Night
+      Crystal in Knight Academy Plant: Night
+      Owlan's Crystals: Faron - Retrieve Oolo & Day
+      Cawlin's Letter: Goddess Harp & Night & Day
+      Ghost/Pipit's Crystals: Cawlin's Letter & Day
+      Crystal in Zelda's Room: Unlocked Zelda's Room & Night
+      Zelda Heartpiece: Unlocked Zelda's Room
+      Fledge's Crystals: Skyloft Central - Bazaar - Endurance Potion & Night
+    exits:
+      Upper Exit: Nothing
+      Lower Exit: Day
+
+    Above Zelda's Room:
+      region: Upper Skyloft
+      exits:
+        Chimney: Nothing
+        Knight Academy: Nothing
+      locations:
+        Unlocked Zelda's Room: Nothing
+
+  Sparring Hall:
+    region: Upper Skyloft
+    locations:
+      Crystal in Sparring Hall: Beetle & Night
+      Practice Sword: Nothing
+      Delivered Hot Soup: Sky - Lumpy Pumpkin - Start Hot Soup Delivery
+    exits:
+      Exit: Nothing
+
+  Goddess Statue:
+    region: Upper Skyloft
+    locations:
+      Goddess Sword: Nothing
+    exits:
+      Exit: Nothing
+
+  region: Upper Skyloft
+  locations:
+    Owlan's Shield: Day
+    Small Chest on Cliffs Near Goddess Statue: Nothing
+    Pumpkin Archery - 600 Points: Bow & Day
+  exits:
+    Knight Academy Upper Entrance: Nothing
+    Knight Academy Lower Entrance: Day
+    Knight Academy Chimney Entrance: Clawshots
+    Goddess Statue Entrance: Nothing
+    Sparring Hall Entrance: Nothing
+    Skyloft Central: Nothing
+
+
+Skyloft Central:
+  region: Skyloft Central
+  locations:
+    Crystal inbetween wooden Planks: Night
+    Crystal on West Cliff: Night
+    Crystal on Light Tower: Night
+    Crystal on Waterfall Island: Night & Clawshots
+    Crystal Past Waterfall Cave: Night & Waterfall Cave Crystals
+    Crystal in Loftwing Prison: Night & Waterfall Cave Crystals
+    West Cliff Goddess Chest: Faron - Goddess Cube on West Great Tree near Exit
+    Parrow's Bottle: Sky - Talk to Orielle & Day # we can ignore parrow in his house. Talking to orielle requires sky access
+    Parrow's Crystals: Sky - Save Orielle & Day
+    Shed Chest: Water Scale
+    Shed Goddess Chest: Water Scale & Eldin - Goddess Cube in Eldin Slide
+    Baby Rattle: (Clawshots & Gust Bellows) | (Beetle & Baby Rattle from Beedle's Shop Trick & Gust Bellows)
+    Waterfall Goddess Chest: Lanayru - Goddess Cube in Pirate Stronghold & Clawshots
+    Floating Island Goddess Chest: Faron - Goddess Cube in Lake Floria & Clawshots
+    Waterfall Cave Crystals: Beetle
+  exits:
+    Waterfall Cave Upper Entrance: Sword | Bomb Bag
+    Beedle's Shop Entrance: Day & (Distance Activator | (Beedle's Shop With Bombs Trick & Bomb Bag))
+    Bazaar North Entrance: Day
+    Bazaar East Entrance: Day
+    Bazaar South Entrance: Day
+    Skyloft Trial Entrance: Song of the Hero & Goddess Harp
+    Parrow and Orielle's House Entrance: Nothing
+    Peatrice's House Entrance: Nothing
+    Wryna's House Entrance: Nothing
+    Sky: Day
+
+    Upper Skyloft: Nothing
+    Skyloft Village: Nothing
+
+  Waterfall Cave:
+    region: Skyloft Center
+    locations:
+      First Chest: Nothing
+      Second Chest: Nothing
+    exits:
+      Upper Exit: Nothing
+      Lower Exit: Nothing
+
+  Past Waterfall Cave:
+    region: Skyloft Center
+    locations:
+      Crystal Past Waterfall Cave: Night
+      Crystal in Loftwing Prison: Night
+    exits:
+      Waterfall Cave Lower Entrance: Nothing
+      Sky: Day
+
+  Bazaar:
+    allowed-time-of-day: DayOnly
+    region: Skyloft Central
+    locations:
+      Bazaar Potion Lady: Nothing
+      Bazaar Goddess Chest: Lanayru - Goddess Cube in Ancient Harbour
+      Endurance Potion: Lanayru - Beat Dungeon Entrance in Lanayru Desert & Bottle
+      Talk to Peatrice: Nothing
+    exits:
+      North Exit: Nothing
+      East Exit: Nothing
+      South Exit: Nothing
+
+  Parrow and Orielle's House:
+    region: Skyloft Central
+    locations:
+      Crystal in Parrow and Orielle's House: Nothing
+      Parrow's Bottle: Sky - Talk to Orielle & Night
+      Parrow's Crystals: Sky - Save Orielle & Night
+    exits:
+      Exit: Nothing
+
+  Peatrice's House:
+    region: Skyloft Central
+    locations:
+      Peater/Peatrice's Crystals: Bazaar - Talk to Peatrice & Night
+    exits:
+      Exit: Nothing
+
+  Wryna's House:
+    region: Skyloft Central
+    locations:
+      Wryna's Crystals: Nothing
+    exits:
+      Exit: Nothing
+
+
+Skyloft Village:
+  region: Skyloft Village
+  locations:
+    Crystal near Pumpkin Patch: Night
+    Opened Shed: Night
+  exits:
+    Skyloft Central: Nothing
+    Skyloft Central - Past Waterfall Cave: Waterfall Cave Jump Trick & Day
+    Bertie's House Entrance: Nothing
+    Sparrot's House Entrance: Nothing
+    Mallara's House Entrance: Nothing
+    Batreaux' House Entrance: Opened Shed
+
+  Bertie's House:
+    region: Skyloft Village
+    locations:
+      Bertie's Crystals: Baby Rattle & Night
+    exits:
+      Exit: Nothing
+
+  Sparrot's House:
+    region: Skyloft Village
+    locations:
+      Sparrot's Crystals: Eldin - Retrieve Crystal Ball
+    exits:
+      Exit: Nothing
+
+  Mallara's House:
+    region: Skyloft Village
+    locations:
+      Mallara's Crystals: Gust Bellows
+    exits:
+      Exit: Nothing
+
+  Batreaux' House:
+    region: Batreaux
+    locations:
+      5 Crystals: 5 Gratitude Crystals
+      10 Crystals: 10 Gratitude Crystals
+      30 Crystals: 30 Gratitude Crystals
+      30 Crystals Chest: 30 Gratitude Crystals
+      50 Crystals: 50 Gratitude Crystals
+      70 Crystals: 70 Gratitude Crystals
+      70 Crystals Second Reward: 70 Gratitude Crystals
+      80 Crystals: 80 Gratitude Crystals
+    exits:
+      Exit: Nothing
+
+# BEEDLES SHOP
+
+Beedle's Shop:
+  region: Beedle
+  can-sleep: true
+  exits:
+    Night Exit: Night
+    Day Exit: Day
+
+  Stall:
+    entrance: Enabled Beedle option
+    exit: {Beedle's Shop: Nothing}
+    locations:
+      300 Rupee Item: Can Afford 300 Rupees #& (Progressive Pouch x1 | Option "shop-mode" Is Not "Vanilla")
+      600 Rupee Item: Can Afford 600 Rupees #& (Progressive Pouch x1 | Option "shop-mode" Is Not "Vanilla")
+      1200 Rupee Item: Can Afford 1200 Rupees #& (Progressive Pouch x1 | Option "shop-mode" Is Not "Vanilla")
+      800 Rupee Item: Can Afford 800 Rupees
+      1600 Rupee Item: Can Afford 1600 Rupees
+      First 100 Rupee Item: Nothing
+      Second 100 Rupee Item: Nothing
+      # To reduce necessary rupee-farming at the start, the third item logically needs an efficient rupee-farming method
+      Third 100 Rupee Item: Can Medium Rupee Farm
+      50 Rupee Item: Nothing
+      1000 Rupee Item: Can Afford 1000 Rupees

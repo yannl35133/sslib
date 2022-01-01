@@ -1,2 +1,103 @@
-Skyview - Entrance:
-  type: idk
+# Skyloft
+Knight Academy - Upper Exit: {}
+Knight Academy - Lower Exit:
+  allowed-time-of-day: DayOnly
+Knight Academy - Chimney:
+  exit-type: Entrance
+
+Knight Academy Upper Entrance: {}
+Knight Academy Lower Entrance:
+  allowed-time-of-day: DayOnly
+Knight Academy Chimney Entrance:
+  exit-type: Exit
+
+Sparring Hall - Exit: {}
+Sparring Hall Entrance: {}
+
+Goddess Statue - Exit: {}
+Goddess Statue Entrance: {}
+
+Waterfall Cave - Upper Exit: {}
+Waterfall Cave - Lower Exit: {}
+
+Waterfall Cave Upper Entrance: {}
+Waterfall Cave Lower Entrance: {}
+
+Skyloft - Beedle's Shop Entrance:
+  allowed-time-of-day: DayOnly
+Beedle's Shop - Day Exit:
+  allowed-time-of-day: DayOnly
+Beedle's Shop - Night Exit:
+  allowed-time-of-day: NightOnly
+
+Bazaar - North Exit: {}
+Bazaar - East Exit: {}
+Bazaar - South Exit: {}
+Bazaar North Entrance: {}
+Bazaar East Entrance: {}
+Bazaar South Entrance: {}
+
+Skyloft Trial Entrance: {}
+Skyloft Trial - Entrance:
+  exit-type: Entrance
+Skyloft Trial - Exit:
+  exit-type: Exit
+
+Parrow and Orielle's House - Exit: {}
+Parrow and Orielle's House Entrance: {}
+
+Peatrice's House - Exit: {}
+Peatrice's House Entrance: {}
+
+Wryna's House - Exit: {}
+Wryna's House Entrance: {}
+
+Bertie's House - Exit: {}
+Bertie's House Entrance: {}
+
+Sparrot's House - Exit: {}
+Sparrot's House Entrance: {}
+
+Mallara's House - Exit: {}
+Mallara's House Entrance: {}
+
+Batreaux' House - Exit: {}
+Batreaux' House Entrance: {}
+
+Skyloft - Sky:
+  exit-type: Exit
+
+Sky - Beedle's Island - Beedle's Ship:
+  allowed-time-of-day: NightOnly
+
+Sky - Faron Pillar - Sealed Grounds Statue: {}
+Sky - Faron Pillar - Behind the Temple Statue: {}
+Sky - Faron Pillar - Faron Woods Entry Statue: {}
+Sky - Faron Pillar - Viewing Platform Statue: {}
+Sky - Faron Pillar - In the Woods Statue: {}
+Sky - Faron Pillar - Deep Woods Statue: {}
+Sky - Faron Pillar - Forest Temple Statue: {}
+Sky - Faron Pillar - Great Tree Statue: {}
+Sky - Faron Pillar - Lake Floria Statue: {}
+Sky - Faron Pillar - Floria Waterfall Statue: {}
+
+Sky - Eldin Pillar - Eldin Entrance Statue: {}
+Sky - Eldin Pillar - Volcano East Statue: {}
+Sky - Eldin Pillar - Volcano Ascent Statue: {}
+Sky - Eldin Pillar - Temple Entrance Statue: {}
+Sky - Eldin Pillar - Inside the Volcano Statue: {}
+
+Sky - Lanayru Pillar - Lanayru Mines Statue: {}
+Sky - Lanayru Pillar - Desert Entrance Statue: {}
+
+Sky - Lumpy Pumpkin - Main Exit: {}
+Sky - Lumpy Pumpkin - Kitchen Exit: {}
+Sky - Lumpy Pumpkin - Main Entrance: {}
+Sky - Lumpy Pumpkin - Kitchen Entrance: {}
+
+Sky - Skyloft Landing: {}
+
+Sky - Thunderhead Entrance: {}
+Sky - Thunderhead - Exit: {}
+
+Skyview - Entrance: {}

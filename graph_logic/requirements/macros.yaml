@@ -1,0 +1,222 @@
+# macros, for logic snippets used in lots of different areas
+
+Practice Sword:
+  Progressive Sword x1
+
+Goddess Sword:
+  Progressive Sword x2
+
+Goddess Longsword:
+  Progressive Sword x3
+
+Goddess White Sword:
+  Progressive Sword x4
+
+Master Sword:
+  Progressive Sword x5
+
+True Master Sword:
+  Progressive Sword x6
+
+Beetle:
+  Progressive Beetle x1
+
+Hook Beetle:
+  Progressive Beetle x2
+
+Digging Mitts:
+  Progressive Mitts x1
+
+Mogma Mitts:
+  Progressive Mitts x2
+
+Medium Wallet:
+  Progressive Wallet x1
+
+Big Wallet:
+  Progressive Wallet x2
+
+Giant Wallet:
+  Progressive Wallet x3
+
+Tycoon Wallet:
+  Progressive Wallet x4
+
+Can Afford 50 Rupees:
+  Nothing
+
+Can Afford 100 Rupees:
+  Nothing
+
+Can Afford 300 Rupees:
+  Can Medium Rupee Farm
+
+Can Afford 600 Rupees:
+  Can High Rupee Farm & (Extra Wallet x1 | Big Wallet)
+
+Can Afford 800 Rupees:
+  Can High Rupee Farm & (Extra Wallet x2 | (Medium Wallet & Extra Wallet x1) | Big Wallet)
+
+Can Afford 1000 Rupees:
+  Can High Rupee Farm & (Extra Wallet x3 | (Medium Wallet & Extra Wallet x2) | Big Wallet)
+
+Can Afford 1200 Rupees:
+  Can High Rupee Farm &
+  (
+    Extra Wallet x3 |
+    (Medium Wallet & Extra Wallet x3) |
+    (Big Wallet & Extra Wallet x1) |
+    Giant Wallet
+  )
+
+Can Afford 1600 Rupees:
+  Can High Rupee Farm & ((Big Wallet & Extra Wallet x2) | Giant Wallet)
+
+Can Medium Rupee Farm:
+  Sky - Clean Cut Minigame | Can High Rupee Farm
+
+Can High Rupee Farm:
+  Sky - Fun Fun Island Minigame | Eldin - Thrill Digger Minigame
+
+Song of the Hero:
+  Faron Song of the Hero Part & Eldin Song of the Hero Part & Lanayru Song of the Hero Part
+
+Bottle:
+  Progressive Pouch & Empty Bottle
+
+5 Single Gratitude Crystals:
+  Gratitude Crystal × 5
+
+10 Single Gratitude Crystals:
+  Gratitude Crystal × 10
+
+15 Single Gratitude Crystals:
+  Gratitude Crystal × 15
+
+1 Gratitude Crystal Pack:
+  Gratitude Crystal Pack × 1
+
+2 Gratitude Crystal Packs:
+  Gratitude Crystal Pack × 2
+
+3 Gratitude Crystal Packs:
+  Gratitude Crystal Pack × 3
+
+4 Gratitude Crystal Packs:
+  Gratitude Crystal Pack × 4
+
+5 Gratitude Crystal Packs:
+  Gratitude Crystal Pack × 5
+
+6 Gratitude Crystal Packs:
+  Gratitude Crystal Pack × 6
+
+7 Gratitude Crystal Packs:
+  Gratitude Crystal Pack × 7
+
+8 Gratitude Crystal Packs:
+  Gratitude Crystal Pack × 8
+
+9 Gratitude Crystal Packs:
+  Gratitude Crystal Pack × 9
+
+10 Gratitude Crystal Packs:
+  Gratitude Crystal Pack × 10
+
+11 Gratitude Crystal Packs:
+  Gratitude Crystal Pack × 11
+
+12 Gratitude Crystal Packs:
+  Gratitude Crystal Pack × 12
+
+13 Gratitude Crystal Packs:
+  Gratitude Crystal Pack × 13
+
+5 Gratitude Crystals:
+  5 Single Gratitude Crystals | 1 Gratitude Crystal Pack
+
+10 Gratitude Crystals:
+  10 Single Gratitude Crystals |
+  (5 Single Gratitude Crystals & 1 Gratitude Crystal Pack) |
+  2 Gratitude Crystal Packs
+
+30 Gratitude Crystals:
+  (15 Single Gratitude Crystals & 3 Gratitude Crystal Packs) |
+  (10 Single Gratitude Crystals & 4 Gratitude Crystal Packs) |
+  (5 Single Gratitude Crystals & 5 Gratitude Crystal Packs) |
+  6 Gratitude Crystal Packs
+
+40 Gratitude Crystals:
+  (15 Single Gratitude Crystals & 5 Gratitude Crystal Packs) |
+  (10 Single Gratitude Crystals & 6 Gratitude Crystal Packs) |
+  (5 Single Gratitude Crystals & 7 Gratitude Crystal Packs) |
+  8 Gratitude Crystal Packs
+
+50 Gratitude Crystals:
+  (15 Single Gratitude Crystals & 7 Gratitude Crystal Packs) |
+  (10 Single Gratitude Crystals & 8 Gratitude Crystal Packs) |
+  (5 Single Gratitude Crystals & 9 Gratitude Crystal Packs) |
+  10 Gratitude Crystal Packs
+
+70 Gratitude Crystals:
+  (15 Single Gratitude Crystals & 11 Gratitude Crystal Packs) |
+  (10 Single Gratitude Crystals & 12 Gratitude Crystal Packs) |
+  (5 Single Gratitude Crystals & 13 Gratitude Crystal Packs)
+
+80 Gratitude Crystals:
+  15 Single Gratitude Crystals & 13 Gratitude Crystal Packs
+
+Sword:
+  Practice Sword
+
+Long Range Skyward Strike:
+  (Goddess Sword & Hero-mode) | True Master Sword
+
+Damaging Item:
+  Sword | Bomb Bag | Bow
+
+Projectile Item:
+  Slingshot | Beetle | Bow
+
+Distance Activator:
+  Slingshot | Beetle | Clawshots | Bow
+
+Can Cut Tree:
+  Sword | Bomb Bag
+
+Can Unlock Combination Lock:
+  Sword | Whip | Clawshots | Bow
+
+# Can defeat enemy
+
+Can Defeat Bokoblins:
+  Damaging Item
+
+Can Defeat Moblins:
+  Damaging Item
+
+Can Defeat Keeses:
+  Sword | Slingshot | Beetle | Whip | Clawshots | Bow | Bomb Bag
+
+Can Defeat Lezalfos:
+  Sword | Bomb Bag
+  # With bombs, let them attack you while you have a bomb in your hands. Takes one bomb for normal lezalfos, two for dark lezalfos
+
+Can Defeat Ampilus:
+  Damaging Item
+
+Can Defeat Armos:
+  Gust Bellows & Sword
+  # Only a sword seems to be able to destroy their crystals, even the bow phases through
+
+Can Defeat Beamos:
+  Sword | Bow
+
+Can Defeat Cursed Bokoblins:
+  Sword | Bomb Bag
+
+Can Defeat Stalfos:
+  Sword
+
+Can Defeat Stalmaster:
+  Sword

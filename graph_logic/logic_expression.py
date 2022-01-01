@@ -132,7 +132,7 @@ class AndCombination(LogicExpression):
         disjunctions = map(lambda x: x.disjunction, arguments)
         bigset = set()
         for conjunction_tuple in product(*disjunctions):
-            bigset.add(reduce(Inventory.__and__, conjunction_tuple))
+            bigset.add(reduce(Inventory.__or__, conjunction_tuple))
         return DNFInventory(Inventory.simplify_invset(bigset))
 
     @staticmethod
@@ -199,7 +199,7 @@ exp_grammar = """
     %ignore WS
 """
 
-item_with_count_re = re.compile(r"^(.+) ×[ ]*(\d+)$")
+item_with_count_re = re.compile(r"^(.+) [×x][ ]*(\d+)$")
 
 
 @v_args(inline=True)  # Affects the signatures of the methods
