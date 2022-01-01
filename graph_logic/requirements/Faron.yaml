@@ -2,7 +2,7 @@
 
 Sealed Grounds Spiral Upper:
   region: Sealed Grounds
-  events:
+  locations:
     Sealed Grounds Statue: Nothing
   exits:
     Sky (Sealed Grounds Statue): Nothing
@@ -11,7 +11,7 @@ Sealed Grounds Spiral Upper:
 
 Sealed Grounds Spiral Lower:
   region: Sealed Grounds
-  events:
+  locations:
     Defeat Imprisoned 2: Start Imprisoned 2 & Goddess Sword
   exits:
     Sealed Grounds Spiral Upper: Beat Required Dungeons & Raise GoT
@@ -19,21 +19,19 @@ Sealed Grounds Spiral Lower:
 
 Sealed Temple:
   region: Sealed Grounds
-  events:
-    Start Imprisoned 2: Raise GoT & Beat Required Dungeons & Sword Requirement Met
-    Raise GoT: Goddess Harp
   locations:
     Inside Sealed Temple: Nothing
     Ballad of the Goddess: Goddess Harp
+    Start Imprisoned 2: Raise GoT & Beat Required Dungeons & Sword Requirement Met
+    Raise GoT: Goddess Harp
   exits:
     Sealed Grounds Spiral Lower: Nothing
     Behind the Temple: Nothing
 
 Behind the Temple:
   region: Sealed Grounds
-  events:
-    Behind the Temple Statue: Nothing
   locations:
+    Behind the Temple Statue: Nothing
     Gorko's Goddess Wall Reward: Goddess Harp & Goddess Sword & Goddess Wall Trigger in SV
   exits:
     Sky (Behind the Temple Statue): Nothing
@@ -43,7 +41,7 @@ Behind the Temple:
 
 Faron Woods Entry:
   region: Faron Woods
-  events:
+  locations:
     Faron Woods Entry Statue: Nothing
   exits:
     Sky (Faron Woods Entry Statue): Nothing
@@ -52,10 +50,6 @@ Faron Woods Entry:
 
 Faron Woods Main:
   region: Faron Woods
-  events:
-    Viewing Platform Statue: Nothing
-    In the Woods Statue: Nothing
-    Retrieve Oolo: Bomb Bag # to kill bokos and cut grass, also rock spawns in front of the crawlspace on layer 5
   exits:
     Sky (Viewing Platform Statue): Nothing
     Sky (In the Woods Statue): Nothing
@@ -64,6 +58,9 @@ Faron Woods Main:
     Lake Floria Entrance: Talk to Yerbal & Goddess Sword & Water Scale
     Faron Woods Clawshot Target Branch: Clawshots
   locations:
+    Viewing Platform Statue: Nothing
+    In the Woods Statue: Nothing
+    Retrieve Oolo: Bomb Bag # to kill bokos and cut grass, also rock spawns in front of the crawlspace on layer 5
     HP on Tree: Nothing
     Slingshot: Bomb Bag | Sword # to kill bokos and cut grass
     HP behind Bombable Wall: Bomb Bag
@@ -71,7 +68,7 @@ Faron Woods Main:
 
 Faron Woods Clawshot Target Branch:
   region: Faron Woods
-  events:
+  locations:
     Goddess Cube on East Great Tree with Clawshots Target: Goddess Sword
 
 # DEEP WOODS
@@ -84,7 +81,8 @@ Deep Woods Entry:
 
 Deep Woods Main:
   region: Faron Woods
-  events:
+  locations:
+    Deep Woods Chest: Nothing
     Deep Woods Statue: Nothing
     Forest Temple Statue: Nothing
     Initial Goddess Cube: Goddess Sword
@@ -95,14 +93,12 @@ Deep Woods Main:
     Sky (Forest Temple Statue): Nothing
     Deep Woods Entry: Nothing
     Skyview Entry: Distance Activator
-  locations:
-    Deep Woods Chest: Nothing
 
 # GREAT TREE
 
 Great Tree Outside Platforms:
   region: Faron Woods
-  events:
+  locations:
     Goddess Cube on West Great Tree near Exit: Goddess Sword
   exits:
     Lower Great Tree Interior: Nothing
@@ -137,7 +133,7 @@ Upper Great Tree Interior: # top with the moblin
 
 Top of Great Tree Outside:
   region: Faron Woods
-  events:
+  locations:
     Goddess Cube on East Great Tree with Rope: Goddess Sword # it's very far down from the top, but for logic you need to reach this area so it's put here
     Great Tree Statue: Nothing
     Talk to Yerbal: Slingshot | Beetle # only those 2 items (and their upgrades) work
@@ -158,7 +154,6 @@ Lake Floria Statue Spot: # idk how this area should be named, cause it encapsula
   region: Lake Floria
   locations:
     Lake Floria Chest: Nothing
-  events:
     Goddess Cube in Lake Floria: Goddess Sword
     Lake Floria Statue: Nothing
   exits:
@@ -176,7 +171,7 @@ Farore's Lair:
 
 Lake Floria Waterfall:
   region: Lake Floria
-  events:
+  locations:
     Floria Waterfall Statue: Nothing
     Goddess Cube in Floria Waterfall: Clawshots & Goddess Sword
   exits:

@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import Dict, List, Any, Tuple
+from typing import Dict, Generic, List, Any, Tuple, TypeVar
 from enum import Enum
 from dataclasses import dataclass, field
 
@@ -13,19 +13,28 @@ DayOnly = AllowedTimeOfDay.DayOnly
 NightOnly = AllowedTimeOfDay.NightOnly
 Both = AllowedTimeOfDay.Both
 
+
+class defaultfactorydict(dict):
+    def __missing__(self, item):
+        return item
+
+
 events: List[EXTENDED_ITEM_NAME] = []
-areas_list: List[Area] = []
+areas_list: List[Area[LogicExpression]] = []
+
+LE = TypeVar("LE")
+LE_bis = TypeVar("LE_bis")
 
 
 @dataclass
-class Area:
+class Area(Generic[LE]):
     name: str
     allowed_time_of_day: AllowedTimeOfDay = AllowedTimeOfDay.DayOnly
     can_sleep: bool = False
     can_save: bool = False
-    sub_areas: Dict[str, Area] = field(default_factory=dict)
-    locations: Dict[str, LogicExpression] = field(default_factory=dict)
-    exits: Dict[str, LogicExpression] = field(default_factory=dict)
+    sub_areas: Dict[str, Area[LE]] = field(default_factory=dict)
+    locations: Dict[str, LE] = field(default_factory=dict)
+    exits: Dict[str, LE] = field(default_factory=dict)
 
     @classmethod
     def of_dict(cls, args):
@@ -36,9 +45,9 @@ class Area:
         cls,
         name: str,
         raw_dict: Dict[str, Any],
-        parent: Area | None = None,
+        parent: Area[LogicExpression] | None = None,
     ):
-        area = cls(name)
+        area: Area[LogicExpression] = cls(name)  # type: ignore
 
         if (v := raw_dict.get("allowed-time-of-day")) is not None:
             area.allowed_time_of_day = AllowedTimeOfDay[v]
@@ -52,7 +61,7 @@ class Area:
         if (d := raw_dict.get("locations")) is not None:
             area.locations = {k: LogicExpression.parse(v) for k, v in d.items()}
             for k in d:
-                events.append(name + "/" + k)
+                events.append(with_sep_full(name, k))
 
         if (d := raw_dict.get("exits")) is not None:
             area.exits = {k: LogicExpression.parse(v) for k, v in d.items()}
@@ -60,60 +69,54 @@ class Area:
         if (v := raw_dict.get("entrance")) is not None:
             if parent is None:
                 raise ValueError("An entrance was given but no parent to give it to")
-            parent.exits[name] = LogicExpression.parse(v)
+            parent.exits[name.rsplit("/", 1)[-1]] = LogicExpression.parse(v)
 
         area.sub_areas = {
-            k: cls.of_yaml(name + "/" + k, v, area)
+            k: cls.of_yaml(with_sep_full(name, k), v, area)
             for k, v in raw_dict.items()
             if "A" <= k[0] <= "Z"
         }
         areas_list.append(area)
         return area
 
-    def map(self, floc, fexit):
-        d = {}
+    def map(
+        self,
+        floc: Callable[[str, str, LE], Tuple[str, LE_bis]],
+        fexit: Callable[[str, str, LE], Tuple[str, LE_bis]],
+    ):
+        new_self: Area[LE_bis] = self  # type: ignore
+        d: Dict[str, LE_bis] = {}
         for k, v in self.locations.items():
             k, v = floc(self.name, k, v)
             d[k] = v
-        self.locations = d
+        new_self.locations = d
 
         d = {}
         for k, v in self.exits.items():
             k, v = fexit(self.name, k, v)
             d[k] = v
-        self.exits = d
+        new_self.exits = d
 
         for sub_area in self.sub_areas.values():
             sub_area.map(floc, fexit)
 
 
-@dataclass
-class LocalizedArea(Area):
-    name: str
-    allowed_time_of_day: AllowedTimeOfDay = AllowedTimeOfDay.DayOnly
-    can_sleep: bool = False
-    can_save: bool = False
-    sub_areas: Dict[str, LocalizedArea] = field(default_factory=dict)
-    locations: Dict[str, DNFInventory] = field(default_factory=dict)
-    exits: Dict[str, DNFInventory] = field(default_factory=dict)
-
-
 class Areas:
-    areas: Dict[str, LocalizedArea]
+    areas: Dict[str, Area[DNFInventory]]
 
     def __getitem__(self, loc):
         return self.areas[loc]
 
     def search_area(
-        self, base_address_str: str, partial_address_str: str
+        self, base_address_str: str, partial_address_str: str, multiple=False
     ) -> EXTENDED_ITEM_NAME:
         """Computes the thing referred by [partial_address] when located at [base_address]"""
         base_address = base_address_str.split("/")
         partial_address = partial_address_str.split(" - ")
 
-        def search_area(i, j, area: Area):
+        def search_area(i, j, area: Area) -> List[str]:
             if len(partial_address) - j == 0:  # We've arrived
-                return ""
+                return [area.name]
 
             hd = partial_address[j]
             if len(partial_address) - j == 1 and (
@@ -121,56 +124,46 @@ class Areas:
                 or (hd in area.exits and hd in self.map_exit_suffixes)
             ):
                 # We've also arrived
-                return hd
+                return [with_sep_full(area.name, hd)]
 
             if hd in area.sub_areas:  # Abandon the base address, we've branched off
-                if (
-                    res := search_area(len(base_address), j + 1, area.sub_areas[hd])
-                ) is not None:
-                    return f"{hd}/{res}"
-                return None
+                return search_area(len(base_address), j + 1, area.sub_areas[hd])
 
-            if (
-                len(base_address) - i > 0 and len(partial_address) - j > 1
-            ):  # Let's follow the base address some more
-                hd2 = base_address[i]
-                if (res := search_area(i + 1, j, area.sub_areas[hd2])) is not None:
-                    return f"{hd2}/{res}"
-                return None
+            if len(base_address) - i > 0:
+                # Let's follow the base address some more
+                return search_area(i + 1, j, area.sub_areas[base_address[i]])
 
             # Now we search everywhere
+            matches: List[str] = []
             for sub_area in area.sub_areas.values():
-                if (res := search_area(i, j, sub_area)) is not None:
-                    return f"{sub_area.name}/{res}"
-            else:
-                return None
+                if (match := search_area(i, j, sub_area)) != []:
+                    if not multiple:
+                        return match
+                    matches.extend(match)
+            return matches
 
         res = search_area(0, 0, self.parent_area)
-        if res is None:
+        if res == []:
             raise ValueError(
                 f"Could not find '{partial_address_str}' from '{base_address_str}'"
             )
-        return EIN(res)
+        if multiple and len(res) > 1:
+            for loc in res:
+                self.normalize[EIN(loc)] = EIN(res[0])
+        return EIN(res[0])
 
     def __init__(
         self,
-        areas: Dict[str, Any],
+        raw_area: Dict[str, Any],
         checks: Dict[str, Any],
         gossip_stones: Dict[str, Any],
         map_exits: Dict[str, Any],
     ):
-        self.parent_area = LocalizedArea(
-            name="",
-            allowed_time_of_day=Both,
-            sub_areas={k: Area.of_yaml(k, v) for k, v in areas.items()},  # type: ignore
-        )
-        res: Dict[str, LocalizedArea] = {area.name: area for area in areas_list}  # type: ignore
-        self.areas = res
-        # The type will we true after localization, for now we'll just ignore it
-        self.areas[""] = self.parent_area
+        self.parent_area = Area.of_yaml(name="", raw_dict=raw_area)
+        areas = {area.name: area for area in areas_list}
 
         EXTENDED_ITEM.items_list.extend(events)
-        for area in self.areas.values():
+        for area in areas.values():
             if area.allowed_time_of_day == Both:
                 EXTENDED_ITEM.items_list.append(make_day(area.name))
                 EXTENDED_ITEM.items_list.append(make_night(area.name))
@@ -180,6 +173,7 @@ class Areas:
         self.map_exit_suffixes = {
             exit_name.rsplit(" - ", 1)[-1] for exit_name in map_exits
         }
+        self.normalize: Dict[EIN, EIN] = defaultfactorydict()
 
         self.parent_area.map(
             lambda prefix, k, v: (
@@ -192,28 +186,42 @@ class Areas:
             ),
         )
 
+        new_areas: Dict[str, Area[DNFInventory]] = areas  # type: ignore
+        # It doesn't understand that the type has changed, but it has
+        self.areas: Dict[str, Area[DNFInventory]] = new_areas
+
         self.short_full: List[Tuple[str, EXTENDED_ITEM_NAME]] = []
+        self.entrance_allowed_time_of_day = {}
         self.checks = set()
         self.gossip_stones = set()
         self.map_exits = set()
 
         for partial_address in checks:
-            full_address = self.search_area("", partial_address)
+            full_address = self.search_area("", partial_address, multiple=True)
             self.short_full.append((partial_address, full_address))
             self.checks.add(full_address)
 
         for partial_address in gossip_stones:
-            full_address = self.search_area("", partial_address)
+            full_address = self.search_area("", partial_address, multiple=True)
             self.short_full.append((partial_address, full_address))
             self.gossip_stones.add(full_address)
 
         for partial_address in map_exits:
-            full_address = self.search_area("", partial_address)
-            exit_type = map_exits[partial_address].get("exit_type", "Both")
+            full_address = self.search_area("", partial_address, multiple=True)
+            exit_type = map_exits[partial_address].get("exit-type", "Both")
             self.short_full.append((partial_address, full_address))
             if exit_type in ("Entrance", "Both"):
                 area_name, suffix = full_address.rsplit("/", 1)
-                if self.areas[area_name].allowed_time_of_day == Both:
+                allowed_time_of_day_str = map_exits[partial_address].get(
+                    "allowed-time-of-day", None
+                )
+                allowed_time_of_day = (
+                    AllowedTimeOfDay[allowed_time_of_day_str]
+                    if allowed_time_of_day_str is not None
+                    else self.areas[area_name].allowed_time_of_day
+                )
+                self.entrance_allowed_time_of_day[full_address] = allowed_time_of_day
+                if allowed_time_of_day == Both:
                     EXTENDED_ITEM.items_list.append(
                         make_day(make_entrance(full_address))
                     )
@@ -253,7 +261,6 @@ class Areas:
         self.full_to_short = full_to_short
 
         self.exit_to_area = {}
-        self.entrance_to_area = {}
         self.entrance_allowed_time_of_day = {}
 
         self.requirements = [DNFInventory() for _ in EXTENDED_ITEM.items()]
@@ -282,8 +289,8 @@ class Areas:
                     timed_req = req.day_only() & DNFInv(EIN(area_name))
                 else:
                     timed_req = req.night_only() & DNFInv(EIN(area_name))
-                loc_bit = EXTENDED_ITEM[area_name + "/" + loc]
-                reqs[loc_bit] = timed_req
+                loc_bit = EXTENDED_ITEM[self.normalize[area_name + "/" + loc]]
+                reqs[loc_bit] |= timed_req
                 self.opaque[loc_bit] = False
 
             for exit, req in area.exits.items():
@@ -323,29 +330,32 @@ class Areas:
                             raise ValueError("Time makes this exit impossible")
 
                 else:  # Map exit
-                    exit = EIN(area_name + "/" + exit)
-                    exit_type = map_exits[self.full_to_short(exit)].get(
-                        "exit_type", "Both"
-                    )
+                    exit = self.normalize[area_name + "/" + exit]
+                    short_exit = self.full_to_short(exit)
+                    exit_type = map_exits[short_exit].get("exit-type", "Both")
                     if exit_type in ("Entrance", "Both"):
-                        entrance = make_entrance(exit)
-                        self.entrance_allowed_time_of_day[
-                            entrance
-                        ] = area.allowed_time_of_day
-                        if area.allowed_time_of_day == Both:
+                        full_entrance = exit
+                        entrance = make_entrance(full_entrance)
+                        allowed_time_of_day = self.entrance_allowed_time_of_day[
+                            full_entrance
+                        ]
+                        if allowed_time_of_day == Both:
                             darea_bit = EXTENDED_ITEM[make_day(area_name)]
                             narea_bit = EXTENDED_ITEM[make_night(area_name)]
                             self.opaque[darea_bit] = False
                             self.opaque[narea_bit] = False
                             reqs[darea_bit] |= DNFInv(make_day(entrance))
                             reqs[narea_bit] |= DNFInv(make_night(entrance))
-                            self.entrance_to_area[make_day(entrance)] = darea_bit
-                            self.entrance_to_area[make_night(entrance)] = narea_bit
-                        elif area.allowed_time_of_day == NightOnly:
-                            area_bit = EXTENDED_ITEM[area_name]
+                        else:
+                            if area.allowed_time_of_day == Both:
+                                if allowed_time_of_day == DayOnly:
+                                    area_bit = EXTENDED_ITEM[make_day(area_name)]
+                                else:
+                                    area_bit = EXTENDED_ITEM[make_night(area_name)]
+                            else:
+                                area_bit = EXTENDED_ITEM[area_name]
                             self.opaque[area_bit] = False
                             reqs[area_bit] |= DNFInv(entrance)
-                            self.entrance_to_area[entrance] = area_bit
 
                     if exit_type in ("Exit", "Both"):
                         exit = make_exit(exit)
