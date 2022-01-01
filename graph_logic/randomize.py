@@ -268,11 +268,11 @@ class Rando:
     # Retro-compatibility
 
     def retro_compatibility(self):
-        done_item_locations = self.placement.locations
-        prerandomization_item_locations = self.initial_placement.locations
-        entrance_connections = {}  # Names were changed
-        trial_connections = {}  # Names were changed
-        macros = self.logic.requirements
+        self.done_item_locations = self.placement.locations
+        self.prerandomization_item_locations = self.initial_placement.locations
+        self.entrance_connections = {}  # Names were changed
+        self.trial_connections = {}  # Names were changed
+        self.macros = self.logic.requirements
 
     def get_sots_locations(self):
         return {}
