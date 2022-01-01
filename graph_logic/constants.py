@@ -24,6 +24,13 @@ LOGIC_OPTIONS = {
 
 # Locations
 
+
+def with_sep_full(pre: str, loc: str) -> EXTENDED_ITEM_NAME:
+    if pre:
+        return EIN(pre + "/" + loc)
+    return EIN(loc)
+
+
 make_day = lambda s: EIN(s + "_DAY")
 make_night = lambda s: EIN(s + "_NIGHT")
 make_entrance = lambda s: EIN(s + "_ENTRANCE")

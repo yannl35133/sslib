@@ -3,7 +3,7 @@ Beedle's Sky Home:
   force-tod: Night # only area requiring force night
   locations:
     Beedle's Crystals: Horned Colossus Beetle
-    Crystal on Beedles Ship: Nighttime & Beetle
+    Crystal on Beedles Ship: Night & Beetle
   exits:
     Beedle's Shop (Night): Nothing
     Beedle Island Cage: Nothing
@@ -24,8 +24,8 @@ Sky:
       (Clawshots | Sky - Volcanic Island Dive Trick)
     # Gossip Stone in Volcanic Island: Nothing
     Orielle's Crystals: Bottle
-    Dodoh Crystals: Can Retrieve Party Wheel
-    Fun Fun Island Minigame: Can Retrieve Party Wheel
+    Dodoh's Crystals: Can Retrieve Party Wheel
+    Fun Fun Island Minigame: Dodoh's Crystals
     Goddess Chest Under Fun Fun Island: Goddess Cube in Floria Waterfall
     Southwest Triple Island Upper Goddess Chest: Goddess Cube at Eldin Entrance
     Southwest Triple Island Lower Goddess Chest: Goddess Cube near Hook Beetle Fight
@@ -36,8 +36,8 @@ Sky:
     Beedle's Island Goddess Chest: Goddess Cube at Ride near Temple of Time
     Northeast Island Goddess Chest Behind Bombable Rocks: Goddess Cube at Lanayru Mines Entrance & Bomb Bag
     Northeast Island Cage Goddess Chest: Goddess Cube East of Earth Temple Entrance
-  events:
-    High Rupee Farm: Can Retrieve Party Wheel
+    Talk to Orielle: Nothing
+    Save Orielle: Bottle
   exits:
     Skyloft Central Outside: Nothing
     Outside Lumpy Pumpkin: Nothing
@@ -61,37 +61,35 @@ Sky:
     Eldin Outside ET (Temple Entrance Statue): Ruby Tablet & Temple Entrance Statue
     Volcano Summit near FS (Inside the Volcano Statue): Ruby Tablet & Inside the Volcano Statue
 
-Outside Lumpy Pumpkin:
-  region: Sky
-  locations:
-    Crystal outside Lumpy Pumpkin: Nighttime
-    Crystal inside Lumpy Pumpkin: Nighttime
-    Kina's Crystals: Pumpkin Carrying & Goddess Harp & Pick up Guld
-    Lumpy Pumpkin Goddess Chest: Initial Goddess Cube
-  events:
-    # assumption: delivering hot soup requires lumpy pumpkin quest start, so there is no need requiring reaching the bartender here as well
-    Pumpkin Carrying: Delivered Hot Soup
-  exits:
-    Inside Lumpy Pumpkin (South): Nothing
-    Inside Lumpy Pumpkin (North): Nothing
-    Sky: Daytime
+Lumpy Pumpkin:
+  Outside:
+    region: Sky
+    locations:
+      Crystal: Night
+      Kina's Crystals: Pumpkin Carrying & Goddess Harp & Pick up Guld
+      Lumpy Pumpkin Goddess Chest: Initial Goddess Cube
+      # assumption: delivering hot soup requires lumpy pumpkin quest start, so there is no need requiring reaching the bartender here as well
+      Pumpkin Carrying: Delivered Hot Soup
+    exits:
+      Inside Lumpy Pumpkin (South): Nothing
+      Inside Lumpy Pumpkin (North): Nothing
+      Sky: Day
 
-Inside Lumpy Pumpkin:
-  region: Sky
-  locations:
-    Harp Minigame: Pumpkin Carrying & Goddess Harp
-    Chandelier: Nothing
-    Crystal inside Lumpy Pumpkin: Nighttime
-  events:
-    Lumpy Pumpkin Quest Start: Bottle
-    Pick up Levia's Soup: Spiral Charge
-  exits:
-    Outside Lumpy Pumpkin (South): Nothing
-    Outside Lumpy Pumpkin (North): Nothing
+  Inside:
+    region: Sky
+    locations:
+      Harp Minigame: Pumpkin Carrying & Goddess Harp
+      Chandelier: Nothing
+      Crystal: Night
+      Quest Start: Bottle
+      Pick up Levias' Soup: Spiral Charge
+    exits:
+      Outside Lumpy Pumpkin (South): Nothing
+      Outside Lumpy Pumpkin (North): Nothing
 
 Inside Bamboo Island:
   region: Sky
-  events:
+  locations:
     Clean Cut Minigame: Sword
 
 Inside Thunderhead:

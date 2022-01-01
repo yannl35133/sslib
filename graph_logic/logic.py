@@ -3,7 +3,7 @@ from typing import Any, Dict, Iterable, List, Tuple
 from collections import defaultdict
 from dataclasses import dataclass, field
 
-from constants import *
+from .constants import *
 from .logic_input import Areas, DayOnly, NightOnly, Both
 from .logic_expression import DNFInventory, AndCombination, OrCombination
 from .inventory import Inventory, EXTENDED_ITEM
@@ -12,13 +12,13 @@ from .inventory import Inventory, EXTENDED_ITEM
 @dataclass
 class PoolEntrance:
     entrance: EXTENDED_ITEM_NAME
-    constraints: List[EXTENDED_ITEM_NAME] = []
+    constraints: List[EXTENDED_ITEM_NAME] = field(default_factory=list)
 
 
 @dataclass
 class PoolExit:
     exit: EXTENDED_ITEM_NAME
-    constraints: List[EXTENDED_ITEM_NAME] = []
+    constraints: List[EXTENDED_ITEM_NAME] = field(default_factory=list)
 
 
 @dataclass
@@ -105,7 +105,6 @@ class Logic:
 
         self.requirements = areas.requirements.copy()
         self.opaque = areas.opaque
-        self.entrance_to_area = areas.entrance_to_area
         self.entrance_allowed_time_of_day = areas.entrance_allowed_time_of_day
         self.exit_to_area = areas.exit_to_area
 

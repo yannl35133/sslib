@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 import yaml
 
@@ -44,5 +45,17 @@ glitchless_requirements = yaml_load(glitchless_requirements_file)
 glitched_requirements_file = ROOT_DIR / "SS Rando Logic - Glitched Requirements.yaml"
 glitched_requirements = yaml_load(glitched_requirements_file)
 
-graph_requirements_file = ROOT_DIR / "graph_logic" / "requirements.yaml"
-graph_requirements = yaml_load(graph_requirements_file)
+
+def requirements(folder: Path):
+    files = filter(lambda s: s[0].isupper() and s.endswith(".yaml"), os.listdir(folder))
+    requirements = {
+        os.path.splitext(filename)[0]: yaml_load(folder / filename)
+        for filename in files
+    } | {"allowed-time-of-day": "Both"}
+    if "macros.yaml" in os.listdir(folder):
+        requirements["locations"] = yaml_load(folder / "macros.yaml")
+    return requirements
+
+
+graph_requirements_folder = ROOT_DIR / "graph_logic" / "requirements"
+graph_requirements = requirements(graph_requirements_folder)

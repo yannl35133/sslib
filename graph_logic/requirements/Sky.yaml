@@ -1,0 +1,281 @@
+# File name is area name (so sky)
+allowed-time-of-day: DayOnly
+
+North East:
+  Bamboo Island:
+    Inside:
+      locations:
+        Clean Cut Minigame: Sword
+        Gossip Stone: Nothing
+
+      exits:
+        Exit: Nothing
+
+    # Outside
+    locations:
+      Goddess Chest: Eldin - Goddess Cube West of Earth Temple Entrance
+    entrance: Nothing
+    exits:
+      North East: Day
+      Entrance: Nothing
+
+  Beedle's Island:
+    allowed-time-of-day: Both
+    locations:
+      Crystal on Beedle's Ship: Night & Beetle
+      Beedle's Crystals: Horned Colossus Beetle & Night
+
+    entrance: Nothing
+    exits:
+      North East: Day
+      Beedle's Ship: Night
+      Cage: Night
+
+    Top:
+      locations:
+        Goddess Chest: Lanayru - Goddess Cube at Ride near Temple of Time
+      exits:
+        Beedle's Island: Nothing
+
+    Cage:
+      locations:
+        Goddess Chest in Cage: Faron - Goddess Cube on top of Skyview
+      exits:
+        Beedle's Island: Nothing
+
+  locations:
+    Goddess Chest on Island next to Bamboo Island: Eldin - Goddess Cube near Mogma Turf Entrance
+    Goddess Chest in Cave on Island Next to Bamboo Island: Lanayru - Goddess Cube in Secret Passageway in Desert & Water Scale
+
+    Northeast Island Goddess Chest behind Bombable Rocks:
+      Lanayru - Goddess Cube at Lanayru Mines Entrance & Bomb Bag # (Bomb Bag | Can RBM 4x01)
+      # Scene Flag 4x01 is "Blow Up rocks on northeastern island"
+
+    Northeast Island Cage Goddess Chest: Eldin - Goddess Cube East of Earth Temple Entrance
+
+  Eldin Pillar:
+    entrance: Nothing
+    exits:
+      Eldin Entrance Statue:     Ruby Tablet & Eldin - Eldin Entrance Statue
+      Volcano East Statue:       Ruby Tablet & Eldin - Volcano East Statue
+      Volcano Ascent Statue:     Ruby Tablet & Eldin - Volcano Ascent Statue
+      Temple Entrance Statue:    Ruby Tablet & Eldin - Temple Entrance Statue
+      Inside the Volcano Statue: Ruby Tablet & Eldin - Inside the Volcano Statue
+
+      Sky - North East: Nothing
+
+  exits:
+    Beedle's Island - Top: Nothing
+    Beedle's Island - Cage: Sky - Beedle's Island Cage Chest Dive Trick
+    # Getting this Chest during the day is possible but rather difficult
+    Sky - South East: Nothing
+    Sky - Around Skyloft: Nothing
+
+South East:
+  Lumpy Pumpkin:
+    allowed-time-of-day: Both
+
+    # Outside
+    entrance: Nothing
+    exits:
+      South East: Day
+      Main Entrance: Nothing # Sky - Lumpy Pumpkin - Main Entrance
+      Kitchen Entrance: Nothing
+    locations:
+      Outside Crystal: Night
+      Goddess Chest: Faron - Initial Goddess Cube
+      Roof Goddess Chest: Skyview - Goddess Cube in Skyview Spring & Day
+      Kina's Crystals:
+        Finish Chandelier Quest & Eldin - Pick up Guld & Day
+        # Unlocked after Chandelier Quest
+
+      Gossip Stone: Nothing
+      Pumpkin Carrying: Skyloft - Delivered Hot Soup & Day
+
+
+    Inside:
+      can-sleep: true
+      locations:
+        Freestanding Item on Chandelier: Break the Chandelier
+        Inside Crystal: Night
+        Harp Minigame: Finish Chandelier Quest
+
+        Break the Chandelier: Nothing
+        Start Hot Soup Delivery: Break the Chandelier & Bottle
+        Play the Harp with Kina: # Play the harp
+          Pumpkin Carrying & Goddess Harp & Night
+        Finish Chandelier Quest: Play the Harp with Kina
+        Pick up Levias' Soup: Spiral Charge
+
+      map-exits:
+        Main Exit: Nothing # Sky - Lumpy Pumpkin - Main Exit
+        Kitchen Exit: Nothing
+
+  locations:
+    Chest in Breakable Boulder near Lumpy Pumpkin:
+      Spiral Charge #| Can RBM 4x02
+      # Scene Flag 4x02 is "Break Boulder near Lumpy Pumpkin with Spiral Charge"
+
+    Goddess Chest on Island Closest to Faron Pillar: Faron - Goddess Cube in Deep Woods
+
+  Faron Pillar:
+    logical-entrances: Nothing
+    exits:
+      Sealed Grounds Statue:    Emerald Tablet & Faron - Sealed Grounds Statue
+      Behind the Temple Statue: Emerald Tablet & Faron - Behind the Temple Statue
+      Faron Woods Entry Statue: Emerald Tablet & Faron - Faron Woods Entry Statue
+      Viewing Platform Statue:  Emerald Tablet & Faron - Viewing Platform Statue
+      In the Woods Statue:      Emerald Tablet & Faron - In the Woods Statue
+      Deep Woods Statue:        Emerald Tablet & Faron - Deep Woods Statue
+      Forest Temple Statue:     Emerald Tablet & Faron - Forest Temple Statue
+      Great Tree Statue:        Emerald Tablet & Faron - Great Tree Statue
+      Lake Floria Statue:       Emerald Tablet & Faron - Lake Floria Statue
+      Floria Waterfall Statue:  Emerald Tablet & Faron - Floria Waterfall Statue
+
+      South East: Nothing
+
+  exits:
+    Sky - North East: Nothing
+    Sky - South West: Nothing
+    Sky - Around Skyloft: Nothing
+
+South West:
+  Volcanic Island:
+    entrance: Nothing
+    exits:
+      South West: Day
+
+    locations:
+      Outside Goddess Chest: Lanayru - Goddess Cube in Sand Oasis
+      Inside Goddess Chest:
+        Faron - Goddess Cube on East Great Tree with Clawshots Target & (Clawshots | Sky - Volcanic Island Dive Trick)
+        # Normally you would need clawshots, but you can skip them with a good dive
+      Gossip Stone: Nothing
+
+
+  Orielle's Island:
+    entrance: Nothing
+    exits:
+      Sky - South West: Day
+    locations:
+      Talk to Orielle: Nothing
+      Save Orielle: Bottle
+      # There are mushrooms in the Sky inside the Volcanic Island
+      Orielle's Crystals: Save Orielle
+
+
+  Fun Fun Island:
+    entrance: Nothing
+    exits:
+      Sky - South West: Day
+
+    locations:
+      Dodoh's Crystals: Lanayru - Retrieve Party Wheel
+      Dodoh's High Dive - 500 Rupees: Fun Fun Island Minigame
+      Goddess Chest Below: Faron - Goddess Cube in Floria Waterfall
+
+      Fun Fun Island Minigame:
+        Dodoh's Crystals
+
+  Triple Island:
+    entrance: Nothing
+    exits:
+      Sky - South West: Day
+
+    locations:
+      Upper Goddess Chest: Eldin - Goddess Cube at Eldin Entrance
+      Lower Goddess Chest: Lanayru - Goddess Cube near Hook Beetle Fight
+      Cage Goddess Chest: Lanayru - Goddess Cube in Skipper's Retreat & Clawshots
+
+  locations:
+    Chest in Breakable Boulder near Fun Fun Island:
+      Spiral Charge #| Can RBM 4x04
+      # Scene Flag 4x04 is "Break Boulder near Fun Fun Island with Spiral Charge"
+
+  Lanayru Pillar:
+    entrance: Nothing
+    exits:
+      Lanayru Mines Statue:   Amber Tablet & Lanayru - Lanayru Mines Statue
+      Desert Entrance Statue: Amber Tablet & Lanayru - Desert Entrance Statue
+      # others I forgot: null #...
+
+      Sky - South West: Nothing
+
+  exits:
+    Sky - South East: Nothing
+    Sky - Around Skyloft: Nothing
+
+Around Skyloft: # Also North West minus Thunderhead
+  exits:
+    Sky - North East: Nothing
+    Sky - South West: Nothing
+    Sky - South East: Nothing
+
+    Thunderhead Entrance: Open Thunderhead option | Ballad of the Goddess
+    Skyloft Landing: Nothing
+    # Bridge to Goddess Statue Landing: Nothing
+    # Knight Academy Landing: Nothing
+    # Bazaar Landing: Nothing
+    # Plaza Landing: Nothing
+    # Village Landing: Nothing
+    # others I forgot: null
+
+Thunderhead:
+  Isle of Songs:
+    Inside:
+      locations:
+        Goddess Sword Strike: Goddess Sword
+        Goddess Longsword Strike: Goddess Longsword
+        Goddess White Sword Strike: Goddess White Sword
+
+      exits:
+        Exit: Nothing
+
+    # Outside
+    entrance: Nothing
+    exits:
+      Thunderhead: Day
+      Entrance: Puzzle Solved
+    locations:
+      Side Goddess Chest: Eldin - Goddess Cube in Mogma Turf
+      Top Goddess Chest: Eldin - Goddess Cube near FS Entrance
+      Puzzle Solved: Nothing
+
+
+  East Island:
+    entrance: Nothing
+    exits:
+      Thunderhead: Day
+
+    locations:
+      Goddess Chest: Faron - Goddess Cube on East Great Tree with Rope
+      Chest: Digging Mitts | Thunderhead - East Island Dive Trick
+
+
+  Mogma Mitts Island:
+    entrance: Nothing
+    exits:
+      Thunderhead: Day
+
+    locations:
+      First Goddess Chest: Eldin - Goddess Cube inside Volcano Summit & Mogma Mitts
+      Second Goddess Chest: Lanayru - Goddess Cube in Lanayru Gorge & Mogma Mitts
+
+
+  Bug Rock:
+    entrance: Nothing
+    exits:
+      Thunderhead: Day
+
+    locations:
+      Bug Heaven - 10 Bugs in 3 Minutes: Bug Net
+      Goddess Chest: Eldin - Goddess Cube in Summit Waterfall
+      Gossip Stone Near: Nothing
+
+
+  locations:
+    Levias' Teaching:
+      Sky - Lumpy Pumpkin - Pick up Levias' Soup & Spiral Charge & Sword
+      # Get the soup, fight Bilocyte
+
+  map-exits: Exit
