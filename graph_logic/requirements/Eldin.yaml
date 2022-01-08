@@ -1,3 +1,5 @@
+allowed-time-of-day: DayOnly
+
 Eldin First Room:
   region: Eldin
   locations:
