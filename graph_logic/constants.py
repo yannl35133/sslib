@@ -11,6 +11,7 @@ sep = " - "
 OPEN_THUNDERHEAD_OPTION = "Open Thunderhead option"
 OPEN_LMF_OPTION = "Open LMF option"
 ENABLED_BEEDLE_OPTION = "Enabled Beedle option"
+RANDOMIZED_BEEDLE_OPTION = "Randomized Beedle option"
 HERO_MODE = "Hero-mode"
 NO_BIT_CRASHES = "No BiT crashes"
 
@@ -18,6 +19,7 @@ LOGIC_OPTIONS = {
     OPEN_THUNDERHEAD_OPTION,
     OPEN_LMF_OPTION,
     ENABLED_BEEDLE_OPTION,
+    RANDOMIZED_BEEDLE_OPTION,
     HERO_MODE,
     NO_BIT_CRASHES,
 }

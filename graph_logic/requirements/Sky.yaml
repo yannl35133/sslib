@@ -39,7 +39,7 @@ North East:
 
     Cage:
       locations:
-        Goddess Chest in Cage: Faron - Goddess Cube on top of Skyview
+        Goddess Chest: Faron - Goddess Cube on top of Skyview
       exits:
         Beedle's Island: Nothing
 
@@ -56,11 +56,11 @@ North East:
   Eldin Pillar:
     entrance: Nothing
     exits:
-      Eldin Entrance Statue:     Ruby Tablet & Eldin - Eldin Entrance Statue
-      Volcano East Statue:       Ruby Tablet & Eldin - Volcano East Statue
-      Volcano Ascent Statue:     Ruby Tablet & Eldin - Volcano Ascent Statue
-      Temple Entrance Statue:    Ruby Tablet & Eldin - Temple Entrance Statue
-      Inside the Volcano Statue: Ruby Tablet & Eldin - Inside the Volcano Statue
+      Eldin Entrance Statue:     Ruby Tablet & Eldin - Volcano - Entrance - Unlock Statue
+      Volcano East Statue:       Ruby Tablet & Eldin - Volcano - East - Unlock Statue
+      Volcano Ascent Statue:     Ruby Tablet & Eldin - Volcano - Ascent - Unlock Statue
+      Temple Entrance Statue:    Ruby Tablet & Eldin - Volcano - Temple Entrance - Unlock Statue
+      Inside the Volcano Statue: Ruby Tablet & Eldin - Volcano Summit - Unlock Statue
 
       Sky - North East: Nothing
 
@@ -85,8 +85,8 @@ South East:
       Outside Crystal: Night
       Goddess Chest: Faron - Initial Goddess Cube
       Roof Goddess Chest: Skyview - Goddess Cube in Skyview Spring & Day
-      Kina's Crystals:
-        Finish Chandelier Quest & Eldin - Pick up Guld & Day
+      Start Kina's Quest: Chandelier Quest Reward & Day
+      Kina's Crystals: Eldin - Pick up Guld & Day
         # Unlocked after Chandelier Quest
 
       Gossip Stone: Nothing
@@ -96,18 +96,17 @@ South East:
     Inside:
       can-sleep: true
       locations:
-        Freestanding Item on Chandelier: Break the Chandelier
-        Inside Crystal: Night
-        Harp Minigame: Finish Chandelier Quest
+        Chandelier: Break the Chandelier
+        Crystal: Night
 
         Break the Chandelier: Nothing
         Start Hot Soup Delivery: Break the Chandelier & Bottle
         Play the Harp with Kina: # Play the harp
           Pumpkin Carrying & Goddess Harp & Night
-        Finish Chandelier Quest: Play the Harp with Kina
+        Chandelier Quest Reward: Play the Harp with Kina
         Pick up Levias' Soup: Spiral Charge
 
-      map-exits:
+      exits:
         Main Exit: Nothing # Sky - Lumpy Pumpkin - Main Exit
         Kitchen Exit: Nothing
 
@@ -171,7 +170,7 @@ South West:
 
     locations:
       Dodoh's Crystals: Lanayru - Retrieve Party Wheel
-      Dodoh's High Dive - 500 Rupees: Fun Fun Island Minigame
+      Fun Fun Island Minigame -- 500 Rupees: Fun Fun Island Minigame
       Goddess Chest Below: Faron - Goddess Cube in Floria Waterfall
 
       Fun Fun Island Minigame:
@@ -183,7 +182,7 @@ South West:
       Sky - South West: Day
 
     locations:
-      Upper Goddess Chest: Eldin - Goddess Cube at Eldin Entrance
+      Upper Goddess Chest: Eldin - Volcano - Entrance - Goddess Cube
       Lower Goddess Chest: Lanayru - Goddess Cube near Hook Beetle Fight
       Cage Goddess Chest: Lanayru - Goddess Cube in Skipper's Retreat & Clawshots
 
@@ -224,9 +223,9 @@ Thunderhead:
   Isle of Songs:
     Inside:
       locations:
-        Goddess Sword Strike: Goddess Sword
-        Goddess Longsword Strike: Goddess Longsword
-        Goddess White Sword Strike: Goddess White Sword
+        Farore's Courage: Goddess Sword
+        Nayru's Wisdom: Goddess Longsword
+        Din's Power: Goddess White Sword
 
       exits:
         Exit: Nothing
@@ -237,8 +236,8 @@ Thunderhead:
       Thunderhead: Day
       Entrance: Puzzle Solved
     locations:
-      Side Goddess Chest: Eldin - Goddess Cube in Mogma Turf
-      Top Goddess Chest: Eldin - Goddess Cube near FS Entrance
+      Side Goddess Chest: Eldin - Mogma Turf - Goddess Cube
+      Top Goddess Chest: Eldin - Volcano Summit - Temple Entrance - Goddess Cube
       Puzzle Solved: Nothing
 
 
@@ -262,20 +261,21 @@ Thunderhead:
       Second Goddess Chest: Lanayru - Goddess Cube in Lanayru Gorge & Mogma Mitts
 
 
-  Bug Rock:
+  Bug Heaven:
     entrance: Nothing
     exits:
       Thunderhead: Day
 
     locations:
-      Bug Heaven - 10 Bugs in 3 Minutes: Bug Net
+      Bug Heaven -- 10 Bugs in 3 Minutes: Bug Net
       Goddess Chest: Eldin - Goddess Cube in Summit Waterfall
       Gossip Stone Near: Nothing
 
 
   locations:
-    Levias' Teaching:
+    Song from Levias:
       Sky - Lumpy Pumpkin - Pick up Levias' Soup & Spiral Charge & Sword
       # Get the soup, fight Bilocyte
 
-  map-exits: Exit
+  exits:
+    Exit: Nothing

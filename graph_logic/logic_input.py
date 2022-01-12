@@ -112,6 +112,8 @@ class Areas:
     ) -> EXTENDED_ITEM_NAME:
         """Computes the thing referred by [partial_address] when located at [base_address]"""
         base_address = base_address_str.split("/")
+        if base_address == [""]:
+            base_address = []
         partial_address = partial_address_str.split(" - ")
 
         def search_area(i, j, area: Area) -> List[str]:
@@ -249,19 +251,18 @@ class Areas:
             for (a, b) in self.short_full:
                 if a == elt:
                     return b
-            raise ValueError("Error: association list")
+            raise ValueError(f"Error: association list, cannot find {elt}")
 
         def full_to_short(elt: EXTENDED_ITEM_NAME):
             for (a, b) in self.short_full:
                 if b == elt:
                     return a
-            raise ValueError("Error: association list")
+            raise ValueError(f"Error: association list, cannot find {elt}")
 
         self.short_to_full = short_to_full
         self.full_to_short = full_to_short
 
         self.exit_to_area = {}
-        self.entrance_allowed_time_of_day = {}
 
         self.requirements = [DNFInventory() for _ in EXTENDED_ITEM.items()]
         self.opaque = [True for _ in EXTENDED_ITEM.items()]
@@ -289,7 +290,7 @@ class Areas:
                     timed_req = req.day_only() & DNFInv(EIN(area_name))
                 else:
                     timed_req = req.night_only() & DNFInv(EIN(area_name))
-                loc_bit = EXTENDED_ITEM[self.normalize[area_name + "/" + loc]]
+                loc_bit = EXTENDED_ITEM[self.normalize[with_sep_full(area_name, loc)]]
                 reqs[loc_bit] |= timed_req
                 self.opaque[loc_bit] = False
 
@@ -330,7 +331,7 @@ class Areas:
                             raise ValueError("Time makes this exit impossible")
 
                 else:  # Map exit
-                    exit = self.normalize[area_name + "/" + exit]
+                    exit = self.normalize[with_sep_full(area_name, exit)]
                     short_exit = self.full_to_short(exit)
                     exit_type = map_exits[short_exit].get("exit-type", "Both")
                     if exit_type in ("Entrance", "Both"):

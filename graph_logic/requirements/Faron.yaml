@@ -51,6 +51,7 @@ Sealed Grounds:
     region: Sealed Grounds
     locations:
       Unlock Statue: Nothing
+      Gossip Stone: Nothing
       Gorko's Goddess Wall Reward: Goddess Harp & Goddess Sword & Skyview - Goddess Wall Trigger
     exits:
       Statue: Unlock Statue
@@ -68,7 +69,7 @@ Woods:
       Faron - Woods: Sword | Bomb Bag | Clawshots # Main - Push a Log # either cut trees or clawshot vines
       To Behind the Temple: Nothing
 
-  From Lake Floria:
+  Ledge to Lake Floria:
     locations:
       Push Log: Nothing
     entrance: Push Log
@@ -81,7 +82,6 @@ Woods:
     Entry: Nothing
     In the Woods Statue: Unlock In the Woods Statue
     Viewing Platform Statue: Unlock Viewing Platform Statue
-    To Deep Woods: Hit Vine to Deep Woods
     To Silent Realm: Open Trial Gate
     Great Tree - Near Underwater Entrance: Water Scale
     Lake Floria Dive: Great Tree - Top - Talk to Yerbal & Goddess Sword & Water Scale
@@ -96,6 +96,13 @@ Woods:
     Item on Tree: Nothing
     Item behind Bombable Rock: Bomb Bag
     Chest behind Bombable Rocks near Erla: Bomb Bag
+
+  Ledge To Deep Woods:
+    entrance: Hit Vine to Deep Woods
+    exits:
+      Faron - Woods: Nothing
+      To Deep Woods: Nothing
+
 
   Behind the Crawlspace and Rope:
     entrance: Bomb Bag | Push Log
@@ -155,7 +162,7 @@ Great Tree:
     Path to Chest: # area around the chest
       region: Faron Woods
       locations:
-        Great Tree Chest: Nothing # Not even something to defeat the quadri-baba ?
+        Chest: Nothing # Not even something to defeat the quadri-baba ?
       exits:
         Lower Area: Nothing
         Near Exit: Nothing
@@ -206,10 +213,11 @@ Deep Woods:
 
   region: Faron Woods
   locations:
-    Deep Woods Chest: Nothing
+    Chest: Nothing
     Unlock Deep Woods Statue: Nothing
     Unlock Forest Temple Statue: Nothing
     Push Shortcut Logs: Nothing
+    Gossip Stone: Nothing
     Initial Goddess Cube: Goddess Sword
     Goddess Cube in Deep Woods: Goddess Sword
     Goddess Cube on top of Skyview: Goddess Sword & Clawshots
@@ -228,14 +236,9 @@ Lake Floria:
     locations:
       Silver Rupee: Water Scale # currently not randomized
       Blow Rock: Water Scale
-    exit:
+    exits:
       Faron Woods Dive: Nothing
-      Right After Rock: Water Scale
-
-    Right After Rock:
-      exit:
-        Above Rock: Blow Rock
-        To Below Rock: Water Scale
+      Below Rock: Water Scale
 
   Below Rock:
     Emerged Area:
@@ -250,7 +253,7 @@ Lake Floria:
 
     exits:
       Emerged Area: Water Scale
-      To Above Rock: Water Scale
+      Above Rock: Water Scale
       To Farore's Lair: Water Scale
 
   Farore's Lair:
@@ -267,6 +270,7 @@ Lake Floria:
     region: Lake Floria
     locations:
       Unlock Statue: Nothing
+      Gossip Stone: Nothing
       Goddess Cube in Floria Waterfall: Clawshots & Goddess Sword
       Golden Rupee: Beetle # Currently not randomized
     exits:
