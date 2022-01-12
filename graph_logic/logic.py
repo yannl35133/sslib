@@ -267,7 +267,7 @@ class Logic:
     def accessible_checks(self, placement_limit: str) -> Iterable[str]:
         def explore(area):
             for loc in area.locations:
-                loc_full = area.name + "/" + loc
+                loc_full = with_sep_full(area.name, loc)
                 if loc_full in self.checks:
                     if self.full_inventory[EXTENDED_ITEM[loc_full]]:
                         yield self.full_to_short(loc_full)

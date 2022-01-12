@@ -1,88 +1,88 @@
-Knight Academy - Fledge's Gift:
+Skyloft - Upper - Knight Academy - Fledge's Gift:
   original item: Progressive Pouch
   type: skyloft, free gift
   Paths:
     - event/114-Friend/16
     - oarc/F001r/l3
     - oarc/F001r/l4
-Knight Academy - Owlan's Gift:
+Skyloft - Upper - Owlan's Gift:
   original item: Wooden Shield
   type: skyloft, free gift
   Paths:
     - event/108-ShinkanA/169
     - oarc/F000/l4
     - oarc/F000/l6
-Knight Academy - Sparring Hall Chest:
+Skyloft - Upper - Sparring Hall - Chest:
   original item: Progressive Sword
   type: skyloft, miscellaneous
   Paths:
     - stage/F009r/r0/l0/TBox/66
-Central Skyloft - Potion Lady's Gift:
+Skyloft - Central - Bazaar - Potion Lady's Gift:
   original item: Bottle
   type: skyloft, free gift
   Paths:
     - event/106-DrugStore/44
     - oarc/F004r/l0
-Central Skyloft - Waterfall Cave First Chest:
+Skyloft - Central - Waterfall Cave - First Chest:
   original item: Red Rupee
   type: skyloft, miscellaneous
   Paths:
     - stage/D000/r0/l0/TBox/67
-Central Skyloft - Waterfall Cave Second Chest:
+Skyloft - Central - Waterfall Cave - Second Chest:
   original item: Red Rupee
   type: skyloft, miscellaneous
   Paths:
     - stage/D000/r0/l0/TBox/68
-Central Skyloft - Rupee Waterfall Cave Crawlspace:
+Skyloft - Waterfall Cave - Rupee in Crawlspace:
   original item: Red Rupee
   type: skyloft, freestanding
   Paths:
     - stage/D000/r0/l0/Item/88
-Knight Academy - Chest near Goddess Statue:
+Skyloft - Upper - Chest near Goddess Statue:
   original item: Red Rupee
   type: skyloft, miscellaneous
   Paths:
     - stage/F000/r0/l0/TBox/71
-Knight Academy - First Chest in Goddess Statue:
+Skyloft - Upper - Goddess Statue - First Chest:
   original item: Progressive Sword
   type: skyloft, miscellaneous
   Paths:
     - stage/F008r/r0/l0/TBox/95
-Knight Academy - Second Chest in Goddess Statue:
+Skyloft - Upper - Goddess Statue - Second Chest:
   original item: Emerald Tablet
   type: skyloft, miscellaneous
   Paths:
     - stage/F008r/r0/l0/TBox/94
-Central Skyloft - Bazaar Goddess Chest:
+Skyloft - Central - Bazaar - Goddess Chest:
   original item: Gold Rupee
   type: skyloft, goddess, sand sea goddess
   Paths:
     - stage/F004r/r0/l0/TBox/93
   cube_region: Lanayru Sand Sea
-Central Skyloft - Shed Chest:
+Skyloft - Central - Shed Chest:
   original item: Silver Rupee
   type: skyloft, miscellaneous
   Paths:
     - stage/F000/r0/l0/TBox/70
-Central Skyloft - Shed Goddess Chest:
+Skyloft - Central - Shed Goddess Chest:
   original item: Heart Piece
   type: skyloft, goddess, eldin goddess
   Paths:
     - stage/F000/r0/l0/TBox/79
   cube_region: Eldin Volcano
-Central Skyloft - West Cliff Goddess Chest:
+Skyloft - Central - West Cliff Goddess Chest:
   original item: Silver Rupee
   type: skyloft, goddess, faron goddess
   Paths:
     - stage/F000/r0/l0/TBox/78
   cube_region: Faron Woods
-Central Skyloft - Floating Island Goddess Chest:
+Skyloft - Central - Floating Island Goddess Chest:
   original item: Gold Rupee
   type: skyloft, goddess, floria goddess
   Paths:
     - stage/F000/r0/l0/TBox/91
   cube_region: Lake Floria
-Central Skyloft - Waterfall Goddess Chest:
+Skyloft - Central - Waterfall Island - Goddess Chest:
   original item: Heart Piece
   type: skyloft, goddess, sand sea goddess, mini dungeon
   Paths:
@@ -90,7 +90,7 @@ Central Skyloft - Waterfall Goddess Chest:
   hint: sometimes
   text: a <s<goddess cube>> <r<amongst the pirates>> reveals
   cube_region: Lanayru Sand Sea
-Knight Academy - Pumpkin Archery - 600 Points:
+Skyloft - Upper - Pumpkin Archery -- 600 Points:
   original item: Heart Piece
   type: skyloft, minigame
   Paths:
@@ -99,17 +99,17 @@ Knight Academy - Pumpkin Archery - 600 Points:
     - oarc/F000/l6
   hint: sometimes
   text: <r<shooting pumpkings>> is rewarded with
-Knight Academy - In Zelda's Closet:
+Skyloft - Upper - Knight Academy - In Zelda's Closet:
   original item: Heart Piece
   type: skyloft, miscellaneous
   Paths:
     - stage/F001r/r6/l0/chest/32 #sceneflag
-Central Skyloft - Item in Bird Nest:
+Skyloft - Central - Item in Bird Nest:
   original item: Baby's Rattle
   type: skyloft, freestanding
   Paths:
     - stage/F000/r0/l0/Item/13
-Central Skyloft - Parrow's Gift:
+Skyloft - Central - Parrow's Gift:
   original item: Bottle
   type: skyloft, free gift, short
   Paths:
@@ -118,19 +118,19 @@ Central Skyloft - Parrow's Gift:
     - oarc/F000/l4
     - oarc/F000/l6
     - oarc/F005r/l0
-Knight Academy - Cawlin's Letter:
+Skyloft - Upper - Knight Academy - Cawlin's Letter:
   original item: Cawlin's Letter
   type: skyloft, short
   Paths:
     - event/115-Town2/166
     - oarc/F001r/l0
-Central Skyloft - Wryna's Crystals:
+Skyloft - Central - Wryna's Crystals:
   original item: Gratitude Crystal Pack
   type: skyloft, free gift, crystal quest
   Paths:
     - event/118-Town3/144
     - oarc/F006r/l0
-Central Skyloft - Peater/Peatrice's Crystals:
+Skyloft - Central - Peater/Peatrice's Crystals:
   original item: Gratitude Crystal Pack
   type: skyloft, long, crystal quest, peatrice
   Paths:
@@ -140,7 +140,7 @@ Central Skyloft - Peater/Peatrice's Crystals:
     - oarc/F019r/l0
   hint: always
   text: the <r<item check girl>> hides
-Central Skyloft - Parrow's Crystals:
+Skyloft - Central - Parrow's Crystals:
   original item: Gratitude Crystal Pack
   type: skyloft, sky, short, crystal quest
   Paths:
@@ -148,27 +148,27 @@ Central Skyloft - Parrow's Crystals:
     - oarc/F000/l4
     - oarc/F000/l6
     - oarc/F005r/l0
-Knight Academy - Fledge's Crystals:
+Skyloft - Upper - Knight Academy - Fledge's Crystals:
   original item: Gratitude Crystal Pack
   type: skyloft, lanayru, short, crystal quest, dungeon
   Paths:
     - event/115-Town2/325
     - oarc/F001r/l0
   text: <r<lending strength to a friend>> yields
-Skyloft Village - Bertie's Crystals:
+Skyloft - Village - Bertie's Crystals:
   original item: Gratitude Crystal Pack
   type: skyloft, fetch, crystal quest
   Paths:
     - event/115-Town2/125
     - oarc/F014r/l0
-Knight Academy - Ghost/Pipit's Crystals:
+Skyloft - Upper - Knight Academy - Ghost/Pipit's Crystals:
   original item: Gratitude Crystal Pack
   type: skyloft, fetch, crystal quest
   Paths:
     - event/115-Town2/522
     - event/115-Town2/641
     - oarc/F001r/l0
-Skyloft Village - Sparrot's Crystals:
+Skyloft - Village - Sparrot's Crystals:
   original item: Gratitude Crystal Pack
   type: skyloft, eldin, long, scrapper, crystal quest
   Paths:
@@ -176,13 +176,13 @@ Skyloft Village - Sparrot's Crystals:
     - oarc/F013r/l0
   hint: sometimes
   text: delivering a <r<fortune telling device>> reveals
-Skyloft Village - Mallara's Crystals:
+Skyloft - Village - Mallara's Crystals:
   original item: Gratitude Crystal Pack
   type: skyloft, short, crystal quest
   Paths:
     - event/123-Town5/186
     - oarc/F016r/l0
-Knight Academy - Owlan's Crystals:
+Skyloft - Upper - Knight Academy - Owlan's Crystals:
   original item: Gratitude Crystal Pack
   type: skyloft, faron, long, scrapper, crystal quest, combat
   Paths:
@@ -191,37 +191,37 @@ Knight Academy - Owlan's Crystals:
   hint: sometimes
   text: delivering a <r<Kikwi>> reveals
 
-#  Batreaux Rewards
-Batreaux - 5 Crystals:
+# Batreaux Rewards
+Skyloft - Village - Batreaux' House - 5 Crystals:
   original item: Progressive Wallet
   type: skyloft
   Paths:
     - event/121-AkumaKun/21
     - oarc/F012r/l0
-Batreaux - 10 Crystals:
+Skyloft - Village - Batreaux' House - 10 Crystals:
   original item: Heart Piece
   type: skyloft
   Paths:
     - event/121-AkumaKun/42
     - oarc/F012r/l0
-Batreaux - 30 Crystals:
+Skyloft - Village - Batreaux' House - 30 Crystals:
   original item: Progressive Wallet
   type: skyloft
   Paths:
     - event/121-AkumaKun/24
     - oarc/F012r/l0
-Batreaux - 30 Crystals Chest:
+Skyloft - Village - Batreaux' House - 30 Crystals Chest:
   original item: Cursed Medal
   type: skyloft
   Paths:
     - stage/F012r/r0/l0/TBox/69
-Batreaux - 40 Crystals:
+Skyloft - Village - Batreaux' House - 40 Crystals:
   original item: Gold Rupee
   type: skyloft
   Paths:
     - event/121-AkumaKun/49
     - oarc/F012r/l0
-Batreaux - 50 Crystals:
+Skyloft - Village - Batreaux' House - 50 Crystals:
   original item: Progressive Wallet
   type: skyloft
   Paths:
@@ -229,7 +229,7 @@ Batreaux - 50 Crystals:
     - oarc/F012r/l0
   hint: sometimes
   text: <ye<50>> <r<pieces of gratitude>> can be exchanged for
-Batreaux - 70 Crystals:
+Skyloft - Village - Batreaux' House - 70 Crystals:
   original item: Gold Rupee
   type: skyloft
   Paths:
@@ -237,7 +237,7 @@ Batreaux - 70 Crystals:
     - oarc/F012r/l0
   hint: sometimes
   text: the <r<demon's penultimate reward>> is
-Batreaux - 70 Crystals Second Reward:
+Skyloft - Village - Batreaux' House - 70 Crystals Second Reward:
   original item: Gold Rupee
   type: skyloft
   Paths:
@@ -245,7 +245,7 @@ Batreaux - 70 Crystals Second Reward:
     - oarc/F012r/l0
   hint: sometimes
   text: the <r<demon's penultimate reward>> is
-Batreaux - 80 Crystals:
+Skyloft - Village - Batreaux' House - 80 Crystals:
   original item: Progressive Wallet
   type: skyloft
   Paths:
@@ -254,94 +254,94 @@ Batreaux - 80 Crystals:
   hint: always
   text: a <r<demon in human form>> grants
 
-Beedle - 300 Rupee Item:
+Skyloft - Beedle's Shop - 300 Rupee Item:
   original item: Progressive Pouch
   type: skyloft, beedle, cheap
   Paths:
     - ShpSmpl/20
-Beedle - 600 Rupee Item:
+Skyloft - Beedle's Shop - 600 Rupee Item:
   original item: Progressive Pouch
   type: skyloft, beedle, medium
   Paths:
     - ShpSmpl/21
-Beedle - 1200 Rupee Item:
+Skyloft - Beedle's Shop - 1200 Rupee Item:
   original item: Progressive Pouch
   type: skyloft, beedle, expensive
   Paths:
     - ShpSmpl/22
   text: for <g+<1200 rupees>> <r<Beedle>> sells
-Beedle - 800 Rupee Item:
+Skyloft - Beedle's Shop - 800 Rupee Item:
   original item: Life Medal
   type: skyloft, beedle, medium
   Paths:
     - ShpSmpl/26
-Beedle - 1600 Rupee Item:
+Skyloft - Beedle's Shop - 1600 Rupee Item:
   original item: Heart Piece
   type: skyloft, beedle, expensive
   Paths:
     - ShpSmpl/23
   text: for <g+<1600 rupees>> <r<Beedle>> sells
-Beedle - First 100 Rupee Item:
+Skyloft - Beedle's Shop - First 100 Rupee Item:
   original item: Extra Wallet
   type: skyloft, beedle, cheap
   Paths:
     - ShpSmpl/24
-Beedle - Second 100 Rupee Item:
+Skyloft - Beedle's Shop - Second 100 Rupee Item:
   original item: Extra Wallet
   type: skyloft, beedle, cheap
   Paths:
     - ShpSmpl/17
-Beedle - Third 100 Rupee Item: # to make not too much farming at the start necessary, the third item is only in logic with some rupee farming method
+Skyloft - Beedle's Shop - Third 100 Rupee Item: # to make not too much farming at the start necessary, the third item is only in logic with some rupee farming method
   original item: Extra Wallet
   type: skyloft, beedle, cheap
   Paths:
     - ShpSmpl/18
-Beedle - 50 Rupee Item:
+Skyloft - Beedle's Shop - 50 Rupee Item:
   original item: Progressive Bug Net
   type: skyloft, beedle, cheap
   Paths:
     - ShpSmpl/25
-Beedle - 1000 Rupee Item:
+Skyloft - Beedle's Shop - 1000 Rupee Item:
   original item: Bug Medal
   type: skyloft, beedle, medium
   Paths:
     - ShpSmpl/27
 
 # Single Gratitude crystals aren't randomized, but still need logic, because some of them need items
-Knight Academy - Crystal in Link's Room:
+Skyloft - Upper - Knight Academy - Crystal in Link's Room:
   original item: Gratitude Crystal
   type: crystal
-Central Skyloft - Crystal on Light Tower:
+Skyloft - Central - Crystal on Light Tower:
   original item: Gratitude Crystal
   type: crystal
-Skyloft Village - Crystal near Pumpkin Patch:
+Skyloft - Village - Crystal near Pumpkin Patch:
   original item: Gratitude Crystal
   type: crystal
-Central Skyloft - Crystal in Orielle and Parrow's House:
+Skyloft - Central - Orielle and Parrow's House - Crystal:
   original item: Gratitude Crystal
   type: crystal
-Central Skyloft - Crystal between Wooden Planks:
+Skyloft - Central - Crystal between Wooden Planks:
   original item: Gratitude Crystal
   type: crystal
-Knight Academy - Crystal in Knight Academy Plant:
+Skyloft - Upper - Knight Academy - Crystal in Plant:
   original item: Gratitude Crystal
   type: crystal
-Central Skyloft - Crystal on West Cliff:
+Skyloft - Central - Crystal on West Cliff:
   original item: Gratitude Crystal
   type: crystal
-Central Skyloft - Crystal after Waterfall Cave:
+Skyloft - Central - Crystal after Waterfall Cave:
   original item: Gratitude Crystal
   type: crystal
-Central Skyloft - Crystal in Loftwing Prison:
+Skyloft - Central - Crystal in Loftwing Prison:
   original item: Gratitude Crystal
   type: crystal
-Knight Academy - Crystal in Sparring Hall:
+Skyloft - Upper - Sparring Hall - Crystal:
   original item: Gratitude Crystal
   type: crystal
-Central Skyloft - Crystal on Waterfall Island:
+Skyloft - Central - Waterfall Island - Crystal:
   original item: Gratitude Crystal
   type: crystal
-Knight Academy - Crystal in Zelda's Room:
+Skyloft - Upper - Knight Academy - Zelda's Room - Crystal:
   original item: Gratitude Crystal
   type: crystal
 
@@ -350,19 +350,19 @@ Sky - Lumpy Pumpkin - Chandelier:
   type: sky, freestanding
   Paths:
     - stage/F011r/r0/l0/Chandel
-Sky - Lumpy Pumpkin - Goddess Chest on the Roof:
+Sky - Lumpy Pumpkin - Roof Goddess Chest:
   original item: Gold Rupee
   type: sky, goddess, faron goddess, dungeon
   Paths:
     - stage/F020/r0/l0/TBox/87
   cube_region: Skyview
-Sky - Lumpy Pumpkin - Outside Goddess Chest:
+Sky - Lumpy Pumpkin - Goddess Chest:
   original item: Progressive Pouch
   type: sky, goddess, faron goddess
   Paths:
     - stage/F020/r0/l0/TBox/64
   cube_region: Faron Woods
-Sky - Lumpy Pumpkin Harp Minigame:
+Sky - Lumpy Pumpkin - Chandelier Quest Reward:
   original item: Heart Piece
   type: sky, long, minigame
   Paths:
@@ -371,7 +371,7 @@ Sky - Lumpy Pumpkin Harp Minigame:
   hint: sometimes
   text: the <r<bartender>> holds
 
-Sky - Bamboo Island Goddess Chest:
+Sky - Bamboo Island - Goddess Chest:
   original item: Gold Rupee
   type: sky, goddess, eldin goddess, bombable
   Paths:
@@ -389,7 +389,7 @@ Sky - Goddess Chest in Cave on Island Next to Bamboo Island:
   Paths:
     - stage/F020/r0/l0/TBox/83
   cube_region: Lanayru Desert
-Sky - Beedle's Island Goddess Chest:
+Sky - Beedle's Island - Top - Goddess Chest:
   original item: Heart Piece
   type: sky, goddess, lanayru goddess, combat
   Paths:
@@ -397,7 +397,7 @@ Sky - Beedle's Island Goddess Chest:
   hint: sometimes
   text: a <s<goddess cube>> at the <r<monument to time>> reveals
   cube_region: Lanayru Desert
-Sky - Beedle's Island Cage Goddess Chest:
+Sky - Beedle's Island - Cage - Goddess Chest:
   original item: Rupee Medal
   type: sky, goddess, faron goddess
   Paths:
@@ -421,37 +421,37 @@ Sky - Goddess Chest on Island Closest to Faron Pillar:
   Paths:
     - stage/F020/r0/l0/TBox/65
   cube_region: Faron Woods
-Sky - Goddess Chest outside Volcanic Island:
+Sky - Volcanic Island - Outside Goddess Chest:
   original item: Heart Medal
   type: sky, goddess, lanayru goddess
   Paths:
     - stage/F020/r0/l0/TBox/67
   cube_region: Lanayru Desert
-Sky - Goddess Chest inside Volcanic Island:
+Sky - Volcanic Island - Inside Goddess Chest:
   original item: Heart Piece
   type: sky, goddess, faron goddess
   Paths:
     - stage/F020/r0/l0/TBox/68
   cube_region: Faron Woods
-Sky - Goddess Chest under Fun Fun Island:
+Sky - Fun Fun Island - Goddess Chest Below:
   original item: Gold Rupee
   type: sky, goddess, floria goddess
   Paths:
     - stage/F020/r0/l0/TBox/86
   cube_region: Lake Floria
-Sky - Southwest Triple Island Upper Goddess Chest:
+Sky - Triple Island - Upper Goddess Chest:
   original item: Small Seed Satchel
   type: sky, goddess, eldin goddess
   Paths:
     - stage/F020/r0/l0/TBox/66
   cube_region: Eldin Volcano
-Sky - Southwest Triple Island Lower Goddess Chest:
+Sky - Triple Island - Lower Goddess Chest:
   original item: Life Medal
   type: sky, goddess, lanayru goddess
   Paths:
     - stage/F020/r0/l0/TBox/84
   cube_region: Lanayru Desert
-Sky - Southwest Triple Island Cage Goddess Chest:
+Sky - Triple Island - Cage Goddess Chest:
   original item: Potion Medal
   type: sky, goddess, sand sea goddess
   Paths:
@@ -464,7 +464,7 @@ Sky - Dodoh's Crystals:
     - event/110-DivingGame/60
     - oarc/F020/l0
   text: delivering a <r<colorful wheel>> is rewarded with
-Sky - Fun Fun Island Minigame - 500 Rupees:
+Sky - Fun Fun Island Minigame -- 500 Rupees:
   original item: Heart Piece
   type: sky, lanayru, minigame, long, scrapper
   Paths:
@@ -507,52 +507,52 @@ Sky - Chest in Breakable Boulder near Lumpy Pumpkin:
   Paths:
     - stage/F020/r0/l0/TBox/69
 
-Sky - Crystal outside Lumpy Pumpkin:
+Sky - Lumpy Pumpkin - Outside Crystal:
   original item: Gratitude Crystal
   type: crystal
-Sky - Crystal inside Lumpy Pumpkin:
+Sky - Lumpy Pumpkin - Inside - Crystal:
   original item: Gratitude Crystal
   type: crystal
 Sky - Crystal on Beedle's Ship:
   original item: Gratitude Crystal
   type: crystal
 
-Thunderhead - Goddess Chest outside Isle of Songs:
+Thunderhead - Isle of Songs - Side Goddess Chest:
   original item: Gold Rupee
   type: thunderhead, goddess, eldin goddess
   Paths:
     - stage/F023/r0/l0/TBox/92
   cube_region: Mogma Turf
-Thunderhead - Goddess Chest on top of Isle of Songs:
+Thunderhead - Isle of Songs - Top Goddess Chest:
   original item: Small Bomb Bag
   type: thunderhead, goddess, summit goddess
   Paths:
     - stage/F023/r0/l0/TBox/85
   cube_region: Volcano Summit
-Thunderhead - East Island Goddess Chest:
+Thunderhead - East Island - Goddess Chest:
   original item: Rupee Medal
   type: thunderhead, goddess, faron goddess
   Paths:
     - stage/F023/r0/l0/TBox/73
   cube_region: Faron Woods
-Thunderhead - East Island Chest:
+Thunderhead - East Island - Chest:
   original item: Evil Crystal
   type: thunderhead, miscellaneous
   Paths:
     - stage/F023/r0/l0/TBox/94
-Thunderhead - Bug Heaven Goddess Chest:
+Thunderhead - Bug Heaven - Goddess Chest:
   original item: Heart Piece
   type: thunderhead, goddess, summit goddess
   Paths:
     - stage/F023/r0/l0/TBox/88
   cube_region: Volcano Summit
-Thunderhead - First Goddess Chest on Mogma Mitts Island:
+Thunderhead - Mogma Mitts Island - First Goddess Chest:
   original item: Bottle
   type: thunderhead, goddess, summit goddess
   Paths:
     - stage/F023/r0/l0/TBox/77
   cube_region: Volcano Summit
-Thunderhead - Second Goddess Chest on Mogma Mitts Island:
+Thunderhead - Mogma Mitts Island - Second Goddess Chest:
   original item: Small Quiver
   type: thunderhead, goddess, sand sea goddess
   Paths:
@@ -560,7 +560,7 @@ Thunderhead - Second Goddess Chest on Mogma Mitts Island:
   cube_region: Lanayru Gorge
   hint: sometimes
   text: They say that <r<curing an ancient dragon>> is rewarded with
-Thunderhead - Bug Heaven - 10 Bugs in 3 Minutes:
+Thunderhead - Bug Heaven -- 10 Bugs in 3 Minutes:
   original item: Horned Colossus Beetle
   type: thunderhead, minigame
   Paths:
@@ -594,18 +594,18 @@ Thunderhead - Isle of Songs - Din's Power:
   hint: sometimes
   text: a <r<blade of white>> reveals
 
-Sealed Grounds - Chest inside Sealed Temple:
+Faron - Sealed Grounds - Sealed Temple - Chest:
   original item: Revitalizing Potion
   type: faron, miscellaneous
   Paths:
     - stage/F402/r2/l0/TBox/64
-Sealed Grounds - Song from Impa:
+Faron - Sealed Grounds - Song from Impa:
   original item: Ballad of the Goddess
   type: faron, song
   Paths:
     - event/501-Inpa/267
     - oarc/F402/l2
-Sealed Grounds - Gorko's Goddess Wall Reward:
+Faron - Sealed Grounds - Gorko's Goddess Wall Reward:
   type: faron, long, dungeon
   original item: Heart Piece
   Paths:
@@ -613,13 +613,13 @@ Sealed Grounds - Gorko's Goddess Wall Reward:
     - oarc/F400/l0
   hint: sometimes
   text: <r<drawing upon a magical wall>> reveals
-#Sealed Grounds - Behind the Temple Triforce on Goddess Wall:
+#Faron - Sealed Grounds - Behind the Temple Triforce on Goddess Wall:
 #  original item: Gold Rupee
 #  type: faron, long, dungeon
 #  Paths:
 #   - event/503-Goron/418
 #   - oarc/F400/l0
-Sealed Grounds - Zelda's Blessing:
+Faron - Sealed Grounds - Zelda's Blessing:
   original item: Progressive Sword
   type: faron #TODO: this may need to be revisited as it doesnt really fit any other checks
   Paths:
@@ -628,7 +628,8 @@ Sealed Grounds - Zelda's Blessing:
   hint: sometimes
   text: the <r<goddess blesses you>> with
 
-Faron Woods - Item on Tree:
+
+Faron - Woods - Item on Tree:
   original item: Heart Piece
   type: faron, freestanding
   Paths:
@@ -641,39 +642,39 @@ Faron Woods - Slingshot:
     - oarc/F100/l0
   hint: sometimes
   text: the <r<Kikwi relic>> is
-Faron Woods - Deep Woods Chest:
+Faron - Deep Woods - Chest:
   original item: Red Rupee
   type: faron, miscellaneous
   Paths:
     - stage/F101/r0/l0/TBox/74
-Faron Woods - Item behind Bombable Rock:
+Faron - Woods - Item behind Bombable Rock:
   original item: Heart Piece
   type: faron, freestanding, bombable
   Paths:
     - stage/F100/r0/l0/Item/33 #last thing is SceneflagID
-Faron Woods - Chest behind Bombable Rocks near Erla:
+Faron - Woods - Chest behind Bombable Rocks near Erla:
   original item: Semi Rare Treasure
   type: faron, bombable
   Paths:
     - stage/F100/r0/l0/TBox/64
-Faron Woods - Chest inside Great Tree:
+Faron - Great Tree - Chest:
   original item: Gold Rupee
   type: faron, miscellaneous
   Paths:
     - stage/F100_1/r0/l0/TBox/84
   hint: sometimes
   text: the <r<hollow tree>> holds
-Faron Woods - Rupee on Great Tree Branch North:
+Great Tree - Top - Rupee on North Branch:
   original item: Blue Rupee
   type: faron, freestanding
   Paths:
     - stage/F100/r0/l0/Item/43
-Faron Woods - Rupee on Great Tree Branch West:
+Great Tree - Top - Rupee on West Branch:
   original item: Blue Rupee
   type: faron, freestanding
   Paths:
     - stage/F100/r0/l0/Item/44
-Faron Woods - Rupee on Platform Near Floria Door:
+Faron Woods - Rupee on Platform near Floria Door:
   original item: Red Rupee
   type: faron, freestanding
   Paths:
@@ -689,145 +690,147 @@ Faron Woods - Rupee on Hollow Tree Branch:
   Paths:
     - stage/F100/r0/l0/Item/41
 
-Lake Floria - Lake Floria Chest:
+Faron - Lake Floria - Chest:
   original item: Goddess Plume
   type: faron, miscellaneous
   hint: sometimes
   text: a <r<lonely chest in the lake>> contains
   Paths:
     - stage/F102/r3/l0/TBox/64
-Lake Floria - Dragon Lair East Chest:
+Faron - Lake Floria - Farore's Lair - East Chest:
   original item: Semi Rare Treasure
   type: faron, miscellaneous
   Paths:
     - stage/F102_2/r0/l0/TBox/85
-Lake Floria - Dragon Lair South Chest:
+Faron - Lake Floria - Farore's Lair - South Chest:
   original item: Silver Rupee
   type: faron, miscellaneous
   Paths:
     - stage/F102_2/r0/l0/TBox/84
-Lake Floria - Rupee Under Big Boulder:
+
+Lake Floria - Rupee under Central Boulder:
  original item: Silver Rupee
  type: faron, freestanding
  Paths:
   - stage/F102/r2/l0/Item/60
 
-Lake Floria - Rupee Behind Northeast Boulder Right:
+Lake Floria - Right Rupee behind Northwest Boulder:
  original item: Red Rupee
  type: faron, freestanding
  Paths:
   - stage/F102/r2/l0/Item/61
 
-Lake Floria - Rupee Behind Northeast Boulder Left:
+Lake Floria - Left Rupee behind Northwest Boulder:
  original item: Red Rupee
  type: faron, freestanding
  Paths:
   - stage/F102/r2/l0/Item/62
 
-Lake Floria - Rupee Behind Southeast Boulder:
+Lake Floria - Rupee behind Southwest Boulder:
  original item: Blue Rupee
  type: faron, freestanding
  Paths:
   - stage/F102/r2/l0/Item/63
-Lake Floria - Rupee High Ledge Outside Cistern Entrance:
+
+Floria Waterfall - Rupee on High Ledge:
   original item: Gold Rupee
   type: faron, freestanding
   Paths:
    - stage/F102_1/r0/l0/Item/64
 
 
-Eldin Volcano - Chest behind Bombable Wall in First Room:
+Eldin - Volcano - First Room - Chest behind Bombable Wall:
   original item: Red Rupee
   type: eldin, bombable
   Paths:
     - stage/F200/r1/l0/TBox/72
-Eldin Volcano - Chest after Crawlspace:
+Eldin - Volcano - East - Chest after Crawlspace:
   original item: Red Rupee
   type: eldin, bombable
   Paths:
     - stage/F200/r2/l0/TBox/66
-Eldin Volcano - Chest behind Bombable Wall near Cliff:
+Eldin - Volcano - East - Chest behind Bombable Wall:
   original item: Red Rupee
   type: eldin, bombable
   Paths:
     - stage/F200/r2/l0/TBox/73
-Eldin Volcano - Item on Cliff:
+Eldin - Volcano - Item on Cliff:
   original item: Heart Piece
   type: eldin, freestanding
   Paths:
     - stage/F200/r2/l0/Item/102 #sceneflagID
-Eldin Volcano - Chest behind Bombable Wall near Volcano Ascent:
+Eldin - Volcano - Ascent - Chest behind Bombable Wall:
   original item: Red Rupee
   type: eldin, bombable
   Paths:
     - stage/F200/r2/l0/TBox/71
 
-Eldin Volcano - Rupee Ledge before First Room:
+Eldin Volcano - Entry - Rupee on Ledge:
   original item: Red Rupee
   type: eldin, freestanding
   Paths:
     - stage/F200/r0/l0/Item/41
 
-Eldin Volcano - Rupee behind Bombable Wall in First Room:
+Eldin Volcano - First Room - Rupee behind Bombable Wall:
   original item: Blue Rupee
   type: eldin, freestanding, bombable
   Paths:
     - stage/F200/r1/l0/Item/13
 
-Eldin Volcano - Rupee in Crawlspace in First Room:
+Eldin Volcano - First Room - Rupee in Crawlspace:
   original item: Blue Rupee
   type: eldin, freestanding, bombable
   Paths:
     - stage/F200/r1/l0/Item/19
 
-Eldin Volcano - Rupee above Mogma Turf Entrance Southeast:
+Eldin Volcano - Southeast Rupee above Mogma Turf Entrance:
   original item: Blue Rupee
   type: eldin, freestanding
   Paths:
     - stage/F200/r2/l0/Item/125
 
-Eldin Volcano - Rupee above Mogma Turf Entrance North:
+Eldin Volcano - North Rupee above Mogma Turf Entrance:
   original item: Red Rupee
   type: eldin, freestanding
   Paths:
     - stage/F200/r2/l0/Item/123
 
-Eldin Volcano - Rupee Bombable Wall First Slope Left:
+Eldin Volcano - Near Thrill Digger Cave - Left Rupee behind Bombable Wall:
   original item: Red Rupee
   type: eldin, freestanding, bombable
   Paths:
     - stage/F200/r4/l0/Item/45
 
-Eldin Volcano - Rupee Bombable Wall First Slope Right:
+Eldin Volcano - Near Thrill Digger Cave - Right Rupee behind Bombable Wall:
   original item: Red Rupee
   type: eldin, freestanding, bombable
   Paths:
     - stage/F200/r4/l0/Item/11
 
 # These checks are Digging Spots
-Eldin Volcano - Digging Spot in front of Earth Temple:
+Eldin - Volcano - Digging Spot in front of Earth Temple:
   original item: Key Piece
   type: eldin, digging
   Paths:
     - stage/F200/r4/l1/Soil/8
-Eldin Volcano - Digging Spot below Tower:
+Eldin - Volcano - Digging Spot below Tower:
   original item: Key Piece
   type: eldin, bombable, digging
   Paths:
     - stage/F200/r4/l1/Soil/9
-Eldin Volcano - Digging Spot behind Boulder on Sandy Slope:
+Eldin - Volcano - Digging Spot behind Boulder on Sandy Slope:
   original item: Key Piece
   type: eldin, bombable, digging
   hint: sometimes
   text: a <r<boulder on a sandy slope>> hides
   Paths:
     - stage/F200/r4/l1/Soil/12
-Eldin Volcano - Digging Spot after Vents:
+Eldin - Volcano - Digging Spot after Vents:
   original item: Key Piece
   type: eldin, digging
   Paths:
     - stage/F200/r6/l1/Soil/10
-Eldin Volcano - Digging Spot after Draining Lava:
+Eldin - Volcano - Digging Spot after Draining Lava:
   original item: Key Piece
   type: eldin, digging
   Paths:
@@ -862,7 +865,7 @@ Mogma Turf - Chest behind Bombable Wall in Fire Maze:
   Paths:
     - stage/F210/r0/l0/TBox/70
 
-Volcano Summit - Small Chest in Volcano Summit:
+Volcano Summit - Small Chest:
   original item: Blue Rupee
   type: eldin, miscellaneous
   Paths:
@@ -879,7 +882,7 @@ Volcano Summit - Item behind Digging:
     - stage/F201_3/r0/l0/Item/104 #sceneflagID
   hint: sometimes
   text: <r<fairies at the summit>> dance with
-Volcano Summit - Chest behind Bombable Wall in Waterfall Area:
+Volcano Summit - Waterfall - Chest behind Bombable Wall:
   original item: Silver Rupee
   type: eldin, bombable
   Paths:
@@ -1010,19 +1013,19 @@ Lanayru Caves - Golo's Gift:
     - oarc/F303/l0
 
 
-Lanayru Sand Sea - Rupee Harbor First Pillar:
+Lanayru Sand Sea - Ancient Harbour - Rupee on First Pillar:
   original item: Red Rupee
   type: lanayru, freestanding
   Paths:
     - stage/F301/r0/l0/Item/92
 
-Lanayru Sand Sea - Rupee Harbor Entrance Crown Left:
+Lanayru Sand Sea - Ancient Harbour - Left Rupee on Entrance Crown:
   original item: Silver Rupee
   type: lanayru, freestanding
   Paths:
     - stage/F301/r0/l0/Item/91
 
-Lanayru Sand Sea - Rupee Harbor Entrance Crown Right:
+Lanayru Sand Sea - Ancient Harbour - Right Rupee on Entrance Crown:
   original item: Silver Rupee
   type: lanayru, freestanding
   Paths:
@@ -1074,19 +1077,19 @@ Lanayru Sand Sea - Pirate Stronghold - Third Chest:
   Paths:
     - stage/F301_2/r6/l0/TBox/74
 
-Lanayru Sand Sea - Pirate Stronghold - Rupee Sea Pillar West:
+Lanayru Sand Sea - Pirate Stronghold - Rupee on West Sea Pillar:
   original item: Silver Rupee
   type: lanayru, freestanding
   Paths:
     - stage/F301_6/r0/l0/Item/11
 
-Lanayru Sand Sea - Pirate Stronghold - Rupee Sea Pillar East:
+Lanayru Sand Sea - Pirate Stronghold - Rupee on East Sea Pillar:
   original item: Silver Rupee
   type: lanayru, freestanding
   Paths:
     - stage/F301_6/r0/l0/Item/12
 
-Lanayru Sand Sea - Pirate Stronghold - Rupee Bird Statue Pillar or Nose:
+Lanayru Sand Sea - Pirate Stronghold - Rupee on Bird Statue Pillar or Nose:
   original item: Silver Rupee
   type: lanayru, freestanding
   Paths:
@@ -1122,17 +1125,17 @@ Skyview - Item behind Bars:
   type: faron, dungeon
   Paths:
     - stage/D100/r5/l0/Item/103
-Skyview - Rupee Southeast Tunnel:
+Skyview - Second Hub - Rupee in Southeast Tunnel:
   original item: Red Rupee
   type: faron, dungeon, freestanding
   Paths:
     - stage/D100/r5/l0/Item/65
-Skyview - Rupee Southwest Tunnel:
+Skyview - Second Hub - Rupee in Southwest Tunnel:
   original item: Red Rupee
   type: faron, dungeon, freestanding
   Paths:
     - stage/D100/r5/l0/Item/67
-Skyview - Rupee East Tunnel:
+Skyview - Second Hub - Rupee in East Tunnel:
   original item: Red Rupee
   type: faron, dungeon, freestanding
   Paths:
@@ -1164,7 +1167,7 @@ Skyview - Ghirahim Heart Container:
     - stage/B100/r0/l3/HeartCo
     - stage/B100/r0/l4/HeartCo
 
-Skyview - Rupee on Spring Pillar:
+Skyview - Spring - Rupee on Pillar:
   original item: Red Rupee
   type: faron, dungeon, freestanding
   Paths:
@@ -1327,37 +1330,40 @@ Ancient Cistern - Chest in East Part:
   text: the <r<lone east chest in the Ancient Cistern>> contains
   Paths:
     - stage/D101/r1/l0/TBox/67
-Ancient Cistern - Rupee East Room Main Path:
+
+Ancient Cistern - East Part - Rupee in Main Tunnel:
   original item: Red Rupee
   type: faron, dungeon, freestanding
   Paths:
     - stage/D101/r2/l0/Item/34
-Ancient Cistern - Rupee East Room Cubby:
+Ancient Cistern - East Part - Rupee in Cubby:
   original item: Red Rupee
   type: faron, dungeon, freestanding
   Paths:
     - stage/D101/r2/l0/Item/68
-Ancient Cistern - Rupee East Room Short Tunnel 3:
+Ancient Cistern - East Part - Third Rupee in Short Tunnel:
   original item: Green Rupee
   type: faron, dungeon, freestanding
   Paths:
     - stage/D101/r2/l0/Item/65
-Ancient Cistern - Rupee East Room Short Tunnel 2:
+Ancient Cistern - East Part - Second Rupee in Short Tunnel:
   original item: Green Rupee
   type: faron, dungeon, freestanding
   Paths:
     - stage/D101/r2/l0/Item/66
-Ancient Cistern - Rupee East Room Short Tunnel 1:
+Ancient Cistern - East Part - First Rupee in Short Tunnel:
   original item: Green Rupee
   type: faron, dungeon, freestanding
   Paths:
     - stage/D101/r2/l0/Item/67
+
 ## Can Be Locked Out Of if activating water pillar before collecting
-#Ancient Cistern - Rupee North Room Under Lilypad:
+#Ancient Cistern - After Gutters - Rupee under Lilypad:
 #  original item: Red Rupee
 #  type: faron, dungeon, freestanding
 #  Paths:
 #    - stage/D101/r5/l0/Item/13
+
 Ancient Cistern - Whip:
   original item: Whip
   type: faron, dungeon
@@ -1573,26 +1579,37 @@ Fire Sanctuary - Din's Flame:
     - oarc/B201_1/l0
 
 
-Lanayru Gorge - Key Check:
+Lanayru Gorge - Item on Pillar:
   original item: Red Rupee
   type: lanayru, freestanding
   Paths:
     - stage/F302/r0/l0/Item/9
-Lanayru Gorge - Seedling:
+
+Lanayru Gorge - Life Tree Seedling:
   original item: Life Tree Seedling
   type: lanayru, digging
   Paths:
     - stage/F302/r0/l0/Soil/30
-Lanayru Gorge - Lanayru Soth:
+
+Lanayru Gorge - Thunder Dragon's Reward:
   original item: Lanayru Song of the Hero Part
   type: lanayru
   Paths:
     - event/404-DesertF3/give item after Healing Thunderdragon
     - oarc/F302/l0
 
+#Lanayru Gorge - Boss Rush - 4 Bosses
+#   original item: Heart Piece
+#   Paths:
+#    - event/
+#Lanayru Gorge - Boss Rush - 8 Bosses
+#   original item: Hylian Shield
+#   Paths:
+#    - event/
+
 
 #Flooded Faron Woods - Water Dragon's Reward
-#   original item: Faron Soth Part
+#   original item: Faron Song of the Hero Part
 #   Paths:
 #    - event/
 
@@ -1623,7 +1640,7 @@ Lanayru Gorge - Lanayru Soth:
 #    - stage/F202.json
 
 #Fire Dragon Room - Fire Dragon's Reward
-#   original item: Eldin Soth part
+#   original item: Eldin Song of the Hero Part
 #   Paths:
 #    - stage/F221.json
 
@@ -1653,7 +1670,7 @@ Sky Keep - Triforce of Courage:
    type: skyloft, dungeon
    Paths:
     - stage/D003_8/r0/l3/Item/64
-Sky Keep - Rupee in Alcove of FS Room:
+Sky Keep - Fire Sanctuary Room - Rupee in Alcove:
   original item: Silver Rupee
   type: skyloft, dungeon, freestanding
   Paths:
@@ -1681,7 +1698,7 @@ Lanayru Silent Realm - Clawshots:
   Paths:
     - stage/S300/r0/l2/WarpObj
   text: a <r<trial of wisdom>> grants
- 
+
 Eldin Silent Realm - Fireshield Earrings:
   original item: Fireshield Earrings
   type: eldin, silent realm
