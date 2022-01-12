@@ -1,15 +1,32 @@
 # Skyloft
-Knight Academy - Upper Exit: {}
-Knight Academy - Lower Exit:
-  allowed-time-of-day: DayOnly
-Knight Academy - Chimney:
-  exit-type: Entrance
+Skyloft - Upper - Knight Academy - Upper Exit:
+  entrance: {}
+  exit: {}
+  vanilla: Skyloft - Upper - Knight Academy Upper Entrance
 
-Knight Academy Upper Entrance: {}
-Knight Academy Lower Entrance:
+Skyloft - Upper - Knight Academy - Lower Exit:
   allowed-time-of-day: DayOnly
-Knight Academy Chimney Entrance:
-  exit-type: Exit
+  entrance: {}
+  exit: {}
+  vanilla: Skyloft - Upper - Knight Academy Lower Entrance
+
+Skyloft - Upper - Knight Academy - Chimney:
+  entrance: {}
+
+Skyloft - Upper - Knight Academy Upper Entrance:
+  entrance: {}
+  exit: {}
+  vanilla: Skyloft - Upper - Knight Acedemy - Upper Exit
+
+Skyloft - Upper - Knight Academy Lower Entrance:
+  allowed-time-of-day: DayOnly
+  entrance: {}
+  exit: {}
+  vanilla: Skyloft - Upper - Knight Academy - Lower Exit
+
+Skyloft - Upper - Knight Academy Chimney Entrance:
+  exit: {}
+  vanilla: Skyloft - Upper - Knight Acedemy - Chimney
 
 Sparring Hall - Exit: {}
 Sparring Hall Entrance: {}
@@ -37,14 +54,14 @@ Bazaar North Entrance: {}
 Bazaar East Entrance: {}
 Bazaar South Entrance: {}
 
-Skyloft Trial Entrance: {}
-Skyloft Trial - Entrance:
+Skyloft - Trial Entrance: {}
+Skyloft - Silent Realm - Entrance:
   exit-type: Entrance
-Skyloft Trial - Exit:
+Skyloft - Silent Realm - Exit:
   exit-type: Exit
 
-Parrow and Orielle's House - Exit: {}
-Parrow and Orielle's House Entrance: {}
+Orielle and Parrow's House - Exit: {}
+Orielle and Parrow's House Entrance: {}
 
 Peatrice's House - Exit: {}
 Peatrice's House Entrance: {}
@@ -90,6 +107,16 @@ Sky - Eldin Pillar - Inside the Volcano Statue: {}
 Sky - Lanayru Pillar - Lanayru Mines Statue: {}
 Sky - Lanayru Pillar - Desert Entrance Statue: {}
 
+Sky - Bamboo Island - Entrance:
+  entrance: {}
+  exit: {}
+  vanilla: Sky - Bamboo Island - Exit
+
+Sky - Bamboo Island - Exit:
+  entrance: {}
+  exit: {}
+  vanilla: Sky - Bamboo Island - Entrance
+
 Sky - Lumpy Pumpkin - Main Exit: {}
 Sky - Lumpy Pumpkin - Kitchen Exit: {}
 Sky - Lumpy Pumpkin - Main Entrance: {}
@@ -100,13 +127,34 @@ Sky - Skyloft Landing: {}
 Sky - Thunderhead Entrance: {}
 Sky - Thunderhead - Exit: {}
 
+Sky - Thunderhead - Isle of Songs - Entrance:
+  entrance: {}
+  exit: {}
+  vanilla: Sky - Thunderhead - Isle of Songs - Exit
 
+Sky - Thunderhead - Isle of Songs - Exit:
+  entrance: {}
+  exit: {}
+  vanilla: Sky - Thunderhead - Isle of Songs - Entrance
+
+
+# Faron
 Faron - Sealed Grounds - Upper Part - Statue: {}
 Faron - Sealed Grounds - Shortcut to Behind the Temple: {}
 Faron - Sealed Temple - To Hylia's Temple: {}
 Faron - Hylia's Temple - To Sealed Temple: {}
-Faron - Sealed Groungs - Behind the Temple - To Faron Woods: {}
-Faron - Sealed Groungs - Behind the Temple - Shortcut to Spiral: {}
+Faron - Sealed Grounds - Behind the Temple - Statue:
+  entrance: {}
+  exit: {}
+  vanilla: Sky - Faron Pillar - Behind the Temple Statue
+
+Faron - Sealed Grounds - Behind the Temple - To Faron Woods: {}
+Faron - Sealed Grounds - Behind the Temple - Shortcut to Spiral: {}
+
+Faron - Woods - Entry - Statue:
+  entrance: {}
+  exit: {}
+  vanilla: Sky - Faron Pillar - Faron Woods Entry Statue
 
 Faron - Woods - To Behind the Temple: {}
 Faron - Woods - Shortcut to Lake Floria: {}
@@ -119,7 +167,7 @@ Faron - Woods - Lake Floria Dive: {}
 Faron - Silent Realm - Entrance: {}
 Faron - Silent Realm - Exit: {}
 
-Faron - Great Tree - Lower Area - Underwater Entrance: {}
+Faron - Great Tree - Near Underwater Entrance - Underwater Entrance: {}
 Faron - Great Tree - Lower Area - Underwater Exit: {}
 Faron - Great Tree - Lower Area - To Outside Platforms: {}
 Faron - Great Tree - Outside Platforms - To Lower Area: {}
@@ -135,9 +183,7 @@ Faron - Deep Woods - Forest Temple Statue: {}
 Faron - Deep Woods - Skyview Entrance: {}
 
 Faron - Lake Floria - Above Rock - Faron Woods Dive: {}
-Faron - Lake Floria - Above Rock - To Below Rock: {}
 Faron - Lake Floria - Below Rock - Statue: {}
-Faron - Lake Floria - Below Rock - To Above Rock: {}
 Faron - Lake Floria - Below Rock - To Farore's Lair: {}
 Faron - Lake Floria - Farore's Lair - To Waterfall: {}
 Faron - Lake Floria - Farore's Lair - To Below Rock: {}
@@ -145,5 +191,113 @@ Faron - Lake Floria - Waterfall - Statue: {}
 Faron - Lake Floria - Waterfall - To Farore's Lair: {}
 Faron - Lake Floria - Waterfall - To Woods: {}
 Faron - Lake Floria - Waterfall - Ancient Cistern Entrance: {}
+
+Eldin - Volcano - Entrance - Statue:
+  entrance: {}
+  exit: {}
+  vanilla: Sky - Eldin Pillar - Eldin Entrance Statue
+
+Eldin - Volcano - East - Statue:
+  entrance: {}
+  exit: {}
+  vanilla: Sky - Eldin Pillar - Volcano East Statue
+
+Eldin - Volcano - East - To Mogma Turf:
+  exit: {}
+  vanilla: Eldin - Mogma Turf - Entrance
+
+Eldin - Volcano - East - From Mogma Turf Vent:
+  entrance: {}
+
+Eldin - Volcano - Past Mogma Turf - From Mogma Turf Vent:
+  entrance: {}
+
+Eldin - Volcano - Ascent - Statue:
+  entrance: {}
+  exit: {}
+  vanilla: Sky - Eldin Pillar - Volcano Ascent Statue
+
+Eldin - Volcano - Ascent - Trial Entrance:
+  entrance: {}
+  exit: {}
+  vanilla: Eldin - Silent Realm - Entrance
+
+Eldin - Volcano - Near Thrill Digger Cave - Cave Entrance:
+  entrance: {}
+  exit: {}
+  vanilla: Eldin - Volcano - Thrill Digger Cave - Exit
+
+Eldin - Volcano - Thrill Digger Cave - Exit:
+  entrance: {}
+  exit: {}
+  vanilla: Eldin - Volcano - Near Thrill Digger Cave - Cave Entrance
+
+Eldin - Volcano - Temple Entrance - Statue:
+  entrance: {}
+  exit: {}
+  vanilla: Sky - Eldin Pillar - Temple Entrance Statue
+
+Eldin - Volcano - Earth Temple Entrance:
+  entrance: {}
+  exit: {}
+  vanilla: Earth Temple - Entrance
+
+Eldin - Volcano - Hot Cave - To Volcano Summit:
+  entrance: {}
+  exit: {}
+  vanilla: Eldin - Volcano Summit - To Hot Cave
+
+Eldin - Volcano - Hot Cave - From Vent:
+  entrance: {}
+
+Eldin - Volcano - Past Slide - Vent to Hot Cave:
+  exit: {}
+  vanilla: Eldin - Volcano - Hot Cave - From Vent
+
+Eldin - Mogma Turf - Entrance:
+  entrance: {}
+
+Eldin - Mogma Turf - First Exit Vent:
+  exit: {}
+  vanilla: Eldin - Volcano - East - From Mogma Turf Vent
+
+Eldin - Mogma Turf - Second Exit Vent:
+  exit: {}
+  vanilla: Eldin - Volcano - Past Mogma Turf - From Mogma Turf Vent
+
+Eldin - Volcano Summit - To Hot Cave:
+  entrance: {}
+  exit: {}
+  vanilla: Eldin - Volcano - Hot Cave - To Volcano Summit
+
+Eldin - Volcano Summit - To Temple Entrance:
+  entrance: {}
+  exit: {}
+  vanilla: Eldin - Volcano Summit - Temple Entrance - To Summit
+
+Eldin - Volcano Summit - To Waterfall:
+  entrance: {}
+  exit: {}
+  vanilla: Eldin - Volcano Summit - Waterfall - Exit
+
+Eldin - Volcano Summit - Waterfall - Exit:
+  entrance: {}
+  exit: {}
+  vanilla: Eldin - Volcano Summit - To Waterfall
+
+Eldin - Volcano Summit - Temple Entrance - To Summit:
+  entrance: {}
+  exit: {}
+  vanilla: Eldin - Volcano Summit - To Temple Entrance
+
+Eldin - Volcano Summit - Temple Entrance - Statue:
+  entrance: {}
+  exit: {}
+  vanilla: Sky - Eldin Pillar - Inside the Volcano Statue
+
+Eldin - Volcano Summit - Fire Sanctuary Entrance:
+  entrance: {}
+  exit: {}
+  vanilla: Fire Sanctuary - Entrance
 
 Skyview - Entrance: {}
