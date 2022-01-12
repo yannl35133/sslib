@@ -143,7 +143,7 @@ class AndCombination(LogicExpression):
             return AndCombination(arguments)
 
     def localize(self, localizer):
-        self.simplify([arg.localize(localizer) for arg in self.arguments])
+        return self.simplify([arg.localize(localizer) for arg in self.arguments])
 
     def eval(self, *args):
         raise TypeError(
@@ -169,7 +169,7 @@ class OrCombination(LogicExpression):
             return OrCombination(arguments)
 
     def localize(self, localizer):
-        self.simplify([arg.localize(localizer) for arg in self.arguments])
+        return self.simplify([arg.localize(localizer) for arg in self.arguments])
 
     def eval(self, *args):
         raise TypeError(

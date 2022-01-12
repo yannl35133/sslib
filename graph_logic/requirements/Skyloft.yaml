@@ -1,37 +1,39 @@
 # this logic assumes, that you can always reach outside skyloft
 
-Upper Skyloft:
+Upper:
   Knight Academy:
     region: Upper Skyloft
     can-sleep: true
     locations:
-      Fledge: Nothing
+      Fledge's Gift: Nothing
       Crystal in Link's Room: Night
-      Crystal in Knight Academy Plant: Night
+      Crystal in Plant: Night
       Start Owlan's Quest: Faron - Woods - Slingshot # The check
       Owlan's Crystals: Faron - Woods - Retrieve Oolo & Day
       Cawlin's Letter: Goddess Harp & Night & Day
       Ghost/Pipit's Crystals: Cawlin's Letter & Day
-      Crystal in Zelda's Room: Unlocked Zelda's Room & Night
-      Zelda Heartpiece: Unlocked Zelda's Room
-      Fledge's Crystals: Skyloft Central - Bazaar - Endurance Potion & Night
+      Fledge's Crystals: Skyloft - Central - Bazaar - Endurance Potion & Night
     exits:
       Upper Exit: Nothing
       Lower Exit: Day
 
-    Above Zelda's Room:
+    Zelda's Room:
       region: Upper Skyloft
+      entrance:
+        Unlocked Zelda's Room
       exits:
         Chimney: Nothing
         Knight Academy: Nothing
       locations:
+        Crystal: Unlocked Zelda's Room & Night
+        In Zelda's Closet: Unlocked Zelda's Room
         Unlocked Zelda's Room: Nothing
 
   Sparring Hall:
     region: Upper Skyloft
     locations:
-      Crystal in Sparring Hall: Beetle & Night
-      Practice Sword: Nothing
+      Crystal: Beetle & Night
+      Chest: Nothing
       Delivered Hot Soup: Sky - Lumpy Pumpkin - Start Hot Soup Delivery
     exits:
       Exit: Nothing
@@ -39,41 +41,38 @@ Upper Skyloft:
   Goddess Statue:
     region: Upper Skyloft
     locations:
-      Goddess Sword: Nothing
+      Chest: Nothing
     exits:
       Exit: Nothing
 
   region: Upper Skyloft
   locations:
-    Owlan's Shield: Day
-    Small Chest on Cliffs Near Goddess Statue: Nothing
-    Pumpkin Archery - 600 Points: Bow & Day
+    Owlan's Gift: Day
+    Chest near Goddess Statue: Nothing
+    Pumpkin Archery -- 600 Points: Bow & Day
   exits:
     Knight Academy Upper Entrance: Nothing
     Knight Academy Lower Entrance: Day
     Knight Academy Chimney Entrance: Clawshots
     Goddess Statue Entrance: Nothing
     Sparring Hall Entrance: Nothing
-    Skyloft Central: Nothing
+    Central: Nothing
 
 
-Skyloft Central:
+Central:
   region: Skyloft Central
   locations:
-    Crystal inbetween wooden Planks: Night
+    Crystal between Wooden Planks: Night
     Crystal on West Cliff: Night
     Crystal on Light Tower: Night
-    Crystal on Waterfall Island: Night & Clawshots
-    Crystal Past Waterfall Cave: Night & Waterfall Cave Crystals
+    Crystal after Waterfall Cave: Night & Waterfall Cave Crystals
     Crystal in Loftwing Prison: Night & Waterfall Cave Crystals
     West Cliff Goddess Chest: Faron - Goddess Cube on West Great Tree near Exit
-    Parrow's Bottle: Sky - Talk to Orielle & Day # we can ignore parrow in his house. Talking to orielle requires sky access
+    Parrow's Gift: Sky - Talk to Orielle & Day
     Parrow's Crystals: Sky - Save Orielle & Day
     Shed Chest: Water Scale
-    Shed Goddess Chest: Water Scale & Eldin - Goddess Cube in Eldin Slide
-    Baby Rattle: (Clawshots & Gust Bellows) | (Beetle & Baby Rattle from Beedle's Shop Trick & Gust Bellows)
-    Waterfall Goddess Chest: Lanayru - Goddess Cube in Pirate Stronghold & Clawshots
-    Floating Island Goddess Chest: Faron - Goddess Cube in Lake Floria & Clawshots
+    Shed Goddess Chest: Water Scale & Eldin - Sand Slide - Goddess Cube
+    Item in Bird Nest: (Clawshots & Gust Bellows) | (Beetle & Baby Rattle from Beedle's Shop Trick & Gust Bellows)
     Waterfall Cave Crystals: Beetle
   exits:
     Waterfall Cave Upper Entrance: Sword | Bomb Bag
@@ -81,14 +80,25 @@ Skyloft Central:
     Bazaar North Entrance: Day
     Bazaar East Entrance: Day
     Bazaar South Entrance: Day
-    Skyloft Trial Entrance: Song of the Hero & Goddess Harp
-    Parrow and Orielle's House Entrance: Nothing
+    Trial Entrance: Song of the Hero & Goddess Harp
+    Orielle and Parrow's House Entrance: Nothing
     Peatrice's House Entrance: Nothing
     Wryna's House Entrance: Nothing
     Sky: Day
 
-    Upper Skyloft: Nothing
-    Skyloft Village: Nothing
+    Upper: Nothing
+    Village: Nothing
+
+  Waterfall Island:
+    entrance: Clawshots
+    exits:
+      Central: Nothing # You can also reach Village
+    locations:
+      Crystal: Night
+      Goddess Chest: Lanayru - Goddess Cube in Pirate Stronghold
+      Floating Island Goddess Chest: Faron - Goddess Cube in Lake Floria
+      Gossip Stone: Nothing
+
 
   Waterfall Cave:
     region: Skyloft Center
@@ -102,7 +112,7 @@ Skyloft Central:
   Past Waterfall Cave:
     region: Skyloft Center
     locations:
-      Crystal Past Waterfall Cave: Night
+      Crystal after Waterfall Cave: Night
       Crystal in Loftwing Prison: Night
     exits:
       Waterfall Cave Lower Entrance: Nothing
@@ -112,8 +122,8 @@ Skyloft Central:
     allowed-time-of-day: DayOnly
     region: Skyloft Central
     locations:
-      Bazaar Potion Lady: Nothing
-      Bazaar Goddess Chest: Lanayru - Goddess Cube in Ancient Harbour
+      Potion Lady's Gift: Nothing
+      Goddess Chest: Lanayru - Goddess Cube in Ancient Harbour
       Endurance Potion: Lanayru - Beat Dungeon Entrance in Lanayru Desert & Bottle
       Talk to Peatrice: Nothing
     exits:
@@ -121,11 +131,11 @@ Skyloft Central:
       East Exit: Nothing
       South Exit: Nothing
 
-  Parrow and Orielle's House:
+  Orielle and Parrow's House:
     region: Skyloft Central
     locations:
-      Crystal in Parrow and Orielle's House: Nothing
-      Parrow's Bottle: Sky - Talk to Orielle & Night
+      Crystal: Nothing
+      Parrow's Gift: Sky - Talk to Orielle & Night
       Parrow's Crystals: Sky - Save Orielle & Night
     exits:
       Exit: Nothing
@@ -144,15 +154,22 @@ Skyloft Central:
     exits:
       Exit: Nothing
 
+Silent Realm:
+  region: Skyloft Silent Realm
+  exits:
+    Entrance: Nothing
+    Exit: Nothing
+  locations:
+    Stone of Trials: Nothing
 
-Skyloft Village:
+Village:
   region: Skyloft Village
   locations:
     Crystal near Pumpkin Patch: Night
     Opened Shed: Night
   exits:
-    Skyloft Central: Nothing
-    Skyloft Central - Past Waterfall Cave: Waterfall Cave Jump Trick & Day
+    Central: Nothing
+    Central - Past Waterfall Cave: Waterfall Cave Jump Trick & Day
     Bertie's House Entrance: Nothing
     Sparrot's House Entrance: Nothing
     Mallara's House Entrance: Nothing
@@ -168,6 +185,7 @@ Skyloft Village:
   Sparrot's House:
     region: Skyloft Village
     locations:
+      Start Sparrot's Quest: Nothing
       Sparrot's Crystals: Eldin - Retrieve Crystal Ball
     exits:
       Exit: Nothing
@@ -186,6 +204,7 @@ Skyloft Village:
       10 Crystals: 10 Gratitude Crystals
       30 Crystals: 30 Gratitude Crystals
       30 Crystals Chest: 30 Gratitude Crystals
+      40 Crystals: 40 Gratitude Crystals
       50 Crystals: 50 Gratitude Crystals
       70 Crystals: 70 Gratitude Crystals
       70 Crystals Second Reward: 70 Gratitude Crystals
@@ -206,9 +225,10 @@ Beedle's Shop:
     entrance: Enabled Beedle option
     exit: {Beedle's Shop: Nothing}
     locations:
-      300 Rupee Item: Can Afford 300 Rupees #& (Progressive Pouch x1 | Option "shop-mode" Is Not "Vanilla")
-      600 Rupee Item: Can Afford 600 Rupees #& (Progressive Pouch x1 | Option "shop-mode" Is Not "Vanilla")
-      1200 Rupee Item: Can Afford 1200 Rupees #& (Progressive Pouch x1 | Option "shop-mode" Is Not "Vanilla")
+      # We don't want the pouch extensions to be the logical access to the pouch
+      300 Rupee Item: Can Afford 300 Rupees & (Pouch | Randomized Beedle option)
+      600 Rupee Item: Can Afford 600 Rupees & (Pouch | Randomized Beedle option)
+      1200 Rupee Item: Can Afford 1200 Rupees & (Pouch | Randomized Beedle option)
       800 Rupee Item: Can Afford 800 Rupees
       1600 Rupee Item: Can Afford 1600 Rupees
       First 100 Rupee Item: Nothing
