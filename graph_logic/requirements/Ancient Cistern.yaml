@@ -1,0 +1,24 @@
+Main:
+  locations:
+    Chest in East Part: Impossible
+    Whip: Impossible
+    Chest after Whip Hooks: Impossible
+    Chest near Vines: Impossible
+    Chest behind the Waterfall: Impossible
+    Bokoblin: Impossible
+    Boss Key Chest: Impossible
+
+Boss Room:
+  locations:
+    Beat Koloktos: Whip & (Sword | Bomb Bag | Bow)
+    Heart Container: Beat Koloktos
+  exits:
+    Entrance: Beat Koloktos
+    Exit: Beat Koloktos
+
+Flame Room:
+  locations:
+    Farore's Flame: Goddess Sword
+  exits:
+    Exit: Nothing
+
