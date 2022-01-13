@@ -90,7 +90,7 @@ DUPLICABLE_COUNTERPROGRESS_ITEMS = ["Rupoor"]
 # note: Lanayru Caves is technically not a dungeon, but has to be treated as such for non key sanity
 
 SMALL_KEYS = (
-    ["LanayruCaves Small Key"] * 1
+    ["Lanayru Caves Key"] * 1
     + ["SV Small Key"] * 2
     + ["ET Small Key"] * 0
     + ["LMF Small Key"] * 1

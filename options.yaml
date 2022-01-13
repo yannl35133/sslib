@@ -338,7 +338,7 @@
   help: Controls the placement of small keys. Vanilla means they will always be in their vanilla locations.
     In Skyview, the Digging Spot will not contain a key. Own Dungeon means the keys can only appear
     within their own dungeons. Restricted decreases the number of locations keys can appear in some
-    dungeons, depending on logic settings. Lanayru Caves Key only shuffles the Lanayru Caves Small Key.
+    dungeons, depending on logic settings. Lanayru Caves Key only shuffles the Lanayru Caves Key.
   ui: option_small_key_mode
 
 - name: Boss Key Mode
@@ -509,7 +509,10 @@
     - Stuttersprint
     # Lanayru
     - Itemless First Timeshift Stone
+    - Lanayru Mines - Quick Bomb
     - Lanayru Mines Brakeslide
+    - Lanayru Desert - Spume Brakeslide
+    - Lanayru Desert - Sand Oasis Brakeslide
     - Temple of Time - Slingshot Shot
     - Temple of Time Skip - Brakeslide
     - Secret Passageway Hook Beetle Opening
