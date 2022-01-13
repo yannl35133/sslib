@@ -159,7 +159,7 @@ SSH_MAP = map(SSH)
 FS_MAP = map(FS)
 SK_MAP = map(SK)
 
-CAVES_KEY = EIN("LanayruCaves Small Key")
+CAVES_KEY = EIN("Lanayru Caves Key")
 
 SV_SMALL_KEYS = group(SV_SMALL_KEY, 2)
 ET_SMALL_KEYS = group(ET_SMALL_KEY, 0)

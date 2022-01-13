@@ -247,7 +247,7 @@ class Hints:
                     if item.endswith("Small Key"):
                         continue
                 elif self.options["small-key-mode"] == "Lanayru Caves Key Only":
-                    if item.endswith("Small Key") and item != "LanayruCaves Small Key":
+                    if item.endswith("Small Key") and item != "Lanayru Caves Key":
                         continue
 
                 if self.options["boss-key-mode"] not in ["Anywhere"]:
