@@ -91,33 +91,33 @@ DUPLICABLE_COUNTERPROGRESS_ITEMS = ["Rupoor"]
 
 SMALL_KEYS = (
     ["Lanayru Caves Key"] * 1
-    + ["SV Small Key"] * 2
-    + ["ET Small Key"] * 0
-    + ["LMF Small Key"] * 1
-    + ["AC Small Key"] * 2
-    + ["SS Small Key"] * 2
-    + ["FS Small Key"] * 3
-    + ["SK Small Key"] * 1
+    + ["Skyview Small Key"] * 2
+    + ["Earth Temple Small Key"] * 0
+    + ["Lanayru Mining Facility Small Key"] * 1
+    + ["Ancient Cistern Small Key"] * 2
+    + ["Sandship Small Key"] * 2
+    + ["Fire Sanctuary Small Key"] * 3
+    + ["Sky Keep Small Key"] * 1
 )
 
 BOSS_KEYS = (
-    ["SV Boss Key"] * 1
-    + ["ET Boss Key"] * 1
-    + ["LMF Boss Key"] * 1
-    + ["AC Boss Key"] * 1
-    + ["SS Boss Key"] * 1
-    + ["FS Boss Key"] * 1
-    + ["SK Boss Key"] * 0
+    ["Skyview Boss Key"] * 1
+    + ["Earth Temple Boss Key"] * 1
+    + ["Lanayru Mining Facility Boss Key"] * 1
+    + ["Ancient Cistern Boss Key"] * 1
+    + ["Sandship Boss Key"] * 1
+    + ["Fire Sanctuary Boss Key"] * 1
+    + ["Sky Keep Boss Key"] * 0
 )
 
 MAPS = (
-    ["SV Map"]
-    + ["ET Map"]
-    + ["LMF Map"]
-    + ["AC Map"]
-    + ["SS Map"]
-    + ["FS Map"]
-    + ["SK Map"]
+    ["Skyview Map"]
+    + ["Earth Temple Map"]
+    + ["Lanayru Mining Facility Map"]
+    + ["Ancient Cistern Map"]
+    + ["Sandship Map"]
+    + ["Fire Sanctuary Map"]
+    + ["Sky Keep Map"]
 )
 
 INVENTORY_ITEMS = (
