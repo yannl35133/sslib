@@ -1100,7 +1100,7 @@ Skyview - Chest on Tree Branch:
   type: faron, dungeon
   Paths:
     - stage/D100/r2/l0/TBox/64
-Skyview - Digging Spot in Crawlspace:
+Skyview - After Crawlspace - Digging Spot:
   original item: SV Small Key
   type: faron, dungeon, digging
   hints: sometimes
@@ -1112,7 +1112,7 @@ Skyview - Chest behind Two Eyes:
   type: faron, dungeon
   Paths:
     - stage/D100/r4/l0/TBox/67
-Skyview - Beetle:
+Skyview - Miniboss Room - Chest:
   original item: Progressive Beetle
   type: faron, dungeon
   Paths:
@@ -1145,7 +1145,7 @@ Skyview - Chest behind Three Eyes:
     - stage/D100/r7/l0/TBox/68
   hint: sometimes
   text: <r<three watchful eyes>> guard
-Skyview - Chest near Boss Door:
+Skyview - Last Room - After Rope - Chest:
   original item: Red Rupee
   type: faron, dungeon
   Paths:
@@ -1156,7 +1156,7 @@ Skyview - Boss Key Chest:
   Paths:
     - stage/D100/r9/l0/TBox/66
 
-Skyview - Ghirahim Heart Container:
+Skyview - Boss Room - Heart Container:
   original item: Heart Container
   type: faron, dungeon
   Paths:
@@ -1170,7 +1170,8 @@ Skyview - Spring - Rupee on Pillar:
   type: faron, dungeon, freestanding
   Paths:
     - stage/B100_1/r0/l0/Item/109
-Skyview - Ruby Tablet:
+
+Skyview - Spring - Ruby Tablet:
   original item: Ruby Tablet
   type: faron, dungeon
   Paths:
@@ -1232,14 +1233,14 @@ Earth Temple - Boss Key Chest:
   Paths:
     - stage/D200/r4/l0/TBox/68
 
-Earth Temple - Scaldera Heart Container:
+Earth Temple - Boss Room - Heart Container:
   original item: Heart Container
   type: eldin, dungeon
   Paths:
     - stage/B200/r10/l1/HeartCo
     - stage/B200/r10/l2/HeartCo
 
-Earth Temple - Amber Tablet:
+Earth Temple - Spring - Amber Tablet:
   original item: Amber Tablet
   type: eldin, dungeon
   Paths:
@@ -1307,14 +1308,14 @@ Lanayru Mining Facility - Shortcut Chest in Main Hub:
   Paths:
     - stage/D300_1/r5/l0/TBox/74
 
-Lanayru Mining Facility - Molderach Heart Container:
+Lanayru Mining Facility - Boss Room - Heart Container:
   original item: Heart Container
   type: lanayru, dungeon
   Paths:
     - stage/B300/r0/l1/HeartCo
     - stage/B300/r0/l3/HeartCo
 
-Lanayru Mining Facility - Goddess Harp:
+Lanayru Mining Facility - Great Hall - Goddess Harp:
   original item: Goddess Harp
   type: lanayru, dungeon
   Paths:
@@ -1403,7 +1404,7 @@ Ancient Cistern - Boss Key Chest:
   Paths:
     - stage/D101/r4/l0/TBox/68
 
-Ancient Cistern - Koloktos Heart Container:
+Ancient Cistern - Boss Room - Heart Container:
   original item: Heart Container
   type: faron, dungeon
   Paths:
@@ -1479,7 +1480,7 @@ Sandship - Boss Key Chest:
     - stage/D301/r14/l3/TBox/73
   hint: sometimes
   text: the <r<secret treasure of the Sandship's captain>> is
-Sandship - Tentalus Heart Container:
+Sandship - Boss Room - Heart Container:
   original item: Heart Container
   type: lanayru, dungeon
   Paths:
@@ -1562,7 +1563,7 @@ Fire Sanctuary - Boss Key Chest:
   Paths:
     - stage/D201/r4/l0/TBox/67
 
-Fire Sanctuary - Ghirahim Heart Container:
+Fire Sanctuary - Boss Room - Heart Container:
   original item: Heart Container
   type: eldin, dungeon
   Paths:
@@ -1675,7 +1676,7 @@ Sky Keep - Fire Sanctuary Room - Rupee in Alcove:
 #    - stage/D003_8.json
 
 
-Skyloft Silent Realm - Stone of Trials:
+Skyloft - Silent Realm - Stone of Trials:
   original item: Stone of Trials
   type: skyloft, silent realm
   Paths:
@@ -1683,21 +1684,21 @@ Skyloft Silent Realm - Stone of Trials:
   text: the <r<goddess's final trial>> grants
 
 
-Faron Silent Realm - Water Scale:
+Faron - Silent Realm - Water Scale:
   original item: Water Scale
   type: faron, silent realm
   Paths:
     - stage/S100/r0/l2/WarpObj
   text: a <r<trial of courage>> grants
 
-Lanayru Silent Realm - Clawshots:
+Lanayru - Silent Realm - Clawshots:
   original item: Clawshots
   type: lanayru, silent realm
   Paths:
     - stage/S300/r0/l2/WarpObj
   text: a <r<trial of wisdom>> grants
 
-Eldin Silent Realm - Fireshield Earrings:
+Eldin - Silent Realm - Fireshield Earrings:
   original item: Fireshield Earrings
   type: eldin, silent realm
   Paths:

@@ -1,0 +1,21 @@
+Main:
+  locations:
+    Chest behind Combination Lock: Impossible
+    Bow: Impossible
+    Chest at the Stern: Impossible
+    Chest before 4-Door Corridor: Impossible
+    Treasure Room First Chest: Impossible
+    Treasure Room Second Chest: Impossible
+    Treasure Room Third Chest: Impossible
+    Treasure Room Fourth Chest: Impossible
+    Treasure Room Fifth Chest: Impossible
+    Robot in Brig's Reward: Impossible
+    Boss Key Chest: Impossible
+
+Boss Room:
+  locations:
+    Beat Tentalus: Bow
+    Heart Container: Beat Tentalus
+    Nayru's Flame: Beat Tentalus & Goddess Sword
+  exits:
+    Exit: Nayru's Flame

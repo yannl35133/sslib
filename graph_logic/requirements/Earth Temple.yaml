@@ -1,0 +1,40 @@
+Main:
+  locations:
+    Vent Chest: Digging Mitts
+    Chest behind Bombable Rock: Impossible
+    Chest Left of Main Room Bridge: Impossible
+    Chest in West Room: Impossible
+    Bomb Bag: Impossible
+    Ledd's Gift: Impossible
+    Chest Guarded by Lizalfos: Impossible
+    Boss Key Chest: Impossible
+
+Boss Room:
+  Entry:
+    exits:
+      Entrance: Boss Room - Beat Scaldera
+      Slope: Nothing
+
+  Slope:
+    locations:
+      Goddess Sword Strat: Goddess Sword & Hero-mode
+      Longsword Strat: Goddess Longsword & Hero-mode
+      Master Sword Strat: Master Sword
+      Bomb Flower Scaldera:
+        Earth Temple - Bomb Flower Scaldera Trick & (
+          Goddess Sword Strat | Longsword Strat | Master Sword Strat
+        )
+        # Scaldera can be beaten without bombs, see strats here: http://bombch.us/DPu1
+      Beat Scaldera:
+        Bomb Bag & Sword | Bomb Flower Scaldera
+      Heart Container: Beat Scaldera
+    exits:
+      Exit: Beat Scaldera
+
+Spring:
+  locations:
+    Amber Tablet: Goddess Sword
+  exits:
+    Exit: Nothing
+
+
