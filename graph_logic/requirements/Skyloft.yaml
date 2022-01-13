@@ -95,7 +95,7 @@ Central:
       Central: Nothing # You can also reach Village
     locations:
       Crystal: Night
-      Goddess Chest: Lanayru - Goddess Cube in Pirate Stronghold
+      Goddess Chest: Lanayru - Sand Sea - Pirate Stronghold - Goddess Cube
       Floating Island Goddess Chest: Faron - Goddess Cube in Lake Floria
       Gossip Stone: Nothing
 
@@ -123,8 +123,8 @@ Central:
     region: Skyloft Central
     locations:
       Potion Lady's Gift: Nothing
-      Goddess Chest: Lanayru - Goddess Cube in Ancient Harbour
-      Endurance Potion: Lanayru - Beat Dungeon Entrance in Lanayru Desert & Bottle
+      Goddess Chest: Lanayru - Ancient Harbour - Goddess Cube
+      Endurance Potion: Bottle & Impossible # Lanayru - Beat Dungeon Entrance in Lanayru Desert
       Talk to Peatrice: Nothing
     exits:
       North Exit: Nothing
