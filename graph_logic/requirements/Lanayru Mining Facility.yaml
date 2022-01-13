@@ -1,0 +1,40 @@
+Main:
+  locations:
+    Chest behind Bars: Nothing
+    First Chest in Hub Room: Impossible
+    Chest in Key Locked Room: Impossible
+    Gust Bellows: Impossible
+    Chest inside Gust Bellows Room: Impossible
+    Chest in First West Room: Impossible
+    Chest after Armos Fight: Impossible
+    Chest behind First Crawlspace: Impossible
+    Chest in Spike Maze: Impossible
+    Boss Key Chest: Impossible
+    Shortcut Chest in Main Hub: Impossible
+
+Boss Room:
+  exits:
+    Entrance: Boss Room - Beat Molderach
+    After Sand Drain: Nothing
+
+  After Sand Drain:
+    locations:
+      Beat Molderach:
+        (Gust Bellows | LMF - Molderach without Gust Bellows Trick) & Sword
+        # Bow also works instead of sword but you need a LOT of arrows
+      Heart Container: Beat Molderach
+    exits:
+      Exit: Beat Molderach
+
+Great Hall:
+  Entry:
+    locations:
+      Hit Timeshift Stone: Beetle | Bow
+    exits:
+      Entrance: Nothing
+      End: Hit Timeshift Stone
+  End:
+    locations:
+      Goddess Harp: Nothing
+    exits:
+      Exit: Nothing

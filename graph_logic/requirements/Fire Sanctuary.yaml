@@ -1,0 +1,30 @@
+Main:
+  locations:
+    Chest in First Room: Impossible
+    Chest in Second Room: Impossible
+    Chest near First Trapped Mogma: Impossible
+    First Chest in Water Fruit Room: Impossible
+    Second Chest in Water Fruit Room: Impossible
+    Mogma Mitts: Impossible
+    Chest on Balcony: Impossible
+    Chest after Second Trapped Mogma: Impossible
+    Chest after Bombable Wall: Impossible
+    Plats' Chest: Impossible
+    Chest in Staircase Room: Impossible
+    Boss Key Chest: Impossible
+
+
+Boss Room:
+  locations:
+    Beat Ghirahim: Sword
+    Heart Container: Beat Ghirahim
+  exits:
+    Entrance: Beat Ghirahim
+    Exit: Beat Ghirahim
+
+Flame Room:
+  locations:
+    Din's Flame: Goddess Sword
+  exits:
+    Exit: Nothing
+
