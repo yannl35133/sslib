@@ -104,8 +104,55 @@ Sky - Eldin Pillar - Volcano Ascent Statue: {}
 Sky - Eldin Pillar - Temple Entrance Statue: {}
 Sky - Eldin Pillar - Inside the Volcano Statue: {}
 
-Sky - Lanayru Pillar - Lanayru Mines Statue: {}
-Sky - Lanayru Pillar - Desert Entrance Statue: {}
+Sky - Lanayru Pillar - Mines Statue:
+  entrance: {}
+  exit: {}
+  vanilla: Lanayru - Mines - Statue
+Sky - Lanayru Pillar - Desert Entry Statue:
+  entrance: {}
+  exit: {}
+  vanilla: Lanayru - Desert - Entry - Statue
+Sky - Lanayru Pillar - West Desert Statue:
+  entrance: {}
+  exit: {}
+  vanilla: Lanayru - Desert - West - Statue
+Sky - Lanayru Pillar - Desert Gorge Statue:
+  entrance: {}
+  exit: {}
+  vanilla: Lanayru - Temple of Time - South East - Statue
+Sky - Lanayru Pillar - Temple of Time Statue:
+  entrance: {}
+  exit: {}
+  vanilla: Lanayru - Temple of Time - Inside - Statue
+Sky - Lanayru Pillar - North Desert Statue:
+  entrance: {}
+  exit: {}
+  vanilla: Lanayru - Desert - North - Statue
+Sky - Lanayru Pillar - Stone Cache Statue:
+  entrance: {}
+  exit: {}
+  vanilla: Lanayru - Desert - East - Statue
+Sky - Lanayru Pillar - Ancient Harbour Statue:
+  entrance: {}
+  exit: {}
+  vanilla: Lanayru - Sand Sea - Ancient Harbour - Statue
+Sky - Lanayru Pillar - Skipper's Retreat Statue:
+  entrance: {}
+  exit: {}
+  vanilla: Lanayru - Sand Sea - Skipper's Retreat - Statue
+Sky - Lanayru Pillar - Shipyard Statue:
+  entrance: {}
+  exit: {}
+  vanilla: Lanayru - Sand Sea - Shipyard - Statue
+Sky - Lanayru Pillar - Pirate Stronghold Statue:
+  entrance: {}
+  exit: {}
+  vanilla: Lanayru - Sand Sea - Pirate Stronghold - Statue
+Sky - Lanayru Pillar - Lanayru Gorge Statue:
+  entrance: {}
+  exit: {}
+  vanilla: Lanayru - Gorge - Statue
+
 
 Sky - Bamboo Island - Entrance:
   entrance: {}
@@ -161,7 +208,7 @@ Faron - Woods - Shortcut to Lake Floria: {}
 Faron - Woods - In the Woods Statue: {}
 Faron - Woods - Viewing Platform Statue: {}
 Faron - Woods - To Deep Woods: {}
-Faron - Woods - To Silent Realm: {}
+Faron - Woods - Trial Entrance: {}
 Faron - Woods - Lake Floria Dive: {}
 
 Faron - Silent Realm - Entrance: {}
@@ -192,7 +239,7 @@ Faron - Lake Floria - Waterfall - To Farore's Lair: {}
 Faron - Lake Floria - Waterfall - To Woods: {}
 Faron - Lake Floria - Waterfall - Ancient Cistern Entrance: {}
 
-Eldin - Volcano - Entrance - Statue:
+Eldin - Volcano - Entry - Statue:
   entrance: {}
   exit: {}
   vanilla: Sky - Eldin Pillar - Eldin Entrance Statue
@@ -232,12 +279,12 @@ Eldin - Volcano - Thrill Digger Cave - Exit:
   exit: {}
   vanilla: Eldin - Volcano - Near Thrill Digger Cave - Cave Entrance
 
-Eldin - Volcano - Temple Entrance - Statue:
+Eldin - Volcano - Near Temple Entrance - Statue:
   entrance: {}
   exit: {}
   vanilla: Sky - Eldin Pillar - Temple Entrance Statue
 
-Eldin - Volcano - Earth Temple Entrance:
+Eldin - Volcano - Temple Entrance:
   entrance: {}
   exit: {}
   vanilla: Earth Temple - Entrance
@@ -270,7 +317,7 @@ Eldin - Volcano Summit - To Hot Cave:
   exit: {}
   vanilla: Eldin - Volcano - Hot Cave - To Volcano Summit
 
-Eldin - Volcano Summit - To Temple Entrance:
+Eldin - Volcano Summit - To Near Temple Entrance:
   entrance: {}
   exit: {}
   vanilla: Eldin - Volcano Summit - Temple Entrance - To Summit
@@ -285,19 +332,249 @@ Eldin - Volcano Summit - Waterfall - Exit:
   exit: {}
   vanilla: Eldin - Volcano Summit - To Waterfall
 
-Eldin - Volcano Summit - Temple Entrance - To Summit:
+Eldin - Volcano Summit - Near Temple Entrance - To Summit:
   entrance: {}
   exit: {}
   vanilla: Eldin - Volcano Summit - To Temple Entrance
 
-Eldin - Volcano Summit - Temple Entrance - Statue:
+Eldin - Volcano Summit - Near Temple Entrance - Statue:
   entrance: {}
   exit: {}
   vanilla: Sky - Eldin Pillar - Inside the Volcano Statue
 
-Eldin - Volcano Summit - Fire Sanctuary Entrance:
+Eldin - Volcano Summit - Temple Entrance:
   entrance: {}
   exit: {}
   vanilla: Fire Sanctuary - Entrance
+
+
+Lanayru - Mines - Statue:
+  entrance: {}
+  exit: {}
+  vanilla: Sky - Lanayru Pillar - Mines Statue
+
+Lanayru - Mines - To Caves:
+  entrance: {}
+  exit: {}
+  vanilla: Lanayru - Caves - To Mines
+
+Lanayru - Mines - To Desert:
+  entrance: {}
+  exit: {}
+  vanilla: Lanayru - Desert - To Mines
+
+
+Lanayru - Desert - Entry - Statue:
+  entrance: {}
+  exit: {}
+  vanilla: Sky - Lanayru Pillar - Desert Entry Statue
+
+Lanayru - Desert - To Mines:
+  entrance: {}
+  exit: {}
+  vanilla: Lanayru - Mines - To Desert
+
+Lanayru - Desert - To Caves:
+  entrance: {}
+  exit: {}
+  vanilla: Lanayru - Caves - To Desert
+
+Lanayru - Desert - West - Statue:
+  entrance: {}
+  exit: {}
+  vanilla: Sky - Lanayru Pillar - West Desert Statue
+
+Lanayru - Desert - Temple of Time South Entrance:
+  entrance: {}
+  exit: {}
+  vanilla: Lanayru - Temple of Time - South Exit
+
+Lanayru - Desert - Temple of Time North Entrance:
+  entrance: {}
+  exit: {}
+  vanilla: Lanayru - Temple of Time - North Exit
+
+Lanayru - Desert - North - Statue:
+  entrance: {}
+  exit: {}
+  vanilla: Sky - Lanayru Pillar - North Desert Statue
+
+Lanayru - Desert - Temple Entrance:
+  entrance: {}
+  exit: {}
+  vanilla: Lanayru Mining Facility - Entrance
+
+Lanayru - Desert - Lightning Node Entrance:
+  entrance: {}
+  exit: {}
+  vanilla: Lanayru - Desert - Lightning Node - Exit
+
+Lanayru - Desert - East - Statue:
+  entrance: {}
+  exit: {}
+  vanilla: Sky - Lanayru Pillar - Stone Cache Statue
+
+Lanayru - Desert - Fire Node Entrance:
+  entrance: {}
+  exit: {}
+  vanilla: Lanayru - Desert - Fire Node - Exit
+
+
+Lanayru - Temple of Time - South Exit:
+  entrance: {}
+  exit: {}
+  vanilla: Lanayru - Desert - Temple of Time South Entrance
+
+Lanayru - Temple of Time - North Exit:
+  entrance: {}
+  exit: {}
+  vanilla: Lanayru - Desert - Temple of Time North Entrance
+
+Lanayru - Temple of Time - South East - Statue:
+  entrance: {}
+  exit: {}
+  vanilla: Sky - Lanayru Pillar - Desert Gorge Statue
+
+Lanayru - Temple of Time - Inside - Statue:
+  entrance: {}
+  exit: {}
+  vanilla: Sky - Lanayru Pillar - Temple of Time Statue
+
+Lanayru - Desert - Lightning Node - Exit:
+  entrance: {}
+  exit: {}
+  vanilla: Lanayru - Desert - Lightning Node Entrance
+
+Lanayru - Desert - Fire Node - Exit:
+  entrance: {}
+  exit: {}
+  vanilla: Lanayru - Desert - Fire Node Entrance
+
+
+Lanayru - Caves - To Mines:
+  entrance: {}
+  exit: {}
+  vanilla: Lanayru - Mines - To Caves
+
+Lanayru - Caves - To Desert:
+  entrance: {}
+  exit: {}
+  vanilla: Lanayru - Desert - To Caves
+
+Lanayru - Caves - To Sand Sea:
+  entrance: {}
+  exit: {}
+  vanilla: Lanayru - Sand Sea - Ancient Harbour - To Caves
+
+Lanayru - Caves - To Gorge:
+  entrance: {}
+  exit: {}
+  vanilla: Lanayru - Gorge - To Caves
+
+
+Lanayru - Sand Sea - Ancient Harbour - To Caves:
+  entrance: {}
+  exit: {}
+  vanilla: Lanayru - Caves - To Sand Sea
+
+Lanayru - Sand Sea - Ancient Harbour - Statue:
+  entrance: {}
+  exit: {}
+  vanilla: Sky - Lanayru Pillar - Ancient Harbour Statue
+
+Lanayru - Sand Sea - Ancient Harbour - To Sand Sea:
+  entrance: {}
+  exit: {}
+  vanilla: Lanayru - Sand Sea - Ancient Harbour Dock
+
+Lanayru - Sand Sea - Ancient Harbour Dock:
+  entrance: {}
+  exit: {}
+  vanilla: Lanayru - Sand Sea - Ancient Harbour - To Sand Sea
+
+Lanayru - Sand Sea - Sandship Dock:
+  entrance: {}
+  exit: {}
+  vanilla: Sandship - Entrance
+
+Lanayru - Sand Sea - Skipper's Retreat Dock:
+  entrance: {}
+  exit: {}
+  vanilla: Lanayru - Sand Sea - Skipper's Retreat - To Sand Sea
+
+Lanayru - Sand Sea - Shipyard Dock:
+  entrance: {}
+  exit: {}
+  vanilla: Lanayru - Sand Sea - Shipyard - To Sand Sea
+
+Lanayru - Sand Sea - Pirate Stronghold Dock:
+  entrance: {}
+  exit: {}
+  vanilla: Lanayru - Sand Sea - Pirate Stronghold - To Sand Sea
+
+Lanayru - Sand Sea - Skipper's Retreat - To Sand Sea:
+  entrance: {}
+  exit: {}
+  vanilla: Lanayru - Sand Sea - Skipper's Retreat Dock
+
+Lanayru - Sand Sea - Skipper's Retreat - Statue:
+  entrance: {}
+  exit: {}
+  vanilla: Sky - Lanayru Pillar - Skipper's Retreat Statue
+
+Lanayru - Sand Sea - Skipper's Retreat - To Shack:
+  entrance: {}
+  exit: {}
+  vanilla: Lanayru - Sand Sea - Skipper's Retreat - Shack - Exit
+
+Lanayru - Sand Sea - Skipper's Retreat - Shack - Exit:
+  entrance: {}
+  exit: {}
+  vanilla: Lanayru - Sand Sea - Skipper's Retreat - To Shack
+
+Lanayru - Sand Sea - Shipyard - To Sand Sea:
+  entrance: {}
+  exit: {}
+  vanilla: Lanayru - Sand Sea - Shipyard Dock
+
+Lanayru - Sand Sea - Shipyard - Statue:
+  entrance: {}
+  exit: {}
+  vanilla: Sky - Lanayru Pillar - Shipyard Statue
+
+Lanayru - Sand Sea - Pirate Stronghold - To Sand Sea:
+  entrance: {}
+  exit: {}
+  vanilla: Lanayru - Sand Sea - Pirate Stronghold Dock
+
+Lanayru - Sand Sea - Pirate Stronghold - Statue:
+  entrance: {}
+  exit: {}
+  vanilla: Sky - Lanayru Pillar - Pirate Stronghold Statue
+
+Lanayru - Sand Sea - Pirate Stronghold - Side Entrance:
+  entrance: {}
+  exit: {}
+  vanilla: Lanayru - Sand Sea - Pirate Stronghold - Inside - Entrance
+
+Lanayru - Sand Sea - Pirate Stronghold - Exit Door:
+  entrance: {}
+  exit: {}
+  vanilla: Lanayru - Sand Sea - Pirate Stronghold - Inside - Exit
+
+Lanayru - Sand Sea - Pirate Stronghold - Inside - Entrance:
+  entrance: {}
+  exit: {}
+  vanilla: Lanayru - Sand Sea - Pirate Stronghold - Side Entrance
+
+Lanayru - Sand Sea - Pirate Stronghold - Inside - Exit:
+  entrance: {}
+  exit: {}
+  vanilla: Lanayru - Sand Sea - Pirate Stronghold - Exit Door
+
+Lanayru - Gorge - To Caves:
+  entrance: {}
+  exit: {}
+  vanilla: Lanayru - Caves - To Gorge
 
 Skyview - Entrance: {}

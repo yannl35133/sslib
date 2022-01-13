@@ -886,125 +886,125 @@ Volcano Summit - Waterfall - Chest behind Bombable Wall:
   Paths:
     - stage/F201_4/r0/l0/TBox/95
 
-Lanayru Mines - Chest behind First Landing:
+Lanayru - Mines - Higher Area - Chest:
   original item: Evil Crystal
   type: lanayru, miscellaneous
   Paths:
     - stage/F300_1/r0/l0/TBox/64
-Lanayru Mines - Chest near First Timeshift Stone:
+Lanayru - Mines - Chest near First Timeshift Stone:
   original item: Red Rupee
   type: lanayru, miscellaneous
   Paths:
     - stage/F300_1/r1/l0/TBox/65
-Lanayru Mines - Chest behind Statue:
+Lanayru - Mines - Chest behind Statue:
   original item: Red Rupee
   type: lanayru, bombable
   Paths:
     - stage/F300_1/r2/l0/TBox/67
-Lanayru Mines - Chest at the End of Mines:
+Lanayru - Mines - End - Chest:
   original item: Rare Treasure
   type: lanayru, miscellaneous
   Paths:
     - stage/F300_1/r2/l0/TBox/66
 
 
-Lanayru Desert - Chest near Party Wheel:
+Lanayru - Desert - High Ledge after Vines - Chest:
   original item: Golden Skull
   type: lanayru, miscellaneous
   Paths:
     - stage/F300/r0/l0/TBox/70
-Lanayru Desert - Chest near Hook Beetle Fight:
+Lanayru - Desert - Near Hook Beetle Fight - Chest:
   original item: Tumbleweed
   type: lanayru, miscellaneous
   Paths:
     - stage/F300/r0/l0/TBox/84
-Lanayru Desert - Hook Beetle Fight:
+Lanayru - Desert - Hook Beetle Fight:
   original item: Progressive Beetle
   type: lanayru, combat
   Paths:
     - event/400-Desert/8
     - oarc/F300/l0
-Lanayru Desert - Secret Passageway Chest:
+Lanayru - Desert - Secret Passageway - Chest:
   original item: Heart Piece
   type: lanayru, bombable
   hint: sometimes
   text: a <r<secret passage in the desert>> holds
   Paths:
     - stage/F300/r0/l0/TBox/74
-Lanayru Desert - Chest on top of Lanayru Mining Facility: # actually spawns on raising LMF
+Lanayru - Desert - Top of LMF - Chest: # actually spawns on raising LMF
   original item: Rare Treasure # TODO check
   type: lanayru, miscellaneous, mini dungeon
   Paths:
     - stage/F300/r0/l1/TBox/83
   hint: sometimes
   text: the <r<midst of the desert>> holds
-Lanayru Desert - Chest on Platform near Lightning Node:
+Lanayru - Desert - Chest on Platform near Lightning Node:
   original item: Dusk Relic
   type: lanayru, miscellaneous
   Paths:
     - stage/F300/r0/l0/TBox/72
-Lanayru Desert - Chest on Platform near Fire Node:
+Lanayru - Desert - Chest on Platform near Fire Node:
   original item: Red Rupee
   type: lanayru, miscellaneous
   Paths:
     - stage/F300/r0/l0/TBox/73
-Lanayru Desert - Chest near Sand Oasis:
+Lanayru - Desert - Top of Wall - Chest:
   original item: Red Rupee
   type: lanayru, miscellaneous
   Paths:
     - stage/F300/r0/l0/TBox/71
 
-Lanayru Desert - Lightning Node - First Chest:
+Lanayru - Desert - Lightning Node - First Chest:
   original item: Red Rupee
   type: lanayru, mini dungeon
   Paths:
     - stage/F300_2/r0/l0/TBox/75
-Lanayru Desert - Lightning Node - Second Chest:
+Lanayru - Desert - Lightning Node - Second Chest:
   original item: Blue Rupee
   type: lanayru, mini dungeon
   Paths:
     - stage/F300_2/r0/l0/TBox/76
-Lanayru Desert - Lightning Node - Raised Chest near Generator:
+Lanayru - Desert - Lightning Node - Raised Chest near Generator:
   original item: Rare Treasure # TODO check again
   type: lanayru, mini dungeon
   text: a <r<raised chest in the Lightning Node>> contains
   Paths:
     - stage/F300_2/r0/l0/TBox/77
-Lanayru Desert - Fire Node - Shortcut Chest:
+Lanayru - Desert - Fire Node - Shortcut Chest:
   original item: Rare Treasure # TODO check again
   type: lanayru, mini dungeon
   hint: sometimes
   text: a <r<raised chest in the Fire Node>> holds
   Paths:
     - stage/F300_3/r0/l0/TBox/79
-Lanayru Desert - Fire Node - First Small Chest:
+Lanayru - Desert - Fire Node - First Chest:
   original item: Blue Rupee
   type: lanayru, mini dungeon
   Paths:
     - stage/F300_3/r0/l0/TBox/78
-Lanayru Desert - Fire Node - Second Small Chest:
+Lanayru - Desert - Fire Node - Second Chest:
   original item: Blue Rupee
   type: lanayru, mini dungeon
   Paths:
     - stage/F300_3/r0/l0/TBox/80
-Lanayru Desert - Fire Node - Left Ending Chest:
+Lanayru - Desert - Fire Node - Left Ending Chest:
   original item: Golden Skull # TODO check again
   type: lanayru, mini dungeon
   Paths:
     - stage/F300_3/r0/l0/TBox/81
-Lanayru Desert - Fire Node - Right Ending Chest:
+Lanayru - Desert - Fire Node - Right Ending Chest:
   original item: Blue Rupee
   type: lanayru, mini dungeon
   Paths:
     - stage/F300_3/r0/l0/TBox/82
 
-Lanayru Caves - Chest:
+Lanayru - Caves - Chest:
   original item: Golden Skull # TODO check again
   type: lanayru, miscellaneous
   Paths:
     - stage/F303/r0/l0/TBox/127
-Lanayru Caves - Golo's Gift:
-  original item: LanayruCaves Small Key
+Lanayru - Caves - Golo's Gift:
+  original item: Lanayru Caves Key
   type: lanayru, free gift
   Paths:
     - event/404-DesertF3/127
@@ -1029,29 +1029,29 @@ Lanayru Sand Sea - Ancient Harbour - Right Rupee on Entrance Crown:
   Paths:
     - stage/F301/r0/l0/Item/93
 
-Lanayru Sand Sea - Skipper's Retreat - Chest after Moblin:
+Lanayru - Sand Sea - Skipper's Retreat - Chest after Moblin:
   original item: Red Rupee
   type: lanayru, miscellaneous
   Paths:
     - stage/F301_3/r0/l0/TBox/78
-Lanayru Sand Sea - Skipper's Retreat - Chest on top of Cacti Pillar:
+Lanayru - Sand Sea - Skipper's Retreat - Chest on top of Cacti Pillar:
   original item: Semi Rare Treasure
   type: lanayru, miscellaneous
   Paths:
     - stage/F301_3/r0/l0/TBox/76
-Lanayru Sand Sea - Skipper's Retreat - Chest in Shack:
+Lanayru - Sand Sea - Skipper's Retreat - Shack - Chest:
   original item: Sea Chart
   type: lanayru, miscellaneous
   Paths:
     - stage/F301_5/r0/l0/TBox/65
   hint: sometimes
   text: a <r<chest atop a sandy retreat>> holds
-Lanayru Sand Sea - Skipper's Retreat - Skydive Chest:
+Lanayru - Sand Sea - Skipper's Retreat - Skydive Platform - Chest:
   original item: Silver Rupee
   type: lanayru, miscellaneous
   Paths:
     - stage/F301_3/r0/l0/TBox/77
-Lanayru Sand Sea - Rickety Coaster - Heart Stopping Track in 1'05:
+Lanayru - Sand Sea - Shipyard - Rickety Coaster -- Heart Stopping Track in 1'05:
   original item: Heart Piece
   type: lanayru, minigame, combat #Molderach 2 makes this a combat check
   Paths:
@@ -1059,17 +1059,17 @@ Lanayru Sand Sea - Rickety Coaster - Heart Stopping Track in 1'05:
     - oarc/F301_4/l0
   hint: sometimes
   text: a <r<fast minecart time>> is rewarded with
-Lanayru Sand Sea - Pirate Stronghold - First Chest:
+Lanayru - Sand Sea - Pirate Stronghold - First Chest:
   original item: Silver Rupee
   type: lanayru, mini dungeon
   Paths:
     - stage/F301_2/r4/l0/TBox/75
-Lanayru Sand Sea - Pirate Stronghold - Second Chest:
+Lanayru - Sand Sea - Pirate Stronghold - Second Chest:
   original item: Semi Rare Treasure
   type: lanayru, mini dungeon
   Paths:
     - stage/F301_2/r5/l0/TBox/73
-Lanayru Sand Sea - Pirate Stronghold - Third Chest:
+Lanayru - Sand Sea - Pirate Stronghold - Third Chest:
   original item: Semi Rare Treasure
   type: lanayru, mini dungeon
   Paths:
