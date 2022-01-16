@@ -67,7 +67,7 @@ class EXTENDED_ITEM(int, metaclass=MetaContainer):
         return cls(cls.items_list.index(name))
 
     @classmethod
-    def get_item_name(cls, i):
+    def get_item_name(cls, i: EXTENDED_ITEM) -> EXTENDED_ITEM_NAME:
         return cls.items_list[i]
 
 
@@ -153,7 +153,7 @@ class Inventory:
                 return self | item_bit
             else:
                 for i in range(ITEM_COUNTS[item]):
-                    if not self[(item_bit := EXTENDED_ITEM[f"{item} #{i}"])]:
+                    if not self[(item_bit := EXTENDED_ITEM[number(item, i)])]:
                         return self | item_bit
         raise ValueError
 
@@ -164,14 +164,16 @@ class Inventory:
             )
         elif isinstance(item, str):
             for i in reversed(range(ITEM_COUNTS[item])):
-                if self[(item_bit := EXTENDED_ITEM[f"{item} #{i}"])]:
+                if self[(item_bit := EXTENDED_ITEM[number(item, i)])]:
                     return Inventory(
                         (
                             self.bitset & ~(1 << item_bit),
                             self.intset.difference({item_bit}),
                         )
                     )
-        raise ValueError
+            else:
+                raise ValueError(f"{item} not in inventory")
+        raise ValueError(item)
 
     @staticmethod
     def simplify_invset(argset):
