@@ -13,13 +13,13 @@ DUNGEON_REVERSE_ENTRANCES_POOL = {
 }
 
 VANILLA_DUNGEON_ACCESSES = {
-    SV: "Deep Woods - Skyview Exit",
-    ET: "Eldin Volcano - Earth Temple Exit",
-    LMF: "Lanayru Desert - LMF Exit",
-    AC: "Lake Floria - Ancient Cistern Exit",
-    SSH: "Sand Sea - Sandship Exit",
-    FS: "Volcano Summit - Fire Sanctuary Exit",
-    SK: "Skyloft - Sky Keep Exit",
+    SV: "Faron - Deep Woods - Temple Entrance",
+    ET: "Eldin - Volcano - Temple Entrance",
+    LMF: "Lanayru - Desert - Temple Entrance",
+    AC: "Faron - Lake Floria - Temple Entrance",
+    SSH: "Lanayru - Sand Sea - Temple Entrance",
+    FS: "Eldin - Volcano Summit - Temple Entrance",
+    SK: "Skyloft - Temple Entrance",
 }
 
 DUNGEON_ACCESSES_POOL = {
@@ -38,14 +38,14 @@ DUNGEON_ENTRANCES_COMPLETE_POOLS = [
 
 # Silent Realms
 SILENT_REALMS = {
-    "Skyloft Silent Realm ",
-    "Faron Silent Realm ",
-    "Lanayru Silent Realm ",
-    "Eldin Silent Realm ",
+    "Skyloft - Silent Realm",
+    "Faron - Silent Realm",
+    "Lanayru - Silent Realm",
+    "Eldin - Silent Realm",
 }
 
-make_entrance2 = lambda s: EIN(s + " - Entrance")
-make_exit2 = lambda s: EIN(s + " - Exit")
+make_entrance2 = lambda s: EIN(s + " - Entrance_ENTRANCE")
+make_exit2 = lambda s: EIN(s + " - Exit_EXIT")
 
 SILENT_REALM_ENTRANCES_POOL = {
     make_entrance2(realm): PoolEntrance(make_entrance2(realm), [make_exit2(realm)])
@@ -57,10 +57,10 @@ SILENT_REALM_EXITS_POOL = {
 }
 
 SILENT_REALM_ACCESSES = {
-    "Trial Gate on Skyloft",
-    "Trial Gate in Faron Woods",
-    "Trial Gate in Lanayru Desert",
-    "Trial Gate in Eldin Volcano",
+    "Skyloft - Trial Entrance",
+    "Faron - Woods - Trial Entrance",
+    "Lanayru - Desert - Trial Entrance",
+    "Eldin - Volcano - Trial Entrance",
 }
 SILENT_REALM_ACCESSES_POOL = {
     make_exit(access): PoolExit(make_exit(access), [make_entrance(access)])

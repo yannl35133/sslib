@@ -11,6 +11,9 @@ Main:
     Treasure Room Fifth Chest: Impossible
     Robot in Brig's Reward: Impossible
     Boss Key Chest: Impossible
+  exits:
+    Entrance: Nothing # If stuck in the mast sequence, deathwarp
+    Boss Door: Impossible
 
 Boss Room:
   locations:
@@ -18,4 +21,4 @@ Boss Room:
     Heart Container: Beat Tentalus
     Nayru's Flame: Beat Tentalus & Goddess Sword
   exits:
-    Exit: Nayru's Flame
+    Entrance: Impossible
