@@ -30,7 +30,8 @@ class Rando:
             {
                 item
                 for item in EXTENDED_ITEM.items()
-                if item in INVENTORY_ITEMS and item not in self.placement.items
+                if EXTENDED_ITEM.get_item_name(item) in INVENTORY_ITEMS
+                and EXTENDED_ITEM.get_item_name(item) not in self.placement.items
             }
         )
         starting_area = make_day(self.short_to_full(LINKS_ROOM))

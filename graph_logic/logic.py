@@ -4,7 +4,7 @@ from collections import defaultdict
 from dataclasses import dataclass, field
 
 from .constants import *
-from .logic_input import Areas, DayOnly, NightOnly, Both
+from .logic_input import Area, Areas, DayOnly, NightOnly, Both
 from .logic_expression import DNFInventory, AndCombination, OrCombination
 from .inventory import Inventory, EXTENDED_ITEM
 
@@ -264,13 +264,13 @@ class Logic:
         self.full_inventory = self._fill_inventory(self.requirements, inventory)
 
     def accessible_checks(self, placement_limit: str) -> Iterable[str]:
-        def explore(area):
+        def explore(area: Area) -> Iterable[str]:
             for loc in area.locations:
                 loc_full = with_sep_full(area.name, loc)
                 if loc_full in self.checks:
                     if self.full_inventory[EXTENDED_ITEM[loc_full]]:
                         yield self.full_to_short(loc_full)
-            for sub_area in area.sub_areas:
+            for sub_area in area.sub_areas.values():
                 yield from explore(sub_area)
 
         if placement_limit in self.checks:
