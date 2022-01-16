@@ -1,3 +1,4 @@
+from __future__ import annotations
 from dataclasses import dataclass
 import random  # Only for typing purposes
 from typing import List, Set
