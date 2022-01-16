@@ -1,4 +1,13 @@
 Main:
-  locations:
-    First Chest: Impossible
-    Chest after Dreadfuse: Impossible
+  First Room:
+    locations:
+      First Chest: Nothing
+      Unlock Bars: First Chest
+    exits:
+      Entrance: Impossible # It depends on the position of the room
+      Other Rooms: Impossible
+
+  Other Rooms:
+    locations:
+      Chest after Dreadfuse: Impossible
+      Complete Triforce: Impossible

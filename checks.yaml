@@ -306,7 +306,7 @@ Skyloft - Beedle's Shop - 1000 Rupee Item:
     - ShpSmpl/27
 
 # Single Gratitude crystals aren't randomized, but still need logic, because some of them need items
-Skyloft - Upper - Knight Academy - Crystal in Link's Room:
+Skyloft - Upper - Knight Academy - Link's Room - Crystal:
   original item: Gratitude Crystal
   type: crystal
 Skyloft - Central - Crystal on Light Tower:
@@ -1497,67 +1497,67 @@ Sandship - Nayru's Flame:
     - oarc/D301/l1
 
 
-Fire Sanctuary - Chest in First Room:
+Fire Sanctuary - First Room - Chest:
   original item: FS Small Key
   type: eldin, dungeon
   Paths:
     - stage/D201/r0/l0/TBox/64
-Fire Sanctuary - Chest in Second Room:
+Fire Sanctuary - Second Room - Chest:
   original item: Red Rupee
   type: eldin, dungeon
   Paths:
     - stage/D201_1/r1/l0/TBox/74
     - stage/D201/r1/l0/TBox/74
-Fire Sanctuary - Chest near First Trapped Mogma:
+Fire Sanctuary - First Trapped Mogma Room - Chest:
   original item: FS Small Key
   type: eldin, dungeon
   Paths:
     - stage/D201_1/r5/l0/TBox/69
-Fire Sanctuary - First Chest in Water Fruit Room:
+Fire Sanctuary - Water Fruit Room - First Chest:
   original item: Red Rupee
   type: eldin, dungeon
   Paths:
     - stage/D201_1/r7/l0/TBox/73
-Fire Sanctuary - Second Chest in Water Fruit Room:
+Fire Sanctuary - Water Fruit Room - Second Chest:
   original item: Semi Rare Treasure
   type: eldin, dungeon
   Paths:
     - stage/D201_1/r7/l0/TBox/72
-Fire Sanctuary - Mogma Mitts:
+Fire Sanctuary - First Trapped Mogma Room - Reward:
   original item: Progressive Mitts
   type: eldin, dungeon
   Paths:
     - stage/D201_1/r5/l0/TBox/68
-Fire Sanctuary - Chest on Balcony:
+Fire Sanctuary - Second Room - Balcony - Chest:
   original item: Bottle
   type: eldin, dungeon
   Paths:
     - stage/D201_1/r6/l0/TBox/70
     - stage/D201/r6/l0/TBox/70
-Fire Sanctuary - Chest after Second Trapped Mogma:
+Fire Sanctuary - Second Trapped Mogma Room - Reward:
   original item: FS Map
   type: eldin, dungeon
   Paths:
     - stage/D201_1/r2/l0/TBox/65
     - stage/D201/r2/l0/TBox/65
-Fire Sanctuary - Chest after Bombable Wall:
+Fire Sanctuary - Second Trapped Mogma Room - Past Bombable Wall - Chest:
   original item: FS Small Key
   type: eldin, dungeon
   Paths:
     - stage/D201_1/r11/l0/TBox/71
   hint: always
   text: a <r<false wall in the Fire Sanctuary>> guards
-Fire Sanctuary - Plats' Chest:
+Fire Sanctuary - West of Boss Door - Plats' Chest:
   original item: Heart Piece
   type: eldin, dungeon
   Paths:
     - stage/D201/r3/l0/TBox/66
-Fire Sanctuary - Chest in Staircase Room:
+Fire Sanctuary - Staircase Room - Chest:
   original item: Semi Rare Treasure
   type: eldin, dungeon
   Paths:
     - stage/D201/r9/l0/TBox/75
-Fire Sanctuary - Boss Key Chest:
+Fire Sanctuary - Boss Key Room - Boss Key Chest:
   original item: FS Boss Key
   type: eldin, dungeon
   Paths:

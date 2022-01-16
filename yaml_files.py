@@ -51,7 +51,7 @@ def requirements(folder: Path):
     requirements = {
         os.path.splitext(filename)[0]: yaml_load(folder / filename)
         for filename in files
-    } | {"allowed-time-of-day": "Both"}
+    } | {"abstract": True, "allowed-time-of-day": "Both"}
     if "macros.yaml" in os.listdir(folder):
         requirements["locations"] = yaml_load(folder / "macros.yaml")
     return requirements

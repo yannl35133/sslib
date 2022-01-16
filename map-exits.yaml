@@ -60,6 +60,11 @@ Skyloft - Silent Realm - Entrance:
 Skyloft - Silent Realm - Exit:
   exit-type: Exit
 
+Skyloft - Temple Entrance:
+  entrance: {}
+  exit: {}
+  vanilla: Sky Keep - Main - Entrance
+
 Orielle and Parrow's House - Exit: {}
 Orielle and Parrow's House Entrance: {}
 
@@ -103,6 +108,10 @@ Sky - Eldin Pillar - Volcano East Statue: {}
 Sky - Eldin Pillar - Volcano Ascent Statue: {}
 Sky - Eldin Pillar - Temple Entrance Statue: {}
 Sky - Eldin Pillar - Inside the Volcano Statue: {}
+Sky - Eldin Pillar - Fire Sanctuary Statue:
+  entrance: {}
+  exit: {}
+  vanilla: Fire Sanctuary - Main - Front of Boss Door - Statue
 
 Sky - Lanayru Pillar - Mines Statue:
   entrance: {}
@@ -237,7 +246,7 @@ Faron - Lake Floria - Farore's Lair - To Below Rock: {}
 Faron - Lake Floria - Waterfall - Statue: {}
 Faron - Lake Floria - Waterfall - To Farore's Lair: {}
 Faron - Lake Floria - Waterfall - To Woods: {}
-Faron - Lake Floria - Waterfall - Ancient Cistern Entrance: {}
+Faron - Lake Floria - Waterfall - Temple Entrance: {}
 
 Eldin - Volcano - Entry - Statue:
   entrance: {}
@@ -300,6 +309,15 @@ Eldin - Volcano - Hot Cave - From Vent:
 Eldin - Volcano - Past Slide - Vent to Hot Cave:
   exit: {}
   vanilla: Eldin - Volcano - Hot Cave - From Vent
+
+
+Eldin - Silent Realm - Entrance:
+  entrance: {}
+
+Eldin - Silent Realm - Exit:
+  exit: {}
+  vanilla: Eldin - Volcano - Ascent - Trial Entrance
+
 
 Eldin - Mogma Turf - Entrance:
   entrance: {}
@@ -404,6 +422,11 @@ Lanayru - Desert - Temple Entrance:
   exit: {}
   vanilla: Lanayru Mining Facility - Entrance
 
+Lanayru - Desert - Trial Entrance:
+  entrance: {}
+  exit: {}
+  vanilla: Lanayru - Silent Realm - Entrance
+
 Lanayru - Desert - Lightning Node Entrance:
   entrance: {}
   exit: {}
@@ -450,6 +473,13 @@ Lanayru - Desert - Fire Node - Exit:
   exit: {}
   vanilla: Lanayru - Desert - Fire Node Entrance
 
+Lanayru - Silent Realm - Entrance:
+  entrance: {}
+
+Lanayru - Silent Realm - Exit:
+  exit: {}
+  vanilla: Lanayru - Desert - Trial Entrance
+
 
 Lanayru - Caves - To Mines:
   entrance: {}
@@ -492,10 +522,10 @@ Lanayru - Sand Sea - Ancient Harbour Dock:
   exit: {}
   vanilla: Lanayru - Sand Sea - Ancient Harbour - To Sand Sea
 
-Lanayru - Sand Sea - Sandship Dock:
+Lanayru - Sand Sea - Temple Entrance:
   entrance: {}
   exit: {}
-  vanilla: Sandship - Entrance
+  vanilla: Sandship - Main - Entrance
 
 Lanayru - Sand Sea - Skipper's Retreat Dock:
   entrance: {}
@@ -577,20 +607,16 @@ Lanayru - Gorge - To Caves:
   exit: {}
   vanilla: Lanayru - Caves - To Gorge
 
+Lanayru - Gorge - Statue:
+  entrance: {}
+  exit: {}
+  vanilla: Sky - Lanayru Pillar - Lanayru Gorge Statue
+
+
 Skyview - Main - Entrance:
   entrance: {}
   exit: {}
   vanilla: Faron - Deep Woods - Temple Entrance
-
-Skyview - Main - To Second Hub:
-  entrance: {}
-  exit: {}
-  vanilla: Skyview - Main - To First Hub
-
-Skyview - Main - To First Hub:
-  entrance: {}
-  exit: {}
-  vanilla: Skyview - Main - To Second Hub
 
 Skyview - Main - Boss Door:
   entrance: {}
@@ -611,3 +637,180 @@ Skyview - Spring - Exit:
   entrance: {}
   exit: {}
   vanilla: Skyview - Boss Room - Exit
+
+Earth Temple - Main - Entrance:
+  entrance: {}
+  exit: {}
+  vanilla: Eldin - Volcano - Temple Entrance
+
+Earth Temple - Main - Boss Door:
+  entrance: {}
+  exit: {}
+  vanilla: Earth Temple - Boss Room - Entrance
+
+Earth Temple - Boss Room - Entrance:
+  entrance: {}
+  exit: {}
+  vanilla: Earth Temple - Main - Boss Door
+
+Earth Temple - Boss Room - Exit:
+  entrance: {}
+  exit: {}
+  vanilla: Earth Temple - Spring - Exit
+
+Earth Temple - Spring - Exit:
+  entrance: {}
+  exit: {}
+  vanilla: Earth Temple - Boss Room - Exit
+
+Lanayru Mining Facility - Main - Entrance:
+  entrance: {}
+  exit: {}
+  vanilla: Lanayru - Desert - Temple Entrance
+
+Lanayru Mining Facility - Main - First Hub To Big Hub:
+  entrance: {}
+  exit: {}
+  vanilla: Lanayru Mining Facility - Main - Big Hub - To First Hub
+
+Lanayru Mining Facility - Main - Gust Bellows Room To Big Hub:
+  entrance: {}
+  exit: {}
+  vanilla: Lanayru Mining Facility - Main - Big Hub - To Gust Bellows Room
+
+Lanayru Mining Facility - Main - Map Room To Big Hub:
+  entrance: {}
+  exit: {}
+  vanilla: Lanayru Mining Facility - Main - Big Hub - To Map Room
+
+Lanayru Mining Facility - Main - Big Hub - To First Hub:
+  entrance: {}
+  exit: {}
+  vanilla: Lanayru Mining Facility - Main - First Hub To Big Hub
+
+Lanayru Mining Facility - Main - Big Hub - To Gust Bellows Room:
+  entrance: {}
+  exit: {}
+  vanilla: Lanayru Mining Facility - Main - Gust Bellows Room To Big Hub
+
+Lanayru Mining Facility - Main - Big Hub - To Map Room:
+  entrance: {}
+  exit: {}
+  vanilla: Lanayru Mining Facility - Main - Map Room To Big Hub
+
+Lanayru Mining Facility - Main - Boss Door:
+  entrance: {}
+  exit: {}
+  vanilla: Lanayru Mining Facility - Boss Room - Entrance
+
+Lanayru Mining Facility - Boss Room - Entrance:
+  entrance: {}
+  exit: {}
+  vanilla: Lanayru Mining Facility - Main - Boss Door
+
+Lanayru Mining Facility - Boss Room - Exit:
+  entrance: {}
+  exit: {}
+  vanilla: Lanayru Mining Facility - Great Hall - Entrance
+
+Lanayru Mining Facility - Great Hall - Entrance:
+  entrance: {}
+  exit: {}
+  vanilla: Lanayru Mining Facility - Boss Room - Exit
+
+Lanayru Mining Facility - Great Hall - Exit:
+  entrance: {}
+  exit: {}
+  vanilla: Lanayru - Temple of Time - LMF Back Entrance
+
+Ancient Cistern - Main - Entrance:
+  entrance: {}
+  exit: {}
+  vanilla: Faron - Lake Floria - Waterfall - Temple Entrance
+
+Ancient Cistern - Main - Boss Door:
+  entrance: {}
+  exit: {}
+  vanilla: Ancient Cistern - Boss Room - Entrance
+
+Ancient Cistern - Boss Room - Entrance:
+  entrance: {}
+  exit: {}
+  vanilla: Ancient Cistern - Main - Boss Door
+
+Ancient Cistern - Boss Room - Exit:
+  entrance: {}
+  exit: {}
+  vanilla: Ancient Cistern - Flame Room - Exit
+
+Ancient Cistern - Flame Room - Exit:
+  entrance: {}
+  exit: {}
+  vanilla: Ancient Cistern - Boss Room - Exit
+
+Sandship - Main - Entrance:
+  entrance: {}
+  exit: {}
+  vanilla: Lanayru - Sand Sea - Temple Entrance
+
+Sandship - Main - Boss Door:
+  exit: {}
+  vanilla: Sandship - Boss Room - Entrance
+
+Sandship - Boss Room - Entrance:
+  entrance: {}
+
+Fire Sanctuary - Main - Entrance:
+  entrance: {}
+  exit: {}
+  vanilla: Eldin - Volcano Summit - Temple Entrance
+
+Fire Sanctuary - Main - First Room - To Second Room:
+  entrance: {}
+  exit: {}
+  vanilla: Fire Sanctuary - Main - Second Room - To First Room
+
+Fire Sanctuary - Main - Second Room - To First Room:
+  entrance: {}
+  exit: {}
+  vanilla: Fire Sanctuary - Main - First Room - To Second Room
+
+Fire Sanctuary - Main - Magmanos Fight Room - To West of Boss Door:
+  entrance: {}
+  exit: {}
+  vanilla: Fire Sanctuary - Main - West of Boss Door - To Magmanos Fight Room
+
+Fire Sanctuary - Main - West of Boss Door - To Magmanos Fight Room:
+  entrance: {}
+  exit: {}
+  vanilla: Fire Sanctuary - Main - Magmanos Fight Room - To West of Boss Door
+
+Fire Sanctuary - Main - Front of Boss Door - Statue:
+  entrance: {}
+  exit: {}
+  vanilla: Sky - Eldin Pillar - Fire Sanctuary Statue
+
+Fire Sanctuary - Main - Boss Door:
+  entrance: {}
+  exit: {}
+  vanilla: Fire Sanctuary - Boss Room - Entrance
+
+Fire Sanctuary - Boss Room - Entrance:
+  entrance: {}
+  exit: {}
+  vanilla: Fire Sanctuary - Main - Boss Door
+
+Fire Sanctuary - Boss Room - Exit:
+  entrance: {}
+  exit: {}
+  vanilla: Fire Sanctuary - Flame Room - Exit
+
+Fire Sanctuary - Flame Room - Exit:
+  entrance: {}
+  exit: {}
+  vanilla: Ancient Cistern - Boss Room - Exit
+
+Sky Keep - Main - Entrance:
+  entrance: {}
+  exit: {}
+  vanilla: Skyloft - Temple Entrance
