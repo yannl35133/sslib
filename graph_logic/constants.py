@@ -28,7 +28,7 @@ LOGIC_OPTIONS = {
 
 
 def with_sep_full(pre: str, loc: str) -> EXTENDED_ITEM_NAME:
-    if pre:
+    if pre and "/" not in loc:
         return EIN(pre + "/" + loc)
     return EIN(loc)
 
@@ -401,7 +401,7 @@ HORDE_DOOR_REQUIREMENT = "Horde Door Requirement"
 LINKS_ROOM = "Knight Academy - Link's Room"
 SONG_IMPA_CHECK = "Sealed Grounds - Song from Impa"
 
-trick = lambda s: s + " Trick"
+trick: Callable[[str], str] = lambda s: s + " Trick"
 
 
 # Retro-compatibility

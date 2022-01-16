@@ -33,7 +33,7 @@ class Rando:
                 if item in INVENTORY_ITEMS and item not in self.placement.items
             }
         )
-        starting_area = LINKS_ROOM
+        starting_area = make_day(self.short_to_full(LINKS_ROOM))
         exit_pools = DUNGEON_ENTRANCES_COMPLETE_POOLS + SILENT_REALMNS_COMPLETE_POOLS
 
         additional_requirements = (
@@ -104,7 +104,7 @@ class Rando:
         self.starting_items = starting_items
 
     def ban_the_banned(self):
-        self.banned = []
+        self.banned: List[str] = []
         if self.options["empty-unrequired-dungeons"]:
             self.banned.extend(
                 DUNGEON_ENTRANCES[dungeon] for dungeon in self.unrequired_dungeons
@@ -190,7 +190,7 @@ class Rando:
     def set_placement_options(self):
         shop_mode = self.options["shop-mode"]
 
-        self.logic_options_requirements = {
+        options = {
             OPEN_THUNDERHEAD_OPTION: self.options["open-thunderhead"] == "Open",
             OPEN_LMF_OPTION: self.options["open-lmf"] == "Open",
             ENABLED_BEEDLE_OPTION: shop_mode != "Always Junk",
@@ -217,10 +217,12 @@ class Rando:
 
         enabled_tricks = set(self.options["enabled-tricks-bitless"])
 
-        for trick_name in OPTIONS["Enabled Tricks BiTless"]["choices"]:
-            self.logic_options_requirements[trick(trick_name)] = DNFInventory(
-                trick_name in enabled_tricks
-            )
+        self.logic_options_requirements = {
+            k: DNFInventory(b) for k, b in options.items()
+        } | {
+            trick(trick_name): DNFInventory(trick_name in enabled_tricks)
+            for trick_name in OPTIONS["enabled-tricks-bitless"]["choices"]
+        }
 
         if shop_mode == "Vanilla":
             self.placement |= VANILLA_BEEDLE_PLACEMENT

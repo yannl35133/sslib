@@ -8,6 +8,9 @@ Main:
     Ledd's Gift: Impossible
     Chest Guarded by Lizalfos: Impossible
     Boss Key Chest: Impossible
+  exits:
+    Entrance: Nothing
+    Boss Door: Impossible
 
 Boss Room:
   Entry:

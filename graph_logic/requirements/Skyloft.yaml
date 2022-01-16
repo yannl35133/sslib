@@ -6,7 +6,6 @@ Upper:
     can-sleep: true
     locations:
       Fledge's Gift: Nothing
-      Crystal in Link's Room: Night
       Crystal in Plant: Night
       Start Owlan's Quest: Faron - Woods - Slingshot # The check
       Owlan's Crystals: Faron - Woods - Retrieve Oolo & Day
@@ -16,6 +15,15 @@ Upper:
     exits:
       Upper Exit: Nothing
       Lower Exit: Day
+
+    Link's Room: # Default starting area
+      can-sleep: true
+      entrance: Nothing
+      exits:
+        Knight Academy: Nothing
+      locations:
+        Crystal: Night
+
 
     Zelda's Room:
       region: Upper Skyloft
@@ -84,10 +92,16 @@ Central:
     Orielle and Parrow's House Entrance: Nothing
     Peatrice's House Entrance: Nothing
     Wryna's House Entrance: Nothing
+    Near Temple Entrance: Clawshots
     Sky: Day
 
     Upper: Nothing
     Village: Nothing
+
+  Near Temple Entrance:
+    exits:
+      Temple Entrance: Nothing
+      Central: Clawshots
 
   Waterfall Island:
     entrance: Clawshots

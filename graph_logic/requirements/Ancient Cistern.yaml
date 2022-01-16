@@ -8,6 +8,10 @@ Main:
     Bokoblin: Impossible
     Boss Key Chest: Impossible
 
+  exits:
+    Entrance: Nothing
+    Boss Door: Impossible
+
 Boss Room:
   locations:
     Beat Koloktos: Whip & (Sword | Bomb Bag | Bow)

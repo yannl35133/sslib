@@ -1,5 +1,6 @@
 from __future__ import annotations
-from typing import Dict, Generic, List, Any, Tuple, TypeVar
+from typing import Deque, Dict, Generic, List, Any, Tuple, TypeVar
+from collections import deque
 from enum import Enum
 from dataclasses import dataclass, field
 
@@ -32,6 +33,7 @@ class Area(Generic[LE]):
     allowed_time_of_day: AllowedTimeOfDay = AllowedTimeOfDay.DayOnly
     can_sleep: bool = False
     can_save: bool = False
+    abstract: bool = False
     sub_areas: Dict[str, Area[LE]] = field(default_factory=dict)
     locations: Dict[str, LE] = field(default_factory=dict)
     exits: Dict[str, LE] = field(default_factory=dict)
@@ -58,10 +60,14 @@ class Area(Generic[LE]):
         if (b := raw_dict.get("can-save")) is not None:
             area.can_save = b
 
+        if (b := raw_dict.get("abstract")) is not None:
+            area.abstract = b
+
         if (d := raw_dict.get("locations")) is not None:
             area.locations = {k: LogicExpression.parse(v) for k, v in d.items()}
             for k in d:
-                events.append(with_sep_full(name, k))
+                if " - " not in k:
+                    events.append(with_sep_full(name, k))
 
         if (d := raw_dict.get("exits")) is not None:
             area.exits = {k: LogicExpression.parse(v) for k, v in d.items()}
@@ -112,47 +118,51 @@ class Areas:
     ) -> EXTENDED_ITEM_NAME:
         """Computes the thing referred by [partial_address] when located at [base_address]"""
         base_address = base_address_str.split("/")
-        if base_address == [""]:
-            base_address = []
         partial_address = partial_address_str.split(" - ")
 
-        def search_area(i, j, area: Area) -> List[str]:
-            if len(partial_address) - j == 0:  # We've arrived
-                return [area.name]
+        i, j = 0, 0
+        if base_address == [""]:
+            i = 1
+        if partial_address[0] == "General":
+            j = 1
+            i = len(base_address)
 
-            hd = partial_address[j]
-            if len(partial_address) - j == 1 and (
-                hd in area.locations
-                or (hd in area.exits and hd in self.map_exit_suffixes)
+        queue: Deque[Area] = deque([self.parent_area])
+        head = partial_address[j]
+        while queue:
+            area = queue.popleft()
+            if j == len(partial_address):
+                return EIN(area.name)
+
+            if j + 1 == len(partial_address) and (
+                head in area.locations
+                or (head in area.exits and head in self.map_exit_suffixes)
             ):
-                # We've also arrived
-                return [with_sep_full(area.name, hd)]
+                return with_sep_full(area.name, head)
 
-            if hd in area.sub_areas:  # Abandon the base address, we've branched off
-                return search_area(len(base_address), j + 1, area.sub_areas[hd])
+            if head in area.sub_areas:  # Abandon the base address, we've branched off
+                if j + 1 == len(partial_address):
+                    return EIN(area.sub_areas[head].name)
+                queue.clear()
+                queue.append(area.sub_areas[head])
+                i = len(base_address)
+                j += 1
+                head = partial_address[j]
+                continue
 
-            if len(base_address) - i > 0:
+            if i < len(base_address):
                 # Let's follow the base address some more
-                return search_area(i + 1, j, area.sub_areas[base_address[i]])
+                queue.clear()
+                queue.append(area.sub_areas[base_address[i]])
+                i += 1
+                continue
 
             # Now we search everywhere
-            matches: List[str] = []
-            for sub_area in area.sub_areas.values():
-                if (match := search_area(i, j, sub_area)) != []:
-                    if not multiple:
-                        return match
-                    matches.extend(match)
-            return matches
-
-        res = search_area(0, 0, self.parent_area)
-        if res == []:
+            queue.extend(area.sub_areas.values())
+        else:
             raise ValueError(
                 f"Could not find '{partial_address_str}' from '{base_address_str}'"
             )
-        if multiple and len(res) > 1:
-            for loc in res:
-                self.normalize[EIN(loc)] = EIN(res[0])
-        return EIN(res[0])
 
     def __init__(
         self,
@@ -175,11 +185,9 @@ class Areas:
         self.map_exit_suffixes = {
             exit_name.rsplit(" - ", 1)[-1] for exit_name in map_exits
         }
-        self.normalize: Dict[EIN, EIN] = defaultfactorydict()
-
         self.parent_area.map(
             lambda prefix, k, v: (
-                k,
+                self.search_area(prefix, k) if " - " in k else k,
                 v.localize(lambda text: self.search_area(prefix, text)),
             ),
             lambda prefix, k, v: (
@@ -222,7 +230,9 @@ class Areas:
                     if allowed_time_of_day_str is not None
                     else self.areas[area_name].allowed_time_of_day
                 )
-                self.entrance_allowed_time_of_day[full_address] = allowed_time_of_day
+                self.entrance_allowed_time_of_day[
+                    make_entrance(full_address)
+                ] = allowed_time_of_day
                 if allowed_time_of_day == Both:
                     EXTENDED_ITEM.items_list.append(
                         make_day(make_entrance(full_address))
@@ -248,10 +258,17 @@ class Areas:
                 self.map_exits.add(make_exit(full_address))
 
         def short_to_full(elt: str):
+            if elt in LOGIC_OPTIONS or "Trick" in elt:
+                return EIN(elt)
+            for tag in ["_DAY", "_NIGHT", "_ENTRANCE", "_EXIT"]:
+                if elt[-len(tag) :] == tag:
+                    return EIN(short_to_full(elt[: -len(tag)]) + tag)
             for (a, b) in self.short_full:
                 if a == elt:
                     return b
-            raise ValueError(f"Error: association list, cannot find {elt}")
+            b = self.search_area("", elt)
+            self.short_full.append((elt, b))
+            return b
 
         def full_to_short(elt: EXTENDED_ITEM_NAME):
             for (a, b) in self.short_full:
@@ -282,7 +299,9 @@ class Areas:
                 reqs[narea_bit] |= DNFInv(darea_bit)
 
             for loc, req in area.locations.items():
-                if area.allowed_time_of_day == Both:
+                if area.abstract:
+                    timed_req = req
+                elif area.allowed_time_of_day == Both:
                     timed_req = (req.day_only() & DNFInv(make_day(area_name))) | (
                         req.night_only() & DNFInv(make_night(area_name))
                     )
@@ -290,7 +309,7 @@ class Areas:
                     timed_req = req.day_only() & DNFInv(EIN(area_name))
                 else:
                     timed_req = req.night_only() & DNFInv(EIN(area_name))
-                loc_bit = EXTENDED_ITEM[self.normalize[with_sep_full(area_name, loc)]]
+                loc_bit = EXTENDED_ITEM[with_sep_full(area_name, loc)]
                 reqs[loc_bit] |= timed_req
                 self.opaque[loc_bit] = False
 
@@ -331,14 +350,13 @@ class Areas:
                             raise ValueError("Time makes this exit impossible")
 
                 else:  # Map exit
-                    exit = self.normalize[with_sep_full(area_name, exit)]
+                    exit = with_sep_full(area_name, exit)
                     short_exit = self.full_to_short(exit)
                     exit_type = map_exits[short_exit].get("exit-type", "Both")
                     if exit_type in ("Entrance", "Both"):
-                        full_entrance = exit
-                        entrance = make_entrance(full_entrance)
+                        entrance = make_entrance(exit)
                         allowed_time_of_day = self.entrance_allowed_time_of_day[
-                            full_entrance
+                            entrance
                         ]
                         if allowed_time_of_day == Both:
                             darea_bit = EXTENDED_ITEM[make_day(area_name)]
