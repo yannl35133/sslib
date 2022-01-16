@@ -1,16 +1,31 @@
 Main:
-  locations:
-    Chest behind Bars: Nothing
-    First Chest in Hub Room: Impossible
-    Chest in Key Locked Room: Impossible
-    Gust Bellows: Impossible
-    Chest inside Gust Bellows Room: Impossible
-    Chest in First West Room: Impossible
-    Chest after Armos Fight: Impossible
-    Chest behind First Crawlspace: Impossible
-    Chest in Spike Maze: Impossible
-    Boss Key Chest: Impossible
-    Shortcut Chest in Main Hub: Impossible
+  First Hub:
+    locations:
+      Chest behind Bars: Nothing
+      Chest in Key Locked Room: Impossible
+      Gust Bellows: Impossible
+      Chest inside Gust Bellows Room: Impossible
+      Chest in First West Room: Impossible
+      Chest after Armos Fight: Impossible
+    exits:
+      Entrance: Nothing
+      First Hub To Big Hub: Impossible
+      Gust Bellows Room To Big Hub: Impossible
+      Map Room To Big Hub: Impossible
+
+  Big Hub:
+    locations:
+      First Chest in Hub Room: Impossible
+      Chest behind First Crawlspace: Impossible
+      Chest in Spike Maze: Impossible
+      Boss Key Chest: Impossible
+      Shortcut Chest in Main Hub: Impossible
+    exits:
+      To First Hub: Nothing
+      To Gust Bellows Room: Impossible
+      To Map Room: Impossible
+      Boss Door: Impossible
+
 
 Boss Room:
   exits:

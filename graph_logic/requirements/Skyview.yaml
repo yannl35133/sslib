@@ -47,7 +47,7 @@ Main:
       Left Room: Switch to Left Room
       Right Room - Lower Area: Switch to Right Room
       Right Room - Upper Area: Left Room - Raise Water & Right Room - Raise Water | Clawshots
-      To Second Hub: One Water Raise & Skyview Small Key
+      Second Hub: One Water Raise & Skyview Small Key
 
     Left Room:
       locations:
@@ -85,7 +85,7 @@ Main:
       Switch to Left Room: Beetle
       Item behind Bars: Switch for Bars | Whip
     exits:
-      To First Hub: Skyview Small Key
+      First Hub: Skyview Small Key
       Miniboss Room: Switch to Miniboss Room
       Left Rooms: Switch to Left Room
       Staldra Room: Skyview Small Key

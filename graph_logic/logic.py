@@ -79,7 +79,7 @@ class LogicSettings:
         ]
     ]
     starting_inventory: Inventory
-    starting_area: str
+    starting_area: EXTENDED_ITEM_NAME
     additional_requirements: Dict[str, DNFInventory]
 
 
@@ -112,10 +112,9 @@ class Logic:
             self.requirements[EXTENDED_ITEM[self.short_to_full(loc)]] &= req
         self.placement = placement.copy() if placement is not None else Placement()
 
-        self.inventory = logic_settings.starting_inventory.add(
-            logic_settings.starting_area
-        )
-        self.accessibility_check_bit = EXTENDED_ITEM[logic_settings.starting_area]
+        starting_area_bit = EXTENDED_ITEM[logic_settings.starting_area]
+        self.inventory = logic_settings.starting_inventory.add(starting_area_bit)
+        self.accessibility_check_bit = starting_area_bit
 
         for i, (entrances, exits) in enumerate(self.pools):
             EXTENDED_ITEM.items_list.append(make_exit_pool(i))
@@ -241,7 +240,7 @@ class Logic:
         full_inventory = Logic._fill_inventory(requirements, inventory)
         aggregate = Inventory()
 
-        for item in range(len(requirements)):
+        for item in EXTENDED_ITEM.items():
             if full_inventory[item]:
                 for conj in requirements[item].disjunction:
                     aggregate |= conj
@@ -253,8 +252,8 @@ class Logic:
         keep_going = True
         while keep_going:
             keep_going = False
-            for i, req in enumerate(requirements):
-                if not inventory[i] and req.eval(inventory):
+            for i in EXTENDED_ITEM.items():
+                if not inventory[i] and requirements[i].eval(inventory):
                     inventory |= i
                     keep_going = True
         return inventory
