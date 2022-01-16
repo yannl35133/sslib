@@ -58,9 +58,20 @@ class DNFInventory(LogicExpression):
 
     def __or__(self, other) -> DNFInventory:
         if isinstance(other, DNFInventory):
-            return DNFInventory(
-                Inventory.simplify_invset(self.disjunction | other.disjunction)
-            )
+            filtered_set = set()
+            for conj in other.disjunction:
+                for conj2 in self.disjunction:
+                    if conj2 <= conj and conj2 != conj:
+                        break
+                else:
+                    filtered_set.add(conj)
+            for conj in self.disjunction:
+                for conj2 in other.disjunction:
+                    if conj2 <= conj and conj2 != conj:
+                        break
+                else:
+                    filtered_set.add(conj)
+            return DNFInventory(filtered_set)
         else:
             raise ValueError
 
@@ -132,7 +143,7 @@ class AndCombination(LogicExpression):
         disjunctions = map(lambda x: x.disjunction, arguments)
         bigset = set()
         for conjunction_tuple in product(*disjunctions):
-            bigset.add(reduce(Inventory.__or__, conjunction_tuple))
+            bigset.add(reduce(Inventory.__or__, conjunction_tuple, Inventory()))
         return DNFInventory(Inventory.simplify_invset(bigset))
 
     @staticmethod
