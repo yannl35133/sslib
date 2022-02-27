@@ -1129,6 +1129,7 @@ class GamePatcher:
     def do_all_gamepatches(self):
         self.load_base_patches()
         self.add_entrance_rando_patches()
+        self.add_hacky_entrance_rando_patches()
         self.add_trial_rando_patches()
         if self.placement_file.options["shop-mode"] != "Vanilla":
             self.shopsanity_patches()
@@ -1394,6 +1395,59 @@ class GamePatcher:
                         "room": exit_room,
                         "entrance": exit_entrance,
                         "saveprompt": 1,  # save prompt
+                    },
+                },
+            )
+
+    def add_hacky_entrance_rando_patches(self):
+        with (Path(__file__).parent / "entrance_table.yaml").open("r") as f:
+            entrance_table = yaml.safe_load(f)
+        exits = []
+        scens = []
+        statue_scens = []
+        for entry in entrance_table:
+            if entry.get("type") == "statue":
+                statue_scens.append(entry["scen"])
+            else:
+                exits.append(entry["exit"])
+                scens.append(entry["scen"])
+        self.rando.rng.shuffle(scens)
+        for (
+            exit,
+            scen,
+        ) in zip(exits, scens):
+            self.add_patch_to_stage(
+                scen["stage"],
+                {
+                    "name": "h",
+                    "type": "objpatch",
+                    "index": scen["index"],
+                    "room": scen["room"],
+                    "objtype": "SCEN",
+                    "object": {
+                        "name": exit["name"],
+                        "layer": exit["layer"],
+                        "room": exit["room"],
+                        "entrance": exit["entrance"],
+                    },
+                },
+            )
+        # to make no logic more possible, let bird statues point to random exits
+        self.rando.rng.shuffle(exits)
+        for scen, exit in zip(statue_scens, exits):
+            self.add_patch_to_stage(
+                scen["stage"],
+                {
+                    "name": "h",
+                    "type": "objpatch",
+                    "index": scen["index"],
+                    "room": scen["room"],
+                    "objtype": "SCEN",
+                    "object": {
+                        "name": exit["name"],
+                        "layer": exit["layer"],
+                        "room": exit["room"],
+                        "entrance": exit["entrance"],
                     },
                 },
             )
