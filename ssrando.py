@@ -175,6 +175,27 @@ class Randomizer(BaseRandomizer):
         else:
             self.progress_callback("writing spoiler log...")
         plcmt_file = self.get_placement_file()
+
+        with (Path(__file__).parent / "entrance_table.yaml").open("r") as f:
+            entrance_table = yaml.safe_load(f)
+        exits = []
+        scens = []
+        statue_scens = []
+        for entry in entrance_table:
+            if entry.get("type") == "statue":
+                statue_scens.append((entry["name"], entry["scen"]))
+            else:
+                exits.append((entry["name"], entry["exit"]))
+                scens.append((entry["name"], entry["scen"]))
+        self.rng.shuffle(scens)
+        plcmt_file.exits_connections = [
+            (exit, entrance) for ((_, exit), (_, entrance)) in zip(exits, scens)
+        ]
+        self.rng.shuffle(exits)
+        plcmt_file.statue_exits_connections = [
+            (exit, entrance) for ((_, exit), (_, entrance)) in zip(statue_scens, scens)
+        ]
+
         if self.options["out-placement-file"] and not self.no_logs:
             (self.log_file_path / f"placement_file_{self.seed}.json").write_text(
                 plcmt_file.to_json_str()
@@ -222,6 +243,8 @@ class Randomizer(BaseRandomizer):
                     barren_nonprogress=self.logic.get_barren_regions(weak=True),
                     randomized_dungeon_entrance=self.logic.randomized_dungeon_entrance,
                     randomized_trial_entrance=self.logic.randomized_trial_entrance,
+                    exits_connections=plcmt_file.exits_connections,
+                    statue_exits_connections=plcmt_file.statue_exits_connections,
                 )
         if not self.dry_run:
             GamePatcher(

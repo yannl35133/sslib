@@ -37,6 +37,8 @@ def write(
     barren_nonprogress,
     randomized_dungeon_entrance,
     randomized_trial_entrance,
+    exits_connections,
+    statue_exits_connections,
 ):
     write_header(file, options, hash)
     norm = areas.prettify
@@ -169,6 +171,26 @@ def write(
             file.write(f"    {loc + ':':{max_location_name_length}} {item}\n")
 
     file.write("\n\n\n")
+
+    # Write down exits.
+    file.write("Exits:\n")
+    for (
+        entrance_name,
+        dungeon_or_cave_name,
+    ) in exits_connections:
+        file.write("  %-48s %s\n" % (entrance_name + ":", dungeon_or_cave_name))
+
+    file.write("\n\n")
+
+    # Write down exits.
+    file.write("Statue Exits:\n")
+    for (
+        entrance_name,
+        dungeon_or_cave_name,
+    ) in statue_exits_connections:
+        file.write("  %-48s %s\n" % (entrance_name + ":", dungeon_or_cave_name))
+
+    file.write("\n\n")
 
     # Write dungeon entrances.
     file.write("Entrances:\n")
