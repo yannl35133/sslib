@@ -183,16 +183,6 @@ def write(
 
     file.write("\n\n")
 
-    # Write down exits.
-    file.write("Statue Exits:\n")
-    for (
-        statue_name,
-        exit_name,
-    ) in sorted(statue_exits_connections):
-        file.write("  %-48s %s\n" % (statue_name + ":", exit_name))
-
-    file.write("\n\n")
-
     # Write dungeon entrances.
     file.write("Entrances:\n")
     for (
