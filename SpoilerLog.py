@@ -174,21 +174,22 @@ def write(
 
     # Write down exits.
     file.write("Exits:\n")
+    rev = [(a, b) for (b, a) in exits_connections]
     for (
         entrance_name,
-        dungeon_or_cave_name,
-    ) in exits_connections:
-        file.write("  %-48s %s\n" % (entrance_name + ":", dungeon_or_cave_name))
+        exit_name,
+    ) in sorted(rev):
+        file.write("  %-48s %s\n" % (entrance_name + ":", exit_name))
 
     file.write("\n\n")
 
     # Write down exits.
     file.write("Statue Exits:\n")
     for (
-        entrance_name,
-        dungeon_or_cave_name,
-    ) in statue_exits_connections:
-        file.write("  %-48s %s\n" % (entrance_name + ":", dungeon_or_cave_name))
+        statue_name,
+        exit_name,
+    ) in sorted(statue_exits_connections):
+        file.write("  %-48s %s\n" % (statue_name + ":", exit_name))
 
     file.write("\n\n")
 

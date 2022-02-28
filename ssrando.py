@@ -193,7 +193,7 @@ class Randomizer(BaseRandomizer):
         ]
         self.rng.shuffle(exits)
         plcmt_file.statue_exits_connections = [
-            (exit, entrance) for ((_, exit), (_, entrance)) in zip(statue_scens, scens)
+            (statue, exit) for ((_, statue), (_, exit)) in zip(statue_scens, exits)
         ]
 
         if self.options["out-placement-file"] and not self.no_logs:
