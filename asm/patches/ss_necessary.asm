@@ -178,6 +178,11 @@ stw r28, 0x2f8(r6) ; currentTextFileNumber
 .org 0x80242060
 li r7, 0 ; force non trial
 
+; er patches
+; hook into function before spawning link at entrance
+.org 0x800635b4
+bl do_entrance_fixes
+
 .close
 
 .open "d_a_obj_time_door_beforeNP.rel"
