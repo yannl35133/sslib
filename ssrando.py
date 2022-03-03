@@ -32,6 +32,7 @@ from options import OPTIONS, Options
 # import logic.item_types
 from sslib.utils import encodeBytes
 from version import VERSION, VERSION_WITHOUT_COMMIT
+from util.file_accessor import get_entrance_table
 
 from typing import List, Callable
 
@@ -176,40 +177,14 @@ class Randomizer(BaseRandomizer):
             self.progress_callback("writing spoiler log...")
         plcmt_file = self.get_placement_file()
 
-        def to_printable_name(entry):
-            disambig = (
-                f'{entry.get("disambiguation", "")} {entry.get("door", "")}'.strip()
-            )
-            if disambig != "":
-                disambig = f" ({disambig})"
-            return f'{entry["stage"]} -> {entry["to-stage"]}{disambig}'
-
-        with (Path(__file__).parent / "entrance_table2.yaml").open("r") as f:
-            entrance_table = yaml.safe_load(f)
-        # TODO: doesn't belong to this object
-        # this is technically more entrance? I think?
-        self.exit_map = {}
-        self.scen_map = {}
-        exits = []
-        scens = []
-        statue_scens = []
-        for entry in entrance_table:
-            if entry.get("type") == "statue":
-                # todo name
-                for statue_scen in entry["scens"]:
-                    name = f'{statue_scen["stage"]}, {statue_scen["room"]}, {statue_scen["index"]}'
-                    self.scen_map[name] = [statue_scen]
-                    statue_scens.append(name)
-            else:
-                name = to_printable_name(entry)
-                self.exit_map[name] = entry["orig"]
-                self.scen_map[name] = entry["scens"]
-                exits.append(name)
-                scens.append(name)
-        self.rng.shuffle(scens)
-        plcmt_file.exits_connections = list(zip(exits, scens))
+        entrance_table = get_entrance_table()
+        entrances = entrance_table.entrances.copy()
+        exits = entrance_table.exits.copy()
+        statue_exits = entrance_table.statue_exits.copy()
         self.rng.shuffle(exits)
-        plcmt_file.exits_connections.extend(list(zip(exits, statue_scens)))
+        plcmt_file.exits_connections = dict(zip(exits, entrances))
+        self.rng.shuffle(entrances)
+        plcmt_file.exits_connections.update(dict(zip(statue_exits, entrances)))
 
         if self.options["out-placement-file"] and not self.no_logs:
             (self.log_file_path / f"placement_file_{self.seed}.json").write_text(
@@ -259,7 +234,6 @@ class Randomizer(BaseRandomizer):
                     randomized_dungeon_entrance=self.logic.randomized_dungeon_entrance,
                     randomized_trial_entrance=self.logic.randomized_trial_entrance,
                     exits_connections=plcmt_file.exits_connections,
-                    statue_exits_connections=plcmt_file.statue_exits_connections,
                 )
         if not self.dry_run:
             GamePatcher(

@@ -38,7 +38,6 @@ def write(
     randomized_dungeon_entrance,
     randomized_trial_entrance,
     exits_connections,
-    statue_exits_connections,
 ):
     write_header(file, options, hash)
     norm = areas.prettify
@@ -174,11 +173,10 @@ def write(
 
     # Write down exits.
     file.write("Exits:\n")
-    rev = [(a, b) for (b, a) in exits_connections]
     for (
         entrance_name,
         exit_name,
-    ) in sorted(rev):
+    ) in sorted(exits_connections):
         file.write("  %-48s %s\n" % (entrance_name + ":", exit_name))
 
     file.write("\n\n")
