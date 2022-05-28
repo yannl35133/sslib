@@ -1,0 +1,3491 @@
+# Start
+Start:
+  type: exit
+  vanilla: Skyloft - Knight Academy - Start Entrance
+  stage: F001r
+  room: 1
+  index: 2
+
+# Skyloft
+
+## Knight Academy
+Skyloft - Knight Academy - Start Entrance:
+  type: entrance
+  stage: F001r
+  room: 1
+  layer: 0
+  entrance: 5
+  tod: 2
+
+Skyloft - Knight Academy - Chimney:
+  type: entrance
+  stage: F001r
+  room: 6
+  layer: 0
+  entrance: 1
+  tod: 2
+
+Skyloft - Knight Academy - Lower Right Door Entrance:
+  type: entrance
+  stage: F001r
+  room: 0
+  layer: 0
+  entrance: 1
+  tod: 2
+
+Skyloft - Knight Academy - Lower Left Door Entrance:
+  type: entrance
+  stage: F001r
+  room: 0
+  layer: 0
+  entrance: 2
+  tod: 2
+
+Skyloft - Knight Academy - Upper Right Door Entrance:
+  type: entrance
+  stage: F001r
+  room: 0
+  layer: 0
+  entrance: 3
+  tod: 2
+
+Skyloft - Knight Academy - Upper Left Door Entrance:
+  type: entrance
+  stage: F001r
+  room: 0
+  layer: 0
+  entrance: 4
+  tod: 2
+
+
+Skyloft - Knight Academy - Lower Left Door Exit:
+  type: exit
+  vanilla: Skyloft - Knight Academy Lower Right Door Entrance
+  stage: F001r
+  room: 0
+  index: 0
+
+Skyloft - Knight Academy - Lower Right Door Exit:
+  type: exit
+  vanilla: Skyloft - Knight Academy Lower Left Door Entrance
+  stage: F001r
+  room: 0
+  index: 1
+
+Skyloft - Knight Academy - Upper Right Door Exit:
+  type: exit
+  vanilla: Skyloft - Knight Academy Upper Left Door Entrance
+  stage: F001r
+  room: 0
+  index: 2
+
+Skyloft - Knight Academy - Upper Left Door Exit:
+  type: exit
+  vanilla: Skyloft - Knight Academy Upper Right Door Entrance
+  stage: F001r
+  room: 0
+  index: 3
+
+
+## Upper Skyloft around Knight Academy
+
+Skyloft - Knight Academy Lower Right Door Entrance:
+  type: entrance
+  stage: F000
+  room: 0
+  layer: 0
+  entrance: 4
+  tod: 2
+
+Skyloft - Knight Academy Lower Left Door Entrance:
+  type: entrance
+  stage: F000
+  room: 0
+  layer: 0
+  entrance: 5
+  tod: 2
+
+Skyloft - Knight Academy Upper Left Door Entrance:
+  type: entrance
+  stage: F000
+  room: 0
+  layer: 0
+  entrance: 23
+  tod: 2
+
+Skyloft - Knight Academy Upper Right Door Entrance:
+  type: entrance
+  stage: F000
+  room: 0
+  layer: 0
+  entrance: 24
+  tod: 2
+
+
+Skyloft - Knight Academy Lower Right Door Exit:
+  type: exit
+  vanilla: Skyloft - Knight Academy - Lower Left Door Entrance
+  stage: F000
+  room: 0
+  index: 3
+
+Skyloft - Knight Academy Lower Left Door Exit:
+  type: exit
+  vanilla: Skyloft - Knight Academy - Lower Right Door Entrance
+  stage: F000
+  room: 0
+  index: 4
+
+Skyloft - Knight Academy Upper Left Door Exit:
+  type: exit
+  vanilla: Skyloft - Knight Academy - Upper Right Door Entrance
+  stage: F000
+  room: 0
+  index: 23
+
+Skyloft - Knight Academy Upper Right Door Exit:
+  type: exit
+  vanilla: Skyloft - Knight Academy - Upper Left Door Entrance
+  stage: F000
+  room: 0
+  index: 24
+
+Skyloft - Knight Academy Chimney Entrance:
+  type: exit
+  vanilla: Skyloft - Knight Academy - Chimney
+  stage: F000
+  room: 0
+  index: 57
+
+
+## Sparring Hall
+
+Sparring Hall - Right Door Entrance:
+  type: entrance
+  stage: F009r
+  room: 0
+  layer: 0
+  entrance: 1
+  tod: 2
+
+Sparring Hall - Left Door Entrance:
+  type: entrance
+  stage: F009r
+  room: 0
+  layer: 0
+  entrance: 2
+  tod: 2
+
+
+Sparring Hall - Right Door Exit:
+  type: exit
+  vanilla: Skyloft - Sparring Hall Left Door Entrance
+  stage: F009r
+  room: 0
+  index: 0
+
+Sparring Hall - Left Door Exit:
+  type: exit
+  vanilla: Skyloft - Sparring Hall Right Door Entrance
+  stage: F009r
+  room: 0
+  index: 1
+
+
+
+Skyloft - Sparring Hall Left Door Entrance:
+  type: entrance
+  stage: F000
+  room: 0
+  layer: 0
+  entrance: 21
+  tod: 2
+
+Skyloft - Sparring Hall Right Door Entrance:
+  type: entrance
+  stage: F000
+  room: 0
+  layer: 0
+  entrance: 26
+  tod: 2
+
+
+Skyloft - Groosenator Pumpkin Pull Entrance:
+  type: entrance
+  subtype: groosenator
+  stage: F000
+  room: 0
+  layer: 0
+  entrance: 18
+
+
+
+Skyloft - Sparring Hall Left Door Exit:
+  type: exit
+  vanilla: Sparring Hall - Right Door Entrance
+  stage: F000
+  room: 0
+  index: 20
+
+Skyloft - Sparring Hall Right Door Exit:
+  type: exit
+  vanilla: Sparring Hall - Left Door Entrance
+  stage: F000
+  room: 0
+  index: 27
+
+
+## Goddess Statue
+
+Goddess Statue - Entrance:
+  type: entrance
+  stage: F008r
+  room: 0
+  layer: 0
+  entrance: 0
+  tod: 2
+
+Goddess Statue - Exit:
+  type: exit
+  vanilla: Goddess Statue Entrance
+  stage: F008r
+  room: 0
+  index: 0
+
+Goddess Statue Entrance:
+  type: entrance
+  stage: F000
+  room: 0
+  layer: 0
+  entrance: 6
+  tod: 2
+
+Goddess Statue Exit:
+  type: exit
+  vanilla: Goddess Statue - Entrance
+  stage: F000
+  room: 0
+  index: 5
+
+
+## Waterfall Cave
+
+Waterfall Cave - Upper Entrance:
+  type: entrance
+  stage: D000
+  room: 0
+  layer: 0
+  entrance: 0
+  tod: 2
+
+Waterfall Cave - Lower Entrance:
+  type: entrance
+  stage: D000
+  room: 0
+  layer: 0
+  entrance: 1
+  tod: 2
+
+
+Waterfall Cave - Upper Exit:
+  type: exit
+  vanilla: Waterfall Cave Upper Entrance
+  stage: D000
+  room: 0
+  index: 0
+
+Waterfall Cave - Lower Exit:
+  type: exit
+  vanilla: Waterfall Cave Lower Entrance
+  stage: D000
+  room: 0
+  index: 1
+
+
+Waterfall Cave Upper Entrance:
+  type: entrance
+  stage: F000
+  room: 0
+  layer: 0
+  entrance: 7
+  tod: 2
+
+Waterfall Cave Lower Entrance:
+  type: entrance
+  stage: F000
+  room: 0
+  layer: 0
+  entrance: 8
+  tod: 2
+
+
+Waterfall Cave Upper Exit:
+  type: exit
+  vanilla: Waterfall Cave - Upper Entrance
+  stage: F000
+  room: 0
+  index: 6
+
+Waterfall Cave Lower Exit:
+  type: exit
+  vanilla: Waterfall Cave - Lower Entrance
+  stage: F000
+  room: 0
+  index: 7
+
+
+## Bazaar
+
+Bazaar - North Entrance:
+  type: entrance
+  stage: F004r
+  room: 0
+  layer: 0
+  entrance: 0
+
+Bazaar - South Entrance:
+  type: entrance
+  stage: F004r
+  room: 0
+  layer: 0
+  entrance: 1
+
+Bazaar - West Entrance:
+  type: entrance
+  stage: F004r
+  room: 0
+  layer: 0
+  entrance: 2
+
+
+Bazaar - North Exit:
+  type: exit
+  vanilla: Bazaar North Entrance
+  stage: F004r
+  room: 0
+  index: 0
+
+Bazaar - South Exit:
+  type: exit
+  vanilla: Bazaar South Entrance
+  stage: F004r
+  room: 0
+  index: 1
+
+Bazaar - West Exit:
+  type: exit
+  vanilla: Bazaar West Entrance
+  stage: F004r
+  room: 0
+  index: 2
+
+
+Bazaar North Entrance:
+  type: entrance
+  stage: F000
+  room: 0
+  layer: 0
+  entrance: 2
+  tod: 2
+
+Bazaar South Entrance:
+  type: entrance
+  stage: F000
+  room: 0
+  layer: 0
+  entrance: 3
+  tod: 2
+
+Bazaar West Entrance:
+  type: entrance
+  stage: F000
+  room: 0
+  layer: 0
+  entrance: 20
+  tod: 2
+
+
+Bazaar North Exit:
+  type: exit
+  vanilla: Bazaar - North Entrance
+  stage: F000
+  room: 0
+  index: 1
+
+Bazaar South Exit:
+  type: exit
+  vanilla: Bazaar - South Entrance
+  stage: F000
+  room: 0
+  index: 2
+
+Bazaar West Exit:
+  type: exit
+  vanilla: Bazaar - West Entrance
+  stage: F000
+  room: 0
+  index: 19
+
+
+## Beedle
+
+Beedle's Shop - Day Entrance:
+  type: entrance
+  stage: F002r
+  room: 0
+  layer: 0
+  entrance: 0
+  tod: 2
+
+# night only so prevent problems here
+Beedle's Shop - Night Entrance:
+  type: entrance
+  allowed-time-of-day: night
+  stage: F002r
+  room: 0
+  layer: 0
+  entrance: 0
+  tod: 1
+
+
+Beedle's Shop - Day Exit:
+  type: exit
+  vanilla: Skyloft - Beedle's Shop Entrance
+  stage: F002r
+  room: 0
+  index: 0
+
+Beedle's Shop - Trapdoor Exit:
+  type: exit
+  vanilla: Skyloft - Beedle's Shop Entrance
+  stage: F002r
+  room: 0
+  index: 1
+
+Beedle's Shop - Night Exit:
+  type: exit
+  vanilla: Sky - Beedle's Island - Beedle's Ship Entrance
+  allowed-time-of-day: night
+  stage: F002r
+  room: 0
+  index: 2
+
+
+Skyloft - Beedle's Shop Entrance:
+  type: entrance
+  stage: F000
+  room: 0
+  layer: 0
+  entrance: 0
+  tod: 2
+
+Skyloft - Beedle's Shop Exit:
+  type: exit
+  vanilla: Beedle's Shop - Day Entrance
+  stage: F000
+  room: 0
+  index: 26
+
+## Sky Keep
+
+Skyloft - Temple Entrance:
+  type: entrance
+  stage: F000
+  room: 0
+  layer: 0
+  entrance: 53
+
+
+Skyloft - Temple Exit:
+  type: exit
+  vanilla: Sky Keep - Entrance
+  stage: F000
+  room: 0
+  index: 48
+
+
+## Orielle and Parrow's House
+
+Orielle and Parrow's House - Entrance:
+  type: entrance
+  stage: F005r
+  room: 0
+  layer: 0
+  entrance: 1
+  tod: 2
+
+Orielle and Parrow's House - Exit:
+  type: exit
+  vanilla: Orielle and Parrow's House Entrance
+  stage: F005r
+  room: 0
+  index: 0
+
+Orielle and Parrow's House Entrance:
+  type: entrance
+  stage: F000
+  room: 0
+  layer: 0
+  entrance: 30
+  tod: 2
+
+Orielle and Parrow's House Exit:
+  type: exit
+  vanilla: Orielle and Parrow's House - Entrance
+  stage: F000
+  room: 0
+  index: 31
+
+## Peatrice's House
+
+Peatrice's House - Entrance:
+  type: entrance
+  stage: F018r
+  room: 0
+  layer: 0
+  entrance: 1
+  tod: 2
+
+Peatrice's House - Exit:
+  type: exit
+  vanilla: Peatrice's House Entrance
+  stage: F018r
+  room: 0
+  index: 0
+
+Peatrice's House Entrance:
+  type: entrance
+  stage: F000
+  room: 0
+  layer: 0
+  entrance: 38
+  tod: 2
+
+Peatrice's House Exit:
+  type: exit
+  vanilla: Peatrice's House - Entrance
+  stage: F000
+  room: 0
+  index: 38
+
+## Wryna's House
+
+Wryna's House - Entrance:
+  type: entrance
+  stage: F006r
+  room: 0
+  layer: 0
+  entrance: 1
+  tod: 2
+
+Wryna's House - Exit:
+  type: exit
+  vanilla: Wryna's House Entrance
+  stage: F006r
+  room: 0
+  index: 0
+
+Wryna's House Entrance:
+  type: entrance
+  stage: F000
+  room: 0
+  layer: 0
+  entrance: 31
+  tod: 2
+
+Wryna's House Exit:
+  type: exit
+  vanilla: Wryna's House - Entrance
+  stage: F000
+  room: 0
+  index: 10
+
+## Bertie's House
+
+Bertie's House - Entrance:
+  type: entrance
+  stage: F014r
+  room: 0
+  layer: 0
+  entrance: 1
+  tod: 2
+
+Bertie's House - Exit:
+  type: exit
+  vanilla: Bertie's House Entrance
+  stage: F014r
+  room: 0
+  index: 0
+
+Bertie's House Entrance:
+  type: entrance
+  stage: F000
+  room: 0
+  layer: 0
+  entrance: 34
+  tod: 2
+
+Bertie's House Exit:
+  type: exit
+  vanilla: Bertie's House - Entrance
+  stage: F000
+  room: 0
+  index: 34
+
+
+## Sparrot's House
+
+Sparrot's House - Entrance:
+  type: entrance
+  stage: F013r
+  room: 0
+  layer: 0
+  entrance: 1
+  tod: 2
+
+Sparrot's House - Exit:
+  type: exit
+  vanilla: Sparrot's House Entrance
+  stage: F013r
+  room: 0
+  index: 0
+
+Sparrot's House Entrance:
+  type: entrance
+  stage: F000
+  room: 0
+  layer: 0
+  entrance: 33
+  tod: 2
+
+Sparrot's House Exit:
+  type: exit
+  vanilla: Sparrot's House - Entrance
+  stage: F000
+  room: 0
+  index: 33
+
+
+# item delivery CS, make vanilla for now
+Sparrot's House - Delivery Cutscene Entrance:
+  type: entrance
+  disabled: true
+  stage: F013r
+  room: 0
+  layer: 0
+  entrance: 0
+
+Sky - Sparrot Delivery Cutscene Exit:
+  type: exit
+  vanilla: Sparrot's House - Delivery Cutscene Entrance
+  disabled: true
+  stage: F020
+  room: 0
+  index: 24
+
+Skyloft - Sparrot Delivery Cutscene Exit:
+  type: exit
+  vanilla: Sparrot's House - Delivery Cutscene Entrance
+  disabled: true
+  stage: F000
+  room: 0
+  index: 58
+
+
+## Mallara's House
+
+Skyloft - Entrance:
+  type: entrance
+  stage: F000
+  room: 0
+  layer: 0
+  entrance: 36
+  tod: 2
+
+Skyloft - Exit:
+  type: exit
+  vanilla: Skyloft Entrance
+  stage: F000
+  room: 0
+  index: 36
+
+Skyloft Entrance:
+  type: entrance
+  stage: F016r
+  room: 0
+  layer: 0
+  entrance: 1
+  tod: 2
+
+Skyloft Exit:
+  type: exit
+  vanilla: Skyloft - Entrance
+  stage: F016r
+  room: 0
+  index: 0
+
+
+## Batreaux' House
+
+Batreaux' House - Entrance:
+  type: entrance
+  stage: F012r
+  room: 0
+  layer: 0
+  entrance: 0
+  tod: 2
+
+Batreaux' House - Exit:
+  type: exit
+  vanilla: Batreaux' House Entrance
+  stage: F012r
+  room: 0
+  index: 0
+
+Batreaux' House Entrance:
+  type: entrance
+  stage: F000
+  room: 0
+  layer: 0
+  entrance: 29
+  tod: 2
+
+Batreaux' House Exit:
+  type: exit
+  vanilla: Batreaux' House - Entrance
+  stage: F000
+  room: 0
+  index: 30
+
+
+## Gondo's House
+
+Gondo's House - Entrance:
+  type: entrance
+  stage: F015r
+  room: 0
+  layer: 0
+  entrance: 1
+  tod: 2
+
+Gondo's House - Exit:
+  type: exit
+  vanilla: Gondo's House Entrance
+  stage: F015r
+  room: 0
+  index: 0
+
+Gondo's House Entrance:
+  type: entrance
+  stage: F000
+  room: 0
+  layer: 0
+  entrance: 35
+  tod: 2
+
+Gondo's House Exit:
+  type: exit
+  vanilla: Gondo's House - Entrance
+  stage: F000
+  room: 0
+  index: 35
+
+
+## Rupin's House
+
+Rupin's House - Entrance:
+  type: entrance
+  stage: F017r
+  room: 0
+  layer: 0
+  entrance: 1
+  tod: 2
+
+Rupin's House - Exit:
+  type: exit
+  vanilla: Rupin's House Entrance
+  stage: F017r
+  room: 0
+  index: 1
+
+Rupin's House Entrance:
+  type: entrance
+  stage: F000
+  room: 0
+  layer: 0
+  entrance: 37
+  tod: 2
+
+Rupin's House Exit:
+  type: exit
+  vanilla: Rupin's House - Entrance
+  stage: F000
+  room: 0
+  index: 37
+
+
+## Piper's House
+Piper's House - Entrance:
+  type: entrance
+  stage: F007r
+  room: 0
+  layer: 0
+  entrance: 1
+  tod: 2
+
+Piper's House - Exit:
+  type: exit
+  vanilla: Piper's House Entrance
+  stage: F007r
+  room: 0
+  index: 0
+
+Piper's House Entrance:
+  type: entrance
+  stage: F000
+  room: 0
+  layer: 0
+  entrance: 32
+  tod: 2
+
+Piper's House Exit:
+  type: exit
+  vanilla: Piper's House - Entrance
+  stage: F000
+  room: 0
+  index: 32
+
+Piper's Other House Exit ???:
+  type: exit
+  vanilla: Piper's House - Entrance
+  stage: F000
+  room: 0
+  index: 0
+
+
+# Sky
+
+## North East
+
+Inside Bamboo Island - Entrance:
+  type: entrance
+  stage: F019r
+  room: 0
+  layer: 1
+  entrance: 0
+
+Inside Bamboo Island - Exit:
+  type: exit
+  vanilla: Inside Bamboo Island Entrance
+  stage: F019r
+  room: 0
+  index: 2
+
+
+Inside Bamboo Island Entrance:
+  type: entrance
+  stage: F020
+  room: 0
+  layer: 0
+  entrance: 11
+
+Inside Bamboo Island Exit:
+  type: exit
+  vanilla: Inside Bamboo Island - Entrance
+  stage: F020
+  room: 0
+  index: 13
+
+
+Sky - Beedle's Island - Beedle's Ship Entrance:
+  type: entrance
+  allowed-time-of-day: night
+  stage: F020
+  room: 0
+  layer: 4
+  entrance: 0
+  tod: 1
+
+# night only so prevent problems here
+Sky - Beedle's Island - Beedle's Ship Exit:
+  type: exit
+  vanilla: Beedle's Shop - Night Entrance
+  allowed-time-of-day: night
+  stage: F020
+  room: 0
+  index: 14
+
+
+Sky - Eldin Pillar - Entrance:
+  type: entrance
+  subtype: statue
+  stage: F020
+  room: 0
+  layer: 0
+  entrance: 13
+
+
+
+Eldin Volcano - Volcano Entrance Statue Exit:
+  type: exit
+  subtype: statue
+  vanilla: Sky - Eldin Pillar - Entrance
+  stage: F200
+  room: 0
+  index: 0
+
+Eldin Volcano - <<Volcano East/Ascent>> Statue Exit:
+  type: exit
+  subtype: statue
+  vanilla: Sky - Eldin Pillar - Entrance
+  stage: F200
+  room: 2
+  index: 2
+
+Eldin Volcano - Temple Entrance Statue Exit:
+  type: exit
+  subtype: statue
+  vanilla: Sky - Eldin Pillar - Entrance
+  stage: F200
+  room: 4
+  index: 2
+
+Fire Sanctuary - Inner Map Statue Exit:
+  type: exit
+  subtype: statue
+  vanilla: Sky - Eldin Pillar - Entrance
+  stage: D201_1
+  room: 10
+  index: 1
+
+Outside Fire Sanctuary - Statue Exit:
+  type: exit
+  subtype: statue
+  vanilla: Sky - Eldin Pillar - Entrance
+  stage: F201_3
+  room: 0
+  index: 2
+
+Fire Sanctuary - Statue Exit:
+  type: exit
+  subtype: statue
+  vanilla: Sky - Eldin Pillar - Entrance
+  stage: D201
+  room: 10
+  index: 3
+
+
+Eldin Volcano - First Time Entrance:
+  type: entrance
+  subtype: statue
+  stage: F200
+  room: 0
+  layer: 0
+  entrance: 0
+
+Sky - Eldin Pillar - First Time Exit:
+  type: exit
+  subtype: statue
+  vanilla: Eldin Volcano - First Time Entrance
+  stage: F020
+  room: 0
+  index: 1
+
+Eldin Volcano - Temple Entrance Statue:
+  type: entrance
+  subtype: statue
+  stage: F200
+  room: 4
+  layer: 0
+  entrance: 7
+
+Sky - Eldin Pillar - Temple Entrance Statue:
+  type: exit
+  subtype: statue
+  vanilla: Eldin Volcano - Temple Entrance Statue
+  stage: F020
+  room: 0
+  index: 29
+
+Sky - Eldin Pillar - Temple Entrance <<Alternate>> Statue:
+  type: exit
+  subtype: statue
+  vanilla: Eldin Volcano - Temple Entrance Statue
+  stage: F020
+  room: 0
+  index: 53
+
+Outside Fire Sanctuary - Inside the Volcano Statue:
+  type: entrance
+  subtype: statue
+  stage: F201_3
+  room: 0
+  layer: 0
+  entrance: 3
+
+Sky - Eldin Pillar - Inside the Volcano Statue:
+  type: exit
+  subtype: statue
+  vanilla: Outside Fire Sanctuary - Inside the Volcano Statue
+  stage: F020
+  room: 0
+  index: 30
+
+Sky - Eldin Pillar - Inside the Volcano <<Alternate>> Statue:
+  type: exit
+  subtype: statue
+  vanilla: Outside Fire Sanctuary - Inside the Volcano Statue
+  stage: F020
+  room: 0
+  index: 54
+
+Eldin Volcano - Volcano Entrance Statue:
+  type: entrance
+  subtype: statue
+  stage: F200
+  room: 0
+  layer: 0
+  entrance: 2
+
+Sky - Eldin Pillar - Volcano Entrance Statue:
+  type: exit
+  subtype: statue
+  vanilla: Eldin Volcano - Volcano Entrance Statue
+  stage: F020
+  room: 0
+  index: 50
+
+Eldin Volcano - Volcano East Statue:
+  type: entrance
+  subtype: statue
+  stage: F200
+  room: 2
+  layer: 0
+  entrance: 6
+
+Sky - Eldin Pillar - Volcano East Statue:
+  type: exit
+  subtype: statue
+  vanilla: Eldin Volcano - Volcano East Statue
+  stage: F020
+  room: 0
+  index: 51
+
+Eldin Volcano - Volcano Ascent Statue:
+  type: entrance
+  subtype: statue
+  stage: F200
+  room: 2
+  layer: 0
+  entrance: 7
+
+Sky - Eldin Pillar - Volcano Ascent Statue:
+  type: exit
+  subtype: statue
+  vanilla: Eldin Volcano - Volcano Ascent Statue
+  stage: F020
+  room: 0
+  index: 52
+
+Fire Sanctuary - Fire Sanctuary Statue:
+  type: entrance
+  subtype: statue
+  stage: D201
+  room: 10
+  layer: 0
+  entrance: 2
+
+Sky - Eldin Pillar - Fire Sanctuary Statue:
+  type: exit
+  subtype: statue
+  vanilla: Fire Sanctuary - Fire Sanctuary Statue
+  stage: F020
+  room: 0
+  index: 55
+
+
+
+## South East
+
+
+Lumpy Pumpkin - Main Right Door Entrance:
+  type: entrance
+  stage: F011r
+  room: 0
+  layer: 0
+  entrance: 1
+  tod: 2
+
+Lumpy Pumpkin - Main Left Door Entrance:
+  type: entrance
+  stage: F011r
+  room: 0
+  layer: 0
+  entrance: 2
+  tod: 2
+
+Lumpy Pumpkin - Back Entrance:
+  type: entrance
+  stage: F011r
+  room: 0
+  layer: 0
+  entrance: 3
+  tod: 2
+
+
+Lumpy Pumpkin - Main Right Door Exit:
+  type: exit
+  vanilla: Lumpy Pumpkin Main Left Door Entrance
+  stage: F011r
+  room: 0
+  index: 0
+
+Lumpy Pumpkin - Main Left Door Exit:
+  type: exit
+  vanilla: Lumpy Pumpkin Main Right Door Entrance
+  stage: F011r
+  room: 0
+  index: 1
+
+Lumpy Pumpkin - Back Exit:
+  type: exit
+  vanilla: Lumpy Pumpkin Back Entrance
+  stage: F011r
+  room: 0
+  index: 2
+
+
+
+Lumpy Pumpkin Main Left Door Entrance:
+  type: entrance
+  stage: F020
+  room: 0
+  layer: 0
+  entrance: 22
+  tod: 2
+
+Lumpy Pumpkin Main Right Door Entrance:
+  type: entrance
+  stage: F020
+  room: 0
+  layer: 0
+  entrance: 23
+  tod: 2
+
+Lumpy Pumpkin Back Entrance:
+  type: entrance
+  stage: F020
+  room: 0
+  layer: 0
+  entrance: 24
+  tod: 2
+
+
+Lumpy Pumpkin Main Right Door Exit:
+  type: exit
+  vanilla: Lumpy Pumpkin - Main Left Door Entrance
+  stage: F020
+  room: 0
+  index: 18
+
+Lumpy Pumpkin Main Left Door Exit:
+  type: exit
+  vanilla: Lumpy Pumpkin - Main Right Door Entrance
+  stage: F020
+  room: 0
+  index: 19
+
+Lumpy Pumpkin Back Exit:
+  type: exit
+  vanilla: Lumpy Pumpkin - Back Entrance
+  stage: F020
+  room: 0
+  index: 20
+
+Sky - Faron Pillar - Entrance:
+  type: entrance
+  subtype: statue
+  stage: F020
+  room: 0
+  layer: 0
+  entrance: 12
+
+
+
+
+Sky - Faron Pillar - First Time Exit:
+  type: exit
+  subtype: statue
+  vanilla: Sealed Grounds Spiral - Statue Entrance
+  stage: F020
+  room: 0
+  index: 0
+
+Sky - Faron Pillar - Sealed Grounds Statue:
+  type: exit
+  subtype: statue
+  vanilla: Sealed Grounds Spiral - Statue Entrance
+  stage: F020
+  room: 0
+  index: 68
+
+Sky - Faron Pillar - Forest Temple Statue:
+  type: exit
+  subtype: statue
+  vanilla: Deep Woods - Forest Temple Statue Entrance
+  stage: F020
+  room: 0
+  index: 27
+
+Sky - Faron Pillar - Forest Temple Statue <<bis>>:
+  type: exit
+  subtype: statue
+  vanilla: Deep Woods - Forest Temple Statue Entrance
+  stage: F020
+  room: 0
+  index: 45
+
+Sky - Faron Pillar - Floria Waterfall <<Alternate>> Statue:
+  type: exit
+  subtype: statue
+  vanilla: Lake Floria - Floria Waterfall <<Alternate>> Statue Entrance
+  stage: F020
+  room: 0
+  index: 28
+
+Sky - Faron Pillar - Behind the Temple Statue:
+  type: exit
+  subtype: statue
+  vanilla: Behind the Temple - Statue Entrance
+  stage: F020
+  room: 0
+  index: 40
+
+Sky - Faron Pillar - Faron Woods Entry Statue:
+  type: exit
+  subtype: statue
+  vanilla: Faron Woods - Faron Woods Entry Statue Entrance
+  stage: F020
+  room: 0
+  index: 41
+
+Sky - Faron Pillar - In the Woods Statue:
+  type: exit
+  subtype: statue
+  vanilla: Faron Woods - In the Woods Statue Entrance
+  stage: F020
+  room: 0
+  index: 42
+
+Sky - Faron Pillar - Viewing Platform Statue:
+  type: exit
+  subtype: statue
+  vanilla: Faron Woods - Viewing Platform Statue Entrance
+  stage: F020
+  room: 0
+  index: 43
+
+Sky - Faron Pillar - The Great Tree Statue:
+  type: exit
+  subtype: statue
+  vanilla: Faron Woods - The Great Tree Statue Entrance
+  stage: F020
+  room: 0
+  index: 44
+
+Sky - Faron Pillar - Deep Woods Statue:
+  type: exit
+  subtype: statue
+  vanilla: Deep Woods - Deep Woods Statue Entrance
+  stage: F020
+  room: 0
+  index: 46
+
+Sky - Faron Pillar - Lake Floria Statue:
+  type: exit
+  subtype: statue
+  vanilla: Lake Floria - Statue Entrance
+  stage: F020
+  room: 0
+  index: 47
+
+Sky - Faron Pillar - Floria Waterfall Statue:
+  type: exit
+  subtype: statue
+  vanilla: Floria Waterfall - Statue Entrance
+  stage: F020
+  room: 0
+  index: 48
+
+
+
+## South West
+
+Lanayru Mines - First Time Entrance:
+  type: entrance
+  subtype: statue
+  stage: F300_1
+  room: 0
+  layer: 0
+  entrance: 0
+
+Sky - Lanayru Pillar - First Time Exit:
+  type: exit
+  subtype: statue
+  vanilla: Lanayru Mines - First Time Entrance
+  stage: F020
+  room: 0
+  index: 2
+
+Lanayru Desert - <<?? Statue>>:
+  type: entrance
+  subtype: statue
+  stage: F300
+  room: 0
+  layer: 0
+  entrance: 10
+
+Sky - Lanayru Pillar - <<?? Statue>>:
+  type: exit
+  subtype: statue
+  vanilla: Lanayru Desert - <<?? Statue>>
+  stage: F020
+  room: 0
+  index: 31
+
+Sand Sea Docks - Ancient Harbour <<Alternate>> Statue:
+  type: entrance
+  subtype: statue
+  stage: F301
+  room: 0
+  layer: 0
+  entrance: 4
+
+Sky - Lanayru Pillar - Ancient Harbour <<Alternate>> Statue:
+  type: exit
+  subtype: statue
+  vanilla: Sand Sea Docks - Ancient Harbour <<Alternate>> Statue
+  stage: F020
+  room: 0
+  index: 32
+
+Lanayru Mines - Lanayru Mine Entry:
+  type: entrance
+  subtype: statue
+  stage: F300_1
+  room: 0
+  layer: 0
+  entrance: 2
+
+Sky - Lanayru Pillar - Lanayru Mine Entry Statue:
+  type: exit
+  subtype: statue
+  vanilla: Lanayru Mines - Lanayru Mine Entry
+  stage: F020
+  room: 0
+  index: 56
+
+Lanayru Desert - Desert Entrance Statue Entrance:
+  type: entrance
+  subtype: statue
+  stage: F300
+  room: 0
+  layer: 0
+  entrance: 15
+
+Sky - Lanayru Pillar - Desert Entrance Statue:
+  type: exit
+  subtype: statue
+  vanilla: Lanayru Desert - Desert Entrance Statue Entrance
+  stage: F020
+  room: 0
+  index: 57
+
+Lanayru Desert - West Desert Statue Entrance:
+  type: entrance
+  subtype: statue
+  stage: F300
+  room: 0
+  layer: 0
+  entrance: 16
+
+Sky - Lanayru Pillar - West Desert Statue:
+  type: exit
+  subtype: statue
+  vanilla: Lanayru Desert - West Desert Statue Entrance
+  stage: F020
+  room: 0
+  index: 58
+
+Lanayru Desert - North Desert Statue Entrance:
+  type: entrance
+  subtype: statue
+  stage: F300
+  room: 0
+  layer: 0
+  entrance: 17
+
+Sky - Lanayru Pillar - North Desert Statue:
+  type: exit
+  subtype: statue
+  vanilla: Lanayru Desert - North Desert Statue Entrance
+  stage: F020
+  room: 0
+  index: 59
+
+Lanayru Desert - Stone Cache Statue Entrance:
+  type: entrance
+  subtype: statue
+  stage: F300
+  room: 0
+  layer: 0
+  entrance: 18
+
+Sky - Lanayru Pillar - Stone Cache Statue:
+  type: exit
+  subtype: statue
+  vanilla: Lanayru Desert - Stone Cache Statue Entrance
+  stage: F020
+  room: 0
+  index: 60
+
+Temple of Time - Desert Gorge Statue Entrance:
+  type: entrance
+  subtype: statue
+  stage: F300_4
+  room: 0
+  layer: 0
+  entrance: 16
+
+Sky - Lanayru Pillar - Desert Gorge Statue:
+  type: exit
+  subtype: statue
+  vanilla: Temple of Time - Desert Gorge Statue Entrance
+  stage: F020
+  room: 0
+  index: 61
+
+Temple of Time - Temple of Time Statue Entrance:
+  type: entrance
+  subtype: statue
+  stage: F300_4
+  room: 0
+  layer: 0
+  entrance: 17
+
+Sky - Lanayru Pillar - Temple of Time Statue:
+  type: exit
+  subtype: statue
+  vanilla: Temple of Time - Temple of Time Statue Entrance
+  stage: F020
+  room: 0
+  index: 62
+
+Sand Sea Docks - Ancient Harbour Statue:
+  type: entrance
+  subtype: statue
+  stage: F301
+  room: 0
+  layer: 0
+  entrance: 10
+
+Sky - Lanayru Pillar - Ancient Harbour Statue:
+  type: exit
+  subtype: statue
+  vanilla: Sand Sea Docks - Ancient Harbour Statue
+  stage: F020
+  room: 0
+  index: 63
+
+Skipper's Retreat - Statue Entrance:
+  type: entrance
+  subtype: statue
+  stage: F301_3
+  room: 0
+  layer: 0
+  entrance: 10
+
+Sky - Lanayru Pillar - Skipper's Retreat Statue:
+  type: exit
+  subtype: statue
+  vanilla: Skipper's Retreat - Statue Entrance
+  stage: F020
+  room: 0
+  index: 64
+
+Shipyard - Statue Entrance:
+  type: entrance
+  subtype: statue
+  stage: F301_4
+  room: 0
+  layer: 0
+  entrance: 10
+
+Sky - Lanayru Pillar - Shipyard Statue:
+  type: exit
+  subtype: statue
+  vanilla: Shipyard - Statue Entrance
+  stage: F020
+  room: 0
+  index: 65
+
+Outside Pirate's Stronghold - Statue Entrance:
+  type: entrance
+  subtype: statue
+  stage: F301_6
+  room: 0
+  layer: 0
+  entrance: 10
+
+Sky - Lanayru Pillar - Pirate Stronghold Statue:
+  type: exit
+  subtype: statue
+  vanilla: Outside Pirate's Stronghold - Statue Entrance
+  stage: F020
+  room: 0
+  index: 66
+
+
+Sky - Lanayru Pillar - Entrance:
+  type: entrance
+  subtype: statue
+  stage: F020
+  room: 0
+  layer: 0
+  entrance: 14
+
+Sand Sea Docks - Statue Exit:
+  type: exit
+  subtype: statue
+  vanilla: Sky - Lanayru Pillar - Entrance
+  stage: F301
+  room: 0
+  index: 3
+
+Outside Pirate's Stronghold - Statue Exit:
+  type: exit
+  subtype: statue
+  vanilla: Sky - Lanayru Pillar - Entrance
+  stage: F301_6
+  room: 0
+  index: 3
+
+Temple of Time - Statue Exit:
+  type: exit
+  subtype: statue
+  vanilla: Sky - Lanayru Pillar - Entrance
+  stage: F300_4
+  room: 0
+  index: 2
+
+Skipper's Retreat - Statue Exit:
+  type: exit
+  subtype: statue
+  vanilla: Sky - Lanayru Pillar - Entrance
+  stage: F301_3
+  room: 0
+  index: 1
+
+Lanayru Mines - Statue Exit:
+  type: exit
+  subtype: statue
+  vanilla: Sky - Lanayru Pillar - Entrance
+  stage: F300_1
+  room: 0
+  index: 0
+
+Shipyard - Statue Exit:
+  type: exit
+  subtype: statue
+  vanilla: Sky - Lanayru Pillar - Entrance
+  stage: F301_4
+  room: 0
+  index: 1
+
+Lanayru Desert - Statue Exit:
+  type: exit
+  subtype: statue
+  vanilla: Sky - Lanayru Pillar - Entrance
+  stage: F300
+  room: 0
+  index: 6
+
+
+
+
+
+Sky - Groosenator <<F020/15>> Entrance:
+  type: entrance
+  subtype: groosenator
+  stage: F020
+  room: 0
+  layer: 0
+  entrance: 15
+
+
+
+
+Sky - Groosenator <<F020/30>> Entrance:
+  type: entrance
+  subtype: groosenator
+  stage: F020
+  room: 0
+  layer: 0
+  entrance: 30
+
+
+
+
+## Thunderhead
+
+Sky - Thunderhead Entrance:
+  type: entrance
+  stage: F020
+  room: 0
+  layer: 0
+  entrance: 28
+
+Sky - Thunderhead Exit:
+  type: exit
+  vanilla: Thunderhead - Entrance
+  stage: F020
+  room: 0
+  index: 25
+
+
+Thunderhead - Entrance:
+  type: entrance
+  stage: F023
+  room: 0
+  layer: 0
+  entrance: 1
+
+Thunderhead - Exit:
+  type: exit
+  vanilla: Thunderhead Entrance
+  stage: F023
+  room: 0
+  index: 1
+
+
+
+
+Isle of Songs - Entrance:
+  type: entrance
+  stage: F010r
+  room: 0
+  layer: 0
+  entrance: 0
+
+Isle of Songs - Exit:
+  type: exit
+  vanilla: Isle of Songs Entrance
+  stage: F010r
+  room: 0
+  index: 0
+
+
+Isle of Songs Entrance:
+  type: entrance
+  stage: F023
+  room: 0
+  layer: 0
+  entrance: 4
+
+Isle of Songs Exit:
+  type: exit
+  vanilla: Isle of Songs - Entrance
+  stage: F023
+  room: 0
+  index: 2
+
+
+Inside Thunderhead - Groosenator Bug Heaven Entrance:
+  type: entrance
+  subtype: groosenator
+  stage: F023
+  room: 0
+  layer: 0
+  entrance: 3
+
+
+# Faron
+
+## Spiral Grounds
+
+Sealed Grounds Spiral - Statue Entrance:
+  type: entrance
+  subtype: statue
+  stage: F401
+  room: 1
+  layer: 0
+  entrance: 8
+
+Sealed Grounds Spiral - Statue Exit:
+  type: exit
+  subtype: statue
+  vanilla: Sky - Faron Pillar - Entrance
+  stage: F401
+  room: 1
+  index: 19
+
+
+Sealed Grounds Spiral - Groosenator <<F020/15>> Exit:
+  type: exit
+  subtype: groosenator
+  vanilla: Sky - Groosenator <<F020/15>> Entrance
+  stage: F401
+  room: 1
+  index: 8
+
+Sealed Grounds Spiral - Groosenator Bug Heaven Exit:
+  type: exit
+  subtype: groosenator
+  vanilla: Inside Thunderhead - Groosenator Bug Heaven Entrance
+  stage: F401
+  room: 1
+  index: 9
+
+Sealed Grounds Spiral - Groosenator <<F020/30>> Exit:
+  type: exit
+  subtype: groosenator
+  vanilla: Sky - Groosenator <<F020/30>> Entrance
+  stage: F401
+  room: 1
+  index: 10
+
+Sealed Grounds Spiral - Groosenator Pumpkin Pull Exit:
+  type: exit
+  subtype: groosenator
+  vanilla: Skyloft - Groosenator Pumpkin Pull Entrance
+  stage: F401
+  room: 1
+  index: 11
+
+Sealed Grounds Spiral - Groosenator Thrill Digger Exit:
+  type: exit
+  subtype: groosenator
+  vanilla: Eldin Volcano - Groosenator Thrill Digger Entrance
+  stage: F401
+  room: 1
+  index: 13
+
+Sealed Grounds Spiral - Groosenator Rickety Coaster Exit:
+  type: exit
+  subtype: groosenator
+  vanilla: Shipyard - Groosenator Rickety Coaster Entrance
+  stage: F401
+  room: 1
+  index: 14
+
+
+Sealed Grounds Spiral - Shortcut Entrance:
+  type: entrance
+  stage: F401
+  room: 1
+  layer: 0
+  entrance: 0
+
+Sealed Grounds Spiral - Door Entrance:
+  type: entrance
+  stage: F401
+  room: 1
+  layer: 0
+  entrance: 2
+
+
+Sealed Grounds Spiral - Door Exit:
+  type: exit
+  vanilla: Sealed Temple - Main Entrance
+  stage: F401
+  room: 1
+  index: 0
+
+Sealed Grounds Spiral - Shortcut Exit:
+  type: exit
+  vanilla: Behind the Temple - Shortcut Entrance
+  stage: F401
+  room: 1
+  index: 1
+
+
+Sealed Temple - Main Entrance:
+  type: entrance
+  stage: F402
+  room: 2
+  layer: 0
+  entrance: 0
+
+Sealed Temple - Side Entrance:
+  type: entrance
+  stage: F402
+  room: 2
+  layer: 0
+  entrance: 1
+
+Sealed Temple - Gate of Time Entrance:
+  type: entrance
+  stage: F402
+  room: 2
+  layer: 0
+  entrance: 11
+
+Sealed Temple - Main Exit:
+  type: exit
+  vanilla: Sealed Grounds Spiral - Door Entrance
+  stage: F402
+  room: 2
+  index: 0
+
+Sealed Temple - Side Exit:
+  type: exit
+  vanilla: Behind the Temple - Door Entrance
+  stage: F402
+  room: 2
+  index: 1
+
+Sealed Temple - Gate of Time Exit:
+  type: exit
+  vanilla: Hylia's Temple - Gate of Time Entrance
+  stage: F402
+  room: 2
+  index: 5
+
+
+Hylia's Temple - Gate of Time Entrance:
+  type: entrance
+  stage: F404
+  room: 2
+  layer: 0
+  entrance: 1
+
+Hylia's Temple - Gate of Time Exit:
+  type: exit
+  vanilla: Sealed Temple - Gate of Time Entrance
+  stage: F404
+  room: 2
+  index: 1
+
+
+
+Behind the Temple - Door Entrance:
+  type: entrance
+  stage: F400
+  room: 0
+  layer: 0
+  entrance: 1
+
+Behind the Temple - Shortcut Entrance:
+  type: entrance
+  stage: F400
+  room: 0
+  layer: 0
+  entrance: 2
+
+Behind the Temple - Faron Woods Entrance:
+  type: entrance
+  stage: F400
+  room: 0
+  layer: 0
+  entrance: 3
+
+
+Behind the Temple - Shortcut Exit:
+  type: exit
+  vanilla: Sealed Grounds Spiral - Shortcut Entrance
+  stage: F400
+  room: 0
+  index: 0
+
+Behind the Temple - Door Exit:
+  type: exit
+  vanilla: Sealed Temple - Side Entrance
+  stage: F400
+  room: 0
+  index: 1
+
+Behind the Temple - Faron Woods Exit:
+  type: exit
+  vanilla: Faron Woods - Behind the Temple Entrance
+  stage: F400
+  room: 0
+  index: 2
+
+
+Behind the Temple - Statue Entrance:
+  type: entrance
+  subtype: statue
+  stage: F400
+  room: 0
+  layer: 0
+  entrance: 10
+
+Behind the Temple - Statue Exit:
+  type: exit
+  subtype: statue
+  vanilla: Sky - Faron Pillar - Entrance
+  stage: F400
+  room: 0
+  index: 5
+
+
+
+## Faron Woods
+
+Faron Woods - Statue Exit:
+  type: exit
+  subtype: statue
+  vanilla: Sky - Faron Pillar - Entrance
+  stage: F100
+  room: 0
+  index: 10
+
+Faron Woods - Faron Woods Entry Statue Entrance:
+  type: entrance
+  stage: F100
+  room: 0
+  layer: 0
+  entrance: 50
+
+Faron Woods - In the Woods Statue Entrance:
+  type: entrance
+  stage: F100
+  room: 0
+  layer: 0
+  entrance: 51
+
+Faron Woods - Viewing Platform Statue Entrance:
+  type: entrance
+  stage: F100
+  room: 0
+  layer: 0
+  entrance: 52
+
+Faron Woods - The Great Tree Statue Entrance:
+  type: entrance
+  stage: F100
+  room: 0
+  layer: 0
+  entrance: 53
+
+
+Faron Woods - Behind the Temple Entrance:
+  type: entrance
+  stage: F100
+  room: 0
+  layer: 0
+  entrance: 0
+
+Faron Woods - Behind the Temple Exit:
+  type: exit
+  vanilla: Behind the Temple - Faron Woods Entrance
+  stage: F100
+  room: 0
+  index: 0
+
+
+
+Faron Woods - Great Tree Lower Platform Entrance:
+  type: entrance
+  stage: F100
+  room: 0
+  layer: 0
+  entrance: 4
+
+Great Tree - Faron Woods Lower Platform Exit:
+  type: exit
+  vanilla: Faron Woods - Great Tree Lower Platform Entrance
+  stage: F100_1
+  room: 0
+  index: 1
+
+Faron Woods - Great Tree Upper Platform Entrance:
+  type: entrance
+  stage: F100
+  room: 0
+  layer: 0
+  entrance: 5
+
+Great Tree - Faron Woods Upper Platform Exit:
+  type: exit
+  vanilla: Faron Woods - Great Tree Upper Platform Entrance
+  stage: F100_1
+  room: 0
+  index: 2
+
+Faron Woods - Great Tree Top Entrance:
+  type: entrance
+  stage: F100
+  room: 0
+  layer: 0
+  entrance: 6
+
+Great Tree - Faron Woods Top Exit:
+  type: exit
+  vanilla: Faron Woods - Great Tree Top Entrance
+  stage: F100_1
+  room: 0
+  index: 3
+
+Faron Woods - Great Tree Tunnel Entrance:
+  type: entrance
+  stage: F100
+  room: 0
+  layer: 0
+  entrance: 7
+
+Great Tree - Faron Woods Tunnel Exit:
+  type: exit
+  vanilla: Faron Woods - Great Tree Tunnel Entrance
+  stage: F100_1
+  room: 0
+  index: 4
+
+Deep Woods - Faron Woods Entrance:
+  type: entrance
+  stage: F101
+  room: 0
+  layer: 0
+  entrance: 0
+
+Faron Woods - Deep Woods Exit:
+  type: exit
+  vanilla: Deep Woods - Faron Woods Entrance
+  stage: F100
+  room: 0
+  index: 1
+
+Faron Woods - Deep Woods Alternate (Cutscene ?) Exit:
+  type: exit
+  vanilla: Deep Woods - Faron Woods Entrance
+  stage: F100
+  room: 0
+  index: 13
+
+
+Great Tree - Faron Woods Lower Platform Entrance:
+  type: entrance
+  stage: F100_1
+  room: 0
+  layer: 0
+  entrance: 1
+
+Faron Woods - Great Tree Lower Platform Exit:
+  type: exit
+  vanilla: Great Tree - Faron Woods Lower Platform Entrance
+  stage: F100
+  room: 0
+  index: 3
+
+Great Tree - Faron Woods Upper Platform Entrance:
+  type: entrance
+  stage: F100_1
+  room: 0
+  layer: 0
+  entrance: 2
+
+Faron Woods - Great Tree Upper Platform Exit:
+  type: exit
+  vanilla: Great Tree - Faron Woods Upper Platform Entrance
+  stage: F100
+  room: 0
+  index: 4
+
+Great Tree - Faron Woods Top Entrance:
+  type: entrance
+  stage: F100_1
+  room: 0
+  layer: 0
+  entrance: 3
+
+Faron Woods - Great Tree Top Exit:
+  type: exit
+  vanilla: Great Tree - Faron Woods Top Entrance
+  stage: F100
+  room: 0
+  index: 5
+
+Great Tree - Faron Woods Tunnel Entrance:
+  type: entrance
+  stage: F100_1
+  room: 0
+  layer: 0
+  entrance: 4
+
+Faron Woods - Great Tree Tunnel Exit:
+  type: exit
+  vanilla: Great Tree - Faron Woods Tunnel Entrance
+  stage: F100
+  room: 0
+  index: 6
+
+Lake Floria - Faron Woods Entrance:
+  type: entrance
+  stage: F102
+  room: 0
+  layer: 0
+  entrance: 0
+
+Faron Woods - Lake Floria Exit:
+  type: exit
+  vanilla: Lake Floria - Faron Woods Entrance
+  stage: F100
+  room: 0
+  index: 9
+
+
+Faron Woods - Lake Floria Alternate Exit:
+  type: exit
+  vanilla: Lake Floria - Faron Woods Entrance
+  stage: F100 # copied from duplicate
+  room: 0
+  index: 12
+
+
+Floria Waterfall - Faron Woods Entrance:
+  type: entrance
+  stage: F102_1
+  room: 0
+  layer: 0
+  entrance: 2
+
+Faron Woods - Floria Waterfall Exit:
+  type: exit
+  vanilla: Floria Waterfall - Faron Woods Entrance
+  stage: F100
+  room: 0
+  index: 11
+
+Faron Woods - Deep Woods Entrance:
+  type: entrance
+  stage: F100
+  room: 0
+  layer: 0
+  entrance: 45
+
+Deep Woods - Faron Woods Exit:
+  type: exit
+  vanilla: Faron Woods - Deep Woods Entrance
+  stage: F101
+  room: 0
+  index: 0
+
+Skyview Temple - Deep Woods Entrance:
+  type: entrance
+  stage: D100
+  room: 0
+  layer: 0
+  entrance: 0
+
+Deep Woods - Skyview Temple Exit:
+  type: exit
+  vanilla: Skyview Temple - Deep Woods Entrance
+  stage: F101
+  room: 0
+  index: 1
+
+
+Farore's Lair - Floria Waterfall Entrance:
+  type: entrance
+  stage: F102_2
+  room: 0
+  layer: 0
+  entrance: 1
+
+Floria Waterfall - Farore's Lair Exit:
+  type: exit
+  vanilla: Farore's Lair - Floria Waterfall Entrance
+  stage: F102_1
+  room: 0
+  index: 0
+
+Ancient Cistern - Floria Waterfall Entrance:
+  type: entrance
+  stage: D101
+  room: 0
+  layer: 0
+  entrance: 0
+
+Floria Waterfall - Ancient Cistern Exit:
+  type: exit
+  vanilla: Ancient Cistern - Floria Waterfall Entrance
+  stage: F102_1
+  room: 0
+  index: 1
+Faron Woods - Floria Waterfall Entrance:
+  type: entrance
+  stage: F100
+  room: 0
+  layer: 0
+  entrance: 17
+
+Floria Waterfall - Faron Woods Exit:
+  type: exit
+  vanilla: Faron Woods - Floria Waterfall Entrance
+  stage: F102_1
+  room: 0
+  index: 2
+
+
+
+Lake Floria - Farore's Lair Entrance:
+  type: entrance
+  stage: F102
+  room: 4
+  layer: 0
+  entrance: 1
+
+Farore's Lair - Lake Floria Exit:
+  type: exit
+  vanilla: Lake Floria - Farore's Lair Entrance
+  stage: F102_2
+  room: 0
+  index: 0
+Floria Waterfall - Farore's Lair Entrance:
+  type: entrance
+  stage: F102_1
+  room: 0
+  layer: 0
+  entrance: 0
+
+Farore's Lair - Floria Waterfall Exit:
+  type: exit
+  vanilla: Floria Waterfall - Farore's Lair Entrance
+  stage: F102_2
+  room: 0
+  index: 1
+
+
+Farore's Lair - Lake Floria Entrance:
+  type: entrance
+  stage: F102_2
+  room: 0
+  layer: 0
+  entrance: 0
+
+Lake Floria - Farore's Lair Exit:
+  type: exit
+  vanilla: Farore's Lair - Lake Floria Entrance
+  stage: F102
+  room: 4
+  index: 0
+
+
+# Deep Woods
+
+Deep Woods - Statue Exit:
+  type: exit
+  subtype: statue
+  vanilla: Sky - Faron Pillar - Entrance
+  stage: F101
+  room: 0
+  index: 2
+
+Deep Woods - Deep Woods Statue Entrance:
+  type: entrance
+  stage: F101
+  room: 0
+  layer: 0
+  entrance: 14
+
+Deep Woods - Forest Temple Statue Entrance:
+  type: entrance
+  stage: F101
+  room: 0
+  layer: 0
+  entrance: 13
+
+
+# Lake Floria
+
+Lake Floria - Statue Exit:
+  type: exit
+  subtype: statue
+  vanilla: Sky - Faron Pillar - Entrance
+  stage: F102
+  room: 3
+  index: 0
+
+Lake Floria - Statue Entrance:
+  type: entrance
+  stage: F102
+  room: 3
+  layer: 0
+  entrance: 2
+
+Lake Floria - Floria Waterfall <<Alternate>> Statue Entrance:
+  type: entrance
+  stage: F102
+  room: 0
+  layer: 0
+  entrance: 5
+
+Floria Waterfall - Statue Exit:
+  type: exit
+  subtype: statue
+  vanilla: Sky - Faron Pillar - Entrance
+  stage: F102_1
+  room: 0
+  index: 3
+
+Floria Waterfall - Statue Entrance:
+  type: entrance
+  stage: F102_1
+  room: 0
+  layer: 0
+  entrance: 5
+
+
+# Skyview
+
+Deep Woods - Skyview Temple Entrance:
+  type: entrance
+  stage: F101
+  room: 0
+  layer: 0
+  entrance: 1
+
+Skyview Spring - Crest Hit Exit:
+  type: exit
+  subtype: statue
+  vanilla: Deep Woods - Skyview Temple Entrance
+  stage: B100_1
+  room: 0
+  index: 1
+
+Skyview Spring - <<Alternate>> Exit:
+  type: exit
+  subtype: statue
+  vanilla: Deep Woods - Skyview Temple Entrance
+  stage: B100_1
+  room: 0
+  index: 4
+
+Skyview Temple - <<Normal/Statue1>> Exit:
+  type: exit
+  subtype: statue
+  vanilla: Deep Woods - Skyview Temple Entrance
+  stage: D100
+  room: 0
+  index: 0
+
+Skyview Temple - <<Normal/Statue2>> Exit:
+  type: exit
+  subtype: statue
+  vanilla: Deep Woods - Skyview Temple Entrance
+  stage: D100
+  room: 0
+  index: 2
+
+Skyview Temple - <<Normal/Statue3>> Exit:
+  type: exit
+  subtype: statue
+  vanilla: Deep Woods - Skyview Temple Entrance
+  stage: D100
+  room: 2
+  index: 0
+
+Skyview Temple - <<Normal/Statue4>> Exit:
+  type: exit
+  subtype: statue
+  vanilla: Deep Woods - Skyview Temple Entrance
+  stage: D100
+  room: 5
+  index: 0
+
+Skyview Temple - <<Normal/Statue5>> Exit:
+  type: exit
+  subtype: statue
+  vanilla: Deep Woods - Skyview Temple Entrance
+  stage: D100
+  room: 9
+  index: 0
+
+
+# Ancient Cistern
+
+Floria Waterfall - Ancient Cistern Entrance:
+  type: entrance
+  subtype: statue
+  stage: F102_1
+  room: 0
+  layer: 0
+  entrance: 1
+
+Ancient Cistern - <<Normal/Statue1>> Exit:
+  type: exit
+  subtype: statue
+  vanilla: Floria Waterfall - Ancient Cistern Entrance
+  stage: D101
+  room: 0
+  index: 2
+
+Ancient Cistern - <<Normal/Statue2>> Exit:
+  type: exit
+  subtype: statue
+  vanilla: Floria Waterfall - Ancient Cistern Entrance
+  stage: D101
+  room: 0
+  index: 3
+
+Ancient Cistern - <<Normal/Statue3>> Exit:
+  type: exit
+  subtype: statue
+  vanilla: Floria Waterfall - Ancient Cistern Entrance
+  stage: D101
+  room: 3
+  index: 1
+
+Ancient Cistern - <<Normal/Statue4>> Exit:
+  type: exit
+  subtype: statue
+  vanilla: Floria Waterfall - Ancient Cistern Entrance
+  stage: D101
+  room: 4
+  index: 2
+
+Ancient Cistern - <<Normal/Statue5>> Exit:
+  type: exit
+  subtype: statue
+  vanilla: Floria Waterfall - Ancient Cistern Entrance
+  stage: D101
+  room: 5
+  index: 0
+
+Ancient Cistern - Flame Room - Crest Hit Exit:
+  type: exit
+  subtype: statue
+  vanilla: Floria Waterfall - Ancient Cistern Entrance
+  stage: B101_1
+  room: 0
+  index: 3
+
+
+
+# Eldin
+
+Mogma Turf - Eldin Volcano Entrance:
+  type: entrance
+  stage: F210
+  room: 0
+  layer: 0
+  entrance: 0
+
+Eldin Volcano - Mogma Turf Exit:
+  type: exit
+  vanilla: Mogma Turf - Eldin Volcano Entrance
+  stage: F200
+  room: 2
+  index: 1
+Earth Temple - Eldin Volcano Entrance:
+  type: entrance
+  stage: D200
+  room: 1
+  layer: 0
+  entrance: 0
+
+Eldin Volcano - Earth Temple Exit:
+  type: exit
+  vanilla: Earth Temple - Eldin Volcano Entrance
+  stage: F200
+  room: 4
+  index: 0
+Thrill Digger Cave - Eldin Volcano Entrance:
+  type: entrance
+  stage: F211
+  room: 0
+  layer: 1
+  entrance: 0
+
+Eldin Volcano - Thrill Digger Cave Exit:
+  type: exit
+  vanilla: Thrill Digger Cave - Eldin Volcano Entrance
+  stage: F200
+  room: 4
+  index: 1
+
+Inside Volcano Summit - Eldin Volcano Entrance:
+  type: entrance
+  stage: F201_1
+  room: 0
+  layer: 0
+  entrance: 4
+
+Eldin Volcano - Inside Volcano Summit Exit:
+  type: exit
+  vanilla: Inside Volcano Summit - Eldin Volcano Entrance
+  stage: F200
+  room: 5
+  index: 1
+
+Eldin Volcano - Inside Volcano Summit Alternate Exit:
+  type: exit
+  vanilla: Inside Volcano Summit - Eldin Volcano Entrance
+  stage: F200
+  room: 5
+  index: 0
+
+
+Eldin Volcano - Thrill Digger Cave Entrance:
+  type: entrance
+  stage: F200
+  room: 4
+  layer: 0
+  entrance: 2
+
+Thrill Digger Cave - Eldin Volcano Exit:
+  type: exit
+  vanilla: Eldin Volcano - Thrill Digger Cave Entrance
+  stage: F211
+  room: 0
+  index: 0
+Eldin Volcano - Inside Volcano Summit Entrance:
+  type: entrance
+  stage: F200
+  room: 5
+  layer: 0
+  entrance: 2
+
+Inside Volcano Summit - Eldin Volcano Exit:
+  type: exit
+  vanilla: Eldin Volcano - Inside Volcano Summit Entrance
+  stage: F201_1
+  room: 0
+  index: 0
+Volcano Summit Waterfall - Inside Volcano Summit Entrance:
+  type: entrance
+  stage: F201_4
+  room: 0
+  layer: 0
+  entrance: 0
+
+Inside Volcano Summit - Volcano Summit Waterfall Exit:
+  type: exit
+  vanilla: Volcano Summit Waterfall - Inside Volcano Summit Entrance
+  stage: F201_1
+  room: 0
+  index: 1
+Outside Fire Sanctuary - Inside Volcano Summit Entrance:
+  type: entrance
+  stage: F201_3
+  room: 0
+  layer: 0
+  entrance: 0
+
+Inside Volcano Summit - Outside Fire Sanctuary Exit:
+  type: exit
+  vanilla: Outside Fire Sanctuary - Inside Volcano Summit Entrance
+  stage: F201_1
+  room: 0
+  index: 2
+
+
+Eldin Volcano - Mogma Turf Start Vent Entrance:
+  type: entrance
+  stage: F200
+  room: 2
+  layer: 0
+  entrance: 1
+
+Mogma Turf - Eldin Volcano Start Vent Exit:
+  type: exit
+  vanilla: Eldin Volcano - Mogma Turf Start Vent Entrance
+  stage: F210
+  room: 0
+  index: 0
+Eldin Volcano - Mogma Turf End Vent Entrance:
+  type: entrance
+  stage: F200
+  room: 2
+  layer: 0
+  entrance: 2
+
+Mogma Turf - Eldin Volcano End Vent Exit:
+  type: exit
+  vanilla: Eldin Volcano - Mogma Turf End Vent Entrance
+  stage: F210
+  room: 0
+  index: 1
+Eldin Volcano - Groosenator Thrill Digger Entrance:
+  type: entrance
+  subtype: groosenator
+  stage: F200
+  room: 4
+  layer: 0
+  entrance: 6
+
+
+
+Inside Volcano Summit - Outside Fire Sanctuary Entrance:
+  type: entrance
+  stage: F201_1
+  room: 0
+  layer: 0
+  entrance: 1
+
+Outside Fire Sanctuary - Inside Volcano Summit Exit:
+  type: exit
+  vanilla: Inside Volcano Summit - Outside Fire Sanctuary Entrance
+  stage: F201_3
+  room: 0
+  index: 0
+Fire Sanctuary - Outside Fire Sanctuary Entrance:
+  type: entrance
+  stage: D201
+  room: 0
+  layer: 0
+  entrance: 0
+
+Outside Fire Sanctuary - Fire Sanctuary Exit:
+  type: exit
+  vanilla: Fire Sanctuary - Outside Fire Sanctuary Entrance
+  stage: F201_3
+  room: 0
+  index: 1
+
+Inside Volcano Summit - Volcano Summit Waterfall Entrance:
+  type: entrance
+  stage: F201_1
+  room: 0
+  layer: 0
+  entrance: 2
+
+Volcano Summit Waterfall - Inside Volcano Summit Exit:
+  type: exit
+  vanilla: Inside Volcano Summit - Volcano Summit Waterfall Entrance
+  stage: F201_4
+  room: 0
+  index: 0
+
+# Earth Temple
+
+Eldin Volcano - Earth Temple Entrance:
+  type: entrance
+  subtype: statue
+  stage: F200
+  room: 4
+  layer: 0
+  entrance: 1
+
+Earth Temple - <<Normal/Statue1>> Exit:
+  type: exit
+  subtype: statue
+  vanilla: Eldin Volcano - Earth Temple Entrance
+  stage: D200
+  room: 1
+  index: 0
+
+Earth Temple - <<Normal/Statue2>> Exit:
+  type: exit
+  subtype: statue
+  vanilla: Eldin Volcano - Earth Temple Entrance
+  stage: D200
+  room: 1
+  index: 1
+
+Earth Temple - <<Normal/Statue3>> Exit:
+  type: exit
+  subtype: statue
+  vanilla: Eldin Volcano - Earth Temple Entrance
+  stage: D200
+  room: 2
+  index: 0
+
+Earth Temple - <<Normal/Statue4>> Exit:
+  type: exit
+  subtype: statue
+  vanilla: Eldin Volcano - Earth Temple Entrance
+  stage: D200
+  room: 4
+  index: 2
+
+Earth Temple - <<Normal/Statue5>> Exit:
+  type: exit
+  subtype: statue
+  vanilla: Eldin Volcano - Earth Temple Entrance
+  stage: B210
+  room: 0
+  index: 0
+
+# Fire Sanctuary
+
+Outside Fire Sanctuary - Temple Entrance:
+  type: entrance
+  subtype: statue
+  stage: F201_3
+  room: 0
+  layer: 0
+  entrance: 1
+
+Din's Flame - Crest Hit Exit:
+  type: exit
+  subtype: statue
+  vanilla: Outside Fire Sanctuary - Temple Entrance
+  stage: B201_1
+  room: 0
+  index: 2
+
+Fire Sanctuary - <<Normal/Statue1>> Exit:
+  type: exit
+  subtype: statue
+  vanilla: Outside Fire Sanctuary - Temple Entrance
+  stage: D201_1
+  room: 1
+  index: 0
+
+Fire Sanctuary - <<Normal/Statue2>> Exit:
+  type: exit
+  subtype: statue
+  vanilla: Outside Fire Sanctuary - Temple Entrance
+  stage: D201_1
+  room: 5
+  index: 3
+
+Fire Sanctuary - <<Normal/Statue3>> Exit:
+  type: exit
+  subtype: statue
+  vanilla: Outside Fire Sanctuary - Temple Entrance
+  stage: D201_1
+  room: 6
+  index: 1
+
+Fire Sanctuary - <<Normal/Statue4>> Exit:
+  type: exit
+  subtype: statue
+  vanilla: Outside Fire Sanctuary - Temple Entrance
+  stage: D201_1
+  room: 6
+  index: 2
+
+Fire Sanctuary - <<Normal/Statue5>> Exit:
+  type: exit
+  subtype: statue
+  vanilla: Outside Fire Sanctuary - Temple Entrance
+  stage: D201_1
+  room: 7
+  index: 0
+
+Fire Sanctuary - <<Normal/Statue6>> Exit:
+  type: exit
+  subtype: statue
+  vanilla: Outside Fire Sanctuary - Temple Entrance
+  stage: D201_1
+  room: 8
+  index: 0
+
+Fire Sanctuary - <<Normal/Statue7>> Exit:
+  type: exit
+  subtype: statue
+  vanilla: Outside Fire Sanctuary - Temple Entrance
+  stage: D201_1
+  room: 10
+  index: 0
+
+Fire Sanctuary - <<Normal/Statue8>> Exit:
+  type: exit
+  subtype: statue
+  vanilla: Outside Fire Sanctuary - Temple Entrance
+  stage: D201
+  room: 0
+  index: 1
+
+Fire Sanctuary - <<Normal/Statue9>> Exit:
+  type: exit
+  subtype: statue
+  vanilla: Outside Fire Sanctuary - Temple Entrance
+  stage: D201
+  room: 3
+  index: 2
+
+Fire Sanctuary - <<Normal/Statue10>> Exit:
+  type: exit
+  subtype: statue
+  vanilla: Outside Fire Sanctuary - Temple Entrance
+  stage: D201
+  room: 10
+  index: 2
+
+
+
+
+# Lanayru
+
+
+Outside Pirate's Stronghold - Inside Pirate's Stronghold Beginning Entrance:
+  type: entrance
+  stage: F301_6
+  room: 0
+  layer: 0
+  entrance: 1
+
+Inside Pirate's Stronghold - Outside Pirate's Stronghold Beginning Exit:
+  type: exit
+  vanilla: Outside Pirate's Stronghold - Inside Pirate's Stronghold Beginning Entrance
+  stage: F301_2
+  room: 1
+  index: 0
+Outside Pirate's Stronghold - Inside Pirate's Stronghold End Entrance:
+  type: entrance
+  stage: F301_6
+  room: 0
+  layer: 0
+  entrance: 2
+
+Inside Pirate's Stronghold - Outside Pirate's Stronghold End Exit:
+  type: exit
+  vanilla: Outside Pirate's Stronghold - Inside Pirate's Stronghold End Entrance
+  stage: F301_2
+  room: 1
+  index: 2
+Lanayru Desert - Lightning Node Entrance:
+  type: entrance
+  stage: F300
+  room: 0
+  layer: 0
+  entrance: 7
+
+Lightning Node - Lanayru Desert Exit:
+  type: exit
+  vanilla: Lanayru Desert - Lightning Node Entrance
+  stage: F300_2
+  room: 0
+  index: 0
+Shipyard - Shipyard Construction Bay Lower Entrance:
+  type: entrance
+  stage: F301_4
+  room: 0
+  layer: 0
+  entrance: 1
+
+Shipyard Construction Bay - Shipyard Lower Exit:
+  type: exit
+  vanilla: Shipyard - Shipyard Construction Bay Lower Entrance
+  stage: F301_7
+  room: 0
+  index: 0
+Shipyard - Shipyard Construction Bay Upper Entrance:
+  type: entrance
+  stage: F301_4
+  room: 0
+  layer: 0
+  entrance: 4
+
+Shipyard Construction Bay - Shipyard Upper Exit:
+  type: exit
+  vanilla: Shipyard - Shipyard Construction Bay Upper Entrance
+  stage: F301_7
+  room: 0
+  index: 1
+
+Lanayru Mines - Lanayru Caves Entrance:
+  type: entrance
+  stage: F300_1
+  room: 0
+  layer: 0
+  entrance: 1
+
+Lanayru Caves - Lanayru Mines Exit:
+  type: exit
+  vanilla: Lanayru Mines - Lanayru Caves Entrance
+  stage: F303
+  room: 0
+  index: 0
+Lanayru Desert - Lanayru Caves Entrance:
+  type: entrance
+  stage: F300
+  room: 0
+  layer: 0
+  entrance: 6
+
+Lanayru Caves - Lanayru Desert Exit:
+  type: exit
+  vanilla: Lanayru Desert - Lanayru Caves Entrance
+  stage: F303
+  room: 0
+  index: 1
+Sand Sea Docks - Lanayru Caves Entrance:
+  type: entrance
+  stage: F301
+  room: 0
+  layer: 0
+  entrance: 0
+
+Lanayru Caves - Sand Sea Docks Exit:
+  type: exit
+  vanilla: Sand Sea Docks - Lanayru Caves Entrance
+  stage: F303
+  room: 0
+  index: 2
+
+
+# ToT stuff always vanilla (for now)
+Temple of Time - Lanayru Mining Facility to ToT Entrance:
+  type: entrance
+  subtype: vanilla
+  stage: F300_4
+  room: 0
+  layer: 2
+  entrance: 5
+
+Lanayru Mining Facility to ToT - Temple of Time Exit:
+  type: exit
+  subtype: vanilla
+  vanilla: Temple of Time - Lanayru Mining Facility to ToT Entrance
+  stage: F300_5
+  room: 0
+  index: 1
+
+
+Lanayru Mining Facility to ToT - Temple of Time Entrance:
+  type: entrance
+  subtype: vanilla
+  stage: F300_5
+  room: 0
+  layer: 0
+  entrance: 1
+
+Temple of Time - Lanayru Mining Facility to ToT Exit:
+  type: exit
+  subtype: vanilla
+  vanilla: Lanayru Mining Facility to ToT - Temple of Time Entrance
+  stage: F300_4
+  room: 0
+  index: 4
+
+
+Sandship - Sand Sea Entrance:
+  type: entrance
+  stage: D301
+  room: 0
+  layer: 1
+  entrance: 0
+
+Sand Sea Docks - Sandship Exit:
+  type: exit
+  vanilla: Sandship - Sand Sea Entrance
+  stage: F301
+  room: 0
+  index: 0
+
+Sand Sea - Sandship Exit:
+  type: exit
+  vanilla: Sandship - Sand Sea Entrance
+  stage: F301_1
+  room: 0
+  index: 1
+
+Lanayru Caves - Sand Sea Docks Entrance:
+  type: entrance
+  stage: F303
+  room: 0
+  layer: 0
+  entrance: 2
+
+Sand Sea Docks - Lanayru Caves Exit:
+  type: exit
+  vanilla: Lanayru Caves - Sand Sea Docks Entrance
+  stage: F301
+  room: 0
+  index: 1
+Sand Sea - Sand Sea Docks Entrance:
+  type: entrance
+  stage: F301_1
+  room: 0
+  layer: 0
+  entrance: 0
+
+Sand Sea Docks - Sand Sea Exit:
+  type: exit
+  vanilla: Sand Sea - Sand Sea Docks Entrance
+  stage: F301
+  room: 0
+  index: 2
+Sand Sea - Outside Pirate's Stronghold Entrance:
+  type: entrance
+  stage: F301_1
+  room: 0
+  layer: 0
+  entrance: 3
+
+Outside Pirate's Stronghold - Sand Sea Exit:
+  type: exit
+  vanilla: Sand Sea - Outside Pirate's Stronghold Entrance
+  stage: F301_6
+  room: 0
+  index: 0
+Inside Pirate's Stronghold - Outside Pirate's Stronghold Beginning Entrance:
+  type: entrance
+  stage: F301_2
+  room: 1
+  layer: 0
+  entrance: 0
+
+Outside Pirate's Stronghold - Inside Pirate's Stronghold Beginning Exit:
+  type: exit
+  vanilla: Inside Pirate's Stronghold - Outside Pirate's Stronghold Beginning Entrance
+  stage: F301_6
+  room: 0
+  index: 1
+Inside Pirate's Stronghold - Outside Pirate's Stronghold End Entrance:
+  type: entrance
+  stage: F301_2
+  room: 1
+  layer: 0
+  entrance: 1
+
+Outside Pirate's Stronghold - Inside Pirate's Stronghold End Exit:
+  type: exit
+  vanilla: Inside Pirate's Stronghold - Outside Pirate's Stronghold End Entrance
+  stage: F301_6
+  room: 0
+  index: 2
+Skipper's Retreat - Skipper's Shack Entrance:
+  type: entrance
+  stage: F301_3
+  room: 0
+  layer: 0
+  entrance: 1
+
+Skipper's Shack - Skipper's Retreat Exit:
+  type: exit
+  vanilla: Skipper's Retreat - Skipper's Shack Entrance
+  stage: F301_5
+  room: 0
+  index: 0
+Lanayru Desert - Fire Node Entrance:
+  type: entrance
+  stage: F300
+  room: 0
+  layer: 0
+  entrance: 3
+
+Fire Node - Lanayru Desert Exit:
+  type: exit
+  vanilla: Lanayru Desert - Fire Node Entrance
+  stage: F300_3
+  room: 0
+  index: 0
+
+Lanayru Desert - Temple of Time Start Entrance:
+  type: entrance
+  stage: F300
+  room: 0
+  layer: 0
+  entrance: 0
+
+Temple of Time - Lanayru Desert Start Exit:
+  type: exit
+  vanilla: Lanayru Desert - Temple of Time Start Entrance
+  stage: F300_4
+  room: 0
+  index: 0
+Lanayru Desert - Temple of Time End Entrance:
+  type: entrance
+  stage: F300
+  room: 0
+  layer: 0
+  entrance: 1
+
+Temple of Time - Lanayru Desert End Exit:
+  type: exit
+  vanilla: Lanayru Desert - Temple of Time End Entrance
+  stage: F300_4
+  room: 0
+  index: 1
+
+
+
+Sand Sea - Skipper's Retreat Entrance:
+  type: entrance
+  stage: F301_1
+  room: 0
+  layer: 0
+  entrance: 1
+
+Skipper's Retreat - Sand Sea Exit:
+  type: exit
+  vanilla: Sand Sea - Skipper's Retreat Entrance
+  stage: F301_3
+  room: 0
+  index: 2
+Skipper's Shack - Skipper's Retreat Entrance:
+  type: entrance
+  stage: F301_5
+  room: 0
+  layer: 0
+  entrance: 0
+
+Skipper's Retreat - Skipper's Shack Exit:
+  type: exit
+  vanilla: Skipper's Shack - Skipper's Retreat Entrance
+  stage: F301_3
+  room: 0
+  index: 3
+
+Shipyard - Groosenator Rickety Coaster Entrance:
+  type: entrance
+  subtype: groosenator
+  stage: F301_4
+  room: 0
+  layer: 0
+  entrance: 9
+
+
+
+Sand Sea Docks - Sand Sea Entrance:
+  type: entrance
+  stage: F301
+  room: 0
+  layer: 0
+  entrance: 1
+
+Sand Sea - Sand Sea Docks Exit:
+  type: exit
+  vanilla: Sand Sea Docks - Sand Sea Entrance
+  stage: F301_1
+  room: 0
+  index: 0
+Skipper's Retreat - Sand Sea Entrance:
+  type: entrance
+  stage: F301_3
+  room: 0
+  layer: 0
+  entrance: 0
+
+Sand Sea - Skipper's Retreat Exit:
+  type: exit
+  vanilla: Skipper's Retreat - Sand Sea Entrance
+  stage: F301_1
+  room: 0
+  index: 2
+Shipyard - Sand Sea Entrance:
+  type: entrance
+  stage: F301_4
+  room: 0
+  layer: 0
+  entrance: 0
+
+Sand Sea - Shipyard Exit:
+  type: exit
+  vanilla: Shipyard - Sand Sea Entrance
+  stage: F301_1
+  room: 0
+  index: 3
+Outside Pirate's Stronghold - Sand Sea Entrance:
+  type: entrance
+  stage: F301_6
+  room: 0
+  layer: 0
+  entrance: 0
+
+Sand Sea - Outside Pirate's Stronghold Exit:
+  type: exit
+  vanilla: Outside Pirate's Stronghold - Sand Sea Entrance
+  stage: F301_1
+  room: 0
+  index: 4
+Lanayru Caves - Lanayru Mines Entrance:
+  type: entrance
+  stage: F303
+  room: 0
+  layer: 0
+  entrance: 0
+
+Lanayru Mines - Lanayru Caves Exit:
+  type: exit
+  vanilla: Lanayru Caves - Lanayru Mines Entrance
+  stage: F300_1
+  room: 0
+  index: 1
+Lanayru Desert - Lanayru Mines Entrance:
+  type: entrance
+  stage: F300
+  room: 0
+  layer: 0
+  entrance: 2
+
+Lanayru Mines - Lanayru Desert Exit:
+  type: exit
+  vanilla: Lanayru Desert - Lanayru Mines Entrance
+  stage: F300_1
+  room: 2
+  index: 0
+Sand Sea - Shipyard Entrance:
+  type: entrance
+  stage: F301_1
+  room: 0
+  layer: 0
+  entrance: 2
+
+Shipyard - Sand Sea Exit:
+  type: exit
+  vanilla: Sand Sea - Shipyard Entrance
+  stage: F301_4
+  room: 0
+  index: 2
+Shipyard Construction Bay - Shipyard Upper Entrance:
+  type: entrance
+  stage: F301_7
+  room: 0
+  layer: 0
+  entrance: 0
+
+Shipyard - Shipyard Construction Bay Upper Exit:
+  type: exit
+  vanilla: Shipyard Construction Bay - Shipyard Upper Entrance
+  stage: F301_4
+  room: 0
+  index: 3
+Shipyard Construction Bay - Shipyard Lower Entrance:
+  type: entrance
+  stage: F301_7
+  room: 0
+  layer: 0
+  entrance: 1
+
+Shipyard - Shipyard Construction Bay Lower Exit:
+  type: exit
+  vanilla: Shipyard Construction Bay - Shipyard Lower Entrance
+  stage: F301_4
+  room: 0
+  index: 4
+Lightning Node - Lanayru Desert Entrance:
+  type: entrance
+  stage: F300_2
+  room: 0
+  layer: 0
+  entrance: 0
+
+Lanayru Desert - Lightning Node Exit:
+  type: exit
+  vanilla: Lightning Node - Lanayru Desert Entrance
+  stage: F300
+  room: 0
+  index: 0
+Lanayru Mines - Lanayru Desert Entrance:
+  type: entrance
+  stage: F300_1
+  room: 2
+  layer: 0
+  entrance: 1
+
+Lanayru Desert - Lanayru Mines Exit:
+  type: exit
+  vanilla: Lanayru Mines - Lanayru Desert Entrance
+  stage: F300
+  room: 0
+  index: 1
+Fire Node - Lanayru Desert Entrance:
+  type: entrance
+  stage: F300_3
+  room: 0
+  layer: 0
+  entrance: 0
+
+Lanayru Desert - Fire Node Exit:
+  type: exit
+  vanilla: Fire Node - Lanayru Desert Entrance
+  stage: F300
+  room: 0
+  index: 2
+Temple of Time - Lanayru Desert Start Entrance:
+  type: entrance
+  stage: F300_4
+  room: 0
+  layer: 0
+  entrance: 0
+
+Lanayru Desert - Temple of Time Start Exit:
+  type: exit
+  vanilla: Temple of Time - Lanayru Desert Start Entrance
+  stage: F300
+  room: 0
+  index: 3
+Temple of Time - Lanayru Desert End Entrance:
+  type: entrance
+  stage: F300_4
+  room: 0
+  layer: 0
+  entrance: 1
+
+Lanayru Desert - Temple of Time End Exit:
+  type: exit
+  vanilla: Temple of Time - Lanayru Desert End Entrance
+  stage: F300
+  room: 0
+  index: 4
+Lanayru Mining Facility - Lanayru Desert Entrance:
+  type: entrance
+  stage: D300
+  room: 0
+  layer: 0
+  entrance: 0
+
+Lanayru Desert - Lanayru Mining Facility Exit:
+  type: exit
+  vanilla: Lanayru Mining Facility - Lanayru Desert Entrance
+  stage: F300
+  room: 0
+  index: 5
+Lanayru Caves - Lanayru Desert Entrance:
+  type: entrance
+  stage: F303
+  room: 0
+  layer: 0
+  entrance: 1
+
+Lanayru Desert - Lanayru Caves Exit:
+  type: exit
+  vanilla: Lanayru Caves - Lanayru Desert Entrance
+  stage: F300
+  room: 0
+  index: 8
+
+# Lanayru Mining Facility
+
+
+Lanayru Desert - Temple Entrance:
+  type: entrance
+  subtype: statue
+  stage: F300
+  room: 0
+  layer: 0
+  entrance: 5
+
+Lanayru Mining Facility - <<Normal/Statue1>> Exit:
+  type: exit
+  subtype: statue
+  vanilla: Lanayru Desert - Temple Entrance
+  stage: D300
+  room: 0
+  index: 0
+
+Lanayru Mining Facility - <<Normal/Statue2>> Exit:
+  type: exit
+  subtype: statue
+  vanilla: Lanayru Desert - Temple Entrance
+  stage: D300
+  room: 0
+  index: 1
+
+Lanayru Mining Facility - <<Normal/Statue3>> Exit:
+  type: exit
+  subtype: statue
+  vanilla: Lanayru Desert - Temple Entrance
+  stage: D300
+  room: 5
+  index: 4
+
+Lanayru Mining Facility - <<Normal/Statue4>> Exit:
+  type: exit
+  subtype: statue
+  vanilla: Lanayru Desert - Temple Entrance
+  stage: D300_1
+  room: 0
+  index: 0
+
+Lanayru Mining Facility - <<Normal/Statue5>> Exit:
+  type: exit
+  subtype: statue
+  vanilla: Lanayru Desert - Temple Entrance
+  stage: D300_1
+  room: 0
+  index: 1
+
+Lanayru Mining Facility - <<Normal/Statue6>> Exit:
+  type: exit
+  subtype: statue
+  vanilla: Lanayru Desert - Temple Entrance
+  stage: D300_1
+  room: 5
+  index: 4
+
+# Sandship
+
+
+Sand Sea - Temple Entrance:
+  type: entrance
+  subtype: statue
+  stage: F301_1
+  room: 0
+  layer: 0
+  entrance: 4
+
+Sandship - <<Normal/Statue1>> Exit:
+  type: exit
+  subtype: statue
+  vanilla: Sand Sea - Temple Entrance
+  stage: D301
+  room: 0
+  index: 1
+
+Sandship - <<Normal/Statue2>> Exit:
+  type: exit
+  subtype: statue
+  vanilla: Sand Sea - Temple Entrance
+  stage: D301
+  room: 1
+  index: 2
+
+Sandship - <<Normal/Statue3>> Exit:
+  type: exit
+  subtype: statue
+  vanilla: Sand Sea - Temple Entrance
+  stage: D301
+  room: 6
+  index: 0
+
+Sandship - <<Normal/Statue4>> Exit:
+  type: exit
+  subtype: statue
+  vanilla: Sand Sea - Temple Entrance
+  stage: D301
+  room: 9
+  index: 1
+
+Sandship - <<Normal/Statue5>> Exit:
+  type: exit
+  subtype: statue
+  vanilla: Sand Sea - Temple Entrance
+  stage: D301
+  room: 13
+  index: 0
+
+Nayru's Flame - <<Crest Hit>> Exit:
+  type: exit
+  subtype: statue
+  vanilla: Sand Sea - Temple Entrance
+  stage: B301
+  room: 0
+  index: 1
+
+Nayru's Flame - <<??>> Exit:
+  type: exit
+  subtype: statue
+  vanilla: Sand Sea - Temple Entrance
+  stage: B301
+  room: 0
+  index: 4
+
+
+
+
+# Sky Keep
+
+Sky Keep - Entry - Bottom Entrance:
+  type: entrance
+  stage: D003_7
+  room: 0
+  layer: 0
+  entrance: 4
+
+Sky Keep - <<????>>:
+  type: exit
+  vanilla: Skyloft - Temple Entrance
+  scens:
+  - stage: D003_7
+    room: 0
+    index: 1
+  - stage: D003_7
+    room: 0
+    index: 2
