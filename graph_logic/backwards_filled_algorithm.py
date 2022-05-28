@@ -102,7 +102,7 @@ class BFA:
             return False
         assert accessible_locations
         new_item = self.logic.replace_item(self.rng.choice(accessible_locations), item)
-        return self.place_item(item, depth + 1)
+        return self.place_item(new_item, depth + 1)
 
     def link(self, pool: int, entrance=None, depth=0):
         entrance_pool, exit_pool = self.logic.pools[pool]
