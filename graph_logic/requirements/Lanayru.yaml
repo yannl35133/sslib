@@ -25,7 +25,7 @@ Mines:
     Caves Entrance:
       exits:
         Higher Area: Clawshots
-        To Caves: Nothing
+        Exit to Caves: Nothing
 
   Statues Area:
     region: "Lanayru Mines"
@@ -50,7 +50,7 @@ Mines:
       entrance:
         Blow up Rock on Track
       exits:
-        To Desert: Nothing
+        Exit to Desert: Nothing
 
 Desert:
   Entry:
@@ -70,7 +70,7 @@ Desert:
       Timeshift Stone: Blow up Rock for Timeshift Stone
 
     exits:
-      To Mines: Timeshift Stone # I can't assume the minecart is available, right ?
+      Exit to Mines: Timeshift Stone # I can't assume the minecart is available, right ?
       Statue: Unlock Statue
       Near Hook Beetle Fight: Nothing
 
@@ -115,20 +115,20 @@ Desert:
       Statue: Unlock Statue
       Sand Oasis: Nothing
       Top of Wall: Clawshots
-      Near South Temple of Time Entrance: Can Navigate in Oasis | Near South Temple of Time Entrance - Push Minecart
+      Near South Exit to Temple of Time: Can Navigate in Oasis | Near South Exit to Temple of Time - Push Minecart
 
-  Near South Temple of Time Entrance:
+  Near South Exit to Temple of Time:
     locations:
       Push Minecart: Nothing
     exits:
-      Temple of Time South Entrance: Nothing
+      South Exit to Temple of Time: Nothing
       West: Nothing
 
     Ledge to Caves:
       entrance: Clawshots
       exits:
-        Near South Temple of Time Entrance: Nothing
-        To Caves: Nothing
+        Near South Exit to Temple of Time: Nothing
+        Exit to Caves: Nothing
 
   Top of Wall:
     locations:
@@ -149,7 +149,7 @@ Desert:
       North: Nothing
       East: Nothing
       Near Hook Beetle Fight: Nothing
-      Temple Entrance: Nothing
+      Temple: Nothing
 
   North:
     locations:
@@ -165,9 +165,9 @@ Desert:
 
     exits:
       Statue: Unlock Statue
-      Temple of Time North Entrance: Nothing
-      Trial Entrance: Open Trial Gate
-      Lightning Node Entrance: Open Lightning Node
+      North Exit to Temple of Time: Nothing
+      Trial: Open Trial Gate
+      Lightning Node: Open Lightning Node
 
 
     Secret Passageway:
@@ -216,7 +216,7 @@ Desert:
       Top of LMF: North - Raise Lanayru Mining Facility
       Near Hook Beetle Fight: Open Wall Shortcut | Temple of Time Skip - Brakeslide Trick
       Statue: Nothing
-      Fire Node Entrance: Nothing
+      Fire Node: Nothing
 
 
     Fire Node:
@@ -272,7 +272,7 @@ Temple of Time:
     locations:
       Unlock Statue: Nothing
     exits:
-      South Exit: Nothing
+      South Exit to Desert: Nothing
       Statue: Unlock Statue
       Front: Hook Beetle | (Slingshot & Temple of Time - Slingshot Shot Trick)
 
@@ -294,7 +294,7 @@ Temple of Time:
       Unlock Statue: Nothing
     exits:
       Statue: Unlock Statue
-      # LMF Back Entrance: Nothing  # I don't know if it is enabled
+      Exit to Lanayru Mining Facility: Nothing  # I don't know if it is enabled
       Front: Blow up Wall
 
   Near Goddess Cube:
@@ -306,7 +306,7 @@ Temple of Time:
   North East:
     exits:
       South East: Distance Activator
-      North Exit: Nothing
+      North Exit to Desert: Nothing
 
 Silent Realm:
   region: Lanayru Silent Realm
@@ -323,20 +323,20 @@ Caves:
     Gossip Stone: Nothing
 
   exits:
-    To Mines: Nothing
-    To Desert: Nothing
+    Exit to Mines: Nothing
+    Exit to Desert: Nothing
 
   Past Door to Sand Sea:
     entrance: Clawshots & Lanayru Caves Key
     exits:
       Caves: Lanayru Caves Key
-      To Sand Sea: Nothing
+      Exit to Sand Sea: Nothing
 
   Past Crawlspace:
     entrance: Impossible
     exits:
       Caves: Impossible
-      To Gorge: Nothing
+      Exit to Gorge: Nothing
 
 
 Sand Sea:
@@ -344,7 +344,7 @@ Sand Sea:
     Near Exit to Caves:
       entrance: Clawshots
       exits:
-        To Caves: Nothing
+        Exit to Caves: Nothing
         Ancient Harbour: Clawshots
       locations:
         Gold Rupee: Impossible # Upgraded Hook Beetle
@@ -355,7 +355,8 @@ Sand Sea:
       Ship Timeshift Stone: Distance Activator | Goddess Sword | Bomb Bag
 
     exits:
-      To Sand Sea: Ship Timeshift Stone
+      Dock: Ship Timeshift Stone
+      Exit to Sandship: Sand Sea - Shoot down Sandship
       Statue: Unlock Statue
 
   locations:
@@ -363,7 +364,7 @@ Sand Sea:
 
   exits:
     Ancient Harbour Dock: Nothing
-    Temple Entrance: Shoot down Sandship
+    Sandship Dock: Shoot down Sandship
     Skipper's Retreat Dock: Nothing
     Shipyard Dock: Nothing
     Pirate Stronghold Dock: Nothing
@@ -375,7 +376,7 @@ Sand Sea:
 
     exits:
       Statue: Unlock Statue
-      To Sand Sea: Nothing
+      Dock: Nothing
       Past Rock: Blow up Rock & Clawshots
 
     Past Rock:
@@ -394,7 +395,7 @@ Sand Sea:
         Chest on top of Cacti Pillar: Clawshots
 
       exits:
-        To Shack: Nothing
+        Shack: Nothing
         Past Rock: Nothing
         Skydive Platform: Nothing
 
@@ -416,11 +417,19 @@ Sand Sea:
       Gossip Stone: Nothing # Take the first cart and you've arrived
       Rickety Coaster -- Heart Stopping Track in 1'05:
         # Roller Coaster Minigame
-        Gust Bellows & Sword
-        # Defeat Molderach first
+        Construction Bay - Defeat Molderach
     exits:
       Statue: Unlock Statue
-      To Sand Sea: Nothing
+      Dock: Nothing
+      Construction Bay Upper Exit: Nothing
+      Construction Bay Lower Exit: Construction Bay - Defeat Molderach
+
+    Construction Bay:
+      locations:
+        Defeat Molderach: Gust Bellows & Sword
+      exits:
+        Upper Exit: Nothing
+        Lower Exit: Defeat Molderach
 
   Pirate Stronghold:
     locations:
@@ -429,9 +438,9 @@ Sand Sea:
 
     exits:
       Statue: Unlock Statue
-      To Sand Sea: Nothing
-      Side Entrance: Nothing
-      Exit Door: Inside - Finish Minidungeon # What happens if you take it before finishing the minidungeon ?
+      Dock: Nothing
+      Side Exit: Nothing
+      Top Exit: Inside - Finish Minidungeon # What happens if you take it before finishing the minidungeon ?
 
     Inside:
       locations:
@@ -443,8 +452,8 @@ Sand Sea:
         # Technically this is possible without beating a Beamos but it's hard
 
       exits:
-        Entrance: Nothing
-        Exit: Finish Minidungeon
+        First Door: Nothing
+        Second Door: Finish Minidungeon
 
   Gorge:
     locations:
@@ -457,4 +466,4 @@ Sand Sea:
 
     exits:
       Statue: Unlock Statue
-      To Caves: Nothing
+      Exit to Caves: Nothing

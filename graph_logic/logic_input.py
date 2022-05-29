@@ -37,6 +37,7 @@ class Area(Generic[LE]):
     sub_areas: Dict[str, Area[LE]] = field(default_factory=dict)
     locations: Dict[str, LE] = field(default_factory=dict)
     exits: Dict[str, LE] = field(default_factory=dict)
+    entrances: Set[str] = field(default_factory=set)
 
     @classmethod
     def of_dict(cls, args):
@@ -88,7 +89,9 @@ class Area(Generic[LE]):
     def map(
         self,
         floc: Callable[[str, str, LE], Tuple[str, LE_bis]],
-        fexit: Callable[[str, str, LE], Tuple[str, LE_bis]],
+        fexit: Callable[
+            [str, str, LE], Tuple[Tuple[str, LE_bis] | None, str | None]
+        ],
     ):
         new_self: Area[LE_bis] = self  # type: ignore
         d: Dict[str, LE_bis] = {}
@@ -97,11 +100,18 @@ class Area(Generic[LE]):
             d[k] = v
         new_self.locations = d
 
-        d = {}
+        new_exits = {}
+        entrances = set()
         for k, v in self.exits.items():
-            k, v = fexit(self.name, k, v)
-            d[k] = v
-        new_self.exits = d
+            exit, entrance = fexit(self.name, k, v)
+            if exit is not None:
+                exit, req = exit
+                new_exits[exit] = req
+            if entrance is not None:
+                entrances.add(entrance)
+
+        new_self.exits = new_exits
+        new_self.entrances = entrances
 
         for sub_area in self.sub_areas.values():
             sub_area.map(floc, fexit)
@@ -136,6 +146,7 @@ class Areas:
 
             if j + 1 == len(partial_address) and (
                 head in area.locations
+                or (head in area.entrances)
                 or (head in area.exits and head in self.map_exit_suffixes)
             ):
                 return with_sep_full(area.name, head)
@@ -169,8 +180,14 @@ class Areas:
         raw_area: Dict[str, Any],
         checks: Dict[str, Any],
         gossip_stones: Dict[str, Any],
-        map_exits: Dict[str, Any],
+        map_exits_entrances: Dict[str, Any],
     ):
+
+        map_entrances = {
+            k: v for k, v in map_exits_entrances.items() if v["type"] == "entrance"
+        }
+        map_exits = {k: v for k, v in map_exits_entrances.items() if v["type"] == "exit"}
+
         self.parent_area = Area.of_yaml(name="", raw_dict=raw_area)
         areas = {area.name: area for area in areas_list}
 
@@ -182,18 +199,46 @@ class Areas:
             else:
                 EXTENDED_ITEM.items_list.append(EIN(area.name))
 
-        self.map_exit_suffixes = {
-            exit_name.rsplit(" - ", 1)[-1] for exit_name in map_exits
-        }
+        self.map_exit_suffixes: dict[str, bool] = {}
+        self.map_exits_entrances: dict[str, str] = {}
+        for exit_full_name in map_exits:
+            exit_name = exit_full_name.rsplit(" - ", 1)[-1]
+            self.map_exit_suffixes[exit_name] = False
+            if exit_name.endswith(" Exit"):
+                self.map_exit_suffixes[exit_name[: -len(" Exit")]] = True
+                if (
+                    entrance_full_name := exit_full_name.replace("Exit", "Entrance")
+                ) in map_entrances:
+                    entrance_name = entrance_full_name.rsplit(" - ", 1)[-1]
+                    self.map_exits_entrances[exit_name] = entrance_name
+            if "Exit to " in exit_name:
+                if (
+                    entrance_full_name := exit_full_name.replace("Exit to", "Entrance from")
+                ) in map_entrances:
+                    entrance_name = entrance_full_name.rsplit(" - ", 1)[-1]
+                    self.map_exits_entrances[exit_name] = entrance_name
+
+        self.map_entrances_suffixes = { entrance_name.rsplit(" - ", 1)[-1] for entrance_name in map_entrances }
+
+        def floc(prefix, k, v):
+            v = v.localize(lambda text: self.search_area(prefix, text))
+            if k in self.map_entrances_suffixes:
+                return (None, k)
+            if k not in self.map_exit_suffixes:
+                return ((self.search_area(prefix, k), v), None)
+            if self.map_exit_suffixes[k]:
+                k = k + " Exit"
+            if k in self.map_exits_entrances:
+                return ((k, v), self.map_exits_entrances[k])
+            else:
+                return ((k, v), None)
+
         self.parent_area.map(
             lambda prefix, k, v: (
                 self.search_area(prefix, k) if " - " in k else k,
                 v.localize(lambda text: self.search_area(prefix, text)),
             ),
-            lambda prefix, k, v: (
-                k if k in self.map_exit_suffixes else self.search_area(prefix, k),
-                v.localize(lambda text: self.search_area(prefix, text)),
-            ),
+            floc,
         )
 
         new_areas: Dict[str, Area[DNFInventory]] = areas  # type: ignore
@@ -205,6 +250,7 @@ class Areas:
         self.checks = set()
         self.gossip_stones = set()
         self.map_exits = set()
+        self.map_entrances = set()
 
         for partial_address in checks:
             full_address = self.search_area("", partial_address, multiple=True)
@@ -218,49 +264,34 @@ class Areas:
 
         for partial_address in map_exits:
             full_address = self.search_area("", partial_address, multiple=True)
-            exit_type = map_exits[partial_address].get("exit-type", "Both")
             self.short_full.append((partial_address, full_address))
-            if exit_type in ("Entrance", "Both"):
-                area_name, suffix = full_address.rsplit("/", 1)
-                allowed_time_of_day_str = map_exits[partial_address].get(
-                    "allowed-time-of-day", None
-                )
-                allowed_time_of_day = (
-                    AllowedTimeOfDay[allowed_time_of_day_str]
-                    if allowed_time_of_day_str is not None
-                    else self.areas[area_name].allowed_time_of_day
-                )
-                self.entrance_allowed_time_of_day[
-                    make_entrance(full_address)
-                ] = allowed_time_of_day
-                if allowed_time_of_day == Both:
-                    EXTENDED_ITEM.items_list.append(
-                        make_day(make_entrance(full_address))
-                    )
-                    EXTENDED_ITEM.items_list.append(
-                        make_night(make_entrance(full_address))
-                    )
-                else:
-                    EXTENDED_ITEM.items_list.append(make_entrance(full_address))
+            EXTENDED_ITEM.items_list.append(full_address)
+            self.map_exits.add(full_address)
 
-                self.short_full.append(
-                    (
-                        make_entrance(partial_address),
-                        make_entrance(full_address),
-                    )
-                )
-                self.map_exits.add(make_entrance(full_address))
-            if exit_type in ("Exit", "Both"):
-                EXTENDED_ITEM.items_list.append(make_exit(full_address))
-                self.short_full.append(
-                    (make_exit(partial_address), make_exit(full_address))
-                )
-                self.map_exits.add(make_exit(full_address))
+        for partial_address in map_entrances:
+            full_address = self.search_area("", partial_address, multiple=True)
+            area_name, suffix = full_address.rsplit("/", 1)
+            allowed_time_of_day_str = map_entrances[partial_address].get(
+                "allowed-time-of-day", None
+            )
+            allowed_time_of_day = (
+                AllowedTimeOfDay[allowed_time_of_day_str]
+                if allowed_time_of_day_str is not None
+                else self.areas[area_name].allowed_time_of_day
+            )
+            self.entrance_allowed_time_of_day[full_address] = allowed_time_of_day
+            if allowed_time_of_day == Both:
+                EXTENDED_ITEM.items_list.append(make_day(full_address))
+                EXTENDED_ITEM.items_list.append(make_night(full_address))
+            else:
+                EXTENDED_ITEM.items_list.append(full_address)
+
+            self.map_entrances.add(full_address)
 
         def short_to_full(elt: str):
             if elt in LOGIC_OPTIONS or "Trick" in elt:
                 return EIN(elt)
-            for tag in ["_DAY", "_NIGHT", "_ENTRANCE", "_EXIT"]:
+            for tag in ["_DAY", "_NIGHT"]:
                 if elt[-len(tag) :] == tag:
                     return EIN(short_to_full(elt[: -len(tag)]) + tag)
             for (a, b) in self.short_full:
@@ -351,34 +382,28 @@ class Areas:
 
                 else:  # Map exit
                     exit = with_sep_full(area_name, exit)
-                    short_exit = self.full_to_short(exit)
-                    exit_type = map_exits[short_exit].get("exit-type", "Both")
-                    if exit_type in ("Entrance", "Both"):
-                        entrance = make_entrance(exit)
-                        allowed_time_of_day = self.entrance_allowed_time_of_day[
-                            entrance
-                        ]
-                        if allowed_time_of_day == Both:
-                            darea_bit = EXTENDED_ITEM[make_day(area_name)]
-                            narea_bit = EXTENDED_ITEM[make_night(area_name)]
-                            self.opaque[darea_bit] = False
-                            self.opaque[narea_bit] = False
-                            reqs[darea_bit] |= DNFInv(make_day(entrance))
-                            reqs[narea_bit] |= DNFInv(make_night(entrance))
-                        else:
-                            if area.allowed_time_of_day == Both:
-                                if allowed_time_of_day == DayOnly:
-                                    area_bit = EXTENDED_ITEM[make_day(area_name)]
-                                else:
-                                    area_bit = EXTENDED_ITEM[make_night(area_name)]
-                            else:
-                                area_bit = EXTENDED_ITEM[area_name]
-                            self.opaque[area_bit] = False
-                            reqs[area_bit] |= DNFInv(entrance)
+                    exit_bit = EXTENDED_ITEM[exit]
+                    reqs[exit_bit] = req
+                    self.opaque[exit_bit] = False
+                    self.exit_to_area[exit] = area
 
-                    if exit_type in ("Exit", "Both"):
-                        exit = make_exit(exit)
-                        exit_bit = EXTENDED_ITEM[exit]
-                        reqs[exit_bit] = req
-                        self.opaque[exit_bit] = False
-                        self.exit_to_area[exit] = area
+            for entrance in area.entrances:
+                entrance = with_sep_full(area_name, entrance)
+                allowed_time_of_day = self.entrance_allowed_time_of_day[entrance]
+                if allowed_time_of_day == Both:
+                    darea_bit = EXTENDED_ITEM[make_day(area_name)]
+                    narea_bit = EXTENDED_ITEM[make_night(area_name)]
+                    self.opaque[darea_bit] = False
+                    self.opaque[narea_bit] = False
+                    reqs[darea_bit] |= DNFInv(make_day(entrance))
+                    reqs[narea_bit] |= DNFInv(make_night(entrance))
+                else:
+                    if area.allowed_time_of_day == Both:
+                        if allowed_time_of_day == DayOnly:
+                            area_bit = EXTENDED_ITEM[make_day(area_name)]
+                        else:
+                            area_bit = EXTENDED_ITEM[make_night(area_name)]
+                    else:
+                        area_bit = EXTENDED_ITEM[area_name]
+                    self.opaque[area_bit] = False
+                    reqs[area_bit] |= DNFInv(entrance)

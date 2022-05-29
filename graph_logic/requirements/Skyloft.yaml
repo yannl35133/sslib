@@ -13,13 +13,16 @@ Upper:
       Ghost/Pipit's Crystals: Cawlin's Letter & Day
       Fledge's Crystals: Skyloft - Central - Bazaar - Endurance Potion & Night
     exits:
-      Upper Exit: Nothing
-      Lower Exit: Day
+      Upper Right Door: Nothing
+      Upper Left Door: Nothing
+      Lower Right Door: Day
+      Lower Left Door: Day
 
-    Link's Room: # Default starting area
+    Link's Room:
       can-sleep: true
       entrance: Nothing
       exits:
+        Start Entrance: Impossible
         Knight Academy: Nothing
       locations:
         Crystal: Night
@@ -30,12 +33,12 @@ Upper:
       entrance:
         Unlocked Zelda's Room
       exits:
-        Chimney: Nothing
+        Chimney: Impossible
         Knight Academy: Nothing
       locations:
-        Crystal: Unlocked Zelda's Room & Night
-        In Zelda's Closet: Unlocked Zelda's Room
         Unlocked Zelda's Room: Nothing
+        Crystal: Night
+        In Zelda's Closet: Nothing
 
   Sparring Hall:
     region: Upper Skyloft
@@ -44,7 +47,8 @@ Upper:
       Chest: Nothing
       Delivered Hot Soup: Sky - Lumpy Pumpkin - Start Hot Soup Delivery
     exits:
-      Exit: Nothing
+      Right Door: Nothing
+      Left Door: Nothing
 
   Goddess Statue:
     region: Upper Skyloft
@@ -59,11 +63,14 @@ Upper:
     Chest near Goddess Statue: Nothing
     Pumpkin Archery -- 600 Points: Bow & Day
   exits:
-    Knight Academy Upper Entrance: Nothing
-    Knight Academy Lower Entrance: Day
+    Knight Academy Upper Right Door: Nothing
+    Knight Academy Upper Left Door: Nothing
+    Knight Academy Lower Right Door: Day
+    Knight Academy Lower Left Door: Day
     Knight Academy Chimney Entrance: Clawshots
-    Goddess Statue Entrance: Nothing
-    Sparring Hall Entrance: Nothing
+    Sparring Hall Right Door: Nothing
+    Sparring Hall Left Door: Nothing
+    Goddess Statue: Nothing
     Central: Nothing
 
 
@@ -83,15 +90,15 @@ Central:
     Item in Bird Nest: (Clawshots & Gust Bellows) | (Beetle & Baby Rattle from Beedle's Shop Trick & Gust Bellows)
     Waterfall Cave Crystals: Beetle
   exits:
-    Waterfall Cave Upper Entrance: Sword | Bomb Bag
-    Beedle's Shop Entrance: Day & (Distance Activator | (Beedle's Shop With Bombs Trick & Bomb Bag))
-    Bazaar North Entrance: Day
-    Bazaar East Entrance: Day
-    Bazaar South Entrance: Day
-    Trial Entrance: Song of the Hero & Goddess Harp
-    Orielle and Parrow's House Entrance: Nothing
-    Peatrice's House Entrance: Nothing
-    Wryna's House Entrance: Nothing
+    Waterfall Cave Upper: Sword | Bomb Bag
+    Beedle's Shop: Day & (Distance Activator | (Beedle's Shop With Bombs Trick & Bomb Bag))
+    Bazaar North: Day
+    Bazaar West: Day
+    Bazaar South: Day
+    Trial: Song of the Hero & Goddess Harp
+    Orielle and Parrow's House: Nothing
+    Peatrice's House: Nothing
+    Wryna's House: Nothing
     Near Temple Entrance: Clawshots
     Sky: Day
 
@@ -142,7 +149,7 @@ Central:
       Talk to Peatrice: Nothing
     exits:
       North Exit: Nothing
-      East Exit: Nothing
+      West Exit: Nothing
       South Exit: Nothing
 
   Orielle and Parrow's House:
@@ -184,10 +191,10 @@ Village:
   exits:
     Central: Nothing
     Central - Past Waterfall Cave: Waterfall Cave Jump Trick & Day
-    Bertie's House Entrance: Nothing
-    Sparrot's House Entrance: Nothing
-    Mallara's House Entrance: Nothing
-    Batreaux' House Entrance: Opened Shed | Gravestone Jump Trick
+    Bertie's House: Nothing
+    Sparrot's House: Nothing
+    Mallara's House: Nothing
+    Batreaux' House: Opened Shed | Gravestone Jump Trick
 
   Bertie's House:
     region: Skyloft Village
