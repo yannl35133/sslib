@@ -486,6 +486,22 @@ Skyloft - Beedle's Shop Exit:
   room: 0
   index: 26
 
+## Trial
+
+Skyloft - Silent Realm - Entrance:
+  type: entrance
+
+Skyloft - Silent Realm - Exit:
+  type: exit
+  vanilla: Skyloft - Trial Entrance
+
+Skyloft - Trial Entrance:
+  type: entrance
+
+Skyloft - Trial Exit:
+  type: exit
+  vanilla: Skyloft - Silent Realm - Entrance
+
 ## Sky Keep
 
 Skyloft - Temple Entrance:
@@ -1321,14 +1337,6 @@ Sky - Faron Pillar - Floria Waterfall Statue:
 
 ## South West
 
-Lanayru Mines - First Time Entrance:
-  type: entrance
-  subtype: statue
-  stage: F300_1
-  room: 0
-  layer: 0
-  entrance: 0
-
 Sky - Lanayru Pillar - First Time Exit:
   type: exit
   subtype: statue
@@ -1336,14 +1344,6 @@ Sky - Lanayru Pillar - First Time Exit:
   stage: F020
   room: 0
   index: 2
-
-Lanayru Desert - <<?? Statue>>:
-  type: entrance
-  subtype: statue
-  stage: F300
-  room: 0
-  layer: 0
-  entrance: 10
 
 Sky - Lanayru Pillar - <<?? Statue>>:
   type: exit
@@ -1353,14 +1353,6 @@ Sky - Lanayru Pillar - <<?? Statue>>:
   room: 0
   index: 31
 
-Sand Sea Docks - Ancient Harbour <<Alternate>> Statue:
-  type: entrance
-  subtype: statue
-  stage: F301
-  room: 0
-  layer: 0
-  entrance: 4
-
 Sky - Lanayru Pillar - Ancient Harbour <<Alternate>> Statue:
   type: exit
   subtype: statue
@@ -1368,14 +1360,6 @@ Sky - Lanayru Pillar - Ancient Harbour <<Alternate>> Statue:
   stage: F020
   room: 0
   index: 32
-
-Lanayru Mines - Lanayru Mine Entry:
-  type: entrance
-  subtype: statue
-  stage: F300_1
-  room: 0
-  layer: 0
-  entrance: 2
 
 Sky - Lanayru Pillar - Lanayru Mine Entry Statue:
   type: exit
@@ -1385,14 +1369,6 @@ Sky - Lanayru Pillar - Lanayru Mine Entry Statue:
   room: 0
   index: 56
 
-Lanayru Desert - Desert Entrance Statue Entrance:
-  type: entrance
-  subtype: statue
-  stage: F300
-  room: 0
-  layer: 0
-  entrance: 15
-
 Sky - Lanayru Pillar - Desert Entrance Statue:
   type: exit
   subtype: statue
@@ -1400,14 +1376,6 @@ Sky - Lanayru Pillar - Desert Entrance Statue:
   stage: F020
   room: 0
   index: 57
-
-Lanayru Desert - West Desert Statue Entrance:
-  type: entrance
-  subtype: statue
-  stage: F300
-  room: 0
-  layer: 0
-  entrance: 16
 
 Sky - Lanayru Pillar - West Desert Statue:
   type: exit
@@ -1417,14 +1385,6 @@ Sky - Lanayru Pillar - West Desert Statue:
   room: 0
   index: 58
 
-Lanayru Desert - North Desert Statue Entrance:
-  type: entrance
-  subtype: statue
-  stage: F300
-  room: 0
-  layer: 0
-  entrance: 17
-
 Sky - Lanayru Pillar - North Desert Statue:
   type: exit
   subtype: statue
@@ -1432,14 +1392,6 @@ Sky - Lanayru Pillar - North Desert Statue:
   stage: F020
   room: 0
   index: 59
-
-Lanayru Desert - Stone Cache Statue Entrance:
-  type: entrance
-  subtype: statue
-  stage: F300
-  room: 0
-  layer: 0
-  entrance: 18
 
 Sky - Lanayru Pillar - Stone Cache Statue:
   type: exit
@@ -1449,14 +1401,6 @@ Sky - Lanayru Pillar - Stone Cache Statue:
   room: 0
   index: 60
 
-Temple of Time - Desert Gorge Statue Entrance:
-  type: entrance
-  subtype: statue
-  stage: F300_4
-  room: 0
-  layer: 0
-  entrance: 16
-
 Sky - Lanayru Pillar - Desert Gorge Statue:
   type: exit
   subtype: statue
@@ -1464,14 +1408,6 @@ Sky - Lanayru Pillar - Desert Gorge Statue:
   stage: F020
   room: 0
   index: 61
-
-Temple of Time - Temple of Time Statue Entrance:
-  type: entrance
-  subtype: statue
-  stage: F300_4
-  room: 0
-  layer: 0
-  entrance: 17
 
 Sky - Lanayru Pillar - Temple of Time Statue:
   type: exit
@@ -1481,14 +1417,6 @@ Sky - Lanayru Pillar - Temple of Time Statue:
   room: 0
   index: 62
 
-Sand Sea Docks - Ancient Harbour Statue:
-  type: entrance
-  subtype: statue
-  stage: F301
-  room: 0
-  layer: 0
-  entrance: 10
-
 Sky - Lanayru Pillar - Ancient Harbour Statue:
   type: exit
   subtype: statue
@@ -1496,14 +1424,6 @@ Sky - Lanayru Pillar - Ancient Harbour Statue:
   stage: F020
   room: 0
   index: 63
-
-Skipper's Retreat - Statue Entrance:
-  type: entrance
-  subtype: statue
-  stage: F301_3
-  room: 0
-  layer: 0
-  entrance: 10
 
 Sky - Lanayru Pillar - Skipper's Retreat Statue:
   type: exit
@@ -1513,14 +1433,6 @@ Sky - Lanayru Pillar - Skipper's Retreat Statue:
   room: 0
   index: 64
 
-Shipyard - Statue Entrance:
-  type: entrance
-  subtype: statue
-  stage: F301_4
-  room: 0
-  layer: 0
-  entrance: 10
-
 Sky - Lanayru Pillar - Shipyard Statue:
   type: exit
   subtype: statue
@@ -1529,18 +1441,10 @@ Sky - Lanayru Pillar - Shipyard Statue:
   room: 0
   index: 65
 
-Outside Pirate's Stronghold - Statue Entrance:
-  type: entrance
-  subtype: statue
-  stage: F301_6
-  room: 0
-  layer: 0
-  entrance: 10
-
 Sky - Lanayru Pillar - Pirate Stronghold Statue:
   type: exit
   subtype: statue
-  vanilla: Outside Pirate's Stronghold - Statue Entrance
+  vanilla: Pirate Stronghold - Statue Entrance
   stage: F020
   room: 0
   index: 66
@@ -1553,63 +1457,6 @@ Sky - Lanayru Pillar - Entrance:
   room: 0
   layer: 0
   entrance: 14
-
-Sand Sea Docks - Statue Exit:
-  type: exit
-  subtype: statue
-  vanilla: Sky - Lanayru Pillar - Entrance
-  stage: F301
-  room: 0
-  index: 3
-
-Outside Pirate's Stronghold - Statue Exit:
-  type: exit
-  subtype: statue
-  vanilla: Sky - Lanayru Pillar - Entrance
-  stage: F301_6
-  room: 0
-  index: 3
-
-Temple of Time - Statue Exit:
-  type: exit
-  subtype: statue
-  vanilla: Sky - Lanayru Pillar - Entrance
-  stage: F300_4
-  room: 0
-  index: 2
-
-Skipper's Retreat - Statue Exit:
-  type: exit
-  subtype: statue
-  vanilla: Sky - Lanayru Pillar - Entrance
-  stage: F301_3
-  room: 0
-  index: 1
-
-Lanayru Mines - Statue Exit:
-  type: exit
-  subtype: statue
-  vanilla: Sky - Lanayru Pillar - Entrance
-  stage: F300_1
-  room: 0
-  index: 0
-
-Shipyard - Statue Exit:
-  type: exit
-  subtype: statue
-  vanilla: Sky - Lanayru Pillar - Entrance
-  stage: F301_4
-  room: 0
-  index: 1
-
-Lanayru Desert - Statue Exit:
-  type: exit
-  subtype: statue
-  vanilla: Sky - Lanayru Pillar - Entrance
-  stage: F300
-  room: 0
-  index: 6
-
 
 
 
@@ -2810,248 +2657,124 @@ Fire Sanctuary - <<Normal/Statue10>> Exit:
 
 # Lanayru
 
+## Lanayru Mines
 
-Outside Pirate's Stronghold - Inside Pirate's Stronghold Beginning Entrance:
+Lanayru Mines - First Time Entrance:
   type: entrance
-  stage: F301_6
+  subtype: statue
+  stage: F300_1
   room: 0
   layer: 0
-  entrance: 1
+  entrance: 0
 
-Inside Pirate's Stronghold - Outside Pirate's Stronghold Beginning Exit:
-  type: exit
-  vanilla: Outside Pirate's Stronghold - Inside Pirate's Stronghold Beginning Entrance
-  stage: F301_2
-  room: 1
-  index: 0
-Outside Pirate's Stronghold - Inside Pirate's Stronghold End Entrance:
-  type: entrance
-  stage: F301_6
-  room: 0
-  layer: 0
-  entrance: 2
-
-Inside Pirate's Stronghold - Outside Pirate's Stronghold End Exit:
-  type: exit
-  vanilla: Outside Pirate's Stronghold - Inside Pirate's Stronghold End Entrance
-  stage: F301_2
-  room: 1
-  index: 2
-Lanayru Desert - Lightning Node Entrance:
-  type: entrance
-  stage: F300
-  room: 0
-  layer: 0
-  entrance: 7
-
-Lightning Node - Lanayru Desert Exit:
-  type: exit
-  vanilla: Lanayru Desert - Lightning Node Entrance
-  stage: F300_2
-  room: 0
-  index: 0
-Shipyard - Shipyard Construction Bay Lower Entrance:
-  type: entrance
-  stage: F301_4
-  room: 0
-  layer: 0
-  entrance: 1
-
-Shipyard Construction Bay - Shipyard Lower Exit:
-  type: exit
-  vanilla: Shipyard - Shipyard Construction Bay Lower Entrance
-  stage: F301_7
-  room: 0
-  index: 0
-Shipyard - Shipyard Construction Bay Upper Entrance:
-  type: entrance
-  stage: F301_4
-  room: 0
-  layer: 0
-  entrance: 4
-
-Shipyard Construction Bay - Shipyard Upper Exit:
-  type: exit
-  vanilla: Shipyard - Shipyard Construction Bay Upper Entrance
-  stage: F301_7
-  room: 0
-  index: 1
-
-Lanayru Mines - Lanayru Caves Entrance:
+Lanayru Mines - Entrance from Caves:
   type: entrance
   stage: F300_1
   room: 0
   layer: 0
   entrance: 1
 
-Lanayru Caves - Lanayru Mines Exit:
-  type: exit
-  vanilla: Lanayru Mines - Lanayru Caves Entrance
-  stage: F303
-  room: 0
-  index: 0
-Lanayru Desert - Lanayru Caves Entrance:
+Lanayru Mines - Lanayru Mine Entry:
   type: entrance
-  stage: F300
-  room: 0
-  layer: 0
-  entrance: 6
-
-Lanayru Caves - Lanayru Desert Exit:
-  type: exit
-  vanilla: Lanayru Desert - Lanayru Caves Entrance
-  stage: F303
-  room: 0
-  index: 1
-Sand Sea Docks - Lanayru Caves Entrance:
-  type: entrance
-  stage: F301
-  room: 0
-  layer: 0
-  entrance: 0
-
-Lanayru Caves - Sand Sea Docks Exit:
-  type: exit
-  vanilla: Sand Sea Docks - Lanayru Caves Entrance
-  stage: F303
-  room: 0
-  index: 2
-
-
-# ToT stuff always vanilla (for now)
-Temple of Time - Lanayru Mining Facility to ToT Entrance:
-  type: entrance
-  subtype: vanilla
-  stage: F300_4
-  room: 0
-  layer: 2
-  entrance: 5
-
-Lanayru Mining Facility to ToT - Temple of Time Exit:
-  type: exit
-  subtype: vanilla
-  vanilla: Temple of Time - Lanayru Mining Facility to ToT Entrance
-  stage: F300_5
-  room: 0
-  index: 1
-
-
-Lanayru Mining Facility to ToT - Temple of Time Entrance:
-  type: entrance
-  subtype: vanilla
-  stage: F300_5
-  room: 0
-  layer: 0
-  entrance: 1
-
-Temple of Time - Lanayru Mining Facility to ToT Exit:
-  type: exit
-  subtype: vanilla
-  vanilla: Lanayru Mining Facility to ToT - Temple of Time Entrance
-  stage: F300_4
-  room: 0
-  index: 4
-
-
-Sandship - Sand Sea Entrance:
-  type: entrance
-  stage: D301
-  room: 0
-  layer: 1
-  entrance: 0
-
-Sand Sea Docks - Sandship Exit:
-  type: exit
-  vanilla: Sandship - Sand Sea Entrance
-  stage: F301
-  room: 0
-  index: 0
-
-Sand Sea - Sandship Exit:
-  type: exit
-  vanilla: Sandship - Sand Sea Entrance
-  stage: F301_1
-  room: 0
-  index: 1
-
-Lanayru Caves - Sand Sea Docks Entrance:
-  type: entrance
-  stage: F303
+  subtype: statue
+  stage: F300_1
   room: 0
   layer: 0
   entrance: 2
 
-Sand Sea Docks - Lanayru Caves Exit:
+Lanayru Mines - Entrance from Desert:
+  type: entrance
+  stage: F300_1
+  room: 2
+  layer: 0
+  entrance: 1
+
+Lanayru Mines - Statue Exit:
   type: exit
-  vanilla: Lanayru Caves - Sand Sea Docks Entrance
-  stage: F301
+  subtype: statue
+  vanilla: Sky - Lanayru Pillar - Entrance
+  stage: F300_1
+  room: 0
+  index: 0
+
+Lanayru Mines - Exit to Caves:
+  type: exit
+  vanilla: Lanayru Caves - Entrance from Mines
+  stage: F300_1
   room: 0
   index: 1
-Sand Sea - Sand Sea Docks Entrance:
+
+Lanayru Mines - Exit to Desert:
+  type: exit
+  vanilla: Lanayru Desert - Entrance from Mines
+  stage: F300_1
+  room: 2
+  index: 0
+
+## Lanayru Desert
+
+Lanayru Desert - <<?? Statue>>:
   type: entrance
-  stage: F301_1
+  subtype: statue
+  stage: F300
+  room: 0
+  layer: 0
+  entrance: 10
+
+Lanayru Desert - Desert Entrance Statue Entrance:
+  type: entrance
+  subtype: statue
+  stage: F300
+  room: 0
+  layer: 0
+  entrance: 15
+
+Lanayru Desert - West Desert Statue Entrance:
+  type: entrance
+  subtype: statue
+  stage: F300
+  room: 0
+  layer: 0
+  entrance: 16
+
+Lanayru Desert - North Desert Statue Entrance:
+  type: entrance
+  subtype: statue
+  stage: F300
+  room: 0
+  layer: 0
+  entrance: 17
+
+Lanayru Desert - Stone Cache Statue Entrance:
+  type: entrance
+  subtype: statue
+  stage: F300
+  room: 0
+  layer: 0
+  entrance: 18
+
+
+Lanayru Desert - South Entrance from Temple of Time:
+  type: entrance
+  stage: F300
   room: 0
   layer: 0
   entrance: 0
 
-Sand Sea Docks - Sand Sea Exit:
-  type: exit
-  vanilla: Sand Sea - Sand Sea Docks Entrance
-  stage: F301
-  room: 0
-  index: 2
-Sand Sea - Outside Pirate's Stronghold Entrance:
+Lanayru Desert - North Entrance from Temple of Time:
   type: entrance
-  stage: F301_1
-  room: 0
-  layer: 0
-  entrance: 3
-
-Outside Pirate's Stronghold - Sand Sea Exit:
-  type: exit
-  vanilla: Sand Sea - Outside Pirate's Stronghold Entrance
-  stage: F301_6
-  room: 0
-  index: 0
-Inside Pirate's Stronghold - Outside Pirate's Stronghold Beginning Entrance:
-  type: entrance
-  stage: F301_2
-  room: 1
-  layer: 0
-  entrance: 0
-
-Outside Pirate's Stronghold - Inside Pirate's Stronghold Beginning Exit:
-  type: exit
-  vanilla: Inside Pirate's Stronghold - Outside Pirate's Stronghold Beginning Entrance
-  stage: F301_6
-  room: 0
-  index: 1
-Inside Pirate's Stronghold - Outside Pirate's Stronghold End Entrance:
-  type: entrance
-  stage: F301_2
-  room: 1
-  layer: 0
-  entrance: 1
-
-Outside Pirate's Stronghold - Inside Pirate's Stronghold End Exit:
-  type: exit
-  vanilla: Inside Pirate's Stronghold - Outside Pirate's Stronghold End Entrance
-  stage: F301_6
-  room: 0
-  index: 2
-Skipper's Retreat - Skipper's Shack Entrance:
-  type: entrance
-  stage: F301_3
+  stage: F300
   room: 0
   layer: 0
   entrance: 1
 
-Skipper's Shack - Skipper's Retreat Exit:
-  type: exit
-  vanilla: Skipper's Retreat - Skipper's Shack Entrance
-  stage: F301_5
+Lanayru Desert - Entrance from Mines:
+  type: entrance
+  stage: F300
   room: 0
-  index: 0
+  layer: 0
+  entrance: 2
+
 Lanayru Desert - Fire Node Entrance:
   type: entrance
   stage: F300
@@ -3059,68 +2782,503 @@ Lanayru Desert - Fire Node Entrance:
   layer: 0
   entrance: 3
 
-Fire Node - Lanayru Desert Exit:
+Lanayru Desert - Entrance from Temple:
+  type: entrance
+  subtype: statue
+  stage: F300
+  room: 0
+  layer: 0
+  entrance: 5
+
+Lanayru Desert - Entrance from Caves:
+  type: entrance
+  stage: F300
+  room: 0
+  layer: 0
+  entrance: 6
+
+Lanayru Desert - Lightning Node Entrance:
+  type: entrance
+  stage: F300
+  room: 0
+  layer: 0
+  entrance: 7
+
+
+Lanayru Desert - Statue Exit:
+  type: exit
+  subtype: statue
+  vanilla: Sky - Lanayru Pillar - Entrance
+  stage: F300
+  room: 0
+  index: 6
+
+
+Lanayru Desert - Lightning Node Exit:
+  type: exit
+  vanilla: Lightning Node - Entrance
+  stage: F300
+  room: 0
+  index: 0
+
+Lanayru Desert - Exit to Mines:
+  type: exit
+  vanilla: Lanayru Mines - Entrance from Desert
+  stage: F300
+  room: 0
+  index: 1
+
+Lanayru Desert - Fire Node Exit:
+  type: exit
+  vanilla: Fire Node - Entrance
+  stage: F300
+  room: 0
+  index: 2
+
+Lanayru Desert - South Exit to Temple of Time:
+  type: exit
+  vanilla: Temple of Time - South Entrance from Desert
+  stage: F300
+  room: 0
+  index: 3
+
+Lanayru Desert - North Exit to Temple of Time:
+  type: exit
+  vanilla: Temple of Time - North Entrance from Desert
+  stage: F300
+  room: 0
+  index: 4
+
+Lanayru Desert - Exit to Lanayru Mining Facility:
+  type: exit
+  vanilla: Lanayru Mining Facility - Lanayru Desert Entrance
+  stage: F300
+  room: 0
+  index: 5
+
+Lanayru Desert - Exit to Caves:
+  type: exit
+  vanilla: Lanayru Caves - Entrance from Desert
+  stage: F300
+  room: 0
+  index: 8
+
+
+Lightning Node - Entrance:
+  type: entrance
+  stage: F300_2
+  room: 0
+  layer: 0
+  entrance: 0
+
+Lightning Node - Exit:
+  type: exit
+  vanilla: Lanayru Desert - Lightning Node Entrance
+  stage: F300_2
+  room: 0
+  index: 0
+
+
+
+Fire Node - Entrance:
+  type: entrance
+  stage: F300_3
+  room: 0
+  layer: 0
+  entrance: 0
+
+Fire Node - Exit:
   type: exit
   vanilla: Lanayru Desert - Fire Node Entrance
   stage: F300_3
   room: 0
   index: 0
 
-Lanayru Desert - Temple of Time Start Entrance:
+
+## Temple of Time
+
+
+Temple of Time - Desert Gorge Statue Entrance:
   type: entrance
-  stage: F300
+  subtype: statue
+  stage: F300_4
+  room: 0
+  layer: 0
+  entrance: 16
+
+Temple of Time - Temple of Time Statue Entrance:
+  type: entrance
+  subtype: statue
+  stage: F300_4
+  room: 0
+  layer: 0
+  entrance: 17
+
+Temple of Time - Statue Exit:
+  type: exit
+  subtype: statue
+  vanilla: Sky - Lanayru Pillar - Entrance
+  stage: F300_4
+  room: 0
+  index: 2
+
+
+Temple of Time - South Entrance from Desert:
+  type: entrance
+  stage: F300_4
   room: 0
   layer: 0
   entrance: 0
 
-Temple of Time - Lanayru Desert Start Exit:
-  type: exit
-  vanilla: Lanayru Desert - Temple of Time Start Entrance
-  stage: F300_4
-  room: 0
-  index: 0
-Lanayru Desert - Temple of Time End Entrance:
+Temple of Time - North Entrance from Desert:
   type: entrance
-  stage: F300
+  stage: F300_4
   room: 0
   layer: 0
   entrance: 1
 
-Temple of Time - Lanayru Desert End Exit:
+Temple of Time - Entrance from Lanayru Mining Facility:
+  type: entrance
+  subtype: vanilla
+  stage: F300_4
+  room: 0
+  layer: 2
+  entrance: 5
+
+
+Temple of Time - South Exit to Desert:
   type: exit
-  vanilla: Lanayru Desert - Temple of Time End Entrance
+  vanilla: Lanayru Desert - South Entrance from Temple of Time
+  stage: F300_4
+  room: 0
+  index: 0
+
+Temple of Time - North Exit to Desert:
+  type: exit
+  vanilla: Lanayru Desert - North Entrance from Temple of Time
   stage: F300_4
   room: 0
   index: 1
 
+Temple of Time - Exit to Lanayru Mining Facility:
+  type: exit
+  subtype: vanilla
+  vanilla: Lanayru Mining Facility - Entrance from Temple of Time
+  stage: F300_4
+  room: 0
+  index: 4
 
 
-Sand Sea - Skipper's Retreat Entrance:
+Lanayru Mining Facility - Entrance from Temple of Time:
+  type: entrance
+  subtype: vanilla
+  stage: F300_5
+  room: 0
+  layer: 0
+  entrance: 1
+
+Lanayru Mining Facility - Exit to Temple of Time:
+  type: exit
+  subtype: vanilla
+  vanilla: Temple of Time - Entrance from Lanayru Mining Facility
+  stage: F300_5
+  room: 0
+  index: 1
+
+
+## Lanayru Caves
+
+Lanayru Caves - Entrance from Mines:
+  type: entrance
+  stage: F303
+  room: 0
+  layer: 0
+  entrance: 0
+
+Lanayru Caves - Entrance from Desert:
+  type: entrance
+  stage: F303
+  room: 0
+  layer: 0
+  entrance: 1
+
+Lanayru Caves - Entrance from Sand Sea:
+  type: entrance
+  stage: F303
+  room: 0
+  layer: 0
+  entrance: 2
+
+Lanayru Caves - Entrance from Gorge:
+  type: entrance
+
+Lanayru Caves - Exit to Mines:
+  type: exit
+  vanilla: Lanayru Mines - Entrance from Caves
+  stage: F303
+  room: 0
+  index: 0
+
+Lanayru Caves - Exit to Desert:
+  type: exit
+  vanilla: Lanayru Desert - Entrance from Caves
+  stage: F303
+  room: 0
+  index: 1
+
+Lanayru Caves - Exit to Sand Sea:
+  type: exit
+  vanilla: Sand Sea Docks - Entrance from Caves
+  stage: F303
+  room: 0
+  index: 2
+
+Lanayru Caves - Exit to Gorge:
+  type: exit
+  vanilla: Lanayru Gorge - Entrance
+
+## Lanayru Gorge
+
+Lanayru Gorge - Entrance:
+  type: entrance
+
+Lanayru Gorge - Exit:
+  type: exit
+  vanilla: Lanayru Caves - Entrance from Gorge
+
+## Sand Sea
+
+Sand Sea - Ancient Harbour Dock Entrance:
+  type: entrance
+  stage: F301_1
+  room: 0
+  layer: 0
+  entrance: 0
+
+Sand Sea - Skipper's Retreat Dock Entrance:
   type: entrance
   stage: F301_1
   room: 0
   layer: 0
   entrance: 1
 
-Skipper's Retreat - Sand Sea Exit:
+Sand Sea - Shipyard Dock Entrance:
+  type: entrance
+  stage: F301_1
+  room: 0
+  layer: 0
+  entrance: 2
+
+Sand Sea - Pirate Stronghold Dock Entrance:
+  type: entrance
+  stage: F301_1
+  room: 0
+  layer: 0
+  entrance: 3
+
+
+Sand Sea - Ancient Harbour Dock Exit:
   type: exit
-  vanilla: Sand Sea - Skipper's Retreat Entrance
+  vanilla: Sand Sea Docks - Dock Entrance
+  stage: F301_1
+  room: 0
+  index: 0
+
+Sand Sea - Sandship Dock Exit:
+  type: exit
+  vanilla: Sandship - Sand Sea Entrance
+  stage: F301_1
+  room: 0
+  index: 1
+
+Sand Sea - Skipper's Retreat Dock Exit:
+  type: exit
+  vanilla: Skipper's Retreat - Dock Entrance
+  stage: F301_1
+  room: 0
+  index: 2
+
+Sand Sea - Shipyard Dock Exit:
+  type: exit
+  vanilla: Shipyard - Dock Entrance
+  stage: F301_1
+  room: 0
+  index: 3
+
+Sand Sea - Pirate Stronghold Dock Exit:
+  type: exit
+  vanilla: Pirate Stronghold - Dock Entrance
+  stage: F301_1
+  room: 0
+  index: 4
+
+
+## Sand Sea Docks
+
+Sand Sea Docks - Ancient Harbour Statue:
+  type: entrance
+  subtype: statue
+  stage: F301
+  room: 0
+  layer: 0
+  entrance: 10
+
+Sand Sea Docks - Ancient Harbour <<Alternate>> Statue:
+  type: entrance
+  subtype: statue
+  stage: F301
+  room: 0
+  layer: 0
+  entrance: 4
+
+Sand Sea Docks - Statue Exit:
+  type: exit
+  subtype: statue
+  vanilla: Sky - Lanayru Pillar - Entrance
+  stage: F301
+  room: 0
+  index: 3
+
+
+Sand Sea Docks - Entrance from Caves:
+  type: entrance
+  stage: F301
+  room: 0
+  layer: 0
+  entrance: 0
+
+Sand Sea Docks - Dock Entrance:
+  type: entrance
+  stage: F301
+  room: 0
+  layer: 0
+  entrance: 1
+
+Sand Sea Docks - Exit to Sandship:
+  type: exit
+  vanilla: Sandship - Sand Sea Entrance
+  stage: F301
+  room: 0
+  index: 0
+
+Sand Sea Docks - Exit to Caves:
+  type: exit
+  vanilla: Lanayru Caves - Entrance from Sand Sea
+  stage: F301
+  room: 0
+  index: 1
+
+Sand Sea Docks - Dock Exit:
+  type: exit
+  vanilla: Sand Sea - Ancient Harbour Dock Entrance
+  stage: F301
+  room: 0
+  index: 2
+
+
+## Skipper's Retreat
+
+
+Skipper's Retreat - Statue Entrance:
+  type: entrance
+  subtype: statue
+  stage: F301_3
+  room: 0
+  layer: 0
+  entrance: 10
+
+Skipper's Retreat - Statue Exit:
+  type: exit
+  subtype: statue
+  vanilla: Sky - Lanayru Pillar - Entrance
+  stage: F301_3
+  room: 0
+  index: 1
+
+Skipper's Retreat - Dock Entrance:
+  type: entrance
+  stage: F301_3
+  room: 0
+  layer: 0
+  entrance: 0
+
+Skipper's Retreat - Skipper's Shack Entrance:
+  type: entrance
+  stage: F301_3
+  room: 0
+  layer: 0
+  entrance: 1
+
+Skipper's Retreat - Dock Exit:
+  type: exit
+  vanilla: Sand Sea - Skipper's Retreat Dock Entrance
   stage: F301_3
   room: 0
   index: 2
-Skipper's Shack - Skipper's Retreat Entrance:
+
+Skipper's Retreat - Skipper's Shack Exit:
+  type: exit
+  vanilla: Skipper's Shack - Entrance
+  stage: F301_3
+  room: 0
+  index: 3
+
+
+Skipper's Retreat - Shack - Entrance:
   type: entrance
   stage: F301_5
   room: 0
   layer: 0
   entrance: 0
 
-Skipper's Retreat - Skipper's Shack Exit:
+Skipper's Retreat - Shack - Exit:
   type: exit
-  vanilla: Skipper's Shack - Skipper's Retreat Entrance
-  stage: F301_3
+  vanilla: Skipper's Retreat - Skipper's Shack Entrance
+  stage: F301_5
   room: 0
-  index: 3
+  index: 0
+
+
+## Shipyard
+
+
+Shipyard - Statue Entrance:
+  type: entrance
+  subtype: statue
+  stage: F301_4
+  room: 0
+  layer: 0
+  entrance: 10
+
+Shipyard - Statue Exit:
+  type: exit
+  subtype: statue
+  vanilla: Sky - Lanayru Pillar - Entrance
+  stage: F301_4
+  room: 0
+  index: 1
+
+
+Shipyard - Dock Entrance:
+  type: entrance
+  stage: F301_4
+  room: 0
+  layer: 0
+  entrance: 0
+
+Shipyard - Construction Bay Lower Entrance:
+  type: entrance
+  stage: F301_4
+  room: 0
+  layer: 0
+  entrance: 1
+
+Shipyard - Construction Bay Upper Entrance:
+  type: entrance
+  stage: F301_4
+  room: 0
+  layer: 0
+  entrance: 4
 
 Shipyard - Groosenator Rickety Coaster Entrance:
   type: entrance
@@ -3131,189 +3289,152 @@ Shipyard - Groosenator Rickety Coaster Entrance:
   entrance: 9
 
 
+Shipyard - Dock Exit:
+  type: exit
+  vanilla: Sand Sea - Shipyard Dock Entrance
+  stage: F301_4
+  room: 0
+  index: 2
 
-Sand Sea Docks - Sand Sea Entrance:
+Shipyard - Construction Bay Upper Exit:
+  type: exit
+  vanilla: Shipyard - Construction Bay - Upper Entrance
+  stage: F301_4
+  room: 0
+  index: 3
+
+Shipyard - Construction Bay Lower Exit:
+  type: exit
+  vanilla: Shipyard - Construction Bay - Lower Entrance
+  stage: F301_4
+  room: 0
+  index: 4
+
+
+Shipyard - Construction Bay - Upper Entrance:
   type: entrance
-  stage: F301
+  stage: F301_7
+  room: 0
+  layer: 0
+  entrance: 0
+
+Shipyard - Construction Bay - Lower Entrance:
+  type: entrance
+  stage: F301_7
   room: 0
   layer: 0
   entrance: 1
 
-Sand Sea - Sand Sea Docks Exit:
+Shipyard - Construction Bay - Lower Exit:
   type: exit
-  vanilla: Sand Sea Docks - Sand Sea Entrance
-  stage: F301_1
+  vanilla: Shipyard - Construction Bay Lower Entrance
+  stage: F301_7
   room: 0
   index: 0
-Skipper's Retreat - Sand Sea Entrance:
+
+Shipyard - Construction Bay - Upper Exit:
+  type: exit
+  vanilla: Shipyard - Construction Bay Upper Entrance
+  stage: F301_7
+  room: 0
+  index: 1
+
+
+## Pirate Stronghold
+
+
+Pirate Stronghold - Statue Entrance:
   type: entrance
-  stage: F301_3
+  subtype: statue
+  stage: F301_6
   room: 0
   layer: 0
-  entrance: 0
+  entrance: 10
 
-Sand Sea - Skipper's Retreat Exit:
+Pirate Stronghold - Statue Exit:
   type: exit
-  vanilla: Skipper's Retreat - Sand Sea Entrance
-  stage: F301_1
-  room: 0
-  index: 2
-Shipyard - Sand Sea Entrance:
-  type: entrance
-  stage: F301_4
-  room: 0
-  layer: 0
-  entrance: 0
-
-Sand Sea - Shipyard Exit:
-  type: exit
-  vanilla: Shipyard - Sand Sea Entrance
-  stage: F301_1
+  subtype: statue
+  vanilla: Sky - Lanayru Pillar - Entrance
+  stage: F301_6
   room: 0
   index: 3
-Outside Pirate's Stronghold - Sand Sea Entrance:
+
+Pirate Stronghold - Dock Entrance:
   type: entrance
   stage: F301_6
   room: 0
   layer: 0
   entrance: 0
 
-Sand Sea - Outside Pirate's Stronghold Exit:
-  type: exit
-  vanilla: Outside Pirate's Stronghold - Sand Sea Entrance
-  stage: F301_1
-  room: 0
-  index: 4
-Lanayru Caves - Lanayru Mines Entrance:
+Pirate Stronghold - Side Entrance:
   type: entrance
-  stage: F303
+  stage: F301_6
   room: 0
   layer: 0
-  entrance: 0
+  entrance: 1
 
-Lanayru Mines - Lanayru Caves Exit:
-  type: exit
-  vanilla: Lanayru Caves - Lanayru Mines Entrance
-  stage: F300_1
-  room: 0
-  index: 1
-Lanayru Desert - Lanayru Mines Entrance:
+Pirate Stronghold - Top Entrance:
   type: entrance
-  stage: F300
+  stage: F301_6
   room: 0
   layer: 0
   entrance: 2
 
-Lanayru Mines - Lanayru Desert Exit:
-  type: exit
-  vanilla: Lanayru Desert - Lanayru Mines Entrance
-  stage: F300_1
-  room: 2
-  index: 0
-Sand Sea - Shipyard Entrance:
-  type: entrance
-  stage: F301_1
-  room: 0
-  layer: 0
-  entrance: 2
 
-Shipyard - Sand Sea Exit:
+Pirate Stronghold - Dock Exit:
   type: exit
-  vanilla: Sand Sea - Shipyard Entrance
-  stage: F301_4
-  room: 0
-  index: 2
-Shipyard Construction Bay - Shipyard Upper Entrance:
-  type: entrance
-  stage: F301_7
-  room: 0
-  layer: 0
-  entrance: 0
-
-Shipyard - Shipyard Construction Bay Upper Exit:
-  type: exit
-  vanilla: Shipyard Construction Bay - Shipyard Upper Entrance
-  stage: F301_4
-  room: 0
-  index: 3
-Shipyard Construction Bay - Shipyard Lower Entrance:
-  type: entrance
-  stage: F301_7
-  room: 0
-  layer: 0
-  entrance: 1
-
-Shipyard - Shipyard Construction Bay Lower Exit:
-  type: exit
-  vanilla: Shipyard Construction Bay - Shipyard Lower Entrance
-  stage: F301_4
-  room: 0
-  index: 4
-Lightning Node - Lanayru Desert Entrance:
-  type: entrance
-  stage: F300_2
-  room: 0
-  layer: 0
-  entrance: 0
-
-Lanayru Desert - Lightning Node Exit:
-  type: exit
-  vanilla: Lightning Node - Lanayru Desert Entrance
-  stage: F300
+  vanilla: Sand Sea - Pirate Stronghold Dock Entrance
+  stage: F301_6
   room: 0
   index: 0
-Lanayru Mines - Lanayru Desert Entrance:
-  type: entrance
-  stage: F300_1
-  room: 2
-  layer: 0
-  entrance: 1
 
-Lanayru Desert - Lanayru Mines Exit:
+Pirate Stronghold - Side Exit:
   type: exit
-  vanilla: Lanayru Mines - Lanayru Desert Entrance
-  stage: F300
+  vanilla: Pirate Stronghold - Inside - First Door Entrance
+  stage: F301_6
   room: 0
   index: 1
-Fire Node - Lanayru Desert Entrance:
-  type: entrance
-  stage: F300_3
-  room: 0
-  layer: 0
-  entrance: 0
 
-Lanayru Desert - Fire Node Exit:
+Pirate Stronghold - Top Exit:
   type: exit
-  vanilla: Fire Node - Lanayru Desert Entrance
-  stage: F300
+  vanilla: Pirate Stronghold - Inside - Second Door Entrance
+  stage: F301_6
   room: 0
   index: 2
-Temple of Time - Lanayru Desert Start Entrance:
+
+
+Pirate Stronghold - Inside - First Door Entrance:
   type: entrance
-  stage: F300_4
-  room: 0
+  stage: F301_2
+  room: 1
   layer: 0
   entrance: 0
 
-Lanayru Desert - Temple of Time Start Exit:
-  type: exit
-  vanilla: Temple of Time - Lanayru Desert Start Entrance
-  stage: F300
-  room: 0
-  index: 3
-Temple of Time - Lanayru Desert End Entrance:
+Pirate Stronghold - Inside - Second Door Entrance:
   type: entrance
-  stage: F300_4
-  room: 0
+  stage: F301_2
+  room: 1
   layer: 0
   entrance: 1
 
-Lanayru Desert - Temple of Time End Exit:
+Pirate Stronghold - Inside - First Door Exit:
   type: exit
-  vanilla: Temple of Time - Lanayru Desert End Entrance
-  stage: F300
-  room: 0
-  index: 4
+  vanilla: Pirate Stronghold - Side Entrance
+  stage: F301_2
+  room: 1
+  index: 0
+
+Pirate Stronghold - Inside - Second Door Exit:
+  type: exit
+  vanilla: Pirate Stronghold - Top Entrance
+  stage: F301_2
+  room: 1
+  index: 2
+
+
+
+# Lanayru Mining Facility
+
 Lanayru Mining Facility - Lanayru Desert Entrance:
   type: entrance
   stage: D300
@@ -3321,41 +3442,11 @@ Lanayru Mining Facility - Lanayru Desert Entrance:
   layer: 0
   entrance: 0
 
-Lanayru Desert - Lanayru Mining Facility Exit:
-  type: exit
-  vanilla: Lanayru Mining Facility - Lanayru Desert Entrance
-  stage: F300
-  room: 0
-  index: 5
-Lanayru Caves - Lanayru Desert Entrance:
-  type: entrance
-  stage: F303
-  room: 0
-  layer: 0
-  entrance: 1
-
-Lanayru Desert - Lanayru Caves Exit:
-  type: exit
-  vanilla: Lanayru Caves - Lanayru Desert Entrance
-  stage: F300
-  room: 0
-  index: 8
-
-# Lanayru Mining Facility
-
-
-Lanayru Desert - Temple Entrance:
-  type: entrance
-  subtype: statue
-  stage: F300
-  room: 0
-  layer: 0
-  entrance: 5
 
 Lanayru Mining Facility - <<Normal/Statue1>> Exit:
   type: exit
   subtype: statue
-  vanilla: Lanayru Desert - Temple Entrance
+  vanilla: Lanayru Desert - Entrance from Temple
   stage: D300
   room: 0
   index: 0
@@ -3363,7 +3454,7 @@ Lanayru Mining Facility - <<Normal/Statue1>> Exit:
 Lanayru Mining Facility - <<Normal/Statue2>> Exit:
   type: exit
   subtype: statue
-  vanilla: Lanayru Desert - Temple Entrance
+  vanilla: Lanayru Desert - Entrance from Temple
   stage: D300
   room: 0
   index: 1
@@ -3371,7 +3462,7 @@ Lanayru Mining Facility - <<Normal/Statue2>> Exit:
 Lanayru Mining Facility - <<Normal/Statue3>> Exit:
   type: exit
   subtype: statue
-  vanilla: Lanayru Desert - Temple Entrance
+  vanilla: Lanayru Desert - Entrance from Temple
   stage: D300
   room: 5
   index: 4
@@ -3379,7 +3470,7 @@ Lanayru Mining Facility - <<Normal/Statue3>> Exit:
 Lanayru Mining Facility - <<Normal/Statue4>> Exit:
   type: exit
   subtype: statue
-  vanilla: Lanayru Desert - Temple Entrance
+  vanilla: Lanayru Desert - Entrance from Temple
   stage: D300_1
   room: 0
   index: 0
@@ -3387,7 +3478,7 @@ Lanayru Mining Facility - <<Normal/Statue4>> Exit:
 Lanayru Mining Facility - <<Normal/Statue5>> Exit:
   type: exit
   subtype: statue
-  vanilla: Lanayru Desert - Temple Entrance
+  vanilla: Lanayru Desert - Entrance from Temple
   stage: D300_1
   room: 0
   index: 1
@@ -3395,12 +3486,19 @@ Lanayru Mining Facility - <<Normal/Statue5>> Exit:
 Lanayru Mining Facility - <<Normal/Statue6>> Exit:
   type: exit
   subtype: statue
-  vanilla: Lanayru Desert - Temple Entrance
+  vanilla: Lanayru Desert - Entrance from Temple
   stage: D300_1
   room: 5
   index: 4
 
 # Sandship
+
+Sandship - Sand Sea Entrance:
+  type: entrance
+  stage: D301
+  room: 0
+  layer: 1
+  entrance: 0
 
 
 Sand Sea - Temple Entrance:

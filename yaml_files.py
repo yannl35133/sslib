@@ -25,7 +25,7 @@ hints = yaml_load(hints_file)
 items_file = ROOT_DIR / "items.yaml"
 items = yaml_load(items_file)
 
-map_exits_file = ROOT_DIR / "map-exits.yaml"
+map_exits_file = ROOT_DIR / "entrances.yaml"
 map_exits = yaml_load(map_exits_file)
 
 music_file = ROOT_DIR / "music.yaml"
