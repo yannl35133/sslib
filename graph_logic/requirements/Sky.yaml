@@ -56,7 +56,7 @@ North East:
   Eldin Pillar:
     entrance: Nothing
     exits:
-      Eldin Entrance Statue:     Ruby Tablet & Eldin - Volcano - Entry - Unlock Statue
+      Volcano Entrance Statue:     Ruby Tablet & Eldin - Volcano - Entry - Unlock Statue
       Volcano East Statue:       Ruby Tablet & Eldin - Volcano - East - Unlock Statue
       Volcano Ascent Statue:     Ruby Tablet & Eldin - Volcano - Ascent - Unlock Statue
       Temple Entrance Statue:    Ruby Tablet & Eldin - Volcano - Near Temple Entrance - Unlock Statue
@@ -80,8 +80,9 @@ South East:
     entrance: Nothing
     exits:
       South East: Day
-      Main Entrance: Nothing # Sky - Lumpy Pumpkin - Main Entrance
-      Kitchen Entrance: Nothing
+      Main Right Door: Nothing
+      Main Left Door: Nothing
+      Back: Nothing
     locations:
       Outside Crystal: Night
       Goddess Chest: Faron - Initial Goddess Cube
@@ -108,8 +109,9 @@ South East:
         Pick up Levias' Soup: Spiral Charge
 
       exits:
-        Main Exit: Nothing # Sky - Lumpy Pumpkin - Main Exit
-        Kitchen Exit: Nothing
+        Main Right Door: Nothing
+        Main Left Door: Nothing
+        Back: Nothing
 
   locations:
     Chest in Breakable Boulder near Lumpy Pumpkin:
@@ -128,7 +130,7 @@ South East:
       In the Woods Statue:      Emerald Tablet & Faron - Woods - Unlock In the Woods Statue
       Deep Woods Statue:        Emerald Tablet & Faron - Deep Woods - Unlock Deep Woods Statue
       Forest Temple Statue:     Emerald Tablet & Faron - Deep Woods - Unlock Forest Temple Statue
-      Great Tree Statue:        Emerald Tablet & Faron - Great Tree - Unlock Statue
+      The Great Tree Statue:    Emerald Tablet & Faron - Great Tree - Unlock Statue
       Lake Floria Statue:       Emerald Tablet & Faron - Lake Floria - Below Rock - Unlock Statue
       Floria Waterfall Statue:  Emerald Tablet & Faron - Lake Floria - Waterfall - Unlock Statue
 
@@ -196,18 +198,18 @@ South West:
   Lanayru Pillar:
     entrance: Nothing
     exits:
-      Mines Statue:             Amber Tablet & Lanayru - Mines - Entry - Unlock Statue
-      Desert Entry Statue:      Amber Tablet & Lanayru - Desert - Entry - Unlock Statue
-      West Desert Statue:       Amber Tablet & Lanayru - Desert - West - Unlock Statue
-      Desert Gorge Statue:      Amber Tablet & Lanayru - Temple of Time - South East - Unlock Statue
-      Temple of Time Statue:    Amber Tablet & Lanayru - Temple of Time - Inside - Unlock Statue
-      North Desert Statue:      Amber Tablet & Lanayru - Desert - North - Unlock Statue
-      Stone Cache Statue:       Amber Tablet & Lanayru - Desert - East - Unlock Statue
-      Ancient Harbour Statue:   Amber Tablet & Lanayru - Sand Sea - Ancient Harbour - Unlock Statue
-      Skipper's Retreat Statue: Amber Tablet & Lanayru - Sand Sea - Skipper's Retreat - Unlock Statue
-      Shipyard Statue:          Amber Tablet & Lanayru - Sand Sea - Shipyard - Unlock Statue
-      Pirate Stronghold Statue: Amber Tablet & Lanayru - Sand Sea - Pirate Stronghold - Unlock Statue
-      Lanayru Gorge Statue:     Amber Tablet & Lanayru - Gorge - Unlock Statue
+      Lanayru Mine Entry Statue: Amber Tablet & Lanayru - Mines - Entry - Unlock Statue
+      Desert Entrance Statue:    Amber Tablet & Lanayru - Desert - Entry - Unlock Statue
+      West Desert Statue:        Amber Tablet & Lanayru - Desert - West - Unlock Statue
+      Desert Gorge Statue:       Amber Tablet & Lanayru - Temple of Time - South East - Unlock Statue
+      Temple of Time Statue:     Amber Tablet & Lanayru - Temple of Time - Inside - Unlock Statue
+      North Desert Statue:       Amber Tablet & Lanayru - Desert - North - Unlock Statue
+      Stone Cache Statue:        Amber Tablet & Lanayru - Desert - East - Unlock Statue
+      Ancient Harbour Statue:    Amber Tablet & Lanayru - Sand Sea - Ancient Harbour - Unlock Statue
+      Skipper's Retreat Statue:  Amber Tablet & Lanayru - Sand Sea - Skipper's Retreat - Unlock Statue
+      Shipyard Statue:           Amber Tablet & Lanayru - Sand Sea - Shipyard - Unlock Statue
+      Pirate Stronghold Statue:  Amber Tablet & Lanayru - Sand Sea - Pirate Stronghold - Unlock Statue
+      Lanayru Gorge Statue:      Amber Tablet & Lanayru - Gorge - Unlock Statue
 
       Sky - South West: Nothing
 
@@ -222,7 +224,7 @@ Around Skyloft: # Also North West minus Thunderhead
     Sky - South East: Nothing
 
     Thunderhead Entrance: Open Thunderhead option | Ballad of the Goddess
-    Skyloft Landing: Nothing
+    Exit to Skyloft: Nothing
     # Bridge to Goddess Statue Landing: Nothing
     # Knight Academy Landing: Nothing
     # Bazaar Landing: Nothing
