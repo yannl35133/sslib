@@ -13,12 +13,12 @@ Main:
         Chest: Defeat Last Bokoblin
       exits:
         First Room: Hit Water Plant
-        To Second Room: Fire Sanctuary Small Key
+        Exit to Second Room: Fire Sanctuary Small Key
 
   Second Room:
     Outside Section:
       exits:
-        To First Room: Impossible
+        Exit to First Room: Impossible
         Second Room: Nothing
 
     Balcony:
@@ -107,7 +107,7 @@ Main:
       exits:
         First Trapped Mogma Room - Lower Area: Mogma Mitts
         Past Sliding Door: Move Sliding Door
-        To West of Boss Door: Unlock Key Door
+        Exit to West of Boss Door: Unlock Key Door
 
       Past Sliding Door:
         exits:
@@ -155,7 +155,7 @@ Main:
       locations:
         West of Boss Door - Hit Water Plant: Distance Activator | Bomb Bag
       exits:
-        To Magmanos Fight Room: Nothing
+        Exit to Magmanos Fight Room: Nothing
         West of Boss Door: Hit Water Plant
         Front of Boss Door: Hit Water Plant & Past Plats - Release Lava
 
@@ -227,12 +227,13 @@ Boss Room:
     Beat Ghirahim: Sword
     Heart Container: Beat Ghirahim
   exits:
-    Entrance: Beat Ghirahim
-    Exit: Beat Ghirahim
+    Exit to Dungeon: Beat Ghirahim
+    Exit to Flame Room: Beat Ghirahim
 
 Flame Room:
   locations:
     Din's Flame: Goddess Sword
   exits:
-    Exit: Nothing
+    Main Exit: Nothing
+    # Crest Hit Exit: Din's Flame  # One time
 
