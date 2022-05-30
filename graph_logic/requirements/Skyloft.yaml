@@ -100,7 +100,7 @@ Central:
     Peatrice's House: Nothing
     Wryna's House: Nothing
     Near Temple Entrance: Clawshots
-    Sky: Day
+    Exit to Sky: Day
 
     Upper: Nothing
     Village: Nothing
@@ -137,7 +137,7 @@ Central:
       Crystal in Loftwing Prison: Night
     exits:
       Waterfall Cave Lower Entrance: Nothing
-      Sky: Day
+      Exit to Sky: Day
 
   Bazaar:
     allowed-time-of-day: DayOnly

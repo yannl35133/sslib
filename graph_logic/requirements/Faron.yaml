@@ -16,7 +16,7 @@ Sealed Grounds:
       entrance: Push Log
       exits:
         Upper Part: Nothing
-        Shortcut to Behind the Temple: Nothing
+        Shortcut Exit to Behind the Temple: Nothing
 
   Spiral:
     region: Sealed Grounds
@@ -24,7 +24,7 @@ Sealed Grounds:
       Defeat Imprisoned 2: Sealed Temple - Start Imprisoned 2 & Goddess Sword
     exits:
       Upper Part: Defeat Imprisoned 2
-      Sealed Temple: Nothing
+      Door: Nothing
 
   Sealed Temple:
     region: Sealed Grounds
@@ -35,9 +35,9 @@ Sealed Grounds:
       Start Imprisoned 2: Raise Gate of Time & GoT Opening Requirement
       Open Gate of Time: Raise Gate of Time & GoT Opening Requirement & Spiral - Defeat Imprisoned 2
     exits:
-      Spiral: Nothing
-      Behind the Temple: Nothing
-      To Hylia's Temple: Open Gate of Time
+      Main Exit: Nothing
+      Side Exit: Nothing
+      Gate of Time: Open Gate of Time
 
   Hylia's Temple:
     region: Sealed Grounds
@@ -45,7 +45,7 @@ Sealed Grounds:
       Zelda's Blessing: Nothing
       Beat Demise: Horde Door Requirement & Sword
     exits:
-      To Sealed Temple: Nothing
+      Gate of Time: Nothing
 
   Behind the Temple:
     region: Sealed Grounds
@@ -55,9 +55,9 @@ Sealed Grounds:
       Gorko's Goddess Wall Reward: Goddess Harp & Goddess Sword & Skyview - Goddess Wall Trigger
     exits:
       Statue: Unlock Statue
-      Sealed Temple: Nothing
-      To Faron Woods: Nothing
-      Shortcut to Spiral: Nothing
+      Door: Nothing
+      Exit to Faron Woods: Nothing
+      Shortcut Exit to Spiral: Nothing
 
 Woods:
   Entry:
@@ -67,7 +67,7 @@ Woods:
     exits:
       Statue: Unlock Statue
       Faron - Woods: Sword | Bomb Bag | Clawshots # Main - Push a Log # either cut trees or clawshot vines
-      To Behind the Temple: Nothing
+      Exit to Behind the Temple: Nothing
 
   Ledge to Lake Floria:
     locations:
@@ -75,15 +75,15 @@ Woods:
     entrance: Push Log
     exits:
       Faron - Woods: Nothing
-      Shortcut to Lake Floria: Nothing
+      Shortcut Exit to Floria Waterfall: Nothing
 
   region: Faron Woods
   exits:
     Entry: Nothing
     In the Woods Statue: Unlock In the Woods Statue
     Viewing Platform Statue: Unlock Viewing Platform Statue
-    Trial Entrance: Open Trial Gate
-    Great Tree - Near Underwater Entrance: Water Scale
+    Trial: Open Trial Gate
+    Great Tree - Near Underwater Hole: Water Scale
     Lake Floria Dive: Great Tree - Top - Talk to Yerbal & Goddess Sword & Water Scale
     Clawshot Target Branch: Clawshots
   locations:
@@ -101,7 +101,7 @@ Woods:
     entrance: Hit Vine to Deep Woods
     exits:
       Faron - Woods: Nothing
-      To Deep Woods: Nothing
+      Exit to Deep Woods: Nothing
 
 
   Behind the Crawlspace and Rope:
@@ -146,16 +146,16 @@ Silent Realm:
 # GREAT TREE
 
 Great Tree:
-  Near Underwater Entrance:
+  Near Underwater Hole:
     region: Faron Woods
     exits:
       Faron - Woods: Water Scale # Is it really needed ?
-      Underwater Entrance: Water Scale
+      Underwater Hole: Water Scale
 
   Lower Area: # down in the water
     region: Faron Woods
     exits:
-      Underwater Exit: Water Scale
+      Underwater Tunnel: Water Scale
       Path to Chest: Gust Bellows
       Near Exit: Gust Bellows
 
@@ -170,13 +170,13 @@ Great Tree:
     Near Exit:
       exits:
         Lower Area: Nothing
-        To Outside Platforms: Nothing
+        Lower Exit to Platforms: Nothing
 
-  Outside Platforms:
+  Platforms:
     region: Faron Woods
     exits:
-      To Lower Area: Nothing
-      To Upper Area: Nothing
+      Lower Exit to Great Tree: Nothing
+      Upper Exit to Great Tree: Nothing
       Woods - West Branch: Nothing
       Woods: Nothing
 
@@ -187,8 +187,8 @@ Great Tree:
     exits:
       Lower Area: Remove Void Plane
       Lower Area - Path to Chest: Remove Void Plane
-      To Outside Platforms: Nothing
-      To Top: Nothing
+      Upper Exit to Platforms: Nothing
+      Exit to Top: Nothing
 
   Top:
     region: Faron Woods
@@ -197,8 +197,8 @@ Great Tree:
       Talk to Yerbal: Slingshot | Beetle # only those 2 items (and their upgrades) work
     exits:
       Statue: Nothing
-      To Upper Area: Nothing
-      Outside Platforms: Nothing
+      Top Exit to Great Tree: Nothing
+      Platforms: Nothing
       Woods - Rope Branch: Nothing
       Woods - Clawshot Target Branch: Nothing
 
@@ -208,7 +208,7 @@ Deep Woods:
   Entry:
     region: Faron Woods
     exits:
-      To Woods: Nothing
+      Exit to Woods: Nothing
       Deep Woods: Push Shortcut Logs | Distance Activator | Goddess Sword # bomb bag?
 
   region: Faron Woods
@@ -225,7 +225,7 @@ Deep Woods:
     Deep Woods Statue: Nothing
     Forest Temple Statue: Nothing
     Entry: Nothing
-    Temple Entrance: Distance Activator
+    Exit to Skyview Temple: Distance Activator
 
 
 
@@ -237,7 +237,7 @@ Lake Floria:
       Silver Rupee: Water Scale # currently not randomized
       Blow Rock: Water Scale
     exits:
-      Faron Woods Dive: Nothing
+      Dive from Faron Woods: Impossible
       Below Rock: Water Scale
 
   Below Rock:
@@ -254,7 +254,7 @@ Lake Floria:
     exits:
       Emerged Area: Water Scale
       Above Rock: Water Scale
-      To Farore's Lair: Water Scale
+      Exit to Farore's Lair: Water Scale
 
   Farore's Lair:
     region: Lake Floria
@@ -263,8 +263,8 @@ Lake Floria:
       East Chest: Nothing
       Talk to Farore: Nothing
     exits:
-      To Waterfall: Nothing
-      To Below Rock: Water Scale
+      Exit to Waterfall: Nothing
+      Exit to Lake Floria: Water Scale
 
   Waterfall:
     region: Lake Floria
@@ -275,6 +275,6 @@ Lake Floria:
       Golden Rupee: Beetle # Currently not randomized
     exits:
       Statue: Unlock Statue
-      To Farore's Lair: Nothing
-      To Woods: Nothing
-      Temple Entrance: Water Scale
+      Exit to Farore's Lair: Nothing
+      Exit to Woods: Nothing
+      Exit to Ancient Cistern: Water Scale
