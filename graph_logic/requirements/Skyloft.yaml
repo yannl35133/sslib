@@ -99,15 +99,16 @@ Central:
     Orielle and Parrow's House: Nothing
     Peatrice's House: Nothing
     Wryna's House: Nothing
+    Piper's House: Nothing
     Near Temple Entrance: Clawshots
     Exit to Sky: Day
 
-    Upper: Nothing
+    Skyloft - Upper: Nothing
     Village: Nothing
 
   Near Temple Entrance:
     exits:
-      Temple Entrance: Nothing
+      Exit to Sky Keep: Nothing
       Central: Clawshots
 
   Waterfall Island:
@@ -136,8 +137,8 @@ Central:
       Crystal after Waterfall Cave: Night
       Crystal in Loftwing Prison: Night
     exits:
-      Waterfall Cave Lower Entrance: Nothing
-      Exit to Sky: Day
+      Waterfall Cave Lower Exit: Nothing
+      Central - Exit to Sky: Day
 
   Bazaar:
     allowed-time-of-day: DayOnly
@@ -175,6 +176,11 @@ Central:
     exits:
       Exit: Nothing
 
+  Piper's House:
+    region: Skyloft Village
+    exits:
+      Exit: Nothing
+
 Silent Realm:
   region: Skyloft Silent Realm
   exits:
@@ -194,6 +200,8 @@ Village:
     Bertie's House: Nothing
     Sparrot's House: Nothing
     Mallara's House: Nothing
+    Gondo's House: Nothing
+    Rupin's House: Nothing
     Batreaux' House: Opened Shed | Gravestone Jump Trick
 
   Bertie's House:
@@ -215,6 +223,16 @@ Village:
     region: Skyloft Village
     locations:
       Mallara's Crystals: Gust Bellows
+    exits:
+      Exit: Nothing
+
+  Gondo's House:
+    region: Skyloft Village
+    exits:
+      Exit: Nothing
+
+  Rupin's House:
+    region: Skyloft Village
     exits:
       Exit: Nothing
 
