@@ -12,8 +12,8 @@ Main:
     Robot in Brig's Reward: Impossible
     Boss Key Chest: Impossible
   exits:
-    Entrance: Nothing # If stuck in the mast sequence, deathwarp
-    Boss Door: Impossible
+    Main Exit: Nothing # If stuck in the mast sequence, deathwarp
+    Boss Door one-way Exit: Impossible
 
 Boss Room:
   locations:

@@ -3,15 +3,23 @@ Main:
     locations:
       Chest behind Bars: Nothing
       Chest in Key Locked Room: Impossible
+      Chest in First West Room: Impossible
+    exits:
+      Main Exit: Nothing
+      Exit to Big Hub: Impossible
+
+  Gust Bellows Room:
+    locations:
       Gust Bellows: Impossible
       Chest inside Gust Bellows Room: Impossible
-      Chest in First West Room: Impossible
+    exits:
+      Exit to Big Hub: Impossible
+
+  Armos Fight Room:
+    locations:
       Chest after Armos Fight: Impossible
     exits:
-      Entrance: Nothing
-      First Hub To Big Hub: Impossible
-      Gust Bellows Room To Big Hub: Impossible
-      Map Room To Big Hub: Impossible
+      Exit to Big Hub: Impossible
 
   Big Hub:
     locations:
@@ -21,15 +29,15 @@ Main:
       Boss Key Chest: Impossible
       Shortcut Chest in Main Hub: Impossible
     exits:
-      To First Hub: Nothing
-      To Gust Bellows Room: Impossible
-      To Map Room: Impossible
+      Exit to First Hub: Nothing
+      Exit to Gust Bellows Room: Impossible
+      Exit to Armos Fight Room: Impossible
       Boss Door: Impossible
 
 
 Boss Room:
   exits:
-    Entrance: Boss Room - Beat Molderach
+    Exit to Dungeon: Boss Room - Beat Molderach
     After Sand Drain: Nothing
 
   After Sand Drain:
@@ -39,17 +47,17 @@ Boss Room:
         # Bow also works instead of sword but you need a LOT of arrows
       Heart Container: Beat Molderach
     exits:
-      Exit: Beat Molderach
+      Exit to Great Hall: Beat Molderach
 
 Great Hall:
   Entry:
     locations:
       Hit Timeshift Stone: Beetle | Bow
     exits:
-      Entrance: Nothing
+      Exit to Boss Room: Nothing
       End: Hit Timeshift Stone
   End:
     locations:
       Goddess Harp: Nothing
     exits:
-      Exit: Nothing
+      Exit to Temple of Time: Nothing

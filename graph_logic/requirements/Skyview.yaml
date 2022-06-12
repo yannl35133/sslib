@@ -1,4 +1,5 @@
 allowed-time-of-day: DayOnly
+toplevel-alias: Skyview Temple
 
 # Global macros
 locations: # must be replaced with macros eventually
@@ -12,7 +13,7 @@ Main:
       Cut Tree: Can Cut Tree
 
     exits:
-      Entrance: Nothing
+      Main Exit: Nothing
       First Room: Cut Tree
 
   First Room:
@@ -144,13 +145,15 @@ Boss Room:
     Beat Ghirahim: Sword
     Heart Container: Beat Ghirahim
   exits:
-    Entrance: Beat Ghirahim
-    Exit: Beat Ghirahim
+    Exit to Dungeon: Beat Ghirahim
+    Exit to Spring: Beat Ghirahim
 
 Spring:
+  toplevel-alias: Skyview Spring
   locations:
     Ruby Tablet: Goddess Sword
     Goddess Cube: Goddess Sword
     Sacred Water: Bottle & Skyview 2
   exits:
     Exit: Nothing
+    # Crest Hit: Ruby Tablet

@@ -30,6 +30,7 @@ LE_bis = TypeVar("LE_bis")
 @dataclass
 class Area(Generic[LE]):
     name: str
+    toplevel_alias: str | None = None
     allowed_time_of_day: AllowedTimeOfDay = AllowedTimeOfDay.DayOnly
     can_sleep: bool = False
     can_save: bool = False
@@ -56,6 +57,8 @@ class Area(Generic[LE]):
             area.allowed_time_of_day = AllowedTimeOfDay[v]
         elif parent is not None:
             area.allowed_time_of_day = parent.allowed_time_of_day
+        if (s := raw_dict.get("toplevel-alias")) is not None:
+            area.toplevel_alias = s
         if (b := raw_dict.get("can-sleep")) is not None:
             area.can_sleep = b
         if (b := raw_dict.get("can-save")) is not None:
@@ -89,9 +92,7 @@ class Area(Generic[LE]):
     def map(
         self,
         floc: Callable[[str, str, LE], Tuple[str, LE_bis]],
-        fexit: Callable[
-            [str, str, LE], Tuple[Tuple[str, LE_bis] | None, str | None]
-        ],
+        fexit: Callable[[str, str, LE], Tuple[Tuple[str, LE_bis] | None, str | None]],
     ):
         new_self: Area[LE_bis] = self  # type: ignore
         d: Dict[str, LE_bis] = {}
@@ -184,15 +185,27 @@ class Areas:
     ):
 
         map_entrances = {
-            k: v for k, v in map_exits_entrances.items() if v["type"] == "entrance"
+            k: v
+            for k, v in map_exits_entrances.items()
+            if v["type"] == "entrance" and not v.get("disabled", False)
         }
-        map_exits = {k: v for k, v in map_exits_entrances.items() if v["type"] == "exit"}
+        map_exits = {
+            k: v
+            for k, v in map_exits_entrances.items()
+            if v["type"] == "exit" and not v.get("disabled", False)
+        }
 
         self.parent_area = Area.of_yaml(name="", raw_dict=raw_area)
-        areas = {area.name: area for area in areas_list}
+        areas = {}
+        all_areas = {}
+        for area in areas_list:
+            areas[area.name] = area
+            if area.toplevel_alias is not None:
+                all_areas[area.toplevel_alias] = area
+        all_areas |= areas
 
         EXTENDED_ITEM.items_list.extend(events)
-        for area in areas.values():
+        for area in areas_list:
             if area.allowed_time_of_day == Both:
                 EXTENDED_ITEM.items_list.append(make_day(area.name))
                 EXTENDED_ITEM.items_list.append(make_night(area.name))
@@ -200,7 +213,7 @@ class Areas:
                 EXTENDED_ITEM.items_list.append(EIN(area.name))
 
         self.map_exit_suffixes: dict[str, bool] = {}
-        self.map_exits_entrances: dict[str, str] = {}
+        self.map_exits_entrances: dict[str, str] = {"Exit": "Entrance"}
         for exit_full_name in map_exits:
             exit_name = exit_full_name.rsplit(" - ", 1)[-1]
             self.map_exit_suffixes[exit_name] = False
@@ -213,14 +226,18 @@ class Areas:
                     self.map_exits_entrances[exit_name] = entrance_name
             if "Exit to " in exit_name:
                 if (
-                    entrance_full_name := exit_full_name.replace("Exit to", "Entrance from")
+                    entrance_full_name := exit_full_name.replace(
+                        "Exit to", "Entrance from"
+                    )
                 ) in map_entrances:
                     entrance_name = entrance_full_name.rsplit(" - ", 1)[-1]
                     self.map_exits_entrances[exit_name] = entrance_name
 
-        self.map_entrances_suffixes = { entrance_name.rsplit(" - ", 1)[-1] for entrance_name in map_entrances }
+        self.map_entrances_suffixes = {
+            entrance_name.rsplit(" - ", 1)[-1] for entrance_name in map_entrances
+        }
 
-        def floc(prefix, k, v):
+        def fexit(prefix, k, v):
             v = v.localize(lambda text: self.search_area(prefix, text))
             if k in self.map_entrances_suffixes:
                 return (None, k)
@@ -238,12 +255,11 @@ class Areas:
                 self.search_area(prefix, k) if " - " in k else k,
                 v.localize(lambda text: self.search_area(prefix, text)),
             ),
-            floc,
+            fexit,
         )
 
-        new_areas: Dict[str, Area[DNFInventory]] = areas  # type: ignore
-        # It doesn't understand that the type has changed, but it has
-        self.areas: Dict[str, Area[DNFInventory]] = new_areas
+        self.areas: Dict[str, Area[DNFInventory]] = areas
+        self.parent_area.sub_areas = {k: v for (k, v) in all_areas.items() if k != ""}
 
         self.short_full: List[Tuple[str, EXTENDED_ITEM_NAME]] = []
         self.entrance_allowed_time_of_day = {}
