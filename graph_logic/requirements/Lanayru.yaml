@@ -1,6 +1,7 @@
 allowed-time-of-day: DayOnly
 
 Mines:
+  toplevel-alias: Lanayru Mines
   Entry:
     region: "Lanayru Mines"
     locations:
@@ -9,6 +10,7 @@ Mines:
       Timeshift Stone: Distance Activator | Bomb Bag | Sword | Itemless First Timeshift Stone Trick
       Chest near First Timeshift Stone: Timeshift Stone
     exits:
+      First Time Entrance: Impossible
       Statue: Unlock Statue
       Statues Area: Timeshift Stone
 
@@ -53,6 +55,10 @@ Mines:
         Exit to Desert: Nothing
 
 Desert:
+  toplevel-alias: Lanayru Desert
+  exits:
+    Shared Statue Exit: Impossible  # Common for all, so placed here
+
   Entry:
     region: "Lanayru Desert"
 
@@ -71,7 +77,8 @@ Desert:
 
     exits:
       Exit to Mines: Timeshift Stone # I can't assume the minecart is available, right ?
-      Statue: Unlock Statue
+      Desert - Shared Statue Exit: Unlock Statue
+      Desert Entrance Statue Entrance: Impossible
       Near Hook Beetle Fight: Nothing
 
   Near Hook Beetle Fight:
@@ -88,7 +95,7 @@ Desert:
     exits:
       Entry: Nothing
       Top of Wall: Clawshots
-      Top of LMF: North - Raise Lanayru Mining Facility
+      Top of LMF: North Part - Raise Lanayru Mining Facility
       East: Temple of Time Skip - Brakeslide Trick | East - Open Wall Shortcut | Clawshots
       Sand Oasis: Blow Statues to Sand Oasis Down | (Defeat Spume to Sand Oasis & Lanayru Desert - Sand Oasis Brakeslide Trick)
 
@@ -104,15 +111,16 @@ Desert:
         Near Hook Beetle Fight - Blow Statues to Sand Oasis Down |
         (Near Hook Beetle Fight - Defeat Spume to Sand Oasis & Lanayru Desert - Sand Oasis Brakeslide Trick)
       Top of Wall: Clawshots | Top of Wall - Push Minecart
-      West: Can Navigate in Oasis | West - Push Minecart
+      West Part: Can Navigate in Oasis | West Part - Push Minecart
 
-  West:
+  West Part:
     locations:
       Unlock Statue: Nothing
       Sand Oasis - Goddess Cube: Goddess Sword
       Push Minecart: Nothing
     exits:
-      Statue: Unlock Statue
+      Desert - Shared Statue Exit: Unlock Statue
+      West Desert Statue Entrance: Impossible
       Sand Oasis: Nothing
       Top of Wall: Clawshots
       Near South Exit to Temple of Time: Can Navigate in Oasis | Near South Exit to Temple of Time - Push Minecart
@@ -122,7 +130,7 @@ Desert:
       Push Minecart: Nothing
     exits:
       South Exit to Temple of Time: Nothing
-      West: Nothing
+      West Part: Nothing
 
     Ledge to Caves:
       entrance: Clawshots
@@ -139,19 +147,19 @@ Desert:
     exits:
       Near Hook Beetle Fight: Nothing
       Sand Oasis: Nothing
-      West: Nothing
+      West Part: Nothing
 
 
   Top of LMF:
     locations:
       Chest: Nothing
     exits:
-      North: Nothing
+      North Part: Nothing
       East: Nothing
       Near Hook Beetle Fight: Nothing
-      Temple: Nothing
+      Exit to Lanayru Mining Facility: Nothing
 
-  North:
+  North Part:
     locations:
       Water Node: (Bomb Bag | Hook Beetle) & Sword
       Raise Lanayru Mining Facility: Open LMF option | Water Node & Lightning Node - Lightning Node & East - Fire Node - Fire Node & Sword
@@ -164,7 +172,8 @@ Desert:
       Open Lightning Node: Nothing # There's a bombflower nearby
 
     exits:
-      Statue: Unlock Statue
+      Desert - Shared Statue Exit: Unlock Statue
+      North Desert Statue Entrance: Impossible
       North Exit to Temple of Time: Nothing
       Trial: Open Trial Gate
       Lightning Node: Open Lightning Node
@@ -173,7 +182,7 @@ Desert:
     Secret Passageway:
       entrance: Open Secret Passageway
       exits:
-        North: Nothing
+        North Part: Nothing
       locations:
         Chest: Nothing
         Goddess Cube: Clawshots
@@ -212,10 +221,11 @@ Desert:
       Chest on Platform near Fire Node: Clawshots
 
     exits:
-      North: Nothing
-      Top of LMF: North - Raise Lanayru Mining Facility
+      North Part: Nothing
+      Top of LMF: North Part - Raise Lanayru Mining Facility
       Near Hook Beetle Fight: Open Wall Shortcut | Temple of Time Skip - Brakeslide Trick
-      Statue: Nothing
+      Desert - Shared Statue Exit: Nothing
+      Stone Cache Statue Entrance: Impossible
       Fire Node: Nothing
 
 
@@ -268,12 +278,16 @@ Desert:
 
 
 Temple of Time:
+  exits:
+    Shared Statue Exit: Impossible  # Common for all, so placed here
+
   South East:
     locations:
       Unlock Statue: Nothing
     exits:
       South Exit to Desert: Nothing
-      Statue: Unlock Statue
+      Temple of Time - Shared Statue Exit: Unlock Statue
+      Desert Gorge Statue Entrance: Impossible
       Front: Hook Beetle | (Slingshot & Temple of Time - Slingshot Shot Trick)
 
   Front:
@@ -293,7 +307,8 @@ Temple of Time:
       Blow up Wall: Nothing
       Unlock Statue: Nothing
     exits:
-      Statue: Unlock Statue
+      Temple of Time - Shared Statue Exit: Unlock Statue
+      Temple of Time Statue Entrance: Impossible
       Exit to Lanayru Mining Facility: Nothing  # I don't know if it is enabled
       Front: Blow up Wall
 
@@ -317,6 +332,7 @@ Silent Realm:
     Clawshots: Nothing
 
 Caves:
+  toplevel-alias: Lanayru Caves
   locations:
     Chest: Nothing
     Golo's Gift: Nothing
@@ -341,6 +357,7 @@ Caves:
 
 Sand Sea:
   Ancient Harbour:
+    toplevel-alias: Sand Sea Docks
     Near Exit to Caves:
       entrance: Clawshots
       exits:
@@ -388,9 +405,9 @@ Sand Sea:
 
       exits:
         Skipper's Retreat: Nothing
-        Top: Clawshots & Whip Peahat & Deal with Boko Baba
+        Top Part: Clawshots & Whip Peahat & Deal with Boko Baba
 
-    Top:
+    Top Part:
       locations:
         Chest on top of Cacti Pillar: Clawshots
 
@@ -456,6 +473,7 @@ Sand Sea:
         Second Door: Finish Minidungeon
 
   Gorge:
+    toplevel-alias: Lanayru Gorge
     locations:
       Unlock Statue: Impossible
       Goddess Cube: Goddess Sword & Impossible # Did Minecart
@@ -466,4 +484,4 @@ Sand Sea:
 
     exits:
       Statue: Unlock Statue
-      Exit to Caves: Nothing
+      Exit: Nothing

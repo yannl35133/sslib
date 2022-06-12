@@ -3,7 +3,7 @@ Main:
     locations:
       Hit Water Plant: Distance Activator | Bomb Bag
     exits:
-      Entrance: Nothing
+      Main Exit: Nothing
 
     Past Water Plant:
       entrance: Hit Water Plant
@@ -206,9 +206,9 @@ Main:
     locations:
       Chest: Clawshots
     exits:
-      Upper: Clawshots
+      Upper Part: Clawshots
 
-    Upper:
+    Upper Part:
       exits:
         Staircase Room: Nothing
         Boss Key Room: Nothing
@@ -219,7 +219,7 @@ Main:
       Defeat Moldorm: Solve Puzzle & Mogma Mitts
       Boss Key Chest: Solve Puzzle & Defeat Moldorm
     exits:
-      Staircase Room - Upper: Nothing
+      Staircase Room - Upper Part: Nothing
       Front of Boss Door - Past Bars: Nothing
 
 Boss Room:
@@ -234,6 +234,6 @@ Flame Room:
   locations:
     Din's Flame: Goddess Sword
   exits:
-    Main Exit: Nothing
+    Exit: Nothing
     # Crest Hit Exit: Din's Flame  # One time
 

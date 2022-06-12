@@ -2,24 +2,26 @@ allowed-time-of-day: DayOnly
 
 # SEALED GROUNDS
 Sealed Grounds:
-  Upper Part:
-    region: Sealed Grounds
-    locations:
-      Unlock Statue: Nothing
-    exits:
-      Statue: Unlock Statue
-      Spiral: Nothing
-
-    From Behind the Temple:
-      locations:
-        Push Log: Nothing
-      entrance: Push Log
-      exits:
-        Upper Part: Nothing
-        Shortcut Exit to Behind the Temple: Nothing
-
   Spiral:
+    toplevel-alias: Sealed Grounds Spiral
     region: Sealed Grounds
+
+    Upper Part:
+      region: Sealed Grounds
+      locations:
+        Unlock Statue: Nothing
+      exits:
+        Statue: Unlock Statue
+        Spiral: Nothing
+
+      From Behind the Temple:
+        locations:
+          Push Log: Nothing
+        entrance: Push Log
+        exits:
+          Upper Part: Nothing
+          Shortcut Exit to Behind the Temple: Nothing
+
     locations:
       Defeat Imprisoned 2: Sealed Temple - Start Imprisoned 2 & Goddess Sword
     exits:
@@ -60,12 +62,14 @@ Sealed Grounds:
       Shortcut Exit to Spiral: Nothing
 
 Woods:
+  toplevel-alias: Faron Woods
   Entry:
     region: Faron Woods
     locations:
       Unlock Statue: Nothing
     exits:
-      Statue: Unlock Statue
+      Faron Woods Entry Statue Entrance: Impossible
+      Woods - Shared Statue Exit: Unlock Statue
       Faron - Woods: Sword | Bomb Bag | Clawshots # Main - Push a Log # either cut trees or clawshot vines
       Exit to Behind the Temple: Nothing
 
@@ -80,8 +84,9 @@ Woods:
   region: Faron Woods
   exits:
     Entry: Nothing
-    In the Woods Statue: Unlock In the Woods Statue
-    Viewing Platform Statue: Unlock Viewing Platform Statue
+    In the Woods Statue Entrance: Impossible
+    Viewing Platform Statue Entrance: Impossible
+    Shared Statue Exit: Unlock In the Woods Statue | Unlock Viewing Platform Statue
     Trial: Open Trial Gate
     Great Tree - Near Underwater Hole: Water Scale
     Lake Floria Dive: Great Tree - Top - Talk to Yerbal & Goddess Sword & Water Scale
@@ -196,7 +201,8 @@ Great Tree:
       Unlock Statue: Nothing
       Talk to Yerbal: Slingshot | Beetle # only those 2 items (and their upgrades) work
     exits:
-      Statue: Nothing
+      Faron - Woods - Shared Statue Exit: Unlock Statue
+      The Great Tree Statue Entrance: Impossible
       Top Exit to Great Tree: Nothing
       Platforms: Nothing
       Woods - Rope Branch: Nothing
@@ -222,8 +228,9 @@ Deep Woods:
     Goddess Cube in Deep Woods: Goddess Sword
     Goddess Cube on top of Skyview: Goddess Sword & Clawshots
   exits:
-    Deep Woods Statue: Nothing
-    Forest Temple Statue: Nothing
+    Shared Statue: Nothing
+    Deep Woods Statue Entrance: Impossible
+    Forest Temple Statue Entrance: Impossible
     Entry: Nothing
     Exit to Skyview Temple: Distance Activator
 
@@ -267,6 +274,7 @@ Lake Floria:
       Exit to Lake Floria: Water Scale
 
   Waterfall:
+    toplevel-alias: Floria Waterfall
     region: Lake Floria
     locations:
       Unlock Statue: Nothing

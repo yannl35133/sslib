@@ -9,7 +9,7 @@ Main:
     Boss Key Chest: Impossible
 
   exits:
-    Entrance: Nothing
+    Main Exit: Nothing
     Boss Door: Impossible
 
 Boss Room:
@@ -17,12 +17,13 @@ Boss Room:
     Beat Koloktos: Whip & (Sword | Bomb Bag | Bow)
     Heart Container: Beat Koloktos
   exits:
-    Entrance: Beat Koloktos
-    Exit: Beat Koloktos
+    Exit to Dungeon: Beat Koloktos
+    Exit to Flame Room: Beat Koloktos
 
 Flame Room:
   locations:
     Farore's Flame: Goddess Sword
   exits:
     Exit: Nothing
+    # Crest Hit: Farore's Flame
 
