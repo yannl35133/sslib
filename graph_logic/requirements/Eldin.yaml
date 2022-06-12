@@ -1,6 +1,7 @@
 allowed-time-of-day: DayOnly
 
 Volcano:
+  toplevel-alias: Eldin Volcano
   Entry:
     region: Eldin
     locations:
@@ -8,7 +9,8 @@ Volcano:
       Unlock Statue: Nothing
       Unlock shortcut between Entry and Ascent: Bomb Bag # I'm pretty sure Hook Beetle won't work here
     exits:
-      Statue: Unlock Statue
+      First Time Entrance: Impossible
+      Volcano Entrance Statue: Unlock Statue
       Ascent: Unlock shortcut between Entry and Ascent
       First Room: Nothing
 
@@ -32,9 +34,10 @@ Volcano:
       Drain Lava: Nothing
       Blow up Rock between Pre and Past Mogma Turf: Bomb Bag | Hook Beetle
     exits:
-      Statue: Nothing
-      To Mogma Turf: Drain Lava
-      From Mogma Turf Vent: Impossible
+      Volcano East Statue Entrance: Impossible
+      Volcano East / Volcano Ascent Statue: Nothing
+      Dive to Mogma Turf: Drain Lava
+      First Vent from Mogma Turf: Impossible
       First Room: Blow up Rock between First Room and East
       Past Mogma Turf: Blow up Rock between Pre and Past Mogma Turf
 
@@ -47,7 +50,7 @@ Volcano:
       Goddess Cube near Mogma Turf Entrance: Goddess Sword
     exits:
       East: Blow up Rock between Pre and Past Mogma Turf
-      From Mogma Turf Vent: Impossible
+      Second Vent from Mogma Turf: Impossible
       Ascent: Watch Bridge Cutscene
 
   Ascent:
@@ -59,8 +62,9 @@ Volcano:
       Unlock shortcut between Ascent and Past Slide: Bomb Bag | Hook Beetle # | (Whip & Whip Bomb Trick)
       Defeat Slope Bokoblins: Bow | Slingshot | Beetle
     exits:
-      Statue: Nothing
-      Trial Entrance: Din's Power & Goddess Harp
+      Volcano Ascent Statue Entrance: Impossible
+      Volcano East / Volcano Ascent Statue: Nothing
+      Trial Exit: Din's Power & Goddess Harp
       Entry: Unlock shortcut between Entry and Ascent
       Near Thrill Digger Cave: Defeat Slope Bokoblins | Stuttersprint Trick
       Past Slide: Unlock shortcut between Ascent and Past Slide
@@ -72,7 +76,7 @@ Volcano:
     exits:
       Ascent: Nothing
       Near Temple Entrance: Blow down Watchtower
-      Cave Entrance: Nothing
+      Thrill Digger Cave Exit: Nothing
 
   Thrill Digger Cave:
     region: Eldin
@@ -85,9 +89,9 @@ Volcano:
   Near Temple Entrance:
     region: Eldin
     exits:
-      Statue: Nothing
+      Temple Entrance Statue: Unlock Statue
       Near Thrill Digger Cave: Near Thrill Digger Cave - Blow down Watchtower
-      Temple Entrance: Key Piece x5
+      Exit to Earth Temple: Key Piece x5
       Hot Cave: Blow down Watchtower between Earth Temple and Hot Cave
     locations:
       Unlock Statue: Nothing
@@ -105,8 +109,8 @@ Volcano:
     locations:
       Blow down Watchtower between Earth Temple and Hot Cave: Impossible # Bomb Bag & Bomb Throw Trick
     exits:
-      To Volcano Summit: Fireshield Earrings
-      From Vent: Impossible
+      Exit to Summit: Fireshield Earrings
+      Vent Entrance near Hot Cave: Impossible
       Near Temple Entrance: Blow down Watchtower between Earth Temple and Hot Cave
       Sand Slide: Nothing
 
@@ -125,7 +129,7 @@ Volcano:
       Unlock shortcut between Ascent and Past Slide: Nothing
     exits:
       Ascent: Unlock shortcut between Ascent and Past Slide
-      Vent to Hot Cave: Nothing
+      Vent Exit near Ascent: Nothing
 
 
 Mogma Turf: # when randomizing this, need to find a way to force the skydiving animation
@@ -135,12 +139,12 @@ Mogma Turf: # when randomizing this, need to find a way to force the skydiving a
       Free Fall Chest: Nothing
       Goddess Cube: Goddess Sword
       Chest behind Bombable Wall at Entrance: Nothing
-      Pick up Guld: Sky - Lumpy Pumpkin - Start Kina's Quest
+      Pick up Guld: Sky - Pumpkin Landing - Start Kina's Quest
       Digging Mitts Fight: Can Defeat Bokoblins
       Open Vent: Digging Mitts
     exits:
       Entrance: Impossible
-      First Exit Vent: Nothing
+      First Vent: Nothing
       Past Vent: Open Vent
 
   Sand Slide Platform:
@@ -157,7 +161,7 @@ Mogma Turf: # when randomizing this, need to find a way to force the skydiving a
     exits:
       Pre Vent: Nothing
       Sand Slide Platform: Nothing
-      Second Exit Vent: Nothing
+      Second Vent: Nothing
 
 Silent Realm:
   region: Eldin Silent Realm
@@ -175,9 +179,9 @@ Volcano Summit:
     Small Chest: Fireshield Earrings
     Boko Base Pouch Chest: Fireshield Earrings
   exits:
-    To Hot Cave: Fireshield Earrings
-    To Waterfall: Fireshield Earrings
-    To Near Temple Entrance: Fireshield Earrings
+    Exit to Eldin Volcano: Fireshield Earrings
+    Exit to Waterfall: Fireshield Earrings
+    Exit to Outside Fire Sanctuary: Fireshield Earrings
 
   Waterfall:
     region: Volcano Summit
@@ -195,14 +199,14 @@ Volcano Summit:
         Gossip Stone: Nothing
 
 
-  Near Temple Entrance:
+  Outside Fire Sanctuary:
     region: Volcano Summit
 
     Before Thirsty Frogs:
       locations:
         Hydrate First Frog: Water Bottle
       exits:
-        To Summit: Nothing
+        Exit to Summit: Nothing
         Between Thirsty Frogs: Hydrate First Frog
 
     Between Thirsty Frogs:
@@ -213,13 +217,13 @@ Volcano Summit:
         Hydrate Second Frog: Clawshots & Water Bottle
       exits:
         Before Thirsty Frogs: Before Thirsty Frogs - Hydrate First Frog
-        Near Temple Entrance: Hydrate Second Frog
+        Outside Fire Sanctuary: Hydrate Second Frog
 
     locations:
       Goddess Cube: Clawshots & Goddess Sword
       Hydrate Giant Frog: Nothing
       Unlock Statue: Nothing
     exits:
-      Statue: Nothing
+      Statue: Unlock Statue
       Between Thirsty Frogs: Between Thirsty Frogs - Hydrate Second Frog
-      Temple Entrance: Hydrate Giant Frog
+      Exit to Fire Sanctuary: Hydrate Giant Frog

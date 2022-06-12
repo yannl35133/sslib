@@ -337,23 +337,23 @@ Skyloft - Upper - Knight Academy - Zelda's Room - Crystal:
   original item: Gratitude Crystal
   type: crystal
 
-Sky - Lumpy Pumpkin - Chandelier:
-  original item: Heart Piece
-  type: sky, freestanding
-  Paths:
-    - stage/F011r/r0/l0/Chandel
-Sky - Lumpy Pumpkin - Roof Goddess Chest:
-  original item: Gold Rupee
-  type: sky, goddess, faron goddess, dungeon
-  Paths:
-    - stage/F020/r0/l0/TBox/87
-  cube_region: Skyview
-Sky - Lumpy Pumpkin - Goddess Chest:
+Sky - Pumpkin Landing - Goddess Chest:
   original item: Progressive Pouch
   type: sky, goddess, faron goddess
   Paths:
     - stage/F020/r0/l0/TBox/64
   cube_region: Faron Woods
+Sky - Pumpkin Landing - Roof Goddess Chest:
+  original item: Gold Rupee
+  type: sky, goddess, faron goddess, dungeon
+  Paths:
+    - stage/F020/r0/l0/TBox/87
+  cube_region: Skyview
+Sky - Lumpy Pumpkin - Chandelier:
+  original item: Heart Piece
+  type: sky, freestanding
+  Paths:
+    - stage/F011r/r0/l0/Chandel
 Sky - Lumpy Pumpkin - Chandelier Quest Reward:
   original item: Heart Piece
   type: sky, long, minigame
@@ -498,10 +498,10 @@ Sky - Chest in Breakable Boulder near Lumpy Pumpkin:
   Paths:
     - stage/F020/r0/l0/TBox/69
 
-Sky - Lumpy Pumpkin - Outside Crystal:
+Sky - Pumpkin Landing - Crystal:
   original item: Gratitude Crystal
   type: crystal
-Sky - Lumpy Pumpkin - Inside - Crystal:
+Sky - Lumpy Pumpkin - Crystal:
   original item: Gratitude Crystal
   type: crystal
 Sky - Crystal on Beedle's Ship:

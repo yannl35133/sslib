@@ -9,13 +9,13 @@ Main:
     Chest Guarded by Lizalfos: Impossible
     Boss Key Chest: Impossible
   exits:
-    Entrance: Nothing
+    Main Exit: Nothing
     Boss Door: Impossible
 
 Boss Room:
   Entry:
     exits:
-      Entrance: Boss Room - Beat Scaldera
+      Exit to Dungeon: Boss Room - Beat Scaldera
       Slope: Nothing
 
   Slope:
@@ -32,7 +32,7 @@ Boss Room:
         Bomb Bag & Sword | Bomb Flower Scaldera
       Heart Container: Beat Scaldera
     exits:
-      Exit: Beat Scaldera
+      Exit to Spring: Beat Scaldera
 
 Spring:
   locations:
