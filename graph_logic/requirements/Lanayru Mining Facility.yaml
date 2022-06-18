@@ -1,12 +1,20 @@
 Main:
+  First Room:
+    locations:
+      Left Lever: Hook Beetle | (Whip & LMF - Whip First Room Switch Trick)
+      Right Lever: Nothing
+      Chest behind Bars: Right Lever
+    exits:
+      First Hub: Left Lever
+      Main Exit: Nothing
+
   First Hub:
     locations:
-      Chest behind Bars: Nothing
       Chest in Key Locked Room: Impossible
       Chest in First West Room: Impossible
     exits:
-      Main Exit: Nothing
-      Exit to Big Hub: Impossible
+      First Room: Nothing
+      Exit to Big Hub: Nothing
 
   Gust Bellows Room:
     locations:

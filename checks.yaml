@@ -1199,7 +1199,7 @@ Earth Temple - Chest Left of Main Room Bridge:
   type: eldin, dungeon
   Paths:
     - stage/D200/r1/l0/TBox/70
-Earth Temple - Chest in West Room:
+Earth Temple - West Room - Chest:
   original item: ET Map
   type: eldin, dungeon
   hint: sometimes
@@ -1430,7 +1430,7 @@ Sandship - Bow:
     - stage/D301/r15/l0/TBox/72
   hint: sometimes
   text: a <r<robot upon the Sandship's bow>> guards
-Sandship - Chest at the Stern:
+Sandship - Stern - Chest:
   original item: Heart Piece
   type: lanayru, dungeon
   Paths:

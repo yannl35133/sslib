@@ -120,17 +120,17 @@ Main:
         Unlock Shortcut to First Bridge: Nothing
       exits:
         First Bridge: Unlock Shortcut to First Bridge
-        Bottom: Nothing
+        Bottom Part: Nothing
         Right: Clawshots
 
-    Bottom:
+    Bottom Part:
       exits:
         Left: Clawshots
         Right: Clawshots
 
     Right:
       exits:
-        Bottom: Nothing
+        Bottom Part: Nothing
         Left: Clawshots
         Second Trapped Mogma Room: Nothing
 

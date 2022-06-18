@@ -45,9 +45,9 @@ class BFA:
         for item in progress_list:
             self.place_item(item)
 
-        for i, (e, _) in enumerate(self.logic.pools):
-            for _ in range(len(e)):
-                self.link(i)
+        # for i, (e, _) in enumerate(self.logic.pools):
+        #     for _ in range(len(e)):
+        #         self.link(i)
 
         must_be_placed_items = list(
             self.randosettings.must_be_placed_items - self.progress_items
@@ -63,7 +63,7 @@ class BFA:
         self.logic.add_item(EXTENDED_ITEM.banned_bit())
         self.logic.fill_inventory()
         for item in must_be_placed_items:
-            self.place_item(item)
+            assert self.place_item(item)
         for item in may_be_placed_items:
             if not self.place_item(item, force=False):
                 break
@@ -82,9 +82,9 @@ class BFA:
 
     def place_item(self, item: EXTENDED_ITEM_NAME | str, depth=0, force=True):
         if item in EXTENDED_ITEM:
-            self.logic.remove_item(item)
+            self.logic.remove_item(EXTENDED_ITEM[item])
         placement_limit: EIN = self.logic.placement.item_placement_limit.get(item, "")  # type: ignore
-        accessible_locations = list(self.logic.accessible_checks(placement_limit))
+        accessible_locations = self.logic.accessible_checks(placement_limit)
 
         empty_locations = [
             loc

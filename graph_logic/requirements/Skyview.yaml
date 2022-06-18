@@ -2,7 +2,7 @@ allowed-time-of-day: DayOnly
 toplevel-alias: Skyview Temple
 
 # Global macros
-locations: # must be replaced with macros eventually
+macros:
   Skyview 2: Water Scale
   Can Hit High Skyview Switches: Distance Activator | Bomb Bag
   Can Cut Tree: Sword | Bomb Bag
