@@ -1,3 +1,4 @@
+from __future__ import annotations
 import random
 from typing import List  # Only for typing purposes
 
@@ -22,7 +23,8 @@ class Rando:
         self.areas = Areas(graph_requirements, checks, hints, map_exits)
         self.short_to_full = self.areas.short_to_full
 
-        self.placement: Placement = self.options.get("placement", Placement())
+        placement = self.options.get("placement")
+        self.placement: Placement = placement if placement is not None else Placement()
         self.parse_options()
         self.initial_placement = self.placement.copy()
 
@@ -34,7 +36,7 @@ class Rando:
                 and EXTENDED_ITEM.get_item_name(item) not in self.placement.items
             }
         )
-        starting_area = make_day(self.short_to_full(LINKS_ROOM))
+        starting_area = self.short_to_full(START)
         exit_pools = DUNGEON_ENTRANCES_COMPLETE_POOLS + SILENT_REALMNS_COMPLETE_POOLS
 
         additional_requirements = (
@@ -68,9 +70,9 @@ class Rando:
 
         self.get_endgame_requirements()  # self.endgame_requirements
 
-        self.initialize_items()  # self.randosettings
-
         self.set_placement_options()  # self.logic_options_requirements
+
+        self.initialize_items()  # self.randosettings
 
     def randomize_required_dungeons(self):
         """
@@ -78,8 +80,9 @@ class Rando:
         """
         indices = list(range(len(REGULAR_DUNGEONS)))
         self.rng.shuffle(indices)
-        req_indices = indices[: self.options["required-dungeon-count"]]
-        unreq_indices = indices[self.options["required-dungeon-count"] :]
+        nb_dungeons = self.options["required-dungeon-count"]
+        req_indices = indices[:nb_dungeons]
+        unreq_indices = indices[nb_dungeons:]
         req_indices.sort()
         unreq_indices.sort()
         self.required_dungeons = [REGULAR_DUNGEONS[i] for i in req_indices]
@@ -108,11 +111,12 @@ class Rando:
         self.banned: List[str] = []
         if self.options["empty-unrequired-dungeons"]:
             self.banned.extend(
-                DUNGEON_ENTRANCES[dungeon] for dungeon in self.unrequired_dungeons
+                entrance_of_exit(DUNGEON_MAIN_EXITS[dungeon])
+                for dungeon in self.unrequired_dungeons
             )
 
             if self.options["skip-skykeep"]:
-                self.banned.append(DUNGEON_ENTRANCES[SK])
+                self.banned.append(entrance_of_exit(DUNGEON_MAIN_EXITS[SK]))
 
         first_banned_batreaux_check = BATREAUX_FIRST_CHECK_ABOVE[
             self.options["max-batreaux-reward"]
@@ -168,6 +172,8 @@ class Rando:
         for item in self.starting_items.intset:
             item_name = EXTENDED_ITEM.get_item_name(item)
             must_be_placed_items.remove(item_name)
+        for item_name in self.placement.items:
+            must_be_placed_items.remove(item_name)
 
         may_be_placed_items: List[EIN | str] = list(CONSUMABLE_ITEMS)
         duplicable_items = DUPLICABLE_ITEMS
@@ -199,7 +205,23 @@ class Rando:
             NO_BIT_CRASHES: self.options["hero-mode"],
         }
 
-        self.placement |= SINGLE_CRYSTAL_PLACEMENT
+        self.placement |= SINGLE_CRYSTAL_PLACEMENT(
+            lambda s: self.areas.full_to_short(self.short_to_full(s))
+        )
+
+        vanilla_map_transitions = {}
+        vanilla_reverse_map_transitions = {}
+        for exit, v in map_exits.items():
+            if v["type"] == "entrance" or v.get("disabled", False):
+                continue
+            entrance = v["vanilla"]
+            vanilla_map_transitions[exit] = entrance
+            vanilla_reverse_map_transitions[entrance] = exit
+
+        self.placement |= Placement(
+            map_transitions=vanilla_map_transitions,
+            reverse_map_transitions=vanilla_reverse_map_transitions,
+        )
 
         if self.options["sword-dungeon-reward"]:
             swords_to_place = {
@@ -271,7 +293,7 @@ class Rando:
     # Retro-compatibility
 
     def retro_compatibility(self):
-        self.done_item_locations = self.placement.locations
+        self.done_item_locations = self.logic.placement.locations
         self.prerandomization_item_locations = self.initial_placement.locations
         self.entrance_connections = {}  # Names were changed
         self.trial_connections = {}  # Names were changed

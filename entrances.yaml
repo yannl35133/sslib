@@ -11,6 +11,7 @@ Start:
 ## Knight Academy
 Skyloft - Knight Academy - Start Entrance:
   type: entrance
+  allowed-time-of-day: DayOnly
   stage: F001r
   room: 1
   layer: 0
@@ -516,7 +517,7 @@ Skyloft - Entrance from Sky Keep:
 
 Skyloft - Exit to Sky Keep:
   type: exit
-  vanilla: Sky Keep - Entrance
+  vanilla: Sky Keep - First Room - Bottom Entrance
   stage: F000
   room: 0
   index: 48
@@ -722,7 +723,7 @@ Skyloft - Mallara's House Entrance:
 
 Skyloft - Mallara's House Exit:
   type: exit
-  vanilla: Skyloft Entrance
+  vanilla: Mallara's House - Entrance
   stage: F000
   room: 0
   index: 36
@@ -737,7 +738,7 @@ Mallara's House - Entrance:
 
 Mallara's House - Exit:
   type: exit
-  vanilla: Skyloft - Entrance
+  vanilla: Mallara's House Entrance
   stage: F016r
   room: 0
   index: 0
@@ -1220,7 +1221,7 @@ Sky - Faron Pillar - Viewing Platform Statue Dive:
 Sky - Faron Pillar - The Great Tree Statue Dive:
   type: exit
   subtype: statue
-  vanilla: Faron Woods - The Great Tree Statue Entrance
+  vanilla: Great Tree - The Great Tree Statue Entrance
   stage: F020
   room: 0
   index: 44
@@ -1582,7 +1583,7 @@ Sealed Grounds Spiral - Door Exit:
 
 Sealed Grounds Spiral - Shortcut Exit to Behind the Temple:
   type: exit
-  vanilla: Behind the Temple - Shortcut Entrance form Spiral
+  vanilla: Behind the Temple - Shortcut Entrance from Spiral
   stage: F401
   room: 1
   index: 1
@@ -1796,7 +1797,7 @@ Faron Woods - Exit to Deep Woods:
 
 Faron Woods - Lake Floria Dive:
   type: exit
-  vanilla: Lake Floria - Entrance from Faron Woods
+  vanilla: Lake Floria - Dive from Faron Woods
   stage: F100
   room: 0
   index: 9
@@ -1810,7 +1811,7 @@ Faron Woods - Shortcut Exit to Floria Waterfall:
 
 Faron Woods - Alternate Exit to Lake Floria:
   type: exit
-  vanilla: Lake Floria - Entrance from Faron Woods
+  vanilla: Lake Floria - Dive from Faron Woods
   disabled: true
   stage: F100 # copied from duplicate
   room: 0
@@ -2248,7 +2249,7 @@ Skyview Temple - Boss Door Entrance:
 
 Skyview Temple - Boss Door Exit:
   type: exit
-  vanilla: Skyview Temple - Boss Room - Entrance
+  vanilla: Skyview Temple - Boss Room - Entrance from Dungeon
 
 
 Skyview Temple - Boss Room - Entrance from Dungeon:
@@ -2767,7 +2768,7 @@ Earth Temple - Boss Door Entrance:
 
 Earth Temple - Boss Door Exit:
   type: exit
-  vanilla: Earth Temple - Boss Room - Entrance
+  vanilla: Earth Temple - Boss Room - Entrance from Dungeon
 
 
 Earth Temple - Boss Room - Entrance from Dungeon:
@@ -2972,7 +2973,7 @@ Fire Sanctuary - Boss Door Entrance:
 
 Fire Sanctuary - Boss Door Exit:
   type: exit
-  vanilla: Fire Sanctuary - Boss Room - Entrance
+  vanilla: Fire Sanctuary - Boss Room - Entrance from Dungeon
 
 
 Fire Sanctuary - Boss Room - Entrance from Dungeon:
@@ -3579,7 +3580,7 @@ Skipper's Retreat - Dock Exit:
 
 Skipper's Retreat - Shack Exit:
   type: exit
-  vanilla: Skipper's Shack - Entrance
+  vanilla: Skipper's Retreat - Shack - Entrance
   stage: F301_3
   room: 0
   index: 3
@@ -3884,27 +3885,27 @@ Lanayru Mining Facility - Big Hub - Entrance from Armos Fight Room:
 
 Lanayru Mining Facility - First Hub - Exit to Big Hub:
   type: exit
-  vailla: Lanayru Mining Facility - Big Hub - Entrance from First Hub
+  vanilla: Lanayru Mining Facility - Big Hub - Entrance from First Hub
 
 Lanayru Mining Facility - Gust Bellows Room - Exit to Big Hub:
   type: exit
-  vailla: Lanayru Mining Facility - Big Hub - Entrance from Gust Bellows Room
+  vanilla: Lanayru Mining Facility - Big Hub - Entrance from Gust Bellows Room
 
 Lanayru Mining Facility - Armos Fight Room - Exit to Big Hub:
   type: exit
-  vailla: Lanayru Mining Facility - Big Hub - Entrance from Armos Fight Room
+  vanilla: Lanayru Mining Facility - Big Hub - Entrance from Armos Fight Room
 
 Lanayru Mining Facility - Big Hub - Exit to First Hub:
   type: exit
-  vailla: Lanayru Mining Facility - First Hub - Entrance from Big Hub
+  vanilla: Lanayru Mining Facility - First Hub - Entrance from Big Hub
 
 Lanayru Mining Facility - Big Hub - Exit to Gust Bellows Room:
   type: exit
-  vailla: Lanayru Mining Facility - First Hub - Entrance from Gust Bellows Room
+  vanilla: Lanayru Mining Facility - Gust Bellows Room - Entrance from Big Hub
 
 Lanayru Mining Facility - Big Hub - Exit to Armos Fight Room:
   type: exit
-  vailla: Lanayru Mining Facility - First Hub - Entrance from Armos Fight Room
+  vanilla: Lanayru Mining Facility - Armos Fight Room - Entrance from Big Hub
 
 
 
@@ -3913,7 +3914,7 @@ Lanayru Mining Facility - Boss Door Entrance:
 
 Lanayru Mining Facility - Boss Door Exit:
   type: exit
-  vanilla: Lanayru Mining Facility - Boss Room - Entrance
+  vanilla: Lanayru Mining Facility - Boss Room - Entrance from Dungeon
 
 
 Lanayru Mining Facility - Boss Room - Entrance from Dungeon:
@@ -4051,6 +4052,10 @@ Sky Keep - First Room - Bottom Entrance:
   room: 0
   layer: 0
   entrance: 4
+
+Sky Keep - First Room - Bottom Exit:
+  type: exit
+  vanilla: Skyloft - Entrance from Sky Keep
 
 Sky Keep - <<????>>:
   type: exit

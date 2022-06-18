@@ -35,16 +35,14 @@ def with_sep_full(pre: str, loc: str) -> EXTENDED_ITEM_NAME:
 
 make_day = lambda s: EIN(s + "_DAY")
 make_night = lambda s: EIN(s + "_NIGHT")
-make_entrance = lambda s: EIN(s + "_ENTRANCE")
-make_exit = lambda s: EIN(s + "_EXIT")
 
 
-def is_entrance(exit: EXTENDED_ITEM_NAME):
-    if exit[-len("ENTRANCE") :] == "ENTRANCE":
-        return True
-    if exit[-len("EXIT") :] == "EXIT":
-        return False
-    raise ValueError("Neither an entrance nor an exit")
+def entrance_of_exit(exit):
+    if exit.endswith(" Exit"):
+        return exit.replace("Exit", "Entrance")
+    if "Exit to " in exit:
+        return exit.replace("Exit to", "Entrance from")
+    raise ValueError("No pattern")
 
 
 SV = "Skyview"
@@ -361,15 +359,15 @@ SWORD_COUNT = {
 }
 
 
-str_entrance = "Entrance"
-DUNGEON_ENTRANCES = {
-    SV: SV + sep + str_entrance,
-    ET: ET + sep + str_entrance,
-    LMF: LMF + sep + str_entrance,
-    AC: AC + sep + str_entrance,
-    SSH: SSH + sep + str_entrance,
-    FS: FS + sep + str_entrance,
-    SK: SK + sep + str_entrance,
+str_main_exit = "Main Exit"
+DUNGEON_MAIN_EXITS = {
+    SV: SV + sep + str_main_exit,
+    ET: ET + sep + str_main_exit,
+    LMF: LMF + sep + str_main_exit,
+    AC: AC + sep + str_main_exit,
+    SSH: SSH + sep + str_main_exit,
+    FS: FS + sep + str_main_exit,
+    SK: SK + sep + "First Room - Bottom Exit",
 }
 
 DUNGEON_FINAL_CHECK = {
@@ -398,7 +396,7 @@ GOT_OPENING_REQUIREMENT = "GoT Opening Requirement"
 GOT_RAISING_REQUIREMENT = "GoT Raising Requirement"
 HORDE_DOOR_REQUIREMENT = "Horde Door Requirement"
 
-LINKS_ROOM = "Knight Academy - Link's Room"
+START = "Start"
 SONG_IMPA_CHECK = "Sealed Grounds - Song from Impa"
 
 trick: Callable[[str], str] = lambda s: s + " Trick"

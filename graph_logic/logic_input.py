@@ -64,10 +64,17 @@ class Area(Generic[LE]):
         if (b := raw_dict.get("can-save")) is not None:
             area.can_save = b
 
-        if (b := raw_dict.get("abstract")) is not None:
-            area.abstract = b
+        if (d := raw_dict.get("macros")) is not None:
+            area.abstract = True
+            assert "locations" not in raw_dict
+            area.locations = {k: LogicExpression.parse(v) for k, v in d.items()}
+            for k in d:
+                if " - " not in k:
+                    events.append(with_sep_full(name, k))
 
         if (d := raw_dict.get("locations")) is not None:
+            area.abstract = False
+            assert "macros" not in raw_dict
             area.locations = {k: LogicExpression.parse(v) for k, v in d.items()}
             for k in d:
                 if " - " not in k:
@@ -138,7 +145,7 @@ class Areas:
             j = 1
             i = len(base_address)
 
-        queue: Deque[Area] = deque([self.parent_area])
+        queue: Deque[Area] = deque([self.all_areas])
         head = partial_address[j]
         while queue:
             area = queue.popleft()
@@ -196,6 +203,13 @@ class Areas:
         }
 
         self.parent_area = Area.of_yaml(name="", raw_dict=raw_area)
+        self.all_areas = Area(
+            name="",
+            abstract=True,
+            exits=self.parent_area.exits,
+            sub_areas=self.parent_area.sub_areas,
+            locations=self.parent_area.locations,
+        )
         areas = {}
         all_areas = {}
         for area in areas_list:
@@ -259,9 +273,9 @@ class Areas:
         )
 
         self.areas: Dict[str, Area[DNFInventory]] = areas
-        self.parent_area.sub_areas = {k: v for (k, v) in all_areas.items() if k != ""}
+        self.all_areas.sub_areas = {k: v for (k, v) in all_areas.items() if k != ""}
 
-        self.short_full: List[Tuple[str, EXTENDED_ITEM_NAME]] = []
+        self.short_full: List[Tuple[str, EXTENDED_ITEM_NAME]] = [("", EIN(""))]
         self.entrance_allowed_time_of_day = {}
         self.checks = set()
         self.gossip_stones = set()
@@ -399,9 +413,19 @@ class Areas:
                 else:  # Map exit
                     exit = with_sep_full(area_name, exit)
                     exit_bit = EXTENDED_ITEM[exit]
-                    reqs[exit_bit] = req
                     self.opaque[exit_bit] = False
                     self.exit_to_area[exit] = area
+                    if area.allowed_time_of_day == Both:
+                        reqs[exit_bit] |= req.day_only() & DNFInv(make_day(area_name))
+                        reqs[exit_bit] |= req.night_only() & DNFInv(
+                            make_night(area_name)
+                        )
+                    elif area.allowed_time_of_day == DayOnly:
+                        reqs[exit_bit] |= req.day_only() & DNFInv(EIN(area_name))
+                    elif area.allowed_time_of_day == NightOnly:
+                        reqs[exit_bit] |= req.night_only() & DNFInv(EIN(area_name))
+                    else:
+                        assert False
 
             for entrance in area.entrances:
                 entrance = with_sep_full(area_name, entrance)
