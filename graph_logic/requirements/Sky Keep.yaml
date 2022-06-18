@@ -4,7 +4,7 @@ Main:
       First Chest: Nothing
       Unlock Bars: First Chest
     exits:
-      Bottom Entrance: Impossible
+      Bottom Exit: Nothing
       Other Rooms: Impossible
 
   Other Rooms:

@@ -53,7 +53,8 @@ Upper:
   Goddess Statue:
     region: Upper Skyloft
     locations:
-      Chest: Nothing
+      First Chest: Nothing
+      Second Chest: Nothing
     exits:
       Exit: Nothing
 
