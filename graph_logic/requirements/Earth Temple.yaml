@@ -1,16 +1,76 @@
 Main:
-  locations:
-    Vent Chest: Digging Mitts
-    Chest behind Bombable Rock: Impossible
-    Chest Left of Main Room Bridge: Impossible
-    Chest in West Room: Impossible
-    Bomb Bag: Impossible
-    Ledd's Gift: Impossible
-    Chest Guarded by Lizalfos: Impossible
-    Boss Key Chest: Impossible
-  exits:
-    Main Exit: Nothing
-    Boss Door: Impossible
+  First Room:
+    locations:
+      Vent Chest: Digging Mitts
+      Lower Drawbridge:
+        Beetle | Bow | (Long Range Skyward Strike & Earth Temple - Keese Yeet Trick)
+      Dislodge Boulder:
+        Slingshot | (Beetle & Can Defeat Lizalfos) | Clawshots | Bow | Long Range Skyward Strike
+
+    exits:
+      Main Exit: Nothing
+      Hub Room: Lower Drawbridge & Dislodge Boulder
+
+  Hub Room:
+    locations:
+      Access to Boulder: First Room - Dislodge Boulder
+      Chest behind Bombable Rock: Access to Boulder
+      Chest Left of Main Room Bridge: Access to Boulder
+      Ledd's Gift: East Room - Bomb Bag
+
+      Rock to West Room: Bomb Bag | Hook Beetle & Access to Boulder
+      Wall to Lava Section: Bomb Bag | Hook Beetle & Access to Boulder
+      Lower Lava Section Portcullis: Beetle
+
+      Left Peg: Access to Boulder
+      Raise Bridge: Left Peg & Past Lava Section - Right Peg
+
+    exits:
+      Past Lava Section:
+        Access to Boulder & (
+        Wall to Lava Section & Lower Lava Section Portcullis | Raise Bridge)
+      East Room: Access to Boulder
+      West Room: Rock to West Room
+
+    Past Lava Section:
+      locations:
+        Chest Guarded by Lizalfos: Nothing
+        Right Peg: Nothing
+      exits:
+        Hub Room: Nothing
+
+
+  East Room:
+    locations:
+      Bomb Bag: Can Defeat Lizalfos
+
+    exits:
+      Hub Room: Nothing
+      # It'd be annoying to put in logic, but you need boulder access to reach the central part
+
+  West Room:
+    locations:
+      Chest: Nothing
+
+    exits:
+      Hub Room: Nothing
+
+  Room with Slopes:
+    locations:
+      Rock in Second Slope Resting Area:
+        Digging Mitts & Bomb Bag | Hook Beetle
+    exits:
+      Front of Boss Door:
+        Rock in Second Slope Resting Area | Earth Temple - Slope Stuttersprint Trick
+      Hub Room: Nothing
+
+    Front of Boss Door:
+      locations:
+        Boss Key Chest: Nothing
+        Open Boss Door: Boss Key Chest & Earth Temple Boss Key
+      exits:
+        Room with Slopes: Nothing
+        Boss Door: Open Boss Door
 
 Boss Room:
   Entry:

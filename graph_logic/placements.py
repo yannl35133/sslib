@@ -3,31 +3,36 @@ from .logic import Placement
 
 # Single crystals
 SINGLE_CRYSTAL_CHECKS = [
-    "Knight Academy - Crystal in Link's Room",
-    "Knight Academy - Crystal in Knight Academy Plant",
-    "Knight Academy - Crystal in Zelda's Room",
-    "Knight Academy - Crystal in Sparring Hall",
-    "Central Skyloft - Crystal between Wooden Planks",
-    "Central Skyloft - Crystal on West Cliff",
-    "Central Skyloft - Crystal in Orielle and Parrow's House",
-    "Central Skyloft - Crystal on Light Tower",
-    "Skyloft Village - Crystal near Pumpkin Patch",
-    "Central Skyloft - Crystal after Waterfall Cave",
-    "Central Skyloft - Crystal in Loftwing Prison",
-    "Central Skyloft - Crystal on Waterfall Island",
-    "Sky - Crystal outside Lumpy Pumpkin",
-    "Sky - Crystal inside Lumpy Pumpkin",
+    "Knight Academy - Link's Room - Crystal",
+    "Knight Academy - Crystal in Plant",
+    "Knight Academy - Zelda's Room - Crystal",
+    "Sparring Hall - Crystal",
+    "Skyloft - Crystal between Wooden Planks",
+    "Skyloft - Crystal on West Cliff",
+    "Skyloft - Orielle and Parrow's House - Crystal",
+    "Skyloft - Crystal on Light Tower",
+    "Skyloft - Crystal near Pumpkin Patch",
+    "Skyloft - Crystal after Waterfall Cave",
+    "Skyloft - Crystal in Loftwing Prison",
+    "Skyloft - Waterfall Island - Crystal",
+    "Sky - Pumpkin Landing - Crystal",
+    "Sky - Lumpy Pumpkin - Crystal",
     "Sky - Crystal on Beedle's Ship",
 ]
 
-SINGLE_CRYSTAL_PLACEMENT = Placement(
-    items={
-        crystal: loc for loc, crystal in zip(SINGLE_CRYSTAL_CHECKS, GRATITUDE_CRYSTALS)
-    },
-    locations={
-        loc: crystal for loc, crystal in zip(SINGLE_CRYSTAL_CHECKS, GRATITUDE_CRYSTALS)
-    },
-)
+
+def SINGLE_CRYSTAL_PLACEMENT(norm):
+    return Placement(
+        items={
+            crystal: norm(loc)
+            for loc, crystal in zip(SINGLE_CRYSTAL_CHECKS, GRATITUDE_CRYSTALS)
+        },
+        locations={
+            norm(loc): crystal
+            for loc, crystal in zip(SINGLE_CRYSTAL_CHECKS, GRATITUDE_CRYSTALS)
+        },
+    )
+
 
 VANILLA_BEEDLE = {
     "Beedle - 300 Rupee Item": number(PROGRESSIVE_POUCH, 1),
