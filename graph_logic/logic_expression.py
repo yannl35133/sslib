@@ -210,7 +210,7 @@ exp_grammar = """
     %ignore WS
 """
 
-item_with_count_re = re.compile(r"^(.+) [×x][ ]*(\d+)$")
+item_with_count_re = re.compile(r"^(.+) [x][ ]*(\d+)$")
 
 
 @v_args(inline=True)  # Affects the signatures of the methods
