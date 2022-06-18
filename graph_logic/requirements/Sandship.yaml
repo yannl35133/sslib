@@ -11,7 +11,7 @@ Main:
     exits:
       Main Exit: Nothing # If stuck in the mast sequence, deathwarp
       Before Bow: Nothing
-      Captain's Cabin: Sandship Small Key × 2 & (Start Mast Sequence | Freely Usable Timeshift Stone)
+      Captain's Cabin: Sandship Small Key x 2 & (Start Mast Sequence | Freely Usable Timeshift Stone)
       Starboard Rooms: Starboard Rooms - Switch & Bow
       Mast: Start Mast Sequence | Freely Usable Timeshift Stone
 
@@ -36,13 +36,13 @@ Main:
         Boss Key Chest: Switch & Bars
 
       exits:
-        Deck: Sandship Small Key × 2
+        Deck: Sandship Small Key x 2
 
   Before Bow:
     locations:
       Chest before 4-Door Corridor: Deck - Freely Usable Timeshift Stone
     exits:
-      Bow: Sandship Small Key × 2
+      Bow: Sandship Small Key x 2
       Corridor: Pass Spume | Deck - Freely Usable Timeshift Stone
 
   Bow:
