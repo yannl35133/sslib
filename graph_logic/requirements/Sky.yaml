@@ -123,7 +123,7 @@ South East:
     Goddess Chest on Island Closest to Faron Pillar: Faron - Goddess Cube in Deep Woods
 
   Faron Pillar:
-    logical-entrances: Nothing
+    entrance: Nothing
     exits:
       Entrance:                      Impossible
       First Time Dive:               Emerald Tablet

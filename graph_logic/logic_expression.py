@@ -81,6 +81,9 @@ class DNFInventory(LogicExpression):
         else:
             raise ValueError
 
+    def __repr__(self) -> str:
+        return f"DNFInventory({self.disjunction!r})"
+
     def remove(self, item):
         if isinstance(item, EXTENDED_ITEM):
             return DNFInventory({inv for inv in self.disjunction if not inv[item]})
@@ -127,7 +130,7 @@ class BasicTextAtom(LogicExpression):
     def eval(self, *args):
         raise TypeError("Text must be localized to be evaluated")
 
-    def localize(self, localizer):
+    def localize(self, localizer: Callable[[str], EXTENDED_ITEM_NAME | None]):
         if (v := localizer(self.text)) is None:
             raise ValueError(f"Unknown event {self.text}")
         else:

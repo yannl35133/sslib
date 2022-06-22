@@ -75,6 +75,7 @@ class BFA:
             for loc in self.logic.accessible_checks("")
             if loc not in self.logic.placement.locations
         ]
+        junk = list(junk)
 
         for location in empty_locations:
             result = self.logic.place_item(location, self.rng.choice(junk))
@@ -100,7 +101,10 @@ class BFA:
         # We have to replace an already placed item
         if not force:
             return False
-        assert accessible_locations
+        if not accessible_locations:
+            print(self.logic.placement.locations)
+            print(f"No location accessible for {item}")
+            exit(1)
         new_item = self.logic.replace_item(self.rng.choice(accessible_locations), item)
         return self.place_item(new_item, depth + 1)
 

@@ -37,12 +37,15 @@ class Rando:
             }
         )
         starting_area = self.short_to_full(START)
-        exit_pools = DUNGEON_ENTRANCES_COMPLETE_POOLS + SILENT_REALMNS_COMPLETE_POOLS
+        exit_pools = []
+        # DUNGEON_ENTRANCES_COMPLETE_POOLS + SILENT_REALMNS_COMPLETE_POOLS
+
+        banned_bit_inv = DNFInventory(EXTENDED_ITEM.banned_bit())
 
         additional_requirements = (
             self.logic_options_requirements
             | self.endgame_requirements
-            | {loc: DNFInventory(EXTENDED_ITEM.banned_bit()) for loc in self.banned}
+            | {loc: banned_bit_inv for loc in self.banned}
         )
 
         logic_settings = LogicSettings(
@@ -61,6 +64,23 @@ class Rando:
 
     def randomize(self):
         self.rando_algo.randomize()
+
+        # Check
+        self.logic.inventory = self.starting_items.add(
+            EXTENDED_ITEM[self.short_to_full(START)]
+        )
+        self.logic.fill_inventory()
+        all_checks = Inventory(
+            {check["req_index"] for check in self.areas.checks.values()}
+            | {EXTENDED_ITEM[self.short_to_full("Beat Demise")]}
+        )
+
+        if not all_checks <= self.logic.full_inventory:
+            print("Everything is not accessible")
+            print(all_checks.intset - self.logic.full_inventory.intset)
+            i = next(iter(all_checks.intset - self.logic.full_inventory.intset))
+            print(f"For example, {i} would require {self.logic.backup_requirements[i]}")
+            exit(1)
 
     def parse_options(self):
         # Initialize location related attributes.
@@ -109,6 +129,10 @@ class Rando:
 
     def ban_the_banned(self):
         self.banned: List[str] = []
+
+        if self.options["shop-mode"] == "Always Junk":
+            self.banned.append(BEEDLE_STALL)
+
         if self.options["empty-unrequired-dungeons"]:
             self.banned.extend(
                 entrance_of_exit(DUNGEON_MAIN_EXITS[dungeon])
@@ -200,7 +224,7 @@ class Rando:
         options = {
             OPEN_THUNDERHEAD_OPTION: self.options["open-thunderhead"] == "Open",
             OPEN_LMF_OPTION: self.options["open-lmf"] == "Open",
-            ENABLED_BEEDLE_OPTION: shop_mode != "Always Junk",
+            RANDOMIZED_BEEDLE_OPTION: shop_mode != "Vanilla",
             HERO_MODE: self.options["fix-bit-crashes"],
             NO_BIT_CRASHES: self.options["hero-mode"],
         }

@@ -90,7 +90,7 @@ Main:
       Miniboss Room: Switch to Miniboss Room
       Left Rooms: Switch to Left Room
       Staldra Room: Skyview Small Key
-      Last Room: Last Room - Unlock Shortcut to Second Hub
+      Last Room - Before Rope: Last Room - Unlock Shortcut to Second Hub
 
     Miniboss Room:
       locations:
@@ -105,20 +105,29 @@ Main:
         Second Hub: Sword & Projectile Item # to defeat skulltulas ? Include deathwarp ?
 
     Staldra Room:
+      locations:
+        Can Defeat Staldra: Sword | Bomb Bag
       exits:
         Second Hub: Skyview Small Key
-        Last Room: (Sword | Bomb Bag) & Last Room - Deal with Hanging Skulltula # Defeat Staldras
+        Last Room - Near East Entrance: Can Defeat Staldra
 
   Last Room:
-    Before Rope:
+    Near East Entrance:
       locations:
         Deal with Hanging Skulltula: Bomb Bag | Goddess Sword | Beetle | Bow | Skyview 2
         # A bomb knocks the Skulltula away. A skyward strike can knock it away too.
         # Both the Beetle and the bow can cut it down. There is no spider anymore in Skyview.
+      exits:
+        Second Hub - Staldra Room: Nothing
+        Before Rope: Deal with Hanging Skulltula
+
+    Before Rope:
+      locations:
+        Near East Entrance - Deal with Hanging Skulltula: Bomb Bag | Goddess Sword | Beetle | Bow | Skyview 2
         Unlock Shortcut to Second Hub: Can Hit High Skyview Switches
         Deal with Archers: Long Range Skyward Strike | Hook Beetle | Bow
       exits:
-        Second Hub - Staldra Room: Deal with Hanging Skulltula
+        Near East Entrance: Near East Entrance - Deal with Hanging Skulltula
         Second Hub: Unlock Shortcut to Second Hub
         After Rope: Deal with Archers
 
