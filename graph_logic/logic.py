@@ -233,13 +233,20 @@ class Logic:
             new_req = DNFInventory()
             for conj in req.disjunction:
                 if conj & simplifiables:
-                    new_conj = []
+                    new_conj = Inventory()
+                    skip = False
                     for req_item in conj.intset:
                         if opaques[req_item] or not simplifiables[req_item]:
-                            new_conj.append(DNFInventory(req_item))
+                            new_conj |= Inventory(req_item)
                         else:
-                            new_conj.append(requirements[req_item])
-                    new_req |= AndCombination.simplify(new_conj)
+                            req_item_req = requirements[req_item].disjunction
+                            if not req_item_req:
+                                skip = True
+                                break
+                            (req_item_conj,) = req_item_req
+                            new_conj |= req_item_conj
+                    if not skip and not new_conj[EXTENDED_ITEM(item)]:
+                        new_req |= DNFInventory(new_conj)
                 else:
                     new_req |= conj
             requirements[item] = new_req
@@ -495,9 +502,9 @@ class Logic:
             self.backup_requirements[item_bit] = DNFInventory(full_location)
             self.opaque[item_bit] = False
             self.fill_inventory(monotonic=True)
+            self.placement.items[item] = location
 
         self.placement.locations[location] = item
-        self.placement.items[item] = location
 
     def place_item(self, location, item):
         if location in self.placement.locations:
@@ -527,11 +534,42 @@ class Logic:
         self.place_item(location, item)
         return old_item
 
-    def restricted_test(self, banned_indices, test_index):
+    @cache
+    def _fill_for_test(self, banned_intset, inventory):
         custom_requirements = self.requirements.copy()
-        for index in banned_indices:
-            custom_requirements[index] = DNFInventory(False)
+        for index, e in enumerate(reversed(bin(banned_intset))):
+            if e == "1":
+                custom_requirements[index] = DNFInventory(False)
 
-        restricted_full = self._fill_inventory(custom_requirements, self.inventory)
+        return self._fill_inventory(custom_requirements, inventory)
+
+    def fill_restricted(
+        self,
+        banned_indices: List[EXTENDED_ITEM] = [],
+        starting_inventory: None | Inventory = None,
+    ):
+        if starting_inventory is None:
+            starting_inventory = self.inventory
+
+        banned_intset = 0
+        for i in banned_indices:
+            banned_intset += 1 << i
+
+        return self._fill_for_test(banned_intset, self.inventory)
+
+    def restricted_test(
+        self,
+        test_index,
+        banned_indices: List[EXTENDED_ITEM] = [],
+        starting_inventory: None | Inventory = None,
+    ):
+        if starting_inventory is None:
+            starting_inventory = self.inventory
+
+        banned_intset = 0
+        for i in banned_indices:
+            banned_intset += 1 << i
+
+        restricted_full = self._fill_for_test(banned_intset, self.inventory)
 
         return restricted_full[test_index]

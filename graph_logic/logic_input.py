@@ -139,7 +139,7 @@ class Areas:
         partial_address = partial_address_str.split(" - ")
 
         i, j = 0, 0
-        if base_address == [""]:
+        if base_address[0] == "":
             i = 1
         if partial_address[0] == "General":
             j = 1
@@ -216,7 +216,7 @@ class Areas:
             areas[area.name] = area
             if area.toplevel_alias is not None:
                 all_areas[area.toplevel_alias] = area
-        all_areas |= areas
+        all_areas |= areas | self.all_areas.sub_areas
 
         EXTENDED_ITEM.items_list.extend(events)
         for area in areas_list:
@@ -277,20 +277,24 @@ class Areas:
 
         self.short_full: List[Tuple[str, EXTENDED_ITEM_NAME]] = [("", EIN(""))]
         self.entrance_allowed_time_of_day = {}
-        self.checks = set()
-        self.gossip_stones = set()
+        self.checks = {}
+        self.gossip_stones = {}
         self.map_exits = set()
         self.map_entrances = set()
 
         for partial_address in checks:
             full_address = self.search_area("", partial_address, multiple=True)
             self.short_full.append((partial_address, full_address))
-            self.checks.add(full_address)
+            check = checks[partial_address]
+            check["req_index"] = EXTENDED_ITEM[full_address]
+            self.checks[full_address] = check
 
         for partial_address in gossip_stones:
             full_address = self.search_area("", partial_address, multiple=True)
             self.short_full.append((partial_address, full_address))
-            self.gossip_stones.add(full_address)
+            stone = gossip_stones[partial_address]
+            stone["req_index"] = EXTENDED_ITEM[full_address]
+            self.gossip_stones[full_address] = stone
 
         for partial_address in map_exits:
             full_address = self.search_area("", partial_address, multiple=True)

@@ -9,7 +9,8 @@ Upper:
       Crystal in Plant: Night
       Start Owlan's Quest: Faron - Woods - Slingshot # The check
       Owlan's Crystals: Faron - Woods - Retrieve Oolo & Day
-      Cawlin's Letter: Goddess Harp & Night & Day
+      Knock on Toilet Door: Goddess Harp & Night
+      Cawlin's Letter: Knock on Toilet Door & Day
       Ghost/Pipit's Crystals: Cawlin's Letter & Day
       Fledge's Crystals: Skyloft - Central - Bazaar - Endurance Potion & Night
     exits:
@@ -92,7 +93,7 @@ Central:
     Waterfall Cave Crystals: Beetle
   exits:
     Waterfall Cave Upper: Sword | Bomb Bag
-    Beedle's Shop: Day & (Distance Activator | (Beedle's Shop With Bombs Trick & Bomb Bag))
+    Exit to Beedle's Shop: Day & (Distance Activator | (Beedle's Shop With Bombs Trick & Bomb Bag))
     Bazaar North: Day
     Bazaar West: Day
     Bazaar South: Day
@@ -262,8 +263,9 @@ Beedle's Shop:
     Day Exit: Day
 
   Stall:
-    entrance: Enabled Beedle option
-    exit: {Beedle's Shop: Nothing}
+    entrance: Day
+    exits:
+      Beedle's Shop: Nothing
     locations:
       # We don't want the pouch extensions to be the logical access to the pouch
       300 Rupee Item: Can Afford 300 Rupees & (Pouch | Randomized Beedle option)

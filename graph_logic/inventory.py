@@ -46,10 +46,6 @@ class EXTENDED_ITEM(int, metaclass=MetaContainer):
         return cls["Banned"]
 
     @classmethod
-    def everything_bit(cls):
-        return cls["Everything"]
-
-    @classmethod
     def items(cls):
         for i in range(len(cls)):
             yield cls(i)
@@ -69,6 +65,9 @@ class EXTENDED_ITEM(int, metaclass=MetaContainer):
     @classmethod
     def get_item_name(cls, i: EXTENDED_ITEM) -> EXTENDED_ITEM_NAME:
         return cls.items_list[i]
+
+    def __str__(self) -> str:
+        return super().__str__() + f" ({self.items_list[self]})"
 
 
 class Inventory:
@@ -144,6 +143,15 @@ class Inventory:
     def __le__(self, other):
         """Define inclusion"""
         return self.bitset | other.bitset == other.bitset
+
+    def __hash__(self):
+        return hash(self.bitset)
+
+    def __iter__(self):
+        return iter(self.intset)
+
+    def __repr__(self) -> str:
+        return f"Inventory({self.intset!r})"
 
     def add(self, item: EXTENDED_ITEM | str):
         if isinstance(item, EXTENDED_ITEM) or isinstance(item, Inventory):
