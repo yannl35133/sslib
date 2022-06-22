@@ -452,14 +452,14 @@ Beedle's Shop - Night Entrance:
 
 Beedle's Shop - Day Exit:
   type: exit
-  vanilla: Skyloft - Beedle's Shop Entrance
+  vanilla: Skyloft - Entrance from Beedle's Shop
   stage: F002r
   room: 0
   index: 0
 
 Beedle's Shop - Trapdoor Exit:
   type: exit
-  vanilla: Skyloft - Beedle's Shop Entrance
+  vanilla: Skyloft - Entrance from Beedle's Shop
   disabled: true
   stage: F002r
   room: 0
@@ -474,7 +474,7 @@ Beedle's Shop - Night Exit:
   index: 2
 
 
-Skyloft - Beedle's Shop Entrance:
+Skyloft - Entrance from Beedle's Shop:
   type: entrance
   stage: F000
   room: 0
@@ -482,7 +482,7 @@ Skyloft - Beedle's Shop Entrance:
   entrance: 0
   tod: 2
 
-Skyloft - Beedle's Shop Exit:
+Skyloft - Exit to Beedle's Shop:
   type: exit
   vanilla: Beedle's Shop - Day Entrance
   stage: F000

@@ -18,14 +18,14 @@ Main:
   Second Room:
     Outside Section:
       exits:
-        Exit to First Room: Impossible
+        Exit to First Room: Nothing
         Second Room: Nothing
 
     Balcony:
       exits:
         Second Room: Defeat Magmanos
       locations:
-        Chest: Impossible
+        Chest: Nothing
 
     locations:
       Chest: Nothing
