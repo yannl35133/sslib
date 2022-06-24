@@ -70,16 +70,16 @@ VANILLA_SMALL_KEYS_PLACEMENT = Placement(
 
 DUNGEON_SMALL_KEYS_RESTRICTION = Placement(
     item_placement_limit={
-        number(SV_SMALL_KEY, 0): SV,
-        number(SV_SMALL_KEY, 1): SV,
-        number(LMF_SMALL_KEY, 0): LMF,
-        number(AC_SMALL_KEY, 0): AC,
-        number(AC_SMALL_KEY, 1): AC,
-        number(SSH_SMALL_KEY, 0): SSH,
-        number(SSH_SMALL_KEY, 1): SSH,
-        number(FS_SMALL_KEY, 0): FS,
-        number(FS_SMALL_KEY, 1): FS,
-        number(FS_SMALL_KEY, 2): FS,
+        number(SV_SMALL_KEY, 0): SV + sep + "Main",
+        number(SV_SMALL_KEY, 1): SV + sep + "Main",
+        number(LMF_SMALL_KEY, 0): LMF + sep + "Main",
+        number(AC_SMALL_KEY, 0): AC + sep + "Main",
+        number(AC_SMALL_KEY, 1): AC + sep + "Main",
+        number(SSH_SMALL_KEY, 0): SSH + sep + "Main",
+        number(SSH_SMALL_KEY, 1): SSH + sep + "Main",
+        number(FS_SMALL_KEY, 0): FS + sep + "Main",
+        number(FS_SMALL_KEY, 1): FS + sep + "Main",
+        number(FS_SMALL_KEY, 2): FS + sep + "Main",
         number(SK_SMALL_KEY, 0): SK,
     }
 )

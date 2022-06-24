@@ -1,16 +1,86 @@
-Main:
-  locations:
-    Chest in East Part: Impossible
-    Whip: Impossible
-    Chest after Whip Hooks: Impossible
-    Chest near Vines: Impossible
-    Chest behind the Waterfall: Impossible
-    Bokoblin: Impossible
-    Boss Key Chest: Impossible
+macros:
+  Can Lower Statue: Impossible
 
-  exits:
-    Main Exit: Nothing
-    Boss Door: Impossible
+Main:
+  Outside Statue:
+    locations:
+      Chest in East Part: Water Scale & Can Unlock Combination Lock
+    exits:
+      Main Exit: Nothing
+      Inside Statue: Can Lower Statue | Ancient Cistern Small Key x 2
+      Basement - Boss Key Area: Ancient Cistern - Cistern Clip Trick
+      Inside Statue - Whip Chest Room: Ancient Cistern - Cistern Whip Room Clip Trick
+    Whip Hooks Area:
+      entrance: Whip
+      locations:
+        Chest: Nothing
+      exits:
+        Vines Area: Clawshots
+        Outside Statue: Nothing
+    Vines Area:
+      locations:
+        Chest: Nothing
+        Ancient Cistern - Can Lower Statue: Whip
+      exits:
+        # Can front hop and jump slash
+        Whip Hooks Area: Sword & Ancient Cistern - Map Chest Jump Trick
+        Outside Statue: Nothing
+        Waterfall Area: Water Scale & Ancient Cistern - Lever Jump Trick
+    Waterfall Area:
+      entrance: Whip & Water Scale
+      locations:
+        Chest: Nothing
+      exits:
+        Basement Gutters: Whip & Water Scale # | Ancient Cistern - Basement Lilypad Clip Trick)
+    After Gutters:
+      exits:
+        Whip Hooks Area: Nothing
+        Vines Area: Water Scale & Whip
+    Spider Thread Area:
+      locations:
+        Ancient Cistern - Can Lower Statue: Whip
+      exits:
+        Basement - Boss Key Area: Can Lower Statue
+        Vines Area: Nothing
+        Outside Statue: Nothing
+        Basement: Nothing
+  Basement Gutters:
+    locations:
+      Can Get Past Skulltula: Beetle | Bow
+    Past Skulltula:
+      entrance: Can Get Past Skulltula
+      locations:
+        Bokoblin: Whip
+      exits:
+        Outside Statue - After Gutters: Ancient Cistern Small Key x 2 & Water Scale
+    
+  # Implies statue is lowered
+  Basement:
+    exits:
+      Outside Statue - Spider Thread Area: Ancient Cistern - Basement Highflip Trick | (Whip & (Clawshots | Hook Beetle))
+      Inside Statue: Nothing
+
+    # Implies statue is raised
+    Boss Key Area:
+      entrance: Ancient Cistern - Basement Highflip Trick
+      locations:
+        Chest: Nothing
+      exits:
+        Basement: Nothing
+    
+  Inside Statue:
+    exits:
+      Basement: Can Lower Statue
+      Outside Statue: Whip
+      Boss Door: Ancient Cistern Boss Key & Whip
+    Whip Chest Room:
+      entrance: Ancient Cistern Small Key x 2 & (Can Defeat Stalmaster | Can Lower Statue)
+      locations:
+        Chest: Nothing
+      exits:
+        Inside Statue: Ancient Cistern Small Key x 2
+
+
 
 Boss Room:
   locations:

@@ -385,7 +385,7 @@ DUNGEON_FINAL_CHECK = {
     SK: SK + sep + "Complete Triforce",
 }
 
-BATn = lambda n: f"Batreaux - {n} Crystals"
+BATn = lambda n: f"Skyloft - Village - Batreaux's House - {n} Crystals"
 BATREAUX_FIRST_CHECK_ABOVE = {
     0: BATn(5),
     5: BATn(10),
