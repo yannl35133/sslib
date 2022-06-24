@@ -204,7 +204,7 @@ Village:
     Mallara's House: Nothing
     Gondo's House: Nothing
     Rupin's House: Nothing
-    Batreaux' House: Opened Shed | Gravestone Jump Trick
+    Batreaux's House: Opened Shed | Gravestone Jump Trick
 
   Bertie's House:
     region: Skyloft Village
@@ -238,7 +238,7 @@ Village:
     exits:
       Exit: Nothing
 
-  Batreaux' House:
+  Batreaux's House:
     region: Batreaux
     locations:
       5 Crystals: 5 Gratitude Crystals

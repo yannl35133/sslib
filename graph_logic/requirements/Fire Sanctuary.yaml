@@ -55,7 +55,7 @@ Main:
 
     Past Lava:
       locations:
-        Unlock Key Door: Fire Sanctuary Small Key
+        Unlock Key Door: Fire Sanctuary Small Key x 2
       exits:
         Room with Water Plant: Projectile Item
         First Trapped Mogma Room: Nothing
@@ -102,7 +102,7 @@ Main:
         First Trapped Mogma Room: Magmanos Fight
     Lower Part:
       locations:
-        Unlock Key Door: Fire Sanctuary Small Key
+        Unlock Key Door: Fire Sanctuary Small Key x 3
         Move Sliding Door: Mogma Mitts
       exits:
         First Trapped Mogma Room - Lower Area: Mogma Mitts

@@ -744,9 +744,9 @@ Mallara's House - Exit:
   index: 0
 
 
-## Batreaux' House
+## Batreaux's House
 
-Batreaux' House - Entrance:
+Batreaux's House - Entrance:
   type: entrance
   stage: F012r
   room: 0
@@ -754,14 +754,14 @@ Batreaux' House - Entrance:
   entrance: 0
   tod: 2
 
-Batreaux' House - Exit:
+Batreaux's House - Exit:
   type: exit
-  vanilla: Batreaux' House Entrance
+  vanilla: Batreaux's House Entrance
   stage: F012r
   room: 0
   index: 0
 
-Batreaux' House Entrance:
+Batreaux's House Entrance:
   type: entrance
   stage: F000
   room: 0
@@ -769,9 +769,9 @@ Batreaux' House Entrance:
   entrance: 29
   tod: 2
 
-Batreaux' House Exit:
+Batreaux's House Exit:
   type: exit
-  vanilla: Batreaux' House - Entrance
+  vanilla: Batreaux's House - Entrance
   stage: F000
   room: 0
   index: 30
@@ -3885,15 +3885,15 @@ Lanayru Mining Facility - Big Hub - Entrance from Armos Fight Room:
 
 Lanayru Mining Facility - First Hub - Exit to Big Hub:
   type: exit
-  vanilla: Lanayru Mining Facility - Big Hub - Entrance from First Hub
+  vanilla: Lanayru Mining Facility - Big Hub - Entry - Entrance from First Hub
 
 Lanayru Mining Facility - Gust Bellows Room - Exit to Big Hub:
   type: exit
-  vanilla: Lanayru Mining Facility - Big Hub - Entrance from Gust Bellows Room
+  vanilla: Lanayru Mining Facility - Big Hub - Near Exit to Gust Bellows Room - Entrance from Gust Bellows Room
 
 Lanayru Mining Facility - Armos Fight Room - Exit to Big Hub:
   type: exit
-  vanilla: Lanayru Mining Facility - Big Hub - Entrance from Armos Fight Room
+  vanilla: Lanayru Mining Facility - Big Hub - Past West Gate - Entrance from Armos Fight Room
 
 Lanayru Mining Facility - Big Hub - Exit to First Hub:
   type: exit
