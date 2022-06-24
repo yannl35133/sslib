@@ -10,37 +10,93 @@ Main:
 
   First Hub:
     locations:
-      Chest in Key Locked Room: Impossible
-      Chest in First West Room: Impossible
     exits:
       First Room: Nothing
       Exit to Big Hub: Nothing
+      Key Locked Room: Lanayru Mining Facility Small Key
+      First West Room: Gust Bellows
+
+  Key Locked Room:
+    locations:
+      Can Activate East Timeshift Stone: (Bomb Bag | Hook Beetle) & (Bow | Beetle | (Slingshot & LMF - Keylocked Slingshot Trickshot Trick))
+      Chest: Can Activate East Timeshift Stone
+    exits:
+      First Hub: Nothing
+      Gust Bellows Room: Can Activate East Timeshift Stone
 
   Gust Bellows Room:
     locations:
-      Gust Bellows: Impossible
-      Chest inside Gust Bellows Room: Impossible
+      Gust Bellows Chest: Distance Activator | Bomb Bag | Goddess Sword
+      Chest inside Room: Distance Activator | Bomb Bag | Goddess Sword
     exits:
-      Exit to Big Hub: Impossible
+      Exit to Big Hub: Nothing
+
+  First West Room:
+    locations:
+      Chest: Gust Bellows
+    exits:
+      First Hub: Nothing
+      Armos Fight Room: Gust Bellows
 
   Armos Fight Room:
     locations:
-      Chest after Armos Fight: Impossible
+      Chest: Can Defeat Armos & (Distance Activator | Goddess Sword)
     exits:
-      Exit to Big Hub: Impossible
+      Exit to Big Hub: Can Defeat Armos & (Distance Activator | Goddess Sword)
 
   Big Hub:
-    locations:
-      First Chest in Hub Room: Impossible
-      Chest behind First Crawlspace: Impossible
-      Chest in Spike Maze: Impossible
-      Boss Key Chest: Impossible
-      Shortcut Chest in Main Hub: Impossible
+    Entry:
+      exits:
+        Exit to First Hub: Nothing
+        After Wooden Boxes: Bomb Bag | Hook Beetle
+
+    Past West Gate:
+      locations:
+        Chest behind First Crawlspace: Gust Bellows
+        Chest in Spike Maze: Gust Bellows
+      exits:
+        Exit to Armos Fight Room: Impossible
+        Near Boss Door: Gust Bellows
+
+    After Wooden Boxes:
+      locations:
+        Chest: Nothing
+      exits:
+        Entry: Nothing
+
+    Near Exit to Gust Bellows Room:
+      exits:
+        Exit to Gust Bellows Room: Impossible
+        After Wooden Boxes: Nothing
+
+    Near Boss Key Room First Exit:
+      exits:
+        Boss Key Room: Gust Bellows
+
+    Near Boss Key Room Second Exit:
+      locations:
+        Shortcut Chest in Main Hub: Nothing
+      exits:
+        Near Boss Door: Gust Bellows | (LMF - Minecart Jump Trick & Sword & (Bomb Bag | Beetle))
+    
+    Between Wind Gates:
+      exits:
+        Entry: Gust Bellows
+        Near Boss Key Room First Exit: Nothing
+  
+  Near Boss Door:
     exits:
-      Exit to First Hub: Nothing
-      Exit to Gust Bellows Room: Impossible
-      Exit to Armos Fight Room: Impossible
-      Boss Door: Impossible
+      Boss Door: Lanayru Mining Facility Boss Key & (Sword | Whip | Bomb Bag | Distance Activator)
+      Big Hub - Near Boss Key Room Second Exit: LMF - Minecart Jump Trick & Sword & (Bomb Bag | Beetle)
+      Big Hub - Between Wind Gates: Gust Bellows
+
+  Boss Key Room:
+    locations:
+      Can Beat Room: Bomb Bag & Gust Bellows & Sword
+      Chest: Can Beat Room
+    exits:
+      Big Hub - Near Boss Key Room Second Exit: Can Beat Room
+
 
 
 Boss Room:

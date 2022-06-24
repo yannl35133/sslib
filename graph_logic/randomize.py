@@ -305,7 +305,7 @@ class Rando:
         # remove boss keys from the dungeon pool if boss key sanity is enabled
         if boss_key_mode == "Vanilla":
             self.placement |= VANILLA_BOSS_KEYS_PLACEMENT
-        elif small_key_mode == "Own Dungeon":
+        elif boss_key_mode == "Own Dungeon":
             self.placement |= DUNGEON_BOSS_KEYS_RESTRICTION
         elif boss_key_mode == "Anywhere":
             pass
