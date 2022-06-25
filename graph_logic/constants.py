@@ -54,6 +54,13 @@ SK = "Sky Keep"
 REGULAR_DUNGEONS = [SV, ET, LMF, AC, SSH, FS]
 ALL_DUNGEONS = REGULAR_DUNGEONS + [SK]
 
+SKYLOFT_TRIAL = "Skyloft Trial"
+FARON_TRIAL = "Faron Trial"
+ELDIN_TRIAL = "Eldin Trial"
+LANAYRU_TRIAL = "Lanayru Trial"
+
+ALL_TRIALS = [SKYLOFT_TRIAL, FARON_TRIAL, ELDIN_TRIAL, LANAYRU_TRIAL]
+
 # Items
 
 ITEM_COUNTS: Dict[str, int] = defaultdict(lambda: 1)
@@ -402,6 +409,32 @@ trick: Callable[[str], str] = lambda s: s + " Trick"
 
 
 # Retro-compatibility
+
+DUNGEON_OVERWORLD_EXITS: dict[str, list[str]] = {
+    SV: ["Deep Woods - Exit to Skyview Temple"],
+    ET: ["Eldin Volcano - Exit to Earth Temple"],
+    LMF: ["Lanayru Desert - Exit to Lanayru Mining Facility"],
+    AC: ["Floria Waterfall - Exit to Ancient Cistern"],
+    SSH: ["Sand Sea - Sandship Dock Exit", "Sand Sea Docks - Exit to Sandship"],
+    FS: ["Outside Fire Sanctuary - Exit to Fire Sanctuary"],
+    SK: ["Skyloft - Exit to Sky Keep"],
+}
+
+TRIAL_EXITS: dict[str, str] = {
+    SKYLOFT_TRIAL: "Skyloft - Trial Gate Exit",
+    FARON_TRIAL: "Faron Woods - Trial Gate Exit",
+    ELDIN_TRIAL: "Eldin Volcano - Trial Gate Exit",
+    LANAYRU_TRIAL: "Lanayru Desert - Trial Gate Exit",
+}
+
+TRIALS: dict[str, str] = {
+    SKYLOFT_TRIAL: "Skyloft - Silent Realm - Exit",
+    FARON_TRIAL: "Faron - Silent Realm - Exit",
+    ELDIN_TRIAL: "Eldin - Silent Realm - Exit",
+    LANAYRU_TRIAL: "Lanayru - Silent Realm - Exit",
+}
+
+
 from collections import OrderedDict
 
 SILENT_REALMS = OrderedDict(

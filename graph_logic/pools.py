@@ -51,10 +51,10 @@ SILENT_REALM_EXITS_POOL = {
 }
 
 SILENT_REALM_ACCESSES = {
-    EIN("Skyloft - Trial Exit"),
-    EIN("Faron - Woods - Trial Exit"),
-    EIN("Lanayru - Desert - Trial Exit"),
-    EIN("Eldin - Volcano - Trial Exit"),
+    EIN("Skyloft - Trial Gate Exit"),
+    EIN("Faron - Woods - Trial Gate Exit"),
+    EIN("Lanayru - Desert - Trial Gate Exit"),
+    EIN("Eldin - Volcano - Trial Gate Exit"),
 }
 SILENT_REALM_ACCESSES_POOL = {
     exit: PoolExit(exit, [entrance_of_exit(exit)]) for exit in SILENT_REALM_ACCESSES

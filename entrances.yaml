@@ -496,12 +496,12 @@ Skyloft - Silent Realm - Entrance:
 
 Skyloft - Silent Realm - Exit:
   type: exit
-  vanilla: Skyloft - Trial Entrance
+  vanilla: Skyloft - Trial Gate Entrance
 
-Skyloft - Trial Entrance:
+Skyloft - Trial Gate Entrance:
   type: entrance
 
-Skyloft - Trial Exit:
+Skyloft - Trial Gate Exit:
   type: exit
   vanilla: Skyloft - Silent Realm - Entrance
 
@@ -1826,10 +1826,10 @@ Faron Woods - Alternate <<Cutscene ?>> Exit to Deep Woods:
   index: 13
 
 
-Faron Woods - Trial Entrance:
+Faron Woods - Trial Gate Entrance:
   type: entrance
 
-Faron Woods - Trial Exit:
+Faron Woods - Trial Gate Exit:
   type: exit
   vanilla: Faron - Silent Realm - Entrance
 
@@ -1840,7 +1840,7 @@ Faron - Silent Realm - Entrance:
 
 Faron - Silent Realm - Exit:
   type: exit
-  vanilla: Faron Woods - Trial Entrance
+  vanilla: Faron Woods - Trial Gate Entrance
 
 
 ## Great Tree
@@ -2492,7 +2492,7 @@ Eldin Volcano - Entrance from Summit:
   layer: 0
   entrance: 2
 
-Eldin Volcano - Trial Entrance:
+Eldin Volcano - Trial Gate Entrance:
   type: entrance
 
 Eldin Volcano - Vent Entrance near Hot Cave:
@@ -2535,7 +2535,7 @@ Eldin Volcano - Exit to Summit:
   room: 5
   index: 1
 
-Eldin Volcano - Trial Exit:
+Eldin Volcano - Trial Gate Exit:
   type: exit
   vanilla: Eldin - Silent Realm - Entrance
 
@@ -2590,7 +2590,7 @@ Eldin - Silent Realm - Entrance:
 
 Eldin - Silent Realm - Exit:
   type: exit
-  vanilla: Eldin Volcano - Trial Entrance
+  vanilla: Eldin Volcano - Trial Gate Entrance
 
 ## Volcano Summit
 
@@ -3208,10 +3208,10 @@ Lanayru Desert - Exit to Caves:
   room: 0
   index: 8
 
-Lanayru Desert - Trial Entrance:
+Lanayru Desert - Trial Gate Entrance:
   type: entrance
 
-Lanayru Desert - Trial Exit:
+Lanayru Desert - Trial Gate Exit:
   type: exit
   vanilla: Lanayru - Silent Realm - Entrance
 
@@ -3222,7 +3222,7 @@ Lanayru - Silent Realm - Entrance:
 
 Lanayru - Silent Realm - Exit:
   type: exit
-  vanilla: Lanayru Desert - Trial Entrance
+  vanilla: Lanayru Desert - Trial Gate Entrance
 
 
 Lightning Node - Entrance:

@@ -92,6 +92,15 @@ class LogicSettings:
     additional_requirements: Dict[str, DNFInventory]
 
 
+@dataclass
+class AdditionalInfo:
+    required_dungeons: List[str]
+    unrequired_dungeons: List[str]
+    starting_items: Inventory
+    randomized_dungeon_entrance: dict[str, str]
+    randomized_trial_entrance: dict[str, str]
+
+
 def make_exit_pool(i: int) -> EXTENDED_ITEM_NAME:
     return EIN(f"Exit pool {i}")
 
@@ -101,6 +110,7 @@ class Logic:
         self,
         areas: Areas,
         logic_settings: LogicSettings,
+        additional_info: AdditionalInfo,
         placement: Placement | None = None,
         # remove_placed_from_inv=False,
         # acc_areas_default=False,
@@ -166,6 +176,10 @@ class Logic:
         self.aggregate = self.aggregate_required_items(
             self.requirements, self.full_inventory
         )
+
+        self.required_dungeons = additional_info.required_dungeons
+        self.unrequired_dungeons = additional_info.unrequired_dungeons
+        self.starting_items = additional_info.starting_items
 
     def add_item(self, item: EXTENDED_ITEM | str):
         self.inventory.add(item)
@@ -542,6 +556,20 @@ class Logic:
                 custom_requirements[index] = DNFInventory(False)
 
         return self._fill_inventory(custom_requirements, inventory)
+
+    @staticmethod
+    def aggregate_requirements(requirements: List[DNFInventory]):
+        @cache
+        def for_one(item):
+            aggregate = Inventory()
+            for conj in requirements[item].disjunction:
+                aggregate_ = Inventory()
+                for item in conj:
+                    aggregate_ |= for_one(item)
+                aggregate &= aggregate_
+            return aggregate
+
+        return [for_one(item) for item in EXTENDED_ITEM.items()]
 
     def fill_restricted(
         self,
