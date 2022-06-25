@@ -184,36 +184,36 @@ Skyloft - Upper - Knight Academy - Owlan's Crystals:
   text: delivering a <r<Kikwi>> reveals
 
 # Batreaux Rewards
-Skyloft - Village - Batreaux' House - 5 Crystals:
+Skyloft - Village - Batreaux's House - 5 Crystals:
   original item: Progressive Wallet
   type: skyloft
   Paths:
     - event/121-AkumaKun/21
     - oarc/F012r/l0
-Skyloft - Village - Batreaux' House - 10 Crystals:
+Skyloft - Village - Batreaux's House - 10 Crystals:
   original item: Heart Piece
   type: skyloft
   Paths:
     - event/121-AkumaKun/42
     - oarc/F012r/l0
-Skyloft - Village - Batreaux' House - 30 Crystals:
+Skyloft - Village - Batreaux's House - 30 Crystals:
   original item: Progressive Wallet
   type: skyloft
   Paths:
     - event/121-AkumaKun/24
     - oarc/F012r/l0
-Skyloft - Village - Batreaux' House - 30 Crystals Chest:
+Skyloft - Village - Batreaux's House - 30 Crystals Chest:
   original item: Cursed Medal
   type: skyloft
   Paths:
     - stage/F012r/r0/l0/TBox/69
-Skyloft - Village - Batreaux' House - 40 Crystals:
+Skyloft - Village - Batreaux's House - 40 Crystals:
   original item: Gold Rupee
   type: skyloft
   Paths:
     - event/121-AkumaKun/49
     - oarc/F012r/l0
-Skyloft - Village - Batreaux' House - 50 Crystals:
+Skyloft - Village - Batreaux's House - 50 Crystals:
   original item: Progressive Wallet
   type: skyloft
   Paths:
@@ -221,7 +221,7 @@ Skyloft - Village - Batreaux' House - 50 Crystals:
     - oarc/F012r/l0
   hint: sometimes
   text: <ye<50>> <r<pieces of gratitude>> can be exchanged for
-Skyloft - Village - Batreaux' House - 70 Crystals:
+Skyloft - Village - Batreaux's House - 70 Crystals:
   original item: Gold Rupee
   type: skyloft
   Paths:
@@ -229,7 +229,7 @@ Skyloft - Village - Batreaux' House - 70 Crystals:
     - oarc/F012r/l0
   hint: sometimes
   text: the <r<demon's penultimate reward>> is
-Skyloft - Village - Batreaux' House - 70 Crystals Second Reward:
+Skyloft - Village - Batreaux's House - 70 Crystals Second Reward:
   original item: Gold Rupee
   type: skyloft
   Paths:
@@ -237,7 +237,7 @@ Skyloft - Village - Batreaux' House - 70 Crystals Second Reward:
     - oarc/F012r/l0
   hint: sometimes
   text: the <r<demon's penultimate reward>> is
-Skyloft - Village - Batreaux' House - 80 Crystals:
+Skyloft - Village - Batreaux's House - 80 Crystals:
   original item: Progressive Wallet
   type: skyloft
   Paths:
@@ -926,7 +926,7 @@ Lanayru - Sand Sea - Skipper's Retreat - Skydive Platform - Chest:
     - stage/F301_3/r0/l0/TBox/77
 Lanayru - Sand Sea - Shipyard - Rickety Coaster -- Heart Stopping Track in 1'05:
   original item: Heart Piece
-  type: lanayru, minigame, combat #Molderach 2 makes this a combat check
+  type: lanayru, minigame, combat #Moldarach 2 makes this a combat check
   Paths:
     - event/406-TrolleyRace/77
     - oarc/F301_4/l0
@@ -1072,32 +1072,32 @@ Lanayru Mining Facility - Chest behind Bars:
   type: lanayru, dungeon
   Paths:
     - stage/D300/r0/l0/TBox/64
-Lanayru Mining Facility - First Chest in Hub Room:
+Lanayru Mining Facility - Big Hub - Chest:
   original item: LMF Small Key
   type: lanayru, dungeon
   Paths:
     - stage/D300_1/r5/l0/TBox/70
-Lanayru Mining Facility - Chest in Key Locked Room:
+Lanayru Mining Facility - Key Locked Room - Chest:
   original item: Red Rupee
   type: lanayru, dungeon
   Paths:
     - stage/D300/r2/l0/TBox/65
-Lanayru Mining Facility - Gust Bellows:
+Lanayru Mining Facility - Gust Bellows Room - Gust Bellows Chest:
   original item: Gust Bellows
   type: lanayru, dungeon
   Paths:
     - stage/D300/r4/l0/TBox/68
-Lanayru Mining Facility - Chest inside Gust Bellows Room:
+Lanayru Mining Facility - Gust Bellows Room - Chest in Spike Maze:
   original item: Golden Skull # TODO check again
   type: lanayru, dungeon
   Paths:
     - stage/D300/r4/l0/TBox/76
-Lanayru Mining Facility - Chest in First West Room:
+Lanayru Mining Facility - First West Room - Chest:
   original item: Golden Skull # TODO check again
   type: lanayru, dungeon
   Paths:
     - stage/D300/r3/l0/TBox/66
-Lanayru Mining Facility - Chest after Armos Fight:
+Lanayru Mining Facility - Armos Fight Room - Chest:
   original item: LMF Map
   type: lanayru, dungeon
   Paths:
@@ -1108,7 +1108,7 @@ Lanayru Mining Facility - Chest behind First Crawlspace:
   Paths:
     - stage/D300_1/r9/l0/TBox/72
     - stage/D300/r9/l0/TBox/72
-Lanayru Mining Facility - Chest in Spike Maze:
+Lanayru Mining Facility - Sand Spike Maze - Chest:
   original item: Red Rupee
   type: lanayru, dungeon
   Paths:
@@ -1120,7 +1120,7 @@ Lanayru Mining Facility - Boss Key Chest:
     - stage/D300_1/r8/l0/TBox/71
   hint: always
   text: deep inside <r<Lanayru Mining Facility, a pair of Armos>> guard
-Lanayru Mining Facility - Shortcut Chest in Main Hub:
+Lanayru Mining Facility - Big Hub - Shortcut Chest:
   original item: Red Rupee
   type: lanayru, dungeon
   Paths:
@@ -1140,32 +1140,32 @@ Lanayru Mining Facility - Great Hall - Goddess Harp:
     - event/400-Desert/286
     - oarc/F300_5/l0
 
-Ancient Cistern - Chest in East Part:
+Ancient Cistern - East Part - Chest:
   original item: AC Small Key
   type: faron, dungeon
   Paths:
     - stage/D101/r1/l0/TBox/67
-Ancient Cistern - Whip:
+Ancient Cistern - Whip Chest Room - Chest:
   original item: Whip
   type: faron, dungeon
   Paths:
     - stage/D101/r7/l0/TBox/69
-Ancient Cistern - Chest after Whip Hooks:
+Ancient Cistern - After Whip Hooks - Chest:
   original item: AC Map
   type: faron, dungeon
   Paths:
     - stage/D101/r0/l0/TBox/65
-Ancient Cistern - Chest near Vines:
+Ancient Cistern - Vines Area - Chest:
   original item: Red Rupee
   type: faron, dungeon
   Paths:
     - stage/D101/r0/l0/TBox/66
-Ancient Cistern - Chest behind the Waterfall:
+Ancient Cistern - Behind the Waterfall - Chest:
   original item: Red Rupee
   type: faron, dungeon
   Paths:
     - stage/D101/r3/l0/TBox/84
-Ancient Cistern - Bokoblin:
+Ancient Cistern - Basement Gutters - Bokoblin:
   original item: AC Small Key
   type: faron, dungeon
   Paths:
