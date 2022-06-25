@@ -4,7 +4,7 @@ from typing import List  # Only for typing purposes
 
 from options import Options, OPTIONS
 from .backwards_filled_algorithm import BFA, RandomizationSettings
-from .logic import Logic, Placement, LogicSettings
+from .logic import Logic, Placement, LogicSettings, AdditionalInfo
 from .logic_input import Areas
 from .logic_expression import DNFInventory, InventoryAtom, LogicExpression
 from .inventory import Inventory, EXTENDED_ITEM
@@ -22,6 +22,7 @@ class Rando:
 
         self.areas = Areas(graph_requirements, checks, hints, map_exits)
         self.short_to_full = self.areas.short_to_full
+        self.norm = lambda s: self.areas.full_to_short(self.areas.short_to_full(s))
 
         placement = self.options.get("placement")
         self.placement: Placement = placement if placement is not None else Placement()
@@ -51,8 +52,15 @@ class Rando:
         logic_settings = LogicSettings(
             exit_pools, starting_inventory_BFA, starting_area, additional_requirements
         )
+        additional_info = AdditionalInfo(
+            self.required_dungeons,
+            self.unrequired_dungeons,
+            self.starting_items,
+            self.randomized_dungeon_entrance,
+            self.randomized_trial_entrance,
+        )
 
-        self.logic = Logic(self.areas, logic_settings, self.placement)
+        self.logic = Logic(self.areas, logic_settings, additional_info, self.placement)
 
         if self.options["logic-mode"] == "No Logic":
             for i in range(len(self.logic.requirements)):
@@ -66,7 +74,7 @@ class Rando:
         self.rando_algo.randomize()
 
         # Check
-        self.logic.inventory = self.starting_items.add(
+        self.logic.inventory = self.logic.starting_items.add(
             EXTENDED_ITEM[self.short_to_full(START)]
         )
         self.logic.fill_inventory()
@@ -90,9 +98,17 @@ class Rando:
 
         self.get_endgame_requirements()  # self.endgame_requirements
 
+        self.initialize_items()  # self.randosettings
+
         self.set_placement_options()  # self.logic_options_requirements
 
-        self.initialize_items()  # self.randosettings
+        self.randomize_dungeons_trials()
+
+        for item in self.starting_items.intset:
+            item_name = EXTENDED_ITEM.get_item_name(item)
+            self.randosettings.must_be_placed_items.remove(item_name)
+        for item_name in self.placement.items:
+            self.randosettings.must_be_placed_items.remove(item_name)
 
     def randomize_required_dungeons(self):
         """
@@ -193,12 +209,6 @@ class Rando:
         if self.options["map-mode"] != "Removed":
             must_be_placed_items |= MAPS
 
-        for item in self.starting_items.intset:
-            item_name = EXTENDED_ITEM.get_item_name(item)
-            must_be_placed_items.remove(item_name)
-        for item_name in self.placement.items:
-            must_be_placed_items.remove(item_name)
-
         may_be_placed_items: List[EIN | str] = list(CONSUMABLE_ITEMS)
         duplicable_items = DUPLICABLE_ITEMS
 
@@ -229,16 +239,15 @@ class Rando:
             NO_BIT_CRASHES: self.options["hero-mode"],
         }
 
-        self.placement |= SINGLE_CRYSTAL_PLACEMENT(
-            lambda s: self.areas.full_to_short(self.short_to_full(s))
-        )
+        self.placement |= SINGLE_CRYSTAL_PLACEMENT(self.norm)
 
         vanilla_map_transitions = {}
         vanilla_reverse_map_transitions = {}
         for exit, v in map_exits.items():
             if v["type"] == "entrance" or v.get("disabled", False):
                 continue
-            entrance = v["vanilla"]
+            exit = self.norm(exit)
+            entrance = self.norm(v["vanilla"])
             vanilla_map_transitions[exit] = entrance
             vanilla_reverse_map_transitions[entrance] = exit
 
@@ -249,9 +258,10 @@ class Rando:
 
         if self.options["sword-dungeon-reward"]:
             swords_to_place = {
-                item
-                for item in self.randosettings.must_be_placed_items
-                if strip_item_number(item) == PROGRESSIVE_SWORD
+                sword
+                for sword in PROGRESSIVE_SWORDS
+                if sword not in self.placement.items
+                and sword not in self.starting_items.intset
             }
             dungeons = self.required_dungeons.copy()
             self.rng.shuffle(dungeons)
@@ -315,6 +325,68 @@ class Rando:
     #
     #
     # Retro-compatibility
+
+    def reassign_entrances(
+        self, exs1: list[EIN | list[EIN]], exs2: list[EIN | list[EIN]]
+    ):
+        for ex1, ex2 in zip(exs1, exs2):
+            if isinstance(ex1, str):
+                ex1 = [ex1]
+            if isinstance(ex2, str):
+                ex2 = [ex2]
+            assert ex1[0] in self.placement.map_transitions
+            assert ex2[0] in self.placement.map_transitions
+            en1 = EIN(entrance_of_exit(ex1[0]))
+            en2 = EIN(entrance_of_exit(ex2[0]))
+            for exx1 in ex1:
+                self.placement.map_transitions[exx1] = en2
+            for exx2 in ex2:
+                self.placement.map_transitions[exx2] = en1
+            self.placement.reverse_map_transitions[en1] = ex2[0]
+            self.placement.reverse_map_transitions[en2] = ex1[0]
+
+    def randomize_dungeons_trials(self):
+        # Do this in a deliberately hacky way, this is not supposed to be how ER works
+        der = self.options["randomize-entrances"]
+        if der == "Dungeons":
+            pool = REGULAR_DUNGEONS.copy()
+            self.rng.shuffle(pool)
+            pool.append(SK)
+        elif der == "Dungeons + Sky Keep":
+            pool = ALL_DUNGEONS.copy()
+            self.rng.shuffle(pool)
+        else:
+            assert der == "None"
+            pool = ALL_DUNGEONS
+
+        self.randomized_dungeon_entrance = {}
+        for i, e in enumerate(pool):
+            self.randomized_dungeon_entrance[ALL_DUNGEONS[i]] = e
+
+        dungeon_entrances = [
+            [self.norm(e) for e in DUNGEON_OVERWORLD_EXITS[k]] for k in ALL_DUNGEONS
+        ]
+        dungeons = [
+            self.norm(DUNGEON_MAIN_EXITS[self.randomized_dungeon_entrance[k]])
+            for k in ALL_DUNGEONS
+        ]
+
+        self.reassign_entrances(dungeon_entrances, dungeons)  # type: ignore
+
+        ter = self.options["randomize-trials"]
+        pool = ALL_TRIALS.copy()
+        if ter:
+            self.rng.shuffle(pool)
+
+        self.randomized_trial_entrance = {}
+        for i, e in enumerate(pool):
+            self.randomized_trial_entrance[ALL_TRIALS[i]] = e
+
+        trial_entrances = [self.norm(TRIAL_EXITS[k]) for k in ALL_TRIALS]
+        trials = [
+            self.norm(TRIALS[self.randomized_trial_entrance[k]]) for k in ALL_TRIALS
+        ]
+        self.reassign_entrances(trial_entrances, trials)  # type: ignore
 
     def retro_compatibility(self):
         self.done_item_locations = self.logic.placement.locations

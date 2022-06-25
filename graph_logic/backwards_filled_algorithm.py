@@ -99,7 +99,7 @@ class BFA:
             return True
 
         # We have to replace an already placed item
-        if not force:
+        if not force or depth > 50:
             return False
         if not accessible_locations:
             print(self.logic.placement.locations)
