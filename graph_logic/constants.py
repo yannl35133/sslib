@@ -1,5 +1,5 @@
 from collections import defaultdict
-from typing import Set, NewType, Dict, Callable
+from typing import NewType, Dict, Callable
 
 EXTENDED_ITEM_NAME = NewType("EXTENDED_ITEM_NAME", str)
 EIN = EXTENDED_ITEM_NAME
@@ -14,13 +14,15 @@ RANDOMIZED_BEEDLE_OPTION = "Randomized Beedle option"
 HERO_MODE = "Hero-mode"
 NO_BIT_CRASHES = "No BiT crashes"
 
-LOGIC_OPTIONS = {
-    OPEN_THUNDERHEAD_OPTION,
-    OPEN_LMF_OPTION,
-    RANDOMIZED_BEEDLE_OPTION,
-    HERO_MODE,
-    NO_BIT_CRASHES,
-}
+LOGIC_OPTIONS = dict.fromkeys(
+    [
+        OPEN_THUNDERHEAD_OPTION,
+        OPEN_LMF_OPTION,
+        RANDOMIZED_BEEDLE_OPTION,
+        HERO_MODE,
+        NO_BIT_CRASHES,
+    ]
+)
 
 # Locations
 
@@ -80,9 +82,9 @@ def strip_item_number(item: EXTENDED_ITEM_NAME) -> str:
     return item[: item.index("#")]
 
 
-def group(name: str, count: int) -> Set[EXTENDED_ITEM_NAME]:
+def group(name: str, count: int) -> Dict[EXTENDED_ITEM_NAME, None]:
     ITEM_COUNTS[name] = count
-    return {number(name, i) for i in range(count)}
+    return {number(name, i): None for i in range(count)}
 
 
 SLINGSHOT = EIN("Slingshot")
@@ -234,34 +236,36 @@ FIVE_BOMBS_GROUP = group(FIVE_BOMBS, 1)
 RUPOOR = "Rupoor"
 
 PROGRESS_ITEMS = (
-    {
-        SLINGSHOT,
-        BOMB_BAG,
-        GUST_BELLOWS,
-        WHIP,
-        BOW,
-        BUG_NET,
-        CLAWSHOTS,
-        WATER_SCALE,
-        FIRESHIELD_EARRINGS,
-        SEA_CHART,
-        EMERALD_TABLET,
-        RUBY_TABLET,
-        AMBER_TABLET,
-        STONE_OF_TRIALS,
-        BABY_RATTLE,
-        CAWLINS_LETTER,
-        HORNED_COLOSSUS_BEETLE,
-        GODDESS_HARP,
-        BALLAD_OF_THE_GODDESS,
-        FARORES_COURAGE,
-        NAYRUS_WISDOM,
-        DINS_POWER,
-        FARON_SOTH_PART,
-        ELDIN_SOTH_PART,
-        LANAYRU_SOTH_PART,
-        SPIRAL_CHARGE,
-    }
+    dict.fromkeys(
+        [
+            SLINGSHOT,
+            BOMB_BAG,
+            GUST_BELLOWS,
+            WHIP,
+            BOW,
+            BUG_NET,
+            CLAWSHOTS,
+            WATER_SCALE,
+            FIRESHIELD_EARRINGS,
+            SEA_CHART,
+            EMERALD_TABLET,
+            RUBY_TABLET,
+            AMBER_TABLET,
+            STONE_OF_TRIALS,
+            BABY_RATTLE,
+            CAWLINS_LETTER,
+            HORNED_COLOSSUS_BEETLE,
+            GODDESS_HARP,
+            BALLAD_OF_THE_GODDESS,
+            FARORES_COURAGE,
+            NAYRUS_WISDOM,
+            DINS_POWER,
+            FARON_SOTH_PART,
+            ELDIN_SOTH_PART,
+            LANAYRU_SOTH_PART,
+            SPIRAL_CHARGE,
+        ]
+    )
     | GRATITUDE_CRYSTAL_PACKS
     | GRATITUDE_CRYSTALS
     | PROGRESSIVE_SWORDS
@@ -275,17 +279,19 @@ PROGRESS_ITEMS = (
 )
 
 NONPROGRESS_ITEMS = (
-    {
-        WOODEN_SHIELD,
-        HYLIAN_SHIELD,
-        CURSED_MEDAL,
-        TREASURE_MEDAL,
-        POTION_MEDAL,
-        SMALL_SEED_SATCHEL,
-        SMALL_BOMB_BAG,
-        SMALL_QUIVER,
-        BUG_MEDAL,
-    }
+    dict.fromkeys(
+        [
+            WOODEN_SHIELD,
+            HYLIAN_SHIELD,
+            CURSED_MEDAL,
+            TREASURE_MEDAL,
+            POTION_MEDAL,
+            SMALL_SEED_SATCHEL,
+            SMALL_BOMB_BAG,
+            SMALL_QUIVER,
+            BUG_MEDAL,
+        ]
+    )
     | HEART_MEDALS
     | RUPEE_MEDALS
     | HEART_PIECES
@@ -312,13 +318,15 @@ CONSUMABLE_ITEMS = (
 # Once all the items that have a fixed number per seed are used up, this list is used.
 # Unlike the other lists, this one does not have items removed from it as they are placed.
 # The number of each item in this list is instead its weighting relative to the other items in the list.
-DUPLICABLE_ITEMS = {
-    BLUE_RUPEE,
-    RED_RUPEE,
-    SEMI_RARE_TREASURE,
-    RARE_TREASURE,
-}
-DUPLICABLE_COUNTERPROGRESS_ITEMS = {RUPOOR}
+DUPLICABLE_ITEMS = dict.fromkeys(
+    [
+        BLUE_RUPEE,
+        RED_RUPEE,
+        SEMI_RARE_TREASURE,
+        RARE_TREASURE,
+    ]
+)
+DUPLICABLE_COUNTERPROGRESS_ITEMS = {RUPOOR: None}
 
 # note: Lanayru Caves is technically not a dungeon, but has to be treated as such for non key sanity
 SMALL_KEYS = (
@@ -329,7 +337,7 @@ SMALL_KEYS = (
     | SSH_SMALL_KEYS
     | FS_SMALL_KEYS
     | SK_SMALL_KEYS
-    | {CAVES_KEY}
+    | {CAVES_KEY: None}
 )
 BOSS_KEYS = (
     SV_BOSS_KEYS
@@ -340,7 +348,7 @@ BOSS_KEYS = (
     | FS_BOSS_KEYS
     | SK_BOSS_KEYS
 )
-MAPS = {SV_MAP, ET_MAP, LMF_MAP, AC_MAP, SSH_MAP, FS_MAP, SK_MAP}
+MAPS = dict.fromkeys([SV_MAP, ET_MAP, LMF_MAP, AC_MAP, SSH_MAP, FS_MAP, SK_MAP])
 
 INVENTORY_ITEMS = (
     PROGRESS_ITEMS

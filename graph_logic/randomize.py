@@ -106,9 +106,9 @@ class Rando:
 
         for item in self.starting_items.intset:
             item_name = EXTENDED_ITEM.get_item_name(item)
-            self.randosettings.must_be_placed_items.remove(item_name)
+            self.randosettings.must_be_placed_items.pop(item_name, None)
         for item_name in self.placement.items:
-            self.randosettings.must_be_placed_items.remove(item_name)
+            self.randosettings.must_be_placed_items.pop(item_name, None)
 
     def randomize_required_dungeons(self):
         """
