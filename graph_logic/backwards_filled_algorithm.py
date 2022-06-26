@@ -11,9 +11,20 @@ from .inventory import EXTENDED_ITEM
 
 @dataclass
 class RandomizationSettings:
-    must_be_placed_items: Set[EXTENDED_ITEM_NAME]
+    must_be_placed_items: Dict[EXTENDED_ITEM_NAME, None]
     may_be_placed_items: List[str | EXTENDED_ITEM_NAME]
-    duplicable_items: Set[str]
+    duplicable_items: Dict[str, None]
+
+
+from time import time
+
+
+def timeit(name, f):
+    t = time()
+    r = f()
+    t2 = time()
+    # print(name, "took", t2 - t, "seconds")
+    return r
 
 
 class BFA:
@@ -30,10 +41,10 @@ class BFA:
         )
 
         # Initialize item related attributes.
-        self.progress_items: Set[EIN] = {  # type: ignore
-            item
+        self.progress_items: Dict[EIN, None] = {  # type: ignore
+            item: None
             for item in randosettings.must_be_placed_items
-            | set(randosettings.may_be_placed_items)
+            | dict.fromkeys(randosettings.may_be_placed_items)
             if truly_progress_item[EXTENDED_ITEM[item]]
         }
 
@@ -43,15 +54,17 @@ class BFA:
         self.rng.shuffle(progress_list)
 
         for item in progress_list:
-            self.place_item(item)
+            timeit("Place item", lambda: self.place_item(item))
 
         # for i, (e, _) in enumerate(self.logic.pools):
         #     for _ in range(len(e)):
         #         self.link(i)
 
-        must_be_placed_items = list(
-            self.randosettings.must_be_placed_items - self.progress_items
-        )
+        must_be_placed_items = [
+            item
+            for item in self.randosettings.must_be_placed_items
+            if item not in self.progress_items
+        ]
         may_be_placed_items = [
             item
             for item in self.randosettings.may_be_placed_items
@@ -63,9 +76,11 @@ class BFA:
         self.logic.add_item(EXTENDED_ITEM.banned_bit())
         self.logic.fill_inventory()
         for item in must_be_placed_items:
-            assert self.place_item(item)
+            assert timeit("Place nonprogress", lambda: self.place_item(item))
         for item in may_be_placed_items:
-            if not self.place_item(item, force=False):
+            if not timeit(
+                "Place non-mandatory", lambda: self.place_item(item, force=False)
+            ):
                 break
         self.fill_with_junk(self.randosettings.duplicable_items)
 
