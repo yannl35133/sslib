@@ -81,11 +81,15 @@ class Inventory:
         | Tuple[str, int]
         | EXTENDED_ITEM_NAME
         | Set[EXTENDED_ITEM]
-        | EXTENDED_ITEM = None,
+        | EXTENDED_ITEM
+        | Inventory = None,
     ):
         if v is None:
             self.bitset = 0
             self.intset = set()
+        elif isinstance(v, Inventory):
+            self.bitset = v.bitset
+            self.intset = v.intset
         elif isinstance(v, set):
             bitset = 0
             for item in v:
@@ -119,6 +123,8 @@ class Inventory:
                         bit = EXTENDED_ITEM[number(item, i)]
                         self.bitset |= 1 << bit
                         self.intset.add(bit)
+        else:
+            raise ValueError
 
     def __getitem__(self, index):
         if isinstance(index, EXTENDED_ITEM):

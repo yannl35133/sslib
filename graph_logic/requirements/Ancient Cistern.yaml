@@ -1,3 +1,5 @@
+allowed-time-of-day: DayOnly
+
 macros:
   Can Lower Statue: Impossible
 
