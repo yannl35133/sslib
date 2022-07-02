@@ -103,17 +103,17 @@ Main:
 
   Treasure Room:
     locations:
-      Treasure Room First Chest: Nothing
-      Treasure Room Second Chest: Nothing
-      Treasure Room Third Chest: Nothing
-      Treasure Room Fourth Chest: Nothing
-      Treasure Room Fifth Chest: Nothing
+      First Chest: Nothing
+      Second Chest: Nothing
+      Third Chest: Nothing
+      Fourth Chest: Nothing
+      Fifth Chest: Nothing
     exits:
       Brig: Nothing
 
   Brig Prison:
     locations:
-      Robot in Brig's Reward: Nothing
+      Robot's Reward: Nothing
     exits:
       Brig: Nothing
 
