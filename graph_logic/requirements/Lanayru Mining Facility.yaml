@@ -1,3 +1,8 @@
+allowed-time-of-day: DayOnly
+
+macros:
+  Can Activate Minecart Timeshift Stone: Sword | Whip | Bomb Bag | Distance Activator
+
 Main:
   First Room:
     locations:
@@ -78,12 +83,12 @@ Main:
         Shortcut Chest in Main Hub: Nothing
       exits:
         Near Boss Door: Gust Bellows | (LMF - Minecart Jump Trick & Sword & (Bomb Bag | Beetle))
-    
+
     Between Wind Gates:
       exits:
         Entry: Gust Bellows
         Near Boss Key Room First Exit: Nothing
-  
+
   Near Boss Door:
     exits:
       Boss Door: Lanayru Mining Facility Boss Key & (Sword | Whip | Bomb Bag | Distance Activator)

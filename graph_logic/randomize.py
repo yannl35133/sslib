@@ -1,17 +1,237 @@
 from __future__ import annotations
+from dataclasses import dataclass
+from functools import cache
 import random
 from typing import List  # Only for typing purposes
 
 from options import Options, OPTIONS
-from .backwards_filled_algorithm import BFA, RandomizationSettings
-from .logic import Logic, Placement, LogicSettings, AdditionalInfo
+from .backwards_filled_algorithm import BFA, RandomizationSettings, timeit
+from .logic import Logic, Placement, LogicSettings
 from .logic_input import Areas
 from .logic_expression import DNFInventory, InventoryAtom, LogicExpression
 from .inventory import Inventory, EXTENDED_ITEM
-from yaml_files import graph_requirements, checks, hints, map_exits
+from yaml_files import graph_requirements, checks, hints, map_exits, requirements
 from .constants import *
 from .placements import *
 from .pools import *
+
+
+@dataclass
+class AdditionalInfo:
+    required_dungeons: List[str]
+    unrequired_dungeons: List[str]
+    starting_items: Inventory
+    randomized_dungeon_entrance: dict[str, str]
+    randomized_trial_entrance: dict[str, str]
+    initial_placement: Placement
+
+
+class LogicUtils:
+    def __init__(
+        self, logic: Logic, additional_info: AdditionalInfo, additional_requirements
+    ):
+
+        self._logic = logic
+        self.areas = logic.areas
+        self.map_exits = logic.map_exits
+        self.checks = logic.checks
+        self.short_to_full = logic.short_to_full
+        self.full_to_short = logic.full_to_short
+        self.placement = logic.placement
+        self.required_dungeons = additional_info.required_dungeons
+        self.unrequired_dungeons = additional_info.unrequired_dungeons
+        self.starting_items = additional_info.starting_items
+        self.starting_inventory = self.starting_items.add(
+            EXTENDED_ITEM[self.short_to_full(START)]
+        )
+        self.randomized_dungeon_entrance = additional_info.randomized_dungeon_entrance
+        self.randomized_trial_entrance = additional_info.randomized_trial_entrance
+        self.initial_placement = additional_info.initial_placement
+        self.additional_requirements = additional_requirements
+
+    @cache
+    def requirements(self):
+        assert len(self.placement.locations) == len(self.checks)
+        requirements = self.areas.requirements
+        for loc, req in self.additional_requirements.items():
+            requirements[EXTENDED_ITEM[self.short_to_full(loc)]] &= req
+
+        for exit, entrance in self.placement.map_transitions.items():
+            self._logic._link_connection(exit, entrance, requirements=requirements)
+
+        for k, v in self.placement.locations.items():
+            self._logic._place_item(k, v, requirements)
+
+        for k in self.starting_inventory:
+            requirements[k] = DNFInventory(True)
+
+        return requirements
+
+    @cache
+    def _fill_for_test(self, banned_intset, inventory):
+        custom_requirements = self.requirements().copy()
+        for index, e in enumerate(reversed(bin(banned_intset))):
+            if e == "1":
+                custom_requirements[index] = DNFInventory(False)
+
+        return Logic._fill_inventory(custom_requirements, inventory)
+
+    def fill_restricted(
+        self,
+        banned_indices: List[EXTENDED_ITEM] = [],
+        starting_inventory: None | Inventory = None,
+    ):
+        if starting_inventory is None:
+            starting_inventory = self.starting_inventory
+
+        banned_intset = 0
+        for i in banned_indices:
+            banned_intset += 1 << i
+
+        return self._fill_for_test(banned_intset, starting_inventory)
+
+    def restricted_test(
+        self,
+        test_index,
+        banned_indices: List[EXTENDED_ITEM] = [],
+        starting_inventory: None | Inventory = None,
+    ):
+        if starting_inventory is None:
+            starting_inventory = self.starting_inventory
+
+        banned_intset = 0
+        for i in banned_indices:
+            banned_intset += 1 << i
+
+        restricted_full = self._fill_for_test(banned_intset, starting_inventory)
+
+        return restricted_full[test_index]
+
+    def aggregate_requirements(self, item):
+        if not hasattr(self, "aggregated_reqs"):
+            self._isvisited_agg = set()
+            self.aggregated_reqs: List[None | bool | Inventory] = [
+                None for _ in self.requirements()
+            ]
+
+        if item in self._isvisited_agg:
+            return False
+
+        if self.aggregated_reqs[item] is not None:
+            return self.aggregated_reqs[item]
+
+        self._isvisited_agg.add(item)
+        aggregate = False
+        for (possibility, (_, conj_pre)) in self._logic.requirements[
+            item
+        ].disjunction.items():
+            aggregate_ = Inventory(conj_pre)
+            for req_item in possibility:
+                ag = timeit(
+                    f"Aggr reqs {req_item}",
+                    lambda: self.aggregate_requirements(req_item),
+                )
+                if ag is False:
+                    break
+                aggregate_ |= ag
+            else:
+                if aggregate is False:
+                    aggregate = aggregate_
+                else:
+                    aggregate &= aggregate_
+
+        self._isvisited_agg.remove(item)
+        if not self._isvisited_agg:
+            self.aggregated_reqs[item] = aggregate
+
+        return aggregate
+
+    def get_sots_locations(self, loc=DEMISE):
+        index = EXTENDED_ITEM[self.short_to_full(loc)]
+        # requireds: Inventory = self.aggregate_requirements(index)  # type: ignore
+        return [
+            # self.full_to_short(EXTENDED_ITEM[i])
+            # for i in requireds.intset
+            # if EXTENDED_ITEM[i] in self.checks
+        ]
+
+    def aggregate_useful_items(self, item):
+        if hasattr(self, "aggregated_usefuls"):
+            return self.aggregated_usefuls[item]
+
+        self.aggregated_usefuls: List[Inventory] = [
+            x.disj_pre for x in self.requirements()
+        ]
+
+        just_added = [x.intset for x in self.aggregated_usefuls]
+
+        keep_going = True
+        while keep_going:
+            keep_going = False
+            for i in range(len(just_added)):
+                new_just_added = set()
+                for item in just_added[i]:
+                    new_just_added |= (
+                        self.aggregated_usefuls[item].intset
+                        - self.aggregated_usefuls[i].intset
+                    )
+                    self.aggregated_usefuls[i] |= self.aggregated_usefuls[item]
+                just_added[i] = new_just_added
+                keep_going = keep_going or new_just_added
+
+        return self.aggregated_usefuls[item]
+
+    def get_useful_checks(self, loc=DEMISE):
+        index = EXTENDED_ITEM[self.short_to_full(loc)]
+        usefuls: Inventory = self.aggregate_useful_items(index)  # type: ignore
+        return [
+            self.full_to_short(EXTENDED_ITEM[i])
+            for i in usefuls.intset
+            if EXTENDED_ITEM[i] in self.checks
+        ]
+
+    def get_barren_regions(self, loc=DEMISE):
+        return [], []
+
+    def calculate_playthrough_progression_spheres(self):
+        spheres = []
+        keep_going = True
+        inventory = self.starting_inventory
+        requirements = self.requirements()
+        # usefuls = self.aggregate_useful_items(EXTENDED_ITEM[self.short_to_full(DEMISE)])
+        while keep_going:
+            sphere = []
+            keep_going = False
+            for i in EXTENDED_ITEM.items():
+                if not inventory[i] and requirements[i].eval(inventory):
+                    inventory |= i
+                    keep_going = True
+                    if EXTENDED_ITEM.get_item_name(i) in self.checks:  # i in usefuls:
+                        sphere.append(
+                            self.full_to_short(EXTENDED_ITEM.get_item_name(i))
+                        )
+                    elif i == EXTENDED_ITEM[self.short_to_full(DEMISE)]:
+                        sphere.append("Past - Demise")
+            if sphere:
+                spheres.append(sphere)
+        return spheres
+
+    # def all_progress_items(self):
+    #     return self.logic.aggregate_required_items(
+    #         self.logic.requirements, self.logic.inventory
+    #     )
+
+    # def parse_logic_expression(self, exp):
+    #     return LogicExpression.parse(exp)
+
+    # def filter_locations_for_progression(self, lst):
+    #     return [loc for loc in lst if loc not in self.banned]
+
+    # def can_reach_restricted(self, banned_locations, test_location):
+    #     return self.logic.restricted_test(
+    #         (EXTENDED_ITEM[self.areas.short_to_full(loc)] for loc in banned_locations),
+    #         EXTENDED_ITEM[self.areas.short_to_full(test_location)],
+    #     )
 
 
 class Rando:
@@ -41,16 +261,16 @@ class Rando:
         exit_pools = []
         # DUNGEON_ENTRANCES_COMPLETE_POOLS + SILENT_REALMNS_COMPLETE_POOLS
 
-        banned_bit_inv = DNFInventory(EXTENDED_ITEM.banned_bit())
-
         additional_requirements = (
-            self.logic_options_requirements
-            | self.endgame_requirements
-            | {loc: banned_bit_inv for loc in self.banned}
+            self.logic_options_requirements | self.endgame_requirements
         )
 
         logic_settings = LogicSettings(
-            exit_pools, starting_inventory_BFA, starting_area, additional_requirements
+            exit_pools,
+            starting_inventory_BFA,
+            starting_area,
+            additional_requirements,
+            self.banned,
         )
         additional_info = AdditionalInfo(
             self.required_dungeons,
@@ -58,36 +278,43 @@ class Rando:
             self.starting_items,
             self.randomized_dungeon_entrance,
             self.randomized_trial_entrance,
+            self.placement.copy(),
         )
 
-        self.logic = Logic(self.areas, logic_settings, additional_info, self.placement)
+        logic = Logic(self.areas, logic_settings, self.placement)
+        self.logic = LogicUtils(logic, additional_info, additional_requirements)
 
         if self.options["logic-mode"] == "No Logic":
-            for i in range(len(self.logic.requirements)):
-                self.logic.requirements[i] = DNFInventory(True)
+            for i in range(len(logic.requirements)):
+                logic.requirements[i] = DNFInventory(True)
 
-        self.rando_algo = BFA(self.logic, self.rng, self.randosettings)
-
-        self.retro_compatibility()
+        self.rando_algo = BFA(logic, self.rng, self.randosettings)
 
     def randomize(self):
         self.rando_algo.randomize()
+        logic = self.logic._logic
 
         # Check
-        self.logic.inventory = self.logic.starting_items.add(
+        logic.inventory = self.logic.starting_items.add(
             EXTENDED_ITEM[self.short_to_full(START)]
         )
-        self.logic.fill_inventory()
+        logic.fill_inventory()
+        DEMISE_BIT = EXTENDED_ITEM[self.short_to_full(DEMISE)]
+        if not logic.full_inventory[DEMISE_BIT]:
+            print("Could not reach Demise")
+            print(f"It would require {logic.backup_requirements[DEMISE_BIT]}")
+            exit(1)
+
+        logic.add_item(EXTENDED_ITEM.banned_bit())
         all_checks = Inventory(
             {check["req_index"] for check in self.areas.checks.values()}
-            | {EXTENDED_ITEM[self.short_to_full("Beat Demise")]}
         )
 
-        if not all_checks <= self.logic.full_inventory:
+        if not all_checks <= logic.full_inventory:
             print("Everything is not accessible")
-            print(all_checks.intset - self.logic.full_inventory.intset)
-            i = next(iter(all_checks.intset - self.logic.full_inventory.intset))
-            print(f"For example, {i} would require {self.logic.backup_requirements[i]}")
+            print(all_checks.intset - logic.full_inventory.intset)
+            i = next(iter(all_checks.intset - logic.full_inventory.intset))
+            print(f"For example, {i} would require {logic.backup_requirements[i]}")
             exit(1)
 
     def parse_options(self):
@@ -166,7 +393,7 @@ class Rando:
 
         banned_types = set(self.options["banned-types"])
         for loc in checks:
-            check_types = set(checks[loc]["type"].split(","))
+            check_types = set(s.strip() for s in checks[loc]["type"].split(","))
             if not set.isdisjoint(banned_types, check_types):
                 self.banned.append(loc)
 
@@ -387,39 +614,3 @@ class Rando:
             self.norm(TRIALS[self.randomized_trial_entrance[k]]) for k in ALL_TRIALS
         ]
         self.reassign_entrances(trial_entrances, trials)  # type: ignore
-
-    def retro_compatibility(self):
-        self.done_item_locations = self.logic.placement.locations
-        self.prerandomization_item_locations = self.initial_placement.locations
-        self.entrance_connections = {}  # Names were changed
-        self.trial_connections = {}  # Names were changed
-        self.macros = self.logic.requirements
-
-    def get_sots_locations(self):
-        return {}
-
-    def get_barren_regions(self):
-        return [], []
-
-    def calculate_playthrough_progression_spheres(self):
-        return []
-
-    def split_location_name_by_zone(self, name):
-        return name, name
-
-    def all_progress_items(self):
-        return self.logic.aggregate_required_items(
-            self.logic.requirements, self.logic.inventory
-        )
-
-    def parse_logic_expression(self, exp):
-        return LogicExpression.parse(exp)
-
-    def filter_locations_for_progression(self, lst):
-        return [loc for loc in lst if loc not in self.banned]
-
-    def can_reach_restricted(self, banned_locations, test_location):
-        return self.logic.restricted_test(
-            (EXTENDED_ITEM[self.areas.short_to_full(loc)] for loc in banned_locations),
-            EXTENDED_ITEM[self.areas.short_to_full(test_location)],
-        )

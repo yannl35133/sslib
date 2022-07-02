@@ -1,3 +1,5 @@
+allowed-time-of-day: DayOnly
+
 Main:
   First Room:
     locations:
