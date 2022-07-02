@@ -1,3 +1,5 @@
+allowed-time-of-day: DayOnly
+
 macros:
   Can Activate Minecart Timeshift Stone: Sword | Whip | Bomb Bag | Distance Activator
 

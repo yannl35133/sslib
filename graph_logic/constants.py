@@ -410,6 +410,7 @@ GOT_RAISING_REQUIREMENT = "GoT Raising Requirement"
 HORDE_DOOR_REQUIREMENT = "Horde Door Requirement"
 
 START = "Start"
+DEMISE = "Beat Demise"
 SONG_IMPA_CHECK = "Sealed Grounds - Song from Impa"
 BEEDLE_STALL = "Beedle - Stall"
 
@@ -442,6 +443,14 @@ TRIALS: dict[str, str] = {
     LANAYRU_TRIAL: "Lanayru - Silent Realm - Exit",
 }
 
+TRIAL_CHECKS: dict[str, str] = {
+    SKYLOFT_TRIAL: "Skyloft - Silent Realm - Stone of Trials",
+    FARON_TRIAL: "Faron - Silent Realm - Water Scale",
+    ELDIN_TRIAL: "Eldin - Silent Realm - Fireshield Earrings",
+    LANAYRU_TRIAL: "Lanayru - Silent Realm - Clawshots",
+}
+
+TRIAL_CHECKS_REV = {v: k for k, v in TRIAL_CHECKS.items()}
 
 from collections import OrderedDict
 
