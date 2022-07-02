@@ -35,34 +35,34 @@ def SINGLE_CRYSTAL_PLACEMENT(norm):
 
 
 VANILLA_BEEDLE = {
-    "Beedle - 300 Rupee Item": number(PROGRESSIVE_POUCH, 1),
-    "Beedle - 600 Rupee Item": number(PROGRESSIVE_POUCH, 2),
-    "Beedle - 1200 Rupee Item": number(PROGRESSIVE_POUCH, 3),
-    "Beedle - 800 Rupee Item": number(LIFE_MEDAL, 0),
-    "Beedle - 1600 Rupee Item": number(HEART_PIECE, 0),
-    "Beedle - First 100 Rupee Item": number(EXTRA_WALLET, 0),
-    "Beedle - Second 100 Rupee Item": number(EXTRA_WALLET, 1),
-    "Beedle - Third 100 Rupee Item": number(EXTRA_WALLET, 2),
-    "Beedle - 50 Rupee Item": BUG_NET,
-    "Beedle - 1000 Rupee Item": BUG_MEDAL,
+    "Beedle's Shop - 300 Rupee Item": number(PROGRESSIVE_POUCH, 1),
+    "Beedle's Shop - 600 Rupee Item": number(PROGRESSIVE_POUCH, 2),
+    "Beedle's Shop - 1200 Rupee Item": number(PROGRESSIVE_POUCH, 3),
+    "Beedle's Shop - 800 Rupee Item": number(LIFE_MEDAL, 0),
+    "Beedle's Shop - 1600 Rupee Item": number(HEART_PIECE, 0),
+    "Beedle's Shop - First 100 Rupee Item": number(EXTRA_WALLET, 0),
+    "Beedle's Shop - Second 100 Rupee Item": number(EXTRA_WALLET, 1),
+    "Beedle's Shop - Third 100 Rupee Item": number(EXTRA_WALLET, 2),
+    "Beedle's Shop - 50 Rupee Item": BUG_NET,
+    "Beedle's Shop - 1000 Rupee Item": BUG_MEDAL,
 }
 VANILLA_BEEDLE_PLACEMENT = Placement(
     locations=VANILLA_BEEDLE, items={v: k for k, v in VANILLA_BEEDLE.items()}
 )
 
 VANILLA_SMALL_KEYS = {
-    "Skyview - Behind Two Eyes": number(SV_SMALL_KEY, 0),
-    "Skyview - Behind Three Eyes": number(SV_SMALL_KEY, 1),
-    "Lanayru Mining Facility - First Chest in Hub Room": number(LMF_SMALL_KEY, 0),
-    "Ancient Cistern - Small Key Chest": number(AC_SMALL_KEY, 0),
-    "Ancient Cistern - Bokoblin": number(AC_SMALL_KEY, 1),
-    "Sandship - Behind Combination Lock": number(SSH_SMALL_KEY, 0),
-    "Sandship - Robot in Brig": number(SSH_SMALL_KEY, 1),
-    "Fire Sanctuary - First Room": number(FS_SMALL_KEY, 0),
-    "Fire Sanctuary - Second Small Key Chest": number(FS_SMALL_KEY, 1),
-    "Fire Sanctuary - Third Small Key Chest": number(FS_SMALL_KEY, 2),
-    "Sky Keep - Small Key Chest": number(SK_SMALL_KEY, 0),
-    "Lanayru Caves - Golo": CAVES_KEY,
+    "Skyview - Chest behind Two Eyes": number(SV_SMALL_KEY, 0),
+    "Skyview - Chest behind Three Eyes": number(SV_SMALL_KEY, 1),
+    "Lanayru Mining Facility - Big Hub - Chest": number(LMF_SMALL_KEY, 0),
+    "Ancient Cistern - East Part - Chest": number(AC_SMALL_KEY, 0),
+    "Ancient Cistern - Basement Gutters - Bokoblin": number(AC_SMALL_KEY, 1),
+    "Sandship - Chest behind Combination Lock": number(SSH_SMALL_KEY, 0),
+    "Sandship - Brig Prison - Robot's Reward": number(SSH_SMALL_KEY, 1),
+    "Fire Sanctuary - First Room - Chest": number(FS_SMALL_KEY, 0),
+    "Fire Sanctuary - First Trapped Mogma Room - Chest": number(FS_SMALL_KEY, 1),
+    "Fire Sanctuary - Second Trapped Mogma Room - Chest": number(FS_SMALL_KEY, 2),
+    "Sky Keep - Chest after Dreadfuse": number(SK_SMALL_KEY, 0),
+    "Lanayru Caves - Golo's Gift": CAVES_KEY,
 }
 VANILLA_SMALL_KEYS_PLACEMENT = Placement(
     locations=VANILLA_SMALL_KEYS, items={v: k for k, v in VANILLA_SMALL_KEYS.items()}
@@ -88,12 +88,12 @@ CAVES_KEY_RESTRICTION = Placement(item_placement_limit={CAVES_KEY: "Lanayru - Ca
 
 
 VANILLA_BOSS_KEYS = {
-    "Skyview - Boss Key": SV_BOSS_KEY,
-    "Earth Temple - Boss Key": ET_BOSS_KEY,
-    "Lanayru Mining Facility - Boss Key": LMF_BOSS_KEY,
-    "Ancient Cistern - Boss Key": AC_BOSS_KEY,
-    "Sandship - Boss Key": SSH_BOSS_KEY,
-    "Fire Sanctuary - Boss Key": FS_BOSS_KEY,
+    "Skyview - Boss Key Chest": SV_BOSS_KEY,
+    "Earth Temple - Boss Key Chest": ET_BOSS_KEY,
+    "Lanayru Mining Facility - Boss Key Chest": LMF_BOSS_KEY,
+    "Ancient Cistern - Boss Key Chest": AC_BOSS_KEY,
+    "Sandship - Boss Key Chest": SSH_BOSS_KEY,
+    "Fire Sanctuary - Boss Key Chest": FS_BOSS_KEY,
 }
 VANILLA_BOSS_KEYS_PLACEMENT = Placement(
     locations=VANILLA_BOSS_KEYS, items={v: k for k, v in VANILLA_BOSS_KEYS.items()}
@@ -111,13 +111,13 @@ DUNGEON_BOSS_KEYS_RESTRICTION = Placement(
 )
 
 VANILLA_MAPS = {
-    "Skyview - Map Chest": SV_MAP,
-    "Earth Temple - Map Chest": ET_MAP,
-    "Lanayru Mining Facility - Map Chest": LMF_MAP,
-    "Ancient Cistern - Map Chest": AC_MAP,
-    "Sandship - Map Chest": SSH_MAP,
-    "Fire Sanctuary - Map Chest": FS_MAP,
-    "Sky Keep - Map Chest": SK_MAP,
+    "Skyview - Chest on Tree Branch": SV_MAP,
+    "Earth Temple - West Room - Chest": ET_MAP,
+    "Lanayru Mining Facility - Armos Fight Room - Chest": LMF_MAP,
+    "Ancient Cistern - After Whip Hooks - Chest": AC_MAP,
+    "Sandship - Chest before 4-Door Corridor": SSH_MAP,
+    "Fire Sanctuary - Second Trapped Mogma Room - Reward": FS_MAP,
+    "Sky Keep - First Chest": SK_MAP,
 }
 VANILLA_MAPS_PLACEMENT = Placement(
     locations=VANILLA_MAPS, items={v: k for k, v in VANILLA_MAPS.items()}
@@ -131,6 +131,7 @@ DUNGEON_MAPS_RESTRICTION = Placement(
         AC_MAP: AC,
         SSH_MAP: SSH,
         FS_MAP: FS,
+        SK_MAP: SK,
     }
 )
 DUNGEON_MAPS_RESTRICTED_RESTRICTION = Placement(
@@ -141,5 +142,6 @@ DUNGEON_MAPS_RESTRICTED_RESTRICTION = Placement(
         AC_MAP: AC + sep + "Main",
         SSH_MAP: SSH + sep + "Main",
         FS_MAP: FS + sep + "Main",
+        SK_MAP: SK + sep + "Main",
     }
 )

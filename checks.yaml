@@ -1212,32 +1212,32 @@ Sandship - Chest before 4-Door Corridor:
   type: lanayru, dungeon
   Paths:
     - stage/D301/r3/l0/TBox/71
-Sandship - Treasure Room First Chest:
+Sandship - Treasure Room - First Chest:
   original item: Semi Rare Treasure
   type: lanayru, dungeon
   Paths:
     - stage/D301/r9/l0/TBox/64
-Sandship - Treasure Room Second Chest:
+Sandship - Treasure Room - Second Chest:
   original item: Silver Rupee
   type: lanayru, dungeon
   Paths:
     - stage/D301/r9/l0/TBox/65
-Sandship - Treasure Room Third Chest:
+Sandship - Treasure Room - Third Chest:
   original item: Semi Rare Treasure
   type: lanayru, dungeon
   Paths:
     - stage/D301/r9/l0/TBox/66
-Sandship - Treasure Room Fourth Chest:
+Sandship - Treasure Room - Fourth Chest:
   original item: Silver Rupee
   type: lanayru, dungeon
   Paths:
     - stage/D301/r9/l0/TBox/67
-Sandship - Treasure Room Fifth Chest:
+Sandship - Treasure Room - Fifth Chest:
   original item: Semi Rare Treasure
   type: lanayru, dungeon
   Paths:
     - stage/D301/r9/l0/TBox/68
-Sandship - Robot in Brig's Reward:
+Sandship - Brig Prison - Robot's Reward:
   original item: SS Small Key
   type: lanayru, dungeon
   Paths:
