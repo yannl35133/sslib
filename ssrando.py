@@ -8,6 +8,7 @@ import hashlib
 import json
 import yaml
 import subprocess
+from graph_logic.inventory import EXTENDED_ITEM
 
 # from logic.logic import Logic
 from graph_logic.randomize import Rando
@@ -93,15 +94,14 @@ class Randomizer(BaseRandomizer):
         self.options.set_option("seed", self.seed)
 
         self.rng = random.Random()
+        print(f"Seed: {self.seed}")
         self.rng.seed(self.seed)
         if self.no_logs:
             for _ in range(100):
                 self.rng.random()
-
-        self.logic = Rando(self.options, self.rng)
-        self.hints = Hints(
-            self.stonehint_definitions, self.options, self.rng, self.logic
-        )
+        self.rando = Rando(self.options, self.rng)
+        self.logic = self.rando.logic
+        self.hints = Hints(self.options, self.rng, self.logic)
 
         self.dry_run = bool(self.options["dry-run"])
         self.banned_types = self.options["banned-types"]
@@ -156,9 +156,9 @@ class Randomizer(BaseRandomizer):
 
     def randomize(self):
         self.progress_callback("randomizing items...")
-        self.logic.randomize()
+        self.rando.randomize()
         self.sots_locations = self.logic.get_sots_locations()
-        self.hints.do_hints()
+        # self.hints.do_hints()
         if self.no_logs:
             self.progress_callback("writing anti spoiler log...")
         else:
@@ -191,20 +191,23 @@ class Randomizer(BaseRandomizer):
 
             return
 
-        if len(self.logic.starting_items) > 0:
+        if len(self.logic.starting_items.intset) > 0:
             spoiler_log += "\n\nStarting items:\n  "
-            spoiler_log += "\n  ".join(self.logic.starting_items)
+            spoiler_log += "\n  ".join(
+                EXTENDED_ITEM.get_item_name(i) for i in self.logic.starting_items
+            )
         spoiler_log += "\n\n\n"
 
         # Write required dungeons
-        for i, dungeon in enumerate(self.logic.required_dungeons):
-            spoiler_log += f"Required Dungeon {i+1}: " + dungeon + "\n"
+        for i, dungeon in enumerate(self.logic.required_dungeons, start=1):
+            spoiler_log += f"Required Dungeon {i}: " + dungeon + "\n"
 
         spoiler_log += "\n\n"
 
         # Write way of the hero (100% required) locations
         spoiler_log += "SotS:\n"
-        for sotsloc, item in self.sots_locations.items():
+        for sotsloc in self.sots_locations:
+            item = self.logic.placement.items[sotsloc]
             spoiler_log += "  %-53s %s\n" % (sotsloc + ":", item)
 
         spoiler_log += "\n\n"
@@ -245,7 +248,7 @@ class Randomizer(BaseRandomizer):
                 loc
                 for loc in progression_sphere
                 if loc == "Past - Demise"
-                or self.logic.done_item_locations[loc] != "Gratitude Crystal"
+                or self.logic.placement.locations[loc] != "Gratitude Crystal"
             ]
             spoiler_log += "%d:\n" % (i + 1)
 
@@ -263,7 +266,7 @@ class Randomizer(BaseRandomizer):
                         if location_name == "Past - Demise":
                             item_name = "Defeat Demise"
                         else:
-                            item_name = self.logic.done_item_locations[location_name]
+                            item_name = self.logic.placement.locations[location_name]
                         spoiler_log += format_string % (
                             specific_location_name + ":",
                             item_name,
@@ -274,14 +277,15 @@ class Randomizer(BaseRandomizer):
         # Write item locations.
         spoiler_log += "All item locations:\n"
         zones, max_location_name_length = self.get_zones_and_max_location_name_len(
-            self.logic.done_item_locations
+            self.logic.placement.locations
         )
         format_string = "    %-" + str(max_location_name_length + 1) + "s %s\n"
-        for zone_name, locations_in_zone in zones.items():
+        for zone_name in sorted(zones):
+            locations_in_zone = zones[zone_name]
             spoiler_log += zone_name + ":\n"
 
             for (location_name, specific_location_name) in locations_in_zone:
-                item_name = self.logic.done_item_locations[location_name]
+                item_name = self.logic.placement.locations[location_name]
                 # skip single gratitude crystals, since they are forced vanilla
                 if item_name == "Gratitude Crystal":
                     continue
@@ -294,25 +298,25 @@ class Randomizer(BaseRandomizer):
         for (
             entrance_name,
             dungeon_or_cave_name,
-        ) in self.logic.entrance_connections.items():
+        ) in self.logic.randomized_dungeon_entrance.items():
             spoiler_log += "  %-48s %s\n" % (entrance_name + ":", dungeon_or_cave_name)
 
         spoiler_log += "\n\n"
 
         # Write randomized trials
         spoiler_log += "Trial Gates:\n"
-        for trial_gate, trial in self.logic.trial_connections.items():
+        for trial_gate, trial in self.logic.randomized_trial_entrance.items():
             spoiler_log += "  %-48s %s\n" % (trial_gate + ":", trial)
 
         spoiler_log += "\n\n\n"
 
         # Write hints
-        spoiler_log += "Hints:\n"
-        for hintlocation, hint in self.hints.hints.items():
-            spoiler_log += "  %-53s %s\n" % (
-                hintlocation + ":",
-                hint.to_spoiler_log_text(),
-            )
+        # spoiler_log += "Hints:\n"
+        # for hintlocation, hint in self.hints.hints.items():
+        #     spoiler_log += "  %-53s %s\n" % (
+        #         hintlocation + ":",
+        #         hint.to_spoiler_log_text(),
+        #     )
 
         spoiler_log += "\n\n\n"
 
@@ -342,15 +346,15 @@ class Randomizer(BaseRandomizer):
         spoiler_log[
             "playthrough"
         ] = self.logic.calculate_playthrough_progression_spheres()
-        spoiler_log["item-locations"] = self.logic.done_item_locations
+        spoiler_log["item-locations"] = self.logic.placement.items
         spoiler_log["hints"] = dict(
-            map(
-                lambda kv: (kv[0], kv[1].to_spoiler_log_json()),
-                self.hints.hints.items(),
-            )
+            # map(
+            #     lambda kv: (kv[0], kv[1].to_spoiler_log_json()),
+            #     self.hints.hints.items(),
+            # )
         )
-        spoiler_log["entrances"] = self.logic.entrance_connections
-        spoiler_log["trial-connections"] = self.logic.trial_connections
+        spoiler_log["entrances"] = self.logic.randomized_dungeon_entrance
+        spoiler_log["trial-connections"] = self.logic.randomized_trial_entrance
 
         spoiler_log_output_path = self.log_file_path / (
             "SS Random %s - Spoiler Log.json" % self.seed
@@ -519,8 +523,10 @@ class Randomizer(BaseRandomizer):
         zones = OrderedDict()
         max_location_name_length = 0
         for location_name in locations:
-            zone_name, specific_location_name = self.logic.split_location_name_by_zone(
-                location_name
+            zone_name, specific_location_name = (
+                location_name.split(" - ", 1)
+                if " - " in location_name
+                else ("", location_name)
             )
 
             if zone_name not in zones:
@@ -534,54 +540,54 @@ class Randomizer(BaseRandomizer):
 
     def get_placement_file(self):
         # temporary placement file stuff
-        trial_checks = {
-            # (getting it text patch, inventory text line)
-            "Skyloft Silent Realm - Stone of Trials": "Song of the Hero - Trial Hint",
-            "Faron Silent Realm - Water Scale": "Farore's Courage - Trial Hint",
-            "Lanayru Silent Realm - Clawshots": "Nayru's Wisdom - Trial Hint",
-            "Eldin Silent Realm - Fireshield Earrings": "Din's Power - Trial Hint",
-        }
-        trial_hints = {}
-        for (trial_check_name, hintname) in trial_checks.items():
-            trial_gate = constants.SILENT_REALM_CHECKS[trial_check_name]
-            randomized_trial = self.logic.trial_connections[trial_gate]
-            randomized_trial_check = [
-                trial for trial in trial_checks if trial.startswith(randomized_trial)
-            ].pop()
-            item = self.logic.done_item_locations[randomized_trial_check]
-            hint_mode = self.options["song-hints"]
-            if hint_mode == "Basic":
-                if item in self.logic.all_progress_items:
-                    useful_text = "You might need what it reveals..."
-                    # print(f'{item} in {trial_check} is useful')
-                else:
-                    useful_text = "It's probably not too important..."
-                    # print(f'{item} in {trial_check} is not useful')
-            elif hint_mode == "Advanced":
-                if randomized_trial_check in self.sots_locations:
-                    useful_text = "Your spirit will grow by completing this trial"
-                elif item in self.logic.all_progress_items:
-                    useful_text = "You might need what it reveals..."
-                else:
-                    # barren
-                    useful_text = "It's probably not too important..."
-            elif hint_mode == "Direct":
-                useful_text = f"This trial holds {item}"
-            else:
-                useful_text = ""
-            trial_hints[hintname] = useful_text
+        # trial_checks = {
+        #     # (getting it text patch, inventory text line)
+        #     "Skyloft Silent Realm - Stone of Trials": "Song of the Hero - Trial Hint",
+        #     "Faron Silent Realm - Water Scale": "Farore's Courage - Trial Hint",
+        #     "Lanayru Silent Realm - Clawshots": "Nayru's Wisdom - Trial Hint",
+        #     "Eldin Silent Realm - Fireshield Earrings": "Din's Power - Trial Hint",
+        # }
+        # trial_hints = {}
+        # for (trial_check_name, hintname) in trial_checks.items():
+        #     trial_gate = constants.SILENT_REALM_CHECKS[trial_check_name]
+        #     randomized_trial = self.logic.trial_connections[trial_gate]
+        #     randomized_trial_check = [
+        #         trial for trial in trial_checks if trial.startswith(randomized_trial)
+        #     ].pop()
+        #     item = self.logic.done_item_locations[randomized_trial_check]
+        #     hint_mode = self.options["song-hints"]
+        #     if hint_mode == "Basic":
+        #         if item in self.logic.all_progress_items:
+        #             useful_text = "You might need what it reveals..."
+        #             # print(f'{item} in {trial_check} is useful')
+        #         else:
+        #             useful_text = "It's probably not too important..."
+        #             # print(f'{item} in {trial_check} is not useful')
+        #     elif hint_mode == "Advanced":
+        #         if randomized_trial_check in self.sots_locations:
+        #             useful_text = "Your spirit will grow by completing this trial"
+        #         elif item in self.logic.all_progress_items:
+        #             useful_text = "You might need what it reveals..."
+        #         else:
+        #             # barren
+        #             useful_text = "It's probably not too important..."
+        #     elif hint_mode == "Direct":
+        #         useful_text = f"This trial holds {item}"
+        #     else:
+        #         useful_text = ""
+        #     trial_hints[hintname] = useful_text
 
         plcmt_file = PlacementFile()
-        plcmt_file.entrance_connections = self.logic.entrance_connections
-        plcmt_file.trial_connections = self.logic.trial_connections
+        plcmt_file.entrance_connections = self.logic.randomized_dungeon_entrance
+        plcmt_file.trial_connections = self.logic.randomized_trial_entrance
         plcmt_file.hash_str = self.randomizer_hash
         plcmt_file.gossip_stone_hints = dict(
-            (k, v.to_gossip_stone_text()) for (k, v) in self.hints.hints.items()
+            # (k, v.to_gossip_stone_text()) for (k, v) in self.hints.hints.items()
         )
-        plcmt_file.trial_hints = trial_hints
+        # plcmt_file.trial_hints = trial_hints
         plcmt_file.item_locations = dict(
             (k, v)
-            for (k, v) in self.logic.done_item_locations.items()
+            for (k, v) in self.logic.placement.items.items()
             if v != "Gratitude Crystal"
         )
         plcmt_file.options = self.options
@@ -589,7 +595,7 @@ class Randomizer(BaseRandomizer):
         plcmt_file.starting_items = self.logic.starting_items
         plcmt_file.version = VERSION
 
-        plcmt_file.check_valid()
+        # plcmt_file.check_valid()
 
         return plcmt_file
 

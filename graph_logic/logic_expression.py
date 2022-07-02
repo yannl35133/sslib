@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import Iterable, List, Callable, Optional, Set, Tuple
+from typing import Dict, List, Callable, Optional, Set, Tuple
 from dataclasses import dataclass
 from functools import reduce
 from abc import ABC
@@ -23,13 +23,18 @@ class LogicExpression(ABC):
         raise NotImplementedError
 
 
+empty_inv = Inventory()
+
+
 class DNFInventory(LogicExpression):
-    disjunction: Set[Inventory]
+    disj_pre: Inventory
+    disjunction: Dict[Inventory, Inventory]
 
     def __init__(
         self,
         v: None
         | Set[Inventory]
+        | Tuple[Dict[Inventory, Inventory], Inventory]
         | bool
         | Inventory
         | EXTENDED_ITEM
@@ -37,18 +42,26 @@ class DNFInventory(LogicExpression):
         | Tuple[str, int] = None,
     ):
         if v is None:
-            self.disjunction = set()
+            self.disj_pre = empty_inv
+            self.disjunction = {}
         elif isinstance(v, set):
-            self.disjunction = v
+            self.disj_pre = reduce(Inventory.__or__, v, empty_inv)
+            self.disjunction = {k: k for k in v}
         elif isinstance(v, bool):
+            self.disj_pre = empty_inv
             if v:
-                self.disjunction = {Inventory()}
+                self.disjunction = {empty_inv: empty_inv}
             else:
-                self.disjunction = set()
+                self.disjunction = {}
         elif isinstance(v, Inventory):
-            self.disjunction = {v}
+            self.disj_pre = v
+            self.disjunction = {v: v}
+        elif isinstance(v, tuple) and isinstance(v[1], Inventory):
+            self.disjunction, self.disj_pre = v  # type: ignore
         else:
-            self.disjunction = {Inventory(v)}
+            inv = Inventory(v)  # type: ignore
+            self.disj_pre = inv
+            self.disjunction = {inv: inv}
 
     def eval(self, inventory: Inventory):
         return any(req_items <= inventory for req_items in self.disjunction)
@@ -58,20 +71,24 @@ class DNFInventory(LogicExpression):
 
     def __or__(self, other) -> DNFInventory:
         if isinstance(other, DNFInventory):
-            filtered_set = set()
-            for conj in other.disjunction:
-                for conj2 in self.disjunction:
-                    if conj2 <= conj and conj2 != conj:
+            filtered_self = self.disjunction.copy()
+            filtered_other = {}
+            for (conj, conj_pre) in other.disjunction.items():
+                to_pop = []
+                for conj2 in filtered_self:
+                    if conj <= conj2 and conj != conj2:
+                        conj_pre &= filtered_self[conj2]
+                        to_pop.append(conj2)
+                    if conj2 <= conj:
+                        filtered_self[conj2] &= conj_pre
                         break
                 else:
-                    filtered_set.add(conj)
-            for conj in self.disjunction:
-                for conj2 in other.disjunction:
-                    if conj2 <= conj and conj2 != conj:
-                        break
-                else:
-                    filtered_set.add(conj)
-            return DNFInventory(filtered_set)
+                    for c in to_pop:
+                        del filtered_self[c]
+                    filtered_other[conj] = conj_pre
+            return DNFInventory(
+                (filtered_self | filtered_other, self.disj_pre | other.disj_pre)
+            )
         else:
             raise ValueError
 
@@ -137,17 +154,29 @@ class BasicTextAtom(LogicExpression):
             return EventAtom(v)
 
 
+def and_reducer(v, v1):
+    a, b = v
+    a1, b1 = v1
+    return a | a1, b | b1
+
+
 @dataclass
 class AndCombination(LogicExpression):
     arguments: List[LogicExpression]
 
     @staticmethod
     def simplifyDNF(arguments: List[DNFInventory]) -> DNFInventory:
-        disjunctions = map(lambda x: x.disjunction, arguments)
-        bigset = set()
+        disjunctions = map(lambda x: x.disjunction.items(), arguments)
+        disj_pre = reduce(
+            Inventory.__or__, map(lambda x: x.disj_pre, arguments), empty_inv
+        )
+        new_req = DNFInventory(({}, disj_pre))
         for conjunction_tuple in product(*disjunctions):
-            bigset.add(reduce(Inventory.__or__, conjunction_tuple, Inventory()))
-        return DNFInventory(Inventory.simplify_invset(bigset))
+            conj, conj_pre = reduce(
+                and_reducer, conjunction_tuple, (empty_inv, empty_inv)
+            )
+            new_req |= DNFInventory(({conj: conj_pre}, empty_inv))
+        return new_req
 
     @staticmethod
     def simplify(arguments: List[LogicExpression]) -> LogicExpression:
@@ -171,8 +200,10 @@ class OrCombination(LogicExpression):
 
     @staticmethod
     def simplifyDNF(arguments: List[DNFInventory]) -> DNFInventory:
-        disjunctions: Iterable[Set[Inventory]] = map(lambda x: x.disjunction, arguments)
-        bigset = set.union(*disjunctions, set())
+        disjunctions = map(lambda x: x.disjunction, arguments)
+        bigset = {}
+        for s in disjunctions:
+            bigset |= s
         return DNFInventory(Inventory.simplify_invset(bigset))
 
     @staticmethod

@@ -1,3 +1,10 @@
+allowed-time-of-day: DayOnly
+macros:
+  Complete Triforce:
+    Ancient Cistern Room - Triforce of Courage &
+    Fire Sanctuary Room - Triforce of Power &
+    Sandship Room - Triforce of Wisdom
+
 Main:
   First Room:
     locations:

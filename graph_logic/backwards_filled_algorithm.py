@@ -23,7 +23,7 @@ def timeit(name, f):
     t = time()
     r = f()
     t2 = time()
-    # print(name, "took", t2 - t, "seconds")
+    print(name, "took", t2 - t, "seconds")
     return r
 
 
@@ -74,7 +74,6 @@ class BFA:
         self.rng.shuffle(may_be_placed_items)
 
         self.logic.add_item(EXTENDED_ITEM.banned_bit())
-        self.logic.fill_inventory()
         for item in must_be_placed_items:
             assert timeit("Place nonprogress", lambda: self.place_item(item))
         for item in may_be_placed_items:
@@ -117,7 +116,6 @@ class BFA:
         if not force or depth > 50:
             return False
         if not accessible_locations:
-            print(self.logic.placement.locations)
             print(f"No location accessible for {item}")
             exit(1)
         new_item = self.logic.replace_item(self.rng.choice(accessible_locations), item)
