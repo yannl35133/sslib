@@ -38,7 +38,7 @@ make_night = lambda s: EIN(s + "_NIGHT")
 
 
 def entrance_of_exit(exit):
-    if exit.endswith(" Exit"):
+    if exit.endswith(" Exit") or exit.endswith("/Exit"):
         return exit.replace("Exit", "Entrance")
     if "Exit to " in exit:
         return exit.replace("Exit to", "Entrance from")
