@@ -9,6 +9,9 @@ import json
 import yaml
 import subprocess
 from graph_logic.inventory import EXTENDED_ITEM
+from graph_logic.logic_input import Areas
+from yaml_files import graph_requirements, checks, hints, map_exits
+
 
 # from logic.logic import Logic
 from graph_logic.randomize import Rando
@@ -92,7 +95,8 @@ class Randomizer(BaseRandomizer):
         if self.no_logs:
             for _ in range(100):
                 self.rng.random()
-        self.rando = Rando(self.options, self.rng)
+        self.areas = Areas(graph_requirements, checks, hints, map_exits)
+        self.rando = Rando(self.areas, self.options, self.rng)
         self.logic = self.rando.logic
         self.hints = Hints(self.options, self.rng, self.logic)
 
@@ -331,7 +335,7 @@ class Randomizer(BaseRandomizer):
                 json.dump(spoiler_log, f, indent=2)
 
             return
-        spoiler_log["starting-items"] = self.logic.starting_items
+        spoiler_log["starting-items"] = self.logic.placement.starting_items
         spoiler_log["required-dungeons"] = self.logic.required_dungeons
         spoiler_log["sots-locations"] = self.sots_locations
         spoiler_log["barren-regions"] = self.logic.get_barren_regions()[0]

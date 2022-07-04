@@ -317,7 +317,7 @@ class Areas:
                 if allowed_time_of_day_str is not None
                 else self.areas[area_name].allowed_time_of_day
             )
-            entrance["allowed-time-of-day"] = allowed_time_of_day
+            entrance["allowed_time_of_day"] = allowed_time_of_day
             entrance["req_index"] = len(EXTENDED_ITEM.items_list)
             self.entrance_allowed_time_of_day[full_address] = allowed_time_of_day
             if allowed_time_of_day == Both:
