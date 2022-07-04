@@ -31,7 +31,7 @@ LE_bis = TypeVar("LE_bis")
 class Area(Generic[LE]):
     name: str
     toplevel_alias: str | None = None
-    allowed_time_of_day: AllowedTimeOfDay = AllowedTimeOfDay.DayOnly
+    allowed_time_of_day = AllowedTimeOfDay.DayOnly
     can_sleep: bool = False
     can_save: bool = False
     abstract: bool = False
@@ -279,14 +279,15 @@ class Areas:
         self.entrance_allowed_time_of_day = {}
         self.checks = {}
         self.gossip_stones = {}
-        self.map_exits = set()
-        self.map_entrances = set()
+        self.map_exits = {}
+        self.map_entrances = {}
 
         for partial_address in checks:
             full_address = self.search_area("", partial_address, multiple=True)
             self.short_full.append((partial_address, full_address))
             check = checks[partial_address]
             check["req_index"] = EXTENDED_ITEM[full_address]
+            check["short_name"] = partial_address
             self.checks[full_address] = check
 
         for partial_address in gossip_stones:
@@ -294,25 +295,30 @@ class Areas:
             self.short_full.append((partial_address, full_address))
             stone = gossip_stones[partial_address]
             stone["req_index"] = EXTENDED_ITEM[full_address]
+            stone["short_name"] = partial_address
             self.gossip_stones[full_address] = stone
 
         for partial_address in map_exits:
             full_address = self.search_area("", partial_address, multiple=True)
             self.short_full.append((partial_address, full_address))
             EXTENDED_ITEM.items_list.append(full_address)
-            self.map_exits.add(full_address)
+            exit = map_exits[partial_address]
+            exit["req_index"] = len(EXTENDED_ITEM.items_list) - 1
+            exit["short_name"] = partial_address
+            self.map_exits[full_address] = exit
 
         for partial_address in map_entrances:
             full_address = self.search_area("", partial_address, multiple=True)
             area_name, suffix = full_address.rsplit("/", 1)
-            allowed_time_of_day_str = map_entrances[partial_address].get(
-                "allowed-time-of-day", None
-            )
+            entrance = map_entrances[partial_address]
+            allowed_time_of_day_str = entrance.get("allowed-time-of-day", None)
             allowed_time_of_day = (
                 AllowedTimeOfDay[allowed_time_of_day_str]
                 if allowed_time_of_day_str is not None
                 else self.areas[area_name].allowed_time_of_day
             )
+            entrance["allowed-time-of-day"] = allowed_time_of_day
+            entrance["req_index"] = len(EXTENDED_ITEM.items_list)
             self.entrance_allowed_time_of_day[full_address] = allowed_time_of_day
             if allowed_time_of_day == Both:
                 EXTENDED_ITEM.items_list.append(make_day(full_address))
@@ -320,7 +326,8 @@ class Areas:
             else:
                 EXTENDED_ITEM.items_list.append(full_address)
 
-            self.map_entrances.add(full_address)
+            entrance["short_name"] = partial_address
+            self.map_entrances[full_address] = entrance
 
         def short_to_full(elt: str):
             if elt in LOGIC_OPTIONS or "Trick" in elt:

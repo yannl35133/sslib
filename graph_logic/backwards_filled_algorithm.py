@@ -12,7 +12,7 @@ from .inventory import EXTENDED_ITEM
 @dataclass
 class RandomizationSettings:
     must_be_placed_items: Dict[EXTENDED_ITEM_NAME, None]
-    may_be_placed_items: List[str | EXTENDED_ITEM_NAME]
+    may_be_placed_items: List[EXTENDED_ITEM_NAME]
     duplicable_items: Dict[str, None]
 
 
@@ -86,7 +86,7 @@ class BFA:
     def fill_with_junk(self, junk):
         empty_locations = [
             loc
-            for loc in self.logic.accessible_checks("")
+            for loc in self.logic.accessible_checks()
             if loc not in self.logic.placement.locations
         ]
         junk = list(junk)
@@ -95,10 +95,12 @@ class BFA:
             result = self.logic.place_item(location, self.rng.choice(junk))
             assert result
 
-    def place_item(self, item: EXTENDED_ITEM_NAME | str, depth=0, force=True):
+    def place_item(self, item: EXTENDED_ITEM_NAME, depth=0, force=True) -> bool:
         if item in EXTENDED_ITEM:
             self.logic.remove_item(EXTENDED_ITEM[item])
-        placement_limit: EIN = self.logic.placement.item_placement_limit.get(item, "")  # type: ignore
+        placement_limit: EIN = self.logic.placement.item_placement_limit.get(
+            item, EIN("")
+        )
         accessible_locations = self.logic.accessible_checks(placement_limit)
 
         empty_locations = [

@@ -8,9 +8,9 @@ from options import Options, OPTIONS
 from .backwards_filled_algorithm import BFA, RandomizationSettings, timeit
 from .logic import Logic, Placement, LogicSettings
 from .logic_input import Areas
-from .logic_expression import DNFInventory, InventoryAtom, LogicExpression
+from .logic_expression import DNFInventory, InventoryAtom
 from .inventory import Inventory, EXTENDED_ITEM
-from yaml_files import graph_requirements, checks, hints, map_exits, requirements
+from yaml_files import graph_requirements, checks, hints, map_exits
 from .constants import *
 from .placements import *
 from .pools import *
@@ -20,7 +20,6 @@ from .pools import *
 class AdditionalInfo:
     required_dungeons: List[str]
     unrequired_dungeons: List[str]
-    starting_items: Inventory
     randomized_dungeon_entrance: dict[str, str]
     randomized_trial_entrance: dict[str, str]
     initial_placement: Placement
@@ -40,9 +39,9 @@ class LogicUtils:
         self.placement = logic.placement
         self.required_dungeons = additional_info.required_dungeons
         self.unrequired_dungeons = additional_info.unrequired_dungeons
-        self.starting_items = additional_info.starting_items
-        self.starting_inventory = self.starting_items.add(
-            EXTENDED_ITEM[self.short_to_full(START)]
+        starting_set = self.placement.starting_items | {self.short_to_full(START)}
+        self.starting_inventory = Inventory(
+            {EXTENDED_ITEM[item] for item in starting_set}
         )
         self.randomized_dungeon_entrance = additional_info.randomized_dungeon_entrance
         self.randomized_trial_entrance = additional_info.randomized_trial_entrance
@@ -184,11 +183,7 @@ class LogicUtils:
     def get_useful_checks(self, loc=DEMISE):
         index = EXTENDED_ITEM[self.short_to_full(loc)]
         usefuls: Inventory = self.aggregate_useful_items(index)  # type: ignore
-        return [
-            self.full_to_short(EXTENDED_ITEM[i])
-            for i in usefuls.intset
-            if EXTENDED_ITEM[i] in self.checks
-        ]
+        return [loc for i in usefuls.intset if (loc := EXTENDED_ITEM[i]) in self.checks]
 
     def get_barren_regions(self, loc=DEMISE):
         return [], []
@@ -206,10 +201,9 @@ class LogicUtils:
                 if not inventory[i] and requirements[i].eval(inventory):
                     inventory |= i
                     keep_going = True
-                    if EXTENDED_ITEM.get_item_name(i) in self.checks:  # i in usefuls:
-                        sphere.append(
-                            self.full_to_short(EXTENDED_ITEM.get_item_name(i))
-                        )
+                    if (loc := EXTENDED_ITEM.get_item_name(i)) in self.checks:
+                        # i in usefuls:
+                        sphere.append(loc)
                     elif i == EXTENDED_ITEM[self.short_to_full(DEMISE)]:
                         sphere.append("Past - Demise")
             if sphere:
@@ -242,7 +236,7 @@ class Rando:
 
         self.areas = Areas(graph_requirements, checks, hints, map_exits)
         self.short_to_full = self.areas.short_to_full
-        self.norm = lambda s: self.areas.full_to_short(self.areas.short_to_full(s))
+        self.norm = self.short_to_full
 
         placement = self.options.get("placement")
         self.placement: Placement = placement if placement is not None else Placement()
@@ -253,8 +247,11 @@ class Rando:
             {
                 item
                 for item in EXTENDED_ITEM.items()
-                if EXTENDED_ITEM.get_item_name(item) in INVENTORY_ITEMS
-                and EXTENDED_ITEM.get_item_name(item) not in self.placement.items
+                if (item_name := EXTENDED_ITEM.get_item_name(item)) in INVENTORY_ITEMS
+                and (
+                    item_name not in self.placement.items
+                    or item_name in self.placement.starting_items
+                )
             }
         )
         starting_area = self.short_to_full(START)
@@ -275,7 +272,6 @@ class Rando:
         additional_info = AdditionalInfo(
             self.required_dungeons,
             self.unrequired_dungeons,
-            self.starting_items,
             self.randomized_dungeon_entrance,
             self.randomized_trial_entrance,
             self.placement.copy(),
@@ -295,9 +291,8 @@ class Rando:
         logic = self.logic._logic
 
         # Check
-        logic.inventory = self.logic.starting_items.add(
-            EXTENDED_ITEM[self.short_to_full(START)]
-        )
+        starting_set = self.placement.starting_items | {self.short_to_full(START)}
+        logic.inventory = Inventory({EXTENDED_ITEM[item] for item in starting_set})
         logic.fill_inventory()
         DEMISE_BIT = EXTENDED_ITEM[self.short_to_full(DEMISE)]
         if not logic.full_inventory[DEMISE_BIT]:
@@ -320,8 +315,11 @@ class Rando:
     def parse_options(self):
         # Initialize location related attributes.
         self.randomize_required_dungeons()  # self.required_dungeons, self.unrequired_dungeons
-        self.randomize_starting_items()  # self.starting_items
+        self.randomize_starting_items()  # self.placement.starting_items
         self.ban_the_banned()  # self.banned
+
+        for item in self.placement.starting_items:
+            self.placement.items[item] = EIN("Start Item")
 
         self.get_endgame_requirements()  # self.endgame_requirements
 
@@ -331,11 +329,8 @@ class Rando:
 
         self.randomize_dungeons_trials()
 
-        for item in self.starting_items.intset:
-            item_name = EXTENDED_ITEM.get_item_name(item)
-            self.randosettings.must_be_placed_items.pop(item_name, None)
-        for item_name in self.placement.items:
-            self.randosettings.must_be_placed_items.pop(item_name, None)
+        for item in self.placement.items:
+            self.randosettings.must_be_placed_items.pop(item, None)
 
     def randomize_required_dungeons(self):
         """
@@ -356,19 +351,20 @@ class Rando:
         Chooses all items the player has at the start,
         for tablet randomizer adds random tablets
         """
-        starting_items = Inventory(
-            (PROGRESSIVE_SWORD, SWORD_COUNT[self.options["starting-sword"]])
-        )
+        starting_items = {
+            number(PROGRESSIVE_SWORD, i)
+            for i in range(SWORD_COUNT[self.options["starting-sword"]])
+        }
 
         for tablet in self.rng.sample(TABLETS, k=self.options["starting-tablet-count"]):
-            starting_items |= Inventory((tablet, 1))
+            starting_items.add(tablet)
 
         # if self.options.get('start-with-sailcloth', True):
-        #   starting_items |= Inventory('Sailcloth')
+        #   starting_items.add('Sailcloth')
         if self.options["start-with-pouch"]:
-            starting_items |= Inventory((PROGRESSIVE_POUCH, 1))
+            starting_items.add(EIN(PROGRESSIVE_POUCH))
 
-        self.starting_items = starting_items
+        self.placement.starting_items |= starting_items
 
     def ban_the_banned(self):
         self.banned: List[str] = []
@@ -436,14 +432,14 @@ class Rando:
         if self.options["map-mode"] != "Removed":
             must_be_placed_items |= MAPS
 
-        may_be_placed_items: List[EIN | str] = list(CONSUMABLE_ITEMS)
+        may_be_placed_items: List[EIN] = list(CONSUMABLE_ITEMS)
         duplicable_items = DUPLICABLE_ITEMS
 
         rupoor_mode = self.options["rupoor-mode"]
         if rupoor_mode != "Off":
             duplicable_items = DUPLICABLE_COUNTERPROGRESS_ITEMS  # Rupoors
             if rupoor_mode == "Added":
-                may_be_placed_items += [RUPOOR] * 15
+                may_be_placed_items += [EIN(RUPOOR)] * 15
             else:
                 self.rng.shuffle(may_be_placed_items)
                 replace_end_index = len(may_be_placed_items)
@@ -488,7 +484,6 @@ class Rando:
                 sword
                 for sword in PROGRESSIVE_SWORDS
                 if sword not in self.placement.items
-                and sword not in self.starting_items.intset
             }
             dungeons = self.required_dungeons.copy()
             self.rng.shuffle(dungeons)
@@ -509,7 +504,7 @@ class Rando:
         }
 
         if shop_mode == "Vanilla":
-            self.placement |= VANILLA_BEEDLE_PLACEMENT
+            self.placement |= VANILLA_BEEDLE_PLACEMENT(self.norm)
         elif shop_mode == "Randomized":
             pass
         elif shop_mode == "Always Junk":
@@ -520,20 +515,20 @@ class Rando:
         map_mode = self.options["map-mode"]
         # remove small keys from the dungeon pool if small key sanity is enabled
         if small_key_mode == "Vanilla":
-            self.placement |= VANILLA_SMALL_KEYS_PLACEMENT
+            self.placement |= VANILLA_SMALL_KEYS_PLACEMENT(self.norm)
         elif small_key_mode == "Own Dungeon - Restricted":
-            self.placement |= DUNGEON_SMALL_KEYS_RESTRICTION
-            self.placement |= CAVES_KEY_RESTRICTION
+            self.placement |= DUNGEON_SMALL_KEYS_RESTRICTION(self.norm)
+            self.placement |= CAVES_KEY_RESTRICTION(self.norm)
         elif small_key_mode == "Lanayru Caves Key Only":
-            self.placement |= DUNGEON_SMALL_KEYS_RESTRICTION
+            self.placement |= DUNGEON_SMALL_KEYS_RESTRICTION(self.norm)
         elif small_key_mode == "Anywhere":
             pass
 
         # remove boss keys from the dungeon pool if boss key sanity is enabled
         if boss_key_mode == "Vanilla":
-            self.placement |= VANILLA_BOSS_KEYS_PLACEMENT
+            self.placement |= VANILLA_BOSS_KEYS_PLACEMENT(self.norm)
         elif boss_key_mode == "Own Dungeon":
-            self.placement |= DUNGEON_BOSS_KEYS_RESTRICTION
+            self.placement |= DUNGEON_BOSS_KEYS_RESTRICTION(self.norm)
         elif boss_key_mode == "Anywhere":
             pass
 
@@ -541,11 +536,11 @@ class Rando:
         if map_mode == "Removed":
             pass  # Dealt with during item initialization
         elif map_mode == "Vanilla":
-            self.placement |= VANILLA_MAPS_PLACEMENT
+            self.placement |= VANILLA_MAPS_PLACEMENT(self.norm)
         elif map_mode == "Own Dungeon - Restricted":
-            self.placement |= DUNGEON_MAPS_RESTRICTED_RESTRICTION
+            self.placement |= DUNGEON_MAPS_RESTRICTED_RESTRICTION(self.norm)
         elif map_mode == "Own Dungeon - Unrestricted":
-            self.placement |= DUNGEON_MAPS_RESTRICTION
+            self.placement |= DUNGEON_MAPS_RESTRICTION(self.norm)
         elif map_mode == "Anywhere":
             pass
 
@@ -554,7 +549,7 @@ class Rando:
     # Retro-compatibility
 
     def reassign_entrances(
-        self, exs1: list[EIN | list[EIN]], exs2: list[EIN | list[EIN]]
+        self, exs1: list[EIN] | list[list[EIN]], exs2: list[EIN] | list[list[EIN]]
     ):
         for ex1, ex2 in zip(exs1, exs2):
             if isinstance(ex1, str):
@@ -598,7 +593,7 @@ class Rando:
             for k in ALL_DUNGEONS
         ]
 
-        self.reassign_entrances(dungeon_entrances, dungeons)  # type: ignore
+        self.reassign_entrances(dungeon_entrances, dungeons)
 
         ter = self.options["randomize-trials"]
         pool = ALL_TRIALS.copy()
@@ -613,4 +608,4 @@ class Rando:
         trials = [
             self.norm(TRIALS[self.randomized_trial_entrance[k]]) for k in ALL_TRIALS
         ]
-        self.reassign_entrances(trial_entrances, trials)  # type: ignore
+        self.reassign_entrances(trial_entrances, trials)
