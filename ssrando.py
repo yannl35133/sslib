@@ -78,13 +78,6 @@ class Randomizer(BaseRandomizer):
     def __init__(self, options: Options, progress_callback=dummy_progress_callback):
         super().__init__(progress_callback)
         self.options = options
-        # # hack: if shops are vanilla, disable them as banned types because of bug net and progressive pouches
-        # if self.options["shop-mode"] == "Vanilla":
-        #     banned_types = self.options["banned-types"]
-        #     for unban_shop_item in ["beedle", "cheap", "medium", "expensive"]:
-        #         if unban_shop_item in banned_types:
-        #             banned_types.remove(unban_shop_item)
-        #     self.options.set_option("banned-types", banned_types)
 
         self.no_logs = self.options["no-spoiler-log"]
 
@@ -157,6 +150,7 @@ class Randomizer(BaseRandomizer):
     def randomize(self):
         self.progress_callback("randomizing items...")
         self.rando.randomize()
+        del self.rando
         self.sots_locations = self.logic.get_sots_locations()
         # self.hints.do_hints()
         if self.no_logs:
@@ -191,11 +185,9 @@ class Randomizer(BaseRandomizer):
 
             return
 
-        if len(self.logic.starting_items.intset) > 0:
+        if len(self.logic.placement.starting_items) > 0:
             spoiler_log += "\n\nStarting items:\n  "
-            spoiler_log += "\n  ".join(
-                EXTENDED_ITEM.get_item_name(i) for i in self.logic.starting_items
-            )
+            spoiler_log += "\n  ".join(self.logic.placement.starting_items)
         spoiler_log += "\n\n\n"
 
         # Write required dungeons
@@ -592,7 +584,7 @@ class Randomizer(BaseRandomizer):
         )
         plcmt_file.options = self.options
         plcmt_file.required_dungeons = self.logic.required_dungeons
-        plcmt_file.starting_items = self.logic.starting_items
+        plcmt_file.starting_items = self.logic.placement.starting_items
         plcmt_file.version = VERSION
 
         # plcmt_file.check_valid()

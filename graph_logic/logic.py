@@ -34,7 +34,7 @@ class Placement:
     locations: Dict[EIN, EIN] = field(default_factory=dict)
     items: Dict[EXTENDED_ITEM_NAME, EXTENDED_ITEM_NAME] = field(default_factory=dict)
     hints: Dict[EXTENDED_ITEM_NAME, Any] = field(default_factory=dict)
-    # hints: Dict[str, "Hint"] = field(default_factory=dict)
+    starting_items: Set[EIN] = field(default_factory=set)
 
     def copy(self):
         return Placement(
@@ -44,9 +44,10 @@ class Placement:
             self.locations.copy(),
             self.items.copy(),
             self.hints.copy(),
+            self.starting_items.copy(),
         )
 
-    def __or__(self, other):
+    def __or__(self, other: Placement) -> Placement:
         if not isinstance(other, Placement):
             raise ValueError
         for k, v in other.item_placement_limit.items():
@@ -77,6 +78,7 @@ class Placement:
             self.locations | other.locations,
             self.items | other.items,
             self.hints | other.hints,
+            self.starting_items | other.starting_items,
         )
 
 
@@ -318,20 +320,20 @@ class Logic:
         return explore(area)
 
     @cache
-    def check_list(self, placement_limit: str) -> List[EIN]:
+    def check_list(self, placement_limit: EIN) -> List[EIN]:
         return list(
             self.explore(self.checks, self.areas[self.short_to_full(placement_limit)])
         )
 
-    def accessible_checks(self, placement_limit: str) -> List[str]:
+    def accessible_checks(self, placement_limit: EIN = EIN("")) -> List[EIN]:
         if placement_limit in self.checks:
-            placement_limit, loc = placement_limit.rsplit("/", 1)
-            locations = self.areas[placement_limit].locations
+            placement_limit2, loc = placement_limit.rsplit("/", 1)
+            locations = self.areas[placement_limit2].locations
             assert loc in locations
-            return [placement_limit]
+            return [EIN(placement_limit2)]
         else:
             return [
-                self.full_to_short(loc)
+                loc
                 for loc in self.check_list(placement_limit)
                 if self.full_inventory[EXTENDED_ITEM[loc]]
             ]
@@ -344,11 +346,9 @@ class Logic:
                     yield exit
 
     def _link_connection(self, exit: EIN, entrance: EIN, pool=None, requirements=None):
-        full_entrance = self.short_to_full(entrance)
-        allowed_times = self.entrance_allowed_time_of_day[full_entrance]
-        full_exit = self.short_to_full(exit)
-        exit_bit = EXTENDED_ITEM[full_exit]
-        exit_area = self.exit_to_area[full_exit]
+        allowed_times = self.entrance_allowed_time_of_day[entrance]
+        exit_bit = EXTENDED_ITEM[exit]
+        exit_area = self.exit_to_area[exit]
         exit_as_req = DNFInventory(exit_bit)
 
         if exit_area.abstract:
@@ -370,13 +370,13 @@ class Logic:
 
         if allowed_times == Both:
             bit_req = [
-                (EXTENDED_ITEM[make_day(full_entrance)], day_req),
-                (EXTENDED_ITEM[make_night(full_entrance)], night_req),
+                (EXTENDED_ITEM[make_day(entrance)], day_req),
+                (EXTENDED_ITEM[make_night(entrance)], night_req),
             ]
         elif allowed_times == DayOnly:
-            bit_req = [(EXTENDED_ITEM[full_entrance], day_req)]
+            bit_req = [(EXTENDED_ITEM[entrance], day_req)]
         else:
-            bit_req = [(EXTENDED_ITEM[full_entrance], night_req)]
+            bit_req = [(EXTENDED_ITEM[entrance], night_req)]
 
         if requirements is None:
             self.placement.map_transitions[exit] = entrance
@@ -507,14 +507,10 @@ class Logic:
 
         return old_entrance_full
 
-    def _place_item(self, location, item, requirements=None):
-        full_location = self.short_to_full(location)
-        req = DNFInventory(full_location)
-        if (
-            item in self.placement.item_placement_limit
-            and not full_location.startswith(
-                self.areas.search_area("", self.placement.item_placement_limit[item])
-            )
+    def _place_item(self, location: EIN, item: EIN, requirements=None):
+        req = DNFInventory(location)
+        if item in self.placement.item_placement_limit and not location.startswith(
+            self.placement.item_placement_limit[item]
         ):
             raise ValueError(
                 "This item cannot be placed in this area, "
@@ -535,7 +531,7 @@ class Logic:
 
         self.placement.locations[location] = item
 
-    def place_item(self, location, item):
+    def place_item(self, location: EIN, item: EIN):
         if location in self.placement.locations:
             raise ValueError(f"Location {location} is already taken")
         if item in self.placement.items:
@@ -543,7 +539,7 @@ class Logic:
         self._place_item(location, item)
         return True
 
-    def replace_item(self, location, item):
+    def replace_item(self, location: EIN, item: EIN):
         if location not in self.placement.locations:
             raise ValueError(f"Location {location} is not taken")
         if item in self.placement.items:

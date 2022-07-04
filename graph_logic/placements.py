@@ -21,7 +21,7 @@ SINGLE_CRYSTAL_CHECKS = [
 ]
 
 
-def SINGLE_CRYSTAL_PLACEMENT(norm):
+def SINGLE_CRYSTAL_PLACEMENT(norm: Callable[[str], EIN]):
     return Placement(
         items={
             crystal: norm(loc)
@@ -32,6 +32,22 @@ def SINGLE_CRYSTAL_PLACEMENT(norm):
             for loc, crystal in zip(SINGLE_CRYSTAL_CHECKS, GRATITUDE_CRYSTALS)
         },
     )
+
+
+def norm_keys(dict: Dict[str, EIN]):
+    def norm_keys(norm: Callable[[str], EIN]) -> Placement:
+        dict2 = {norm(k): v for k, v in dict.items()}
+        return Placement(locations=dict2, items={v: k for k, v in dict2.items()})
+
+    return norm_keys
+
+
+def norm_values(dict: Dict[EIN, str]):
+    def norm_values(norm: Callable[[str], EIN]):
+        dict2 = {k: norm(v) for k, v in dict.items()}
+        return Placement(item_placement_limit=dict2)
+
+    return norm_values
 
 
 VANILLA_BEEDLE = {
@@ -46,9 +62,7 @@ VANILLA_BEEDLE = {
     "Beedle's Shop - 50 Rupee Item": BUG_NET,
     "Beedle's Shop - 1000 Rupee Item": BUG_MEDAL,
 }
-VANILLA_BEEDLE_PLACEMENT = Placement(
-    locations=VANILLA_BEEDLE, items={v: k for k, v in VANILLA_BEEDLE.items()}
-)
+VANILLA_BEEDLE_PLACEMENT = norm_keys(VANILLA_BEEDLE)
 
 VANILLA_SMALL_KEYS = {
     "Skyview - Chest behind Two Eyes": number(SV_SMALL_KEY, 0),
@@ -64,12 +78,10 @@ VANILLA_SMALL_KEYS = {
     "Sky Keep - Chest after Dreadfuse": number(SK_SMALL_KEY, 0),
     "Lanayru Caves - Golo's Gift": CAVES_KEY,
 }
-VANILLA_SMALL_KEYS_PLACEMENT = Placement(
-    locations=VANILLA_SMALL_KEYS, items={v: k for k, v in VANILLA_SMALL_KEYS.items()}
-)
+VANILLA_SMALL_KEYS_PLACEMENT = norm_keys(VANILLA_SMALL_KEYS)
 
-DUNGEON_SMALL_KEYS_RESTRICTION = Placement(
-    item_placement_limit={
+DUNGEON_SMALL_KEYS_RESTRICTION = norm_values(
+    {
         number(SV_SMALL_KEY, 0): SV + sep + "Main",
         number(SV_SMALL_KEY, 1): SV + sep + "Main",
         number(LMF_SMALL_KEY, 0): LMF + sep + "Main",
@@ -84,7 +96,7 @@ DUNGEON_SMALL_KEYS_RESTRICTION = Placement(
     }
 )
 
-CAVES_KEY_RESTRICTION = Placement(item_placement_limit={CAVES_KEY: "Lanayru - Caves"})
+CAVES_KEY_RESTRICTION = norm_values({CAVES_KEY: "Lanayru - Caves"})
 
 
 VANILLA_BOSS_KEYS = {
@@ -95,12 +107,10 @@ VANILLA_BOSS_KEYS = {
     "Sandship - Boss Key Chest": SSH_BOSS_KEY,
     "Fire Sanctuary - Boss Key Chest": FS_BOSS_KEY,
 }
-VANILLA_BOSS_KEYS_PLACEMENT = Placement(
-    locations=VANILLA_BOSS_KEYS, items={v: k for k, v in VANILLA_BOSS_KEYS.items()}
-)
+VANILLA_BOSS_KEYS_PLACEMENT = norm_keys(VANILLA_BOSS_KEYS)
 
-DUNGEON_BOSS_KEYS_RESTRICTION = Placement(
-    item_placement_limit={
+DUNGEON_BOSS_KEYS_RESTRICTION = norm_values(
+    {
         SV_BOSS_KEY: SV,
         ET_BOSS_KEY: ET,
         LMF_BOSS_KEY: LMF,
@@ -119,12 +129,10 @@ VANILLA_MAPS = {
     "Fire Sanctuary - Second Trapped Mogma Room - Reward": FS_MAP,
     "Sky Keep - First Chest": SK_MAP,
 }
-VANILLA_MAPS_PLACEMENT = Placement(
-    locations=VANILLA_MAPS, items={v: k for k, v in VANILLA_MAPS.items()}
-)
+VANILLA_MAPS_PLACEMENT = norm_keys(VANILLA_MAPS)
 
-DUNGEON_MAPS_RESTRICTION = Placement(
-    item_placement_limit={
+DUNGEON_MAPS_RESTRICTION = norm_values(
+    {
         SV_MAP: SV,
         ET_MAP: ET,
         LMF_MAP: LMF,
@@ -134,8 +142,8 @@ DUNGEON_MAPS_RESTRICTION = Placement(
         SK_MAP: SK,
     }
 )
-DUNGEON_MAPS_RESTRICTED_RESTRICTION = Placement(
-    item_placement_limit={
+DUNGEON_MAPS_RESTRICTED_RESTRICTION = norm_values(
+    {
         SV_MAP: SV + sep + "Main",
         ET_MAP: ET + sep + "Main",
         LMF_MAP: LMF + sep + "Main",
