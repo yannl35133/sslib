@@ -10,7 +10,6 @@ from .logic import Logic, Placement, LogicSettings
 from .logic_input import Areas
 from .logic_expression import DNFInventory, InventoryAtom
 from .inventory import Inventory, EXTENDED_ITEM
-from yaml_files import graph_requirements, checks, hints, map_exits
 from .constants import *
 from .placements import *
 from .pools import *
@@ -53,7 +52,7 @@ class LogicUtils:
         assert len(self.placement.locations) == len(self.checks)
         requirements = self.areas.requirements
         for loc, req in self.additional_requirements.items():
-            requirements[EXTENDED_ITEM[self.short_to_full(loc)]] &= req
+            requirements[EXTENDED_ITEM[loc]] &= req
 
         for exit, entrance in self.placement.map_transitions.items():
             self._logic._link_connection(exit, entrance, requirements=requirements)
@@ -229,12 +228,12 @@ class LogicUtils:
 
 
 class Rando:
-    def __init__(self, options: Options, rng: random.Random):
+    def __init__(self, areas: Areas, options: Options, rng: random.Random):
 
         self.options = options
         self.rng = rng
 
-        self.areas = Areas(graph_requirements, checks, hints, map_exits)
+        self.areas = areas
         self.short_to_full = self.areas.short_to_full
         self.norm = self.short_to_full
 
@@ -367,29 +366,31 @@ class Rando:
         self.placement.starting_items |= starting_items
 
     def ban_the_banned(self):
-        self.banned: List[str] = []
+        self.banned: List[EIN] = []
 
         if self.options["shop-mode"] == "Always Junk":
-            self.banned.append(BEEDLE_STALL)
+            self.banned.append(self.norm(BEEDLE_STALL))
 
         if self.options["empty-unrequired-dungeons"]:
             self.banned.extend(
-                entrance_of_exit(DUNGEON_MAIN_EXITS[dungeon])
+                self.norm(entrance_of_exit(DUNGEON_MAIN_EXITS[dungeon]))
                 for dungeon in self.unrequired_dungeons
             )
 
             if self.options["skip-skykeep"]:
-                self.banned.append(entrance_of_exit(DUNGEON_MAIN_EXITS[SK]))
+                self.banned.append(self.norm(entrance_of_exit(DUNGEON_MAIN_EXITS[SK])))
 
         first_banned_batreaux_check = BATREAUX_FIRST_CHECK_ABOVE[
             self.options["max-batreaux-reward"]
         ]
         if first_banned_batreaux_check is not None:
-            self.banned.append(first_banned_batreaux_check)
+            self.banned.append(self.norm(first_banned_batreaux_check))
 
         banned_types = set(self.options["banned-types"])
-        for loc in checks:
-            check_types = set(s.strip() for s in checks[loc]["type"].split(","))
+        for loc in self.areas.checks:
+            check_types = set(
+                s.strip() for s in self.areas.checks[loc]["type"].split(",")
+            )
             if not set.isdisjoint(banned_types, check_types):
                 self.banned.append(loc)
 
@@ -419,9 +420,9 @@ class Rando:
             horde_door_requirement &= DNFInventory(dungeons_req)
 
         self.endgame_requirements = {
-            GOT_RAISING_REQUIREMENT: got_raising_requirement,
-            GOT_OPENING_REQUIREMENT: got_opening_requirement,
-            HORDE_DOOR_REQUIREMENT: horde_door_requirement,
+            self.norm(GOT_RAISING_REQUIREMENT): got_raising_requirement,
+            self.norm(GOT_OPENING_REQUIREMENT): got_opening_requirement,
+            self.norm(HORDE_DOOR_REQUIREMENT): horde_door_requirement,
         }
 
     def initialize_items(self):
@@ -466,10 +467,9 @@ class Rando:
 
         vanilla_map_transitions = {}
         vanilla_reverse_map_transitions = {}
-        for exit, v in map_exits.items():
+        for exit, v in self.areas.map_exits.items():
             if v["type"] == "entrance" or v.get("disabled", False):
                 continue
-            exit = self.norm(exit)
             entrance = self.norm(v["vanilla"])
             vanilla_map_transitions[exit] = entrance
             vanilla_reverse_map_transitions[entrance] = exit
@@ -499,7 +499,7 @@ class Rando:
         self.logic_options_requirements = {
             k: DNFInventory(b) for k, b in options.items()
         } | {
-            trick(trick_name): DNFInventory(trick_name in enabled_tricks)
+            EIN(trick(trick_name)): DNFInventory(trick_name in enabled_tricks)
             for trick_name in OPTIONS["enabled-tricks-bitless"]["choices"]
         }
 

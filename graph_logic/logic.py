@@ -91,8 +91,8 @@ class LogicSettings:
     ]
     starting_inventory: Inventory
     starting_area: EXTENDED_ITEM_NAME
-    additional_requirements: Dict[str, DNFInventory]
-    banned: List[str]
+    additional_requirements: Dict[EIN, DNFInventory]
+    banned: List[EIN]
 
 
 def make_exit_pool(i: int) -> EXTENDED_ITEM_NAME:
@@ -120,16 +120,14 @@ class Logic:
         self.entrance_allowed_time_of_day = areas.entrance_allowed_time_of_day
         self.exit_to_area = areas.exit_to_area
 
-        self.banned = {
-            EXTENDED_ITEM[self.short_to_full(loc)] for loc in logic_settings.banned
-        }
+        self.banned = {EXTENDED_ITEM[loc] for loc in logic_settings.banned}
 
         self.ban_if = lambda it, r: r & banned_bit_inv if it in self.banned else r
 
         banned_bit_inv = DNFInventory(EXTENDED_ITEM.banned_bit())
 
         for loc, req in logic_settings.additional_requirements.items():
-            self.requirements[EXTENDED_ITEM[self.short_to_full(loc)]] &= req
+            self.requirements[EXTENDED_ITEM[loc]] &= req
         for it in self.banned:
             self.requirements[it] &= banned_bit_inv
         self.placement = placement.copy() if placement is not None else Placement()
@@ -146,14 +144,13 @@ class Logic:
             self.opaque.append(True)
             pool_as_req = DNFInventory(make_exit_pool(i))
             for entrance in entrances:
-                full_entrance = self.short_to_full(entrance)
-                if self.entrance_allowed_time_of_day[full_entrance] == Both:
+                if self.entrance_allowed_time_of_day[entrance] == Both:
                     bits = [
-                        EXTENDED_ITEM[make_day(full_entrance)],
-                        EXTENDED_ITEM[make_night(full_entrance)],
+                        EXTENDED_ITEM[make_day(entrance)],
+                        EXTENDED_ITEM[make_night(entrance)],
                     ]
                 else:
-                    bits = [EXTENDED_ITEM[full_entrance]]
+                    bits = [EXTENDED_ITEM[entrance]]
                 for entrance_bit in bits:
                     self.requirements[entrance_bit] = self.ban_if(
                         entrance_bit, pool_as_req
@@ -162,7 +159,7 @@ class Logic:
 
             pool_as_loc = EXTENDED_ITEM[make_exit_pool(i)]
             for exit in exits:
-                self.requirements[pool_as_loc] |= DNFInventory(self.short_to_full(exit))
+                self.requirements[pool_as_loc] |= DNFInventory(exit)
 
         self.backup_requirements = self.requirements.copy()
 
@@ -321,9 +318,7 @@ class Logic:
 
     @cache
     def check_list(self, placement_limit: EIN) -> List[EIN]:
-        return list(
-            self.explore(self.checks, self.areas[self.short_to_full(placement_limit)])
-        )
+        return list(self.explore(self.checks, self.areas[placement_limit]))
 
     def accessible_checks(self, placement_limit: EIN = EIN("")) -> List[EIN]:
         if placement_limit in self.checks:
@@ -340,9 +335,8 @@ class Logic:
 
     def accessible_exits(self, exit_pool: Iterable[PoolExit]) -> Iterable[PoolExit]:
         for exit in exit_pool:
-            exit_full = self.short_to_full(exit.exit)
-            if exit_full in self.map_exits:
-                if self.full_inventory[EXTENDED_ITEM[exit_full]]:
+            if exit in self.map_exits:
+                if self.full_inventory[EXTENDED_ITEM[exit]]:
                     yield exit
 
     def _link_connection(self, exit: EIN, entrance: EIN, pool=None, requirements=None):
@@ -419,7 +413,7 @@ class Logic:
             ):
                 return False
 
-        exit_area = self.exit_to_area[self.short_to_full(exit)]
+        exit_area = self.exit_to_area[exit]
         full_inventory = self._fill_inventory(requirements_linked, Inventory(exit_area))
 
         return full_inventory[self.accessibility_check_bit]
@@ -473,7 +467,7 @@ class Logic:
         old_entrance = self.placement.map_transitions[exit.exit]
         del self.placement.map_transitions[exit.exit]
         del self.placement.reverse_map_transitions[old_entrance]
-        for old_entrance_bit in all_entrance_bits(self.short_to_full(old_entrance)):
+        for old_entrance_bit in all_entrance_bits(old_entrance):
             self.opaque[old_entrance_bit] = True
             self.backup_requirements[old_entrance_bit] = DNFInventory(
                 make_exit_pool(pool)
@@ -498,9 +492,7 @@ class Logic:
                 del self.placement.reverse_map_transitions[assoc_entrance]
                 del self.placement.map_transitions[other_exit]
 
-                self.requirements[pool_as_loc] |= DNFInventory(
-                    self.short_to_full(other_exit)
-                )
+                self.requirements[pool_as_loc] |= DNFInventory(other_exit)
         self.requirements = self.backup_requirements.copy()
         self.fill_inventory()
         self._link_connection_group(exit, entrance, pool)
