@@ -8,11 +8,11 @@ sep = " - "
 
 # Logic options
 
-OPEN_THUNDERHEAD_OPTION = "Open Thunderhead option"
-OPEN_LMF_OPTION = "Open LMF option"
-RANDOMIZED_BEEDLE_OPTION = "Randomized Beedle option"
-HERO_MODE = "Hero-mode"
-NO_BIT_CRASHES = "No BiT crashes"
+OPEN_THUNDERHEAD_OPTION = EIN("Open Thunderhead option")
+OPEN_LMF_OPTION = EIN("Open LMF option")
+RANDOMIZED_BEEDLE_OPTION = EIN("Randomized Beedle option")
+HERO_MODE = EIN("Hero-mode")
+NO_BIT_CRASHES = EIN("No BiT crashes")
 
 LOGIC_OPTIONS = dict.fromkeys(
     [
