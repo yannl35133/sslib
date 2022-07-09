@@ -407,7 +407,7 @@ class Rando:
         # if self.options.get('start-with-sailcloth', True):
         #   starting_items.add('Sailcloth')
         if self.options["start-with-pouch"]:
-            starting_items.add(EIN(PROGRESSIVE_POUCH))
+            starting_items.add(number(PROGRESSIVE_POUCH, 0))
 
         self.placement.starting_items |= starting_items
 
