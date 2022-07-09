@@ -345,7 +345,7 @@ class Randomizer(BaseRandomizer):
                 json.dump(spoiler_log, f, indent=2)
 
             return
-        spoiler_log["starting-items"] = self.logic.placement.starting_items
+        spoiler_log["starting-items"] = sorted(self.logic.placement.starting_items)
         spoiler_log["required-dungeons"] = self.logic.required_dungeons
         spoiler_log["sots-locations"] = [
             self.logic.placement.items[item] for item in self.logic.get_sots_items()
@@ -514,7 +514,7 @@ class Randomizer(BaseRandomizer):
         plcmt_file.item_locations = self.logic.placement.locations
         plcmt_file.options = self.options
         plcmt_file.required_dungeons = self.logic.required_dungeons
-        plcmt_file.starting_items = self.logic.placement.starting_items
+        plcmt_file.starting_items = sorted(self.logic.placement.starting_items)
         plcmt_file.version = VERSION
 
         # plcmt_file.check_valid()
