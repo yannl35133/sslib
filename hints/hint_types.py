@@ -2,8 +2,6 @@ from dataclasses import dataclass
 from re import S
 from typing import List, Optional
 
-from logic.logic import Logic
-
 
 @dataclass
 class GossipStoneHint:
@@ -73,8 +71,7 @@ class LocationGossipStoneHint(GossipStoneHint):
         if override := self.location_name_override:
             return [f"They say that {override} <y<{self.item}>>"]
         else:
-            zone, specific_loc = Logic.split_location_name_by_zone(self.location)
-            return [f"They say that <r<{zone}: {specific_loc}>> has <y<{self.item}>>"]
+            return [f"They say that <r<{self.location}>> has <y<{self.item}>>"]
 
     def to_spoiler_log_text(self) -> str:
         return f"{self.location} has {self.item}"
@@ -96,7 +93,6 @@ class ZoneItemGossipStoneHint(GossipStoneHint):
     zone_override: str
 
     def to_gossip_stone_text(self) -> List[str]:
-        zone, specific_loc = Logic.split_location_name_by_zone(self.location)
         return [f"<y<{self.item}>> can be found in <r<{self.zone_override}>>"]
 
     def to_spoiler_log_text(self) -> str:

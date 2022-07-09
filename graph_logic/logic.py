@@ -109,8 +109,6 @@ class Logic:
         # acc_areas_default=False,
     ):
         self.areas = areas
-        self.map_exits = areas.map_exits
-        self.checks = areas.checks
         self.pools = logic_settings.exit_pools
         self.short_to_full = areas.short_to_full
         self.full_to_short = areas.full_to_short
@@ -318,11 +316,11 @@ class Logic:
 
     @cache
     def check_list(self, placement_limit: EIN) -> List[EIN]:
-        return list(self.explore(self.checks, self.areas[placement_limit]))
+        return list(self.explore(self.areas.checks, self.areas[placement_limit]))
 
     def accessible_checks(self, placement_limit: EIN = EIN("")) -> List[EIN]:
-        if placement_limit in self.checks:
-            placement_limit2, loc = placement_limit.rsplit("/", 1)
+        if placement_limit in self.areas.checks:
+            placement_limit2, loc = placement_limit.rsplit("\\", 1)
             locations = self.areas[placement_limit2].locations
             assert loc in locations
             return [EIN(placement_limit2)]
@@ -335,7 +333,7 @@ class Logic:
 
     def accessible_exits(self, exit_pool: Iterable[PoolExit]) -> Iterable[PoolExit]:
         for exit in exit_pool:
-            if exit in self.map_exits:
+            if exit in self.areas.map_exits:
                 if self.full_inventory[EXTENDED_ITEM[exit]]:
                     yield exit
 

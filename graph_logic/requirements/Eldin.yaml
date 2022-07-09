@@ -2,8 +2,8 @@ allowed-time-of-day: DayOnly
 
 Volcano:
   toplevel-alias: Eldin Volcano
+  hint-region: Eldin Volcano
   Entry:
-    region: Eldin
     locations:
       Goddess Cube: Goddess Sword
       Unlock Statue: Nothing
@@ -15,7 +15,6 @@ Volcano:
       First Room: Nothing
 
   First Room: # Until the rocks
-    region: Eldin
     locations:
       Chest behind Bombable Wall: Nothing
       Blow up Rock between First Room and East: Nothing
@@ -23,7 +22,6 @@ Volcano:
       East: Blow up Rock between First Room and East
 
   East:
-    region: Eldin
     locations:
       Blow up Rock between First Room and East: Bomb Bag # can probably also use hook beetle
       Unlock Statue: Nothing
@@ -35,7 +33,7 @@ Volcano:
       Blow up Rock between Pre and Past Mogma Turf: Bomb Bag | Hook Beetle
     exits:
       Volcano East Statue Entrance: Impossible
-      Volcano East / Volcano Ascent Statue: Nothing
+      Volcano East / Volcano Ascent Statue: Unlock Statue
       Dive to Mogma Turf: Drain Lava
       First Vent from Mogma Turf: Impossible
       First Room: Blow up Rock between First Room and East
@@ -43,7 +41,6 @@ Volcano:
 
 
   Past Mogma Turf:
-    region: Eldin
     locations:
       Blow up Rock between Pre and Past Mogma Turf: Nothing
       Watch Bridge Cutscene: Nothing
@@ -54,7 +51,6 @@ Volcano:
       Ascent: Watch Bridge Cutscene
 
   Ascent:
-    region: Eldin
     locations:
       Chest behind Bombable Wall: Nothing
       Unlock Statue: Nothing
@@ -64,14 +60,13 @@ Volcano:
       Open Trial Gate: Goddess Harp & Din's Power
     exits:
       Volcano Ascent Statue Entrance: Impossible
-      Volcano East / Volcano Ascent Statue: Nothing
+      East - Volcano East / Volcano Ascent Statue Exit: Unlock Statue
       Trial Gate Exit: Open Trial Gate
       Entry: Unlock shortcut between Entry and Ascent
       Near Thrill Digger Cave: Defeat Slope Bokoblins | Stuttersprint Trick
       Past Slide: Unlock shortcut between Ascent and Past Slide
 
   Near Thrill Digger Cave:
-    region: Eldin
     locations:
       Blow down Watchtower: Nothing
     exits:
@@ -80,7 +75,6 @@ Volcano:
       Thrill Digger Cave Exit: Nothing
 
   Thrill Digger Cave:
-    region: Eldin
     locations:
       Thrill Digger Minigame: Digging Mitts
       Gossip Stone: Nothing
@@ -88,7 +82,6 @@ Volcano:
       Exit: Nothing
 
   Near Temple Entrance:
-    region: Eldin
     exits:
       Temple Entrance Statue: Unlock Statue
       Near Thrill Digger Cave: Near Thrill Digger Cave - Blow down Watchtower
@@ -106,7 +99,6 @@ Volcano:
       Digging Spot behind Boulder on Sandy Slope: Digging Mitts
 
   Hot Cave:
-    region: Eldin
     locations:
       Blow down Watchtower between Earth Temple and Hot Cave: Impossible # Bomb Bag & Bomb Throw Trick
     exits:
@@ -116,7 +108,6 @@ Volcano:
       Sand Slide: Nothing
 
   Sand Slide:
-    region: Eldin
     locations:
       Goddess Cube: Goddess Sword
       Digging Spot after Vents: Digging Mitts
@@ -124,7 +115,6 @@ Volcano:
       Past Slide: Nothing
 
   Past Slide:
-    region: Eldin
     locations:
       Digging Spot after Draining Lava: Digging Mitts
       Unlock shortcut between Ascent and Past Slide: Nothing
@@ -134,8 +124,8 @@ Volcano:
 
 
 Mogma Turf: # when randomizing this, need to find a way to force the skydiving animation
+  hint-region: Mogma Turf
   Pre Vent:
-    region: Mogma Turf
     locations:
       Free Fall Chest: Nothing
       Goddess Cube: Goddess Sword
@@ -149,14 +139,12 @@ Mogma Turf: # when randomizing this, need to find a way to force the skydiving a
       Past Vent: Open Vent
 
   Sand Slide Platform:
-    region: Mogma Turf
     locations:
       Sand Slide Chest: Nothing
     exits:
       Pre Vent: Nothing
 
   Past Vent:
-    region: Mogma Turf
     locations:
       Chest behind Bombable Wall in Fire Maze: Nothing
     exits:
@@ -165,7 +153,7 @@ Mogma Turf: # when randomizing this, need to find a way to force the skydiving a
       Second Vent: Nothing
 
 Silent Realm:
-  region: Eldin Silent Realm
+  hint-region: Eldin Silent Realm
   exits:
     Entrance: Nothing
     Exit: Nothing
@@ -174,7 +162,7 @@ Silent Realm:
 
 # VOLCANO SUMMIT
 Volcano Summit:
-  region: Volcano Summit
+  hint-region: Volcano Summit
   locations:
     Goddess Cube inside Volcano Summit: Fireshield Earrings & Long Range Skyward Strike
     Small Chest: Fireshield Earrings
@@ -185,7 +173,6 @@ Volcano Summit:
     Exit to Outside Fire Sanctuary: Fireshield Earrings
 
   Waterfall:
-    region: Volcano Summit
     locations:
       Goddess Cube in Summit Waterfall: Goddess Sword
       General - Can Collect Water: Nothing
@@ -202,7 +189,6 @@ Volcano Summit:
 
 
   Outside Fire Sanctuary:
-    region: Volcano Summit
 
     Before Thirsty Frogs:
       locations:
@@ -212,7 +198,6 @@ Volcano Summit:
         Between Thirsty Frogs: Hydrate First Frog
 
     Between Thirsty Frogs:
-      region: Volcano Summit
       locations:
         Item behind Digging: Mogma Mitts
         Gossip Stone: Nothing

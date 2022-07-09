@@ -26,13 +26,15 @@ class AdditionalInfo:
 
 class LogicUtils:
     def __init__(
-        self, logic: Logic, additional_info: AdditionalInfo, additional_requirements
+        self,
+        areas: Areas,
+        logic: Logic,
+        additional_info: AdditionalInfo,
+        additional_requirements,
     ):
 
         self._logic = logic
-        self.areas = logic.areas
-        self.map_exits = logic.map_exits
-        self.checks = logic.checks
+        self.areas = areas
         self.short_to_full = logic.short_to_full
         self.full_to_short = logic.full_to_short
         self.placement = logic.placement
@@ -49,7 +51,7 @@ class LogicUtils:
 
     @cache
     def requirements(self):
-        assert len(self.placement.locations) == len(self.checks)
+        assert len(self.placement.locations) == len(self.areas.checks)
         requirements = self.areas.requirements
         for loc, req in self.additional_requirements.items():
             requirements[EXTENDED_ITEM[loc]] &= req
@@ -144,29 +146,38 @@ class LogicUtils:
 
         return aggregate
 
-    def get_sots_locations(self, loc=DEMISE):
+    @cache
+    def get_sots_items(self, loc=DEMISE):
         index = EXTENDED_ITEM[self.short_to_full(loc)]
-        # requireds: Inventory = self.aggregate_requirements(index)  # type: ignore
+        usefuls = self.get_useful_items()
         return [
-            # self.full_to_short(EXTENDED_ITEM[i])
-            # for i in requireds.intset
-            # if EXTENDED_ITEM[i] in self.checks
+            item
+            for item in PROGRESS_ITEMS
+            if item in usefuls
+            and not self.restricted_test(index, [EXTENDED_ITEM[item]])
         ]
+
+        # requireds: Inventory = self.aggregate_requirements(index)  # type: ignore
+        # return [
+        # self.full_to_short(EXTENDED_ITEM[i])
+        # for i in requireds.intset
+        # if EXTENDED_ITEM[i] in self.checks
+        # ]
 
     def aggregate_useful_items(self, item):
         if hasattr(self, "aggregated_usefuls"):
             return self.aggregated_usefuls[item]
 
-        self.aggregated_usefuls: List[Inventory] = [
-            x.disj_pre for x in self.requirements()
-        ]
+        self.aggregated_usefuls: Dict[EXTENDED_ITEM, Inventory] = {
+            item: self.requirements()[item].disj_pre for item in EXTENDED_ITEM
+        }
 
-        just_added = [x.intset for x in self.aggregated_usefuls]
+        just_added = {k: v.intset for k, v in self.aggregated_usefuls.items()}
 
         keep_going = True
         while keep_going:
             keep_going = False
-            for i in range(len(just_added)):
+            for i in EXTENDED_ITEM:
                 new_just_added = set()
                 for item in just_added[i]:
                     new_just_added |= (
@@ -175,17 +186,69 @@ class LogicUtils:
                     )
                     self.aggregated_usefuls[i] |= self.aggregated_usefuls[item]
                 just_added[i] = new_just_added
-                keep_going = keep_going or new_just_added
+                keep_going = keep_going or bool(new_just_added)
 
         return self.aggregated_usefuls[item]
 
-    def get_useful_checks(self, loc=DEMISE):
-        index = EXTENDED_ITEM[self.short_to_full(loc)]
-        usefuls: Inventory = self.aggregate_useful_items(index)  # type: ignore
-        return [loc for i in usefuls.intset if (loc := EXTENDED_ITEM[i]) in self.checks]
+    def aggregate_useful_items_one(self, item):
+        if hasattr(self, "aggregated_usefuls") and item in self.aggregated_usefuls:
+            return self.aggregated_usefuls[item]
+        if not hasattr(self, "aggregated_usefuls"):
+            self.aggregated_usefuls: Dict[EXTENDED_ITEM, Inventory] = {}
 
+        aggregate = self.requirements()[item].disj_pre
+
+        just_added = aggregate.intset
+
+        keep_going = True
+        while keep_going:
+            keep_going = False
+            new_just_added = set()
+            for item2 in just_added:
+                req = self.requirements()[item2].disj_pre
+                new_just_added |= req.intset - aggregate.intset
+                aggregate |= req
+            just_added = new_just_added
+            keep_going = keep_going or bool(new_just_added)
+        self.aggregated_usefuls[item] = aggregate
+
+        return self.aggregated_usefuls[item]
+
+    def get_useful_items(self, loc=DEMISE):
+        index = EXTENDED_ITEM[self.short_to_full(loc)]
+        usefuls: Inventory = self.aggregate_useful_items_one(index)
+        return [
+            loc
+            for i in usefuls.intset
+            if (loc := EXTENDED_ITEM.get_item_name(i)) in PROGRESS_ITEMS
+        ]
+
+    def locations_by_hint_region(self, region):
+        for n, c in self.areas.checks.items():
+            if c["hint_region"] == region:
+                yield n
+
+    @cache
     def get_barren_regions(self, loc=DEMISE):
-        return [], []
+        useful_checks = [
+            self.placement.items[item]
+            for item in self.get_useful_items(loc)
+            if item not in self.placement.starting_items
+        ]
+        non_banned = self.fill_restricted()
+
+        useless_regions = ALL_HINT_REGIONS.copy()
+        for c in useful_checks:
+            useless_regions.pop(self.areas.checks[c]["hint_region"], None)
+
+        inaccessible_regions = ALL_HINT_REGIONS.copy()
+        for c in self.areas.checks.values():
+            if non_banned[c["req_index"]]:
+                inaccessible_regions.pop(c["hint_region"], None)
+
+        return [
+            reg for reg in useless_regions if reg not in inaccessible_regions
+        ], list(inaccessible_regions)
 
     def calculate_playthrough_progression_spheres(self):
         spheres = []
@@ -200,7 +263,7 @@ class LogicUtils:
                 if not inventory[i] and requirements[i].eval(inventory):
                     inventory |= i
                     keep_going = True
-                    if (loc := EXTENDED_ITEM.get_item_name(i)) in self.checks:
+                    if (loc := EXTENDED_ITEM.get_item_name(i)) in self.areas.checks:
                         # i in usefuls:
                         sphere.append(loc)
                     elif i == EXTENDED_ITEM[self.short_to_full(DEMISE)]:
@@ -208,23 +271,6 @@ class LogicUtils:
             if sphere:
                 spheres.append(sphere)
         return spheres
-
-    # def all_progress_items(self):
-    #     return self.logic.aggregate_required_items(
-    #         self.logic.requirements, self.logic.inventory
-    #     )
-
-    # def parse_logic_expression(self, exp):
-    #     return LogicExpression.parse(exp)
-
-    # def filter_locations_for_progression(self, lst):
-    #     return [loc for loc in lst if loc not in self.banned]
-
-    # def can_reach_restricted(self, banned_locations, test_location):
-    #     return self.logic.restricted_test(
-    #         (EXTENDED_ITEM[self.areas.short_to_full(loc)] for loc in banned_locations),
-    #         EXTENDED_ITEM[self.areas.short_to_full(test_location)],
-    #     )
 
 
 class Rando:
@@ -234,7 +280,7 @@ class Rando:
         self.rng = rng
 
         self.areas = areas
-        self.short_to_full = self.areas.short_to_full
+        self.short_to_full = areas.short_to_full
         self.norm = self.short_to_full
 
         placement = self.options.get("placement")
@@ -276,8 +322,8 @@ class Rando:
             self.placement.copy(),
         )
 
-        logic = Logic(self.areas, logic_settings, self.placement)
-        self.logic = LogicUtils(logic, additional_info, additional_requirements)
+        logic = Logic(areas, logic_settings, self.placement)
+        self.logic = LogicUtils(areas, logic, additional_info, additional_requirements)
 
         if self.options["logic-mode"] == "No Logic":
             for i in range(len(logic.requirements)):

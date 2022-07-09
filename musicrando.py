@@ -70,7 +70,7 @@ def music_rando(self):
 
     # patch WZSound.brsar for filename and length requirements
     with (
-        self.rando.modified_extract_path / "DATA" / "files" / "Sound" / "WZSound.brsar"
+        self.modified_extract_path / "DATA" / "files" / "Sound" / "WZSound.brsar"
     ).open("r+b") as brsar:
         for original_track, new_track in self.music.items():
             # patch filename
