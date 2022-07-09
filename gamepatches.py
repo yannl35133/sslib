@@ -12,6 +12,7 @@ import re
 import struct
 
 import nlzss11
+from graph_logic.constants import *
 from sslib import AllPatcher, U8File
 from sslib.msb import process_control_sequences
 from sslib.utils import write_bytes_create_dirs, encodeBytes
@@ -103,81 +104,81 @@ START_CUTSCENES = [
 ]
 
 START_ITEM_STORYFLAGS = {
-    "Emerald Tablet": 46,
-    "Ruby Tablet": 47,
-    "Amber Tablet": 48,
+    EMERALD_TABLET: 46,
+    RUBY_TABLET: 47,
+    AMBER_TABLET: 48,
 }
 
 # The stage name of each dungeon
 DUNGEON_STAGES = {
-    "Skyview": "D100",
-    "Ancient Cistern": "D101",
-    "Earth Temple": "D200",
-    "Fire Sanctuary": "D201",
-    "Lanayru Mining Facility": "D300",
-    "Sandship": "D301",
-    "Sky Keep": "D003_7",
+    SV: "D100",
+    AC: "D101",
+    ET: "D200",
+    FS: "D201",
+    LMF: "D300",
+    SSH: "D301",
+    SK: "D003_7",
 }
 
 # The stage for each map where there are dungeon entrances
 DUNGEON_ENTRANCE_STAGES = {
     # stage, room, scen
-    "Dungeon Entrance in Deep Woods": ("F101", 0, 1),
-    "Dungeon Entrance in Lake Floria": ("F102_1", 0, 1),
-    "Dungeon Entrance in Eldin Volcano": ("F200", 4, 0),
-    "Dungeon Entrance in Volcano Summit": ("F201_3", 0, 1),
-    "Dungeon Entrance in Lanayru Desert": ("F300", 0, 5),
-    "Dungeon Entrance in Sand Sea": ("F301_1", 0, 1),
-    "Dungeon Entrance on Skyloft": ("F000", 0, 48),
+    SV: ("F101", 0, 1),
+    AC: ("F102_1", 0, 1),
+    ET: ("F200", 4, 0),
+    FS: ("F201_3", 0, 1),
+    LMF: ("F300", 0, 5),
+    SSH: ("F301_1", 0, 1),
+    SK: ("F000", 0, 48),
 }
 
 DUNGEON_EXITS = {
     # stage, layer, room, entrance
-    "Dungeon Entrance in Deep Woods": ("F101", 0, 0, 1),
-    "Dungeon Entrance in Lake Floria": ("F102_1", 0, 0, 1),
-    "Dungeon Entrance in Eldin Volcano": ("F200", 0, 4, 1),
-    "Dungeon Entrance in Volcano Summit": ("F201_3", 0, 0, 1),
-    "Dungeon Entrance in Lanayru Desert": ("F300", 0, 0, 5),
-    "Dungeon Entrance in Sand Sea": ("F301_1", 0, 0, 4),
-    "Dungeon Entrance on Skyloft": ("F000", 0, 0, 53),
+    SV: ("F101", 0, 0, 1),
+    AC: ("F102_1", 0, 0, 1),
+    ET: ("F200", 0, 4, 1),
+    FS: ("F201_3", 0, 0, 1),
+    LMF: ("F300", 0, 0, 5),
+    SSH: ("F301_1", 0, 0, 4),
+    SK: ("F000", 0, 0, 53),
 }
 
 DUNGEON_FINISH_EXITS = {
     # stage, layer, room, entrance
-    "Dungeon Entrance in Deep Woods": ("F101", 0, 0, 1),
-    "Dungeon Entrance in Lake Floria": ("F102_1", 0, 0, 6),
-    "Dungeon Entrance in Eldin Volcano": ("F200", 0, 4, 1),
-    "Dungeon Entrance in Volcano Summit": ("F201_3", 0, 0, 1),
-    "Dungeon Entrance in Lanayru Desert": ("F300_4", 2, 0, 2),
-    "Dungeon Entrance in Sand Sea": ("F301", 0, 0, 3),
-    "Dungeon Entrance on Skyloft": ("F000", 0, 0, 52),
+    SV: ("F101", 0, 0, 1),
+    AC: ("F102_1", 0, 0, 6),
+    ET: ("F200", 0, 4, 1),
+    FS: ("F201_3", 0, 0, 1),
+    LMF: ("F300_4", 2, 0, 2),
+    SSH: ("F301", 0, 0, 3),
+    SK: ("F000", 0, 0, 52),
 }
 
 DUNGEON_ENTRANCES = {
     # stage, layer, room, entrance
-    "Skyview": ("D100", 0, 0, 0),
-    "Earth Temple": ("D200", 0, 1, 0),
-    "Lanayru Mining Facility": ("D300", 0, 0, 0),
-    "Ancient Cistern": ("D101", 0, 0, 0),
-    "Sandship": ("D301", 1, 0, 0),
-    "Fire Sanctuary": ("D201", 0, 0, 0),
-    "Sky Keep": ("D003_7", 0, 0, 4),
+    SV: ("D100", 0, 0, 0),
+    ET: ("D200", 0, 1, 0),
+    LMF: ("D300", 0, 0, 0),
+    AC: ("D101", 0, 0, 0),
+    SSH: ("D301", 1, 0, 0),
+    FS: ("D201", 0, 0, 0),
+    SK: ("D003_7", 0, 0, 4),
 }
 
 DUNGEON_FINISH_EXIT_SCEN = {
     # stage, room, index
-    "Skyview": ("B100_1", 0, 1),
-    "Earth Temple": ("B210", 0, 0),
-    "Lanayru Mining Facility": ("F300_4", 0, 3),
-    "Ancient Cistern": ("B101_1", 0, 3),
-    "Sandship": ("B301", 0, 4),
-    "Fire Sanctuary": ("B201_1", 0, 2),
-    "Sky Keep": ("F407", 0, 1),
+    SV: ("B100_1", 0, 1),
+    ET: ("B210", 0, 0),
+    LMF: ("F300_4", 0, 3),
+    AC: ("B101_1", 0, 3),
+    SSH: ("B301", 0, 4),
+    FS: ("B201_1", 0, 2),
+    SK: ("F407", 0, 1),
 }
 
 DUNGEON_EXIT_SCENS = {
     # stage, room, index
-    "Skyview": [
+    SV: [
         ("D100", 0, 0),
         ("D100", 0, 2),
         ("D100", 2, 0),
@@ -185,8 +186,8 @@ DUNGEON_EXIT_SCENS = {
         ("D100", 9, 0),
         ("B100_1", 0, 4),
     ],
-    "Earth Temple": [("D200", 1, 0), ("D200", 1, 1), ("D200", 2, 0), ("D200", 4, 2)],
-    "Lanayru Mining Facility": [
+    ET: [("D200", 1, 0), ("D200", 1, 1), ("D200", 2, 0), ("D200", 4, 2)],
+    LMF: [
         ("D300", 0, 0),
         ("D300", 0, 1),
         ("D300", 5, 4),
@@ -196,7 +197,7 @@ DUNGEON_EXIT_SCENS = {
         ("B300", 0, 1),
         ("F300_5", 0, 3),  # extra bird statue
     ],
-    "Ancient Cistern": [
+    AC: [
         ("D101", 0, 2),
         ("D101", 0, 3),
         ("D101", 3, 1),
@@ -204,7 +205,7 @@ DUNGEON_EXIT_SCENS = {
         ("D101", 5, 0),
         # ('B101_1', 0, 1)
     ],
-    "Sandship": [
+    SSH: [
         ("D301", 0, 0),
         ("D301", 0, 1),
         ("D301", 1, 2),
@@ -215,7 +216,7 @@ DUNGEON_EXIT_SCENS = {
         ("D301", 13, 0),
         ("B301", 0, 1),
     ],
-    "Fire Sanctuary": [
+    FS: [
         ("D201", 0, 1),
         ("D201", 3, 2),
         ("D201", 10, 2),
@@ -224,7 +225,7 @@ DUNGEON_EXIT_SCENS = {
         ("D201_1", 5, 3),
         ("D201_1", 6, 2),
     ],
-    "Sky Keep": [
+    SK: [
         ("D003_0", 0, 3),  # most of them not needed
         ("D003_1", 0, 2),
         ("D003_2", 0, 3),
@@ -247,87 +248,80 @@ DUNGEON_EXIT_SCENS = {
 # fixes for entrance rando, ET, SSH and SK don't need to set storyflags at all
 # for LMF it's the ToT layer change
 POST_DUNGEON_STORYFLAGS = {
-    "Dungeon Entrance in Deep Woods": 5,
-    "Dungeon Entrance in Lake Floria": 900,
-    "Dungeon Entrance in Eldin Volcano": -1,
-    "Dungeon Entrance in Volcano Summit": 901,
-    "Dungeon Entrance in Lanayru Desert": 914,
-    "Dungeon Entrance in Sand Sea": -1,
-    "Dungeon Entrance on Skyloft": -1,
+    SV: 5,
+    AC: 900,
+    ET: -1,
+    FS: 901,
+    LMF: 914,
+    SSH: -1,
+    SK: -1,
 }
 
 POST_DUNGEON_CUTSCENE = {
     # (stage, room, EVNT)
-    "Skyview": ("B100_1", 0, 1),
-    "Earth Temple": ("B210", 0, 2),
-    "Lanayru Mining Facility": ("F300_4", 0, 20),
-    "Ancient Cistern": ("B101_1", 0, 1),
-    "Sandship": ("B301", 0, 1),
-    "Fire Sanctuary": ("B201_1", 0, 0),
-    "Sky Keep": ("F000", 0, 19),
-}
-
-TRIAL_GATE_TO_TRIAL = {
-    "Trial Gate on Skyloft": "Skyloft Silent Realm",
-    "Trial Gate in Faron Woods": "Faron Silent Realm",
-    "Trial Gate in Eldin Volcano": "Eldin Silent Realm",
-    "Trial Gate in Lanayru Desert": "Lanayru Silent Realm",
+    SV: ("B100_1", 0, 1),
+    ET: ("B210", 0, 2),
+    LMF: ("F300_4", 0, 20),
+    AC: ("B101_1", 0, 1),
+    SSH: ("B301", 0, 1),
+    FS: ("B201_1", 0, 0),
+    SK: ("F000", 0, 19),
 }
 
 TRIAL_STAGES = {
-    "Skyloft Silent Realm": "S000",
-    "Faron Silent Realm": "S100",
-    "Eldin Silent Realm": "S200",
-    "Lanayru Silent Realm": "S300",
+    SKYLOFT_TRIAL: "S000",
+    FARON_TRIAL: "S100",
+    ELDIN_TRIAL: "S200",
+    LANAYRU_TRIAL: "S300",
 }
 
 TRIAL_GATE_STAGES = {
     # stage, room, scen
-    "Trial Gate on Skyloft": ("F000", 0, 45),
-    "Trial Gate in Faron Woods": ("F100", 0, 8),
-    "Trial Gate in Eldin Volcano": ("F200", 2, 4),
-    "Trial Gate in Lanayru Desert": ("F300", 0, 7),
+    SKYLOFT_TRIAL: ("F000", 0, 45),
+    FARON_TRIAL: ("F100", 0, 8),
+    ELDIN_TRIAL: ("F200", 2, 4),
+    LANAYRU_TRIAL: ("F300", 0, 7),
 }
 
 TRIAL_EXITS = {
     # stage, layer, room, entrance
-    "Trial Gate on Skyloft": ("F000", 0, 0, 83),
-    "Trial Gate in Faron Woods": ("F100", 0, 0, 48),
-    "Trial Gate in Eldin Volcano": ("F200", 0, 2, 5),
-    "Trial Gate in Lanayru Desert": ("F300", 0, 0, 4),
+    SKYLOFT_TRIAL: ("F000", 0, 0, 83),
+    FARON_TRIAL: ("F100", 0, 0, 48),
+    ELDIN_TRIAL: ("F200", 0, 2, 5),
+    LANAYRU_TRIAL: ("F300", 0, 0, 4),
 }
 
 TRIAL_ENTRANCES = {
     # stage, layer, room, entrance
     # all trials are layer 2
-    "Skyloft Silent Realm": ("S000", 2, 0, 0),
-    "Faron Silent Realm": ("S100", 2, 0, 0),
-    "Eldin Silent Realm": ("S200", 2, 2, 0),
-    "Lanayru Silent Realm": ("S300", 2, 0, 0),
+    SKYLOFT_TRIAL: ("S000", 2, 0, 0),
+    FARON_TRIAL: ("S100", 2, 0, 0),
+    ELDIN_TRIAL: ("S200", 2, 2, 0),
+    LANAYRU_TRIAL: ("S300", 2, 0, 0),
 }
 
 TRIAL_EXIT_SCENS = {
     # stage, room, index
-    "Skyloft Silent Realm": ("S000", 0, 1),
-    "Faron Silent Realm": ("S100", 0, 1),
-    "Eldin Silent Realm": ("S200", 2, 1),
-    "Lanayru Silent Realm": ("S300", 0, 1),
+    SKYLOFT_TRIAL: ("S000", 0, 1),
+    FARON_TRIAL: ("S100", 0, 1),
+    ELDIN_TRIAL: ("S200", 2, 1),
+    LANAYRU_TRIAL: ("S300", 0, 1),
 }
 
 TRIAL_EXIT_GATE_IDS = {
     # silent realm name, silent realm WarpObj ID
-    "Skyloft Silent Realm": 0xFC26,
-    "Faron Silent Realm": 0xFC94,
-    "Eldin Silent Realm": 0xFC37,
-    "Lanayru Silent Realm": 0xFC18,
+    SKYLOFT_TRIAL: 0xFC26,
+    FARON_TRIAL: 0xFC94,
+    ELDIN_TRIAL: 0xFC37,
+    LANAYRU_TRIAL: 0xFC18,
 }
 
 TRIAL_COMPLETE_STORYFLAGS = {
     # trial gate, storyflag
-    "Trial Gate on Skyloft": 0x39A,
-    "Trial Gate in Faron Woods": 0x397,
-    "Trial Gate in Eldin Volcano": 0x398,
-    "Trial Gate in Lanayru Desert": 0x399,
+    SKYLOFT_TRIAL: 0x39A,
+    FARON_TRIAL: 0x397,
+    ELDIN_TRIAL: 0x398,
+    LANAYRU_TRIAL: 0x399,
 }
 
 BEEDLE_TEXT_PATCHES = {  # (undiscounted, discounted, normal price, discounted price)
@@ -391,20 +385,20 @@ FLAGINDEX_NAMES = [
     "Lanayru Gorge",
     "Sealed Grounds",
     "Skyview Temple",
-    "Ancient Cistern",
+    AC,
     "-Unused-",
-    "Earth Temple",
-    "Fire Sanctuary",
+    ET,
+    FS,
     "-Unused-",
     "Mining Facility",
-    "Sandship",
+    SSH,
     "-Unused-",
-    "Sky Keep",
+    SK,
     "The Sky",
-    "Faron Silent Realm",
-    "Eldin Silent Realm",
-    "Lanayru Silent Realm",
-    "Skyloft Silent Realm",
+    FARON_TRIAL,
+    ELDIN_TRIAL,
+    LANAYRU_TRIAL,
+    SKYLOFT_TRIAL,
 ]
 
 
@@ -779,6 +773,7 @@ def get_patches_from_location_item_list(all_checks, filled_checks):
 
     for checkname, itemname in filled_checks.items():
         # single gratitude crystals aren't randomized
+        itemname = strip_item_number(itemname)
         if itemname == "Gratitude Crystal":
             continue
         check = all_checks[checkname]
@@ -872,13 +867,30 @@ def get_entry_from_bzs(
 
 
 class GamePatcher:
-    def __init__(self, rando, placement_file):
-        self.rando = rando
+    def __init__(
+        self,
+        areas,
+        options,
+        progress_callback,
+        actual_extract_path,
+        rando_root_path,
+        exe_root_path,
+        modified_extract_path,
+        oarc_cache_path,
+        placement_file,
+    ):
+        self.areas = areas
+        self.options = options
+        self.progress_callback = progress_callback
         self.placement_file = placement_file
+        self.rando_root_path = rando_root_path
+        self.exe_root_path = exe_root_path
+        self.actual_extract_path = actual_extract_path
+        self.modified_extract_path = modified_extract_path
         self.patcher = AllPatcher(
-            actual_extract_path=rando.actual_extract_path,
-            modified_extract_path=rando.modified_extract_path,
-            oarc_cache_path=rando.oarc_cache_path,
+            actual_extract_path=actual_extract_path,
+            modified_extract_path=modified_extract_path,
+            oarc_cache_path=oarc_cache_path,
             copy_unmodified=False,
         )
         self.text_labels = {}
@@ -906,7 +918,7 @@ class GamePatcher:
         self.patcher.set_bzs_patch(self.bzs_patch_func)
         self.patcher.set_event_patch(self.flow_patch)
         self.patcher.set_event_text_patch(self.text_patch)
-        self.patcher.progress_callback = self.rando.progress_callback
+        self.patcher.progress_callback = self.progress_callback
         self.patcher.do_patch()
 
         self.do_dol_patch()
@@ -962,7 +974,7 @@ class GamePatcher:
             self.rando_eventpatches,
             self.shoppatches,
         ) = get_patches_from_location_item_list(
-            self.rando.item_locations, self.placement_file.item_locations
+            self.areas.checks, self.placement_file.item_locations
         )
 
         # assembly patches
@@ -1017,7 +1029,7 @@ class GamePatcher:
             self.all_asm_patches[exec_file].update(patches)
 
     def add_entrance_rando_patches(self):
-        for entrance, dungeon in self.placement_file.entrance_connections.items():
+        for entrance, dungeon in self.placement_file.dungeon_connections.items():
             entrance_stage, entrance_room, entrance_scen = DUNGEON_ENTRANCE_STAGES[
                 entrance
             ]
@@ -1042,7 +1054,7 @@ class GamePatcher:
 
             # handle the extra loading zone to the dungeon in Sand Sea from Ancient Harbor
             # yes I know there was probably a better way to do this but it's a one off special case
-            if entrance == "Dungeon Entrance in Sand Sea":
+            if entrance == SSH:
                 self.add_patch_to_stage(
                     "F301",
                     {
@@ -1083,10 +1095,7 @@ class GamePatcher:
             # it should not and they don't need to be touched if the LMF entrance is vanilla
             # the first time exit is taken care of by the DUNGEON_FINISH_EXIT_SCEN stuff
             # patch the secondary exit if it's not vanilla
-            if (
-                dungeon == "Lanayru Mining Facility"
-                and not entrance == "Dungeon Entrance in Lanayru Desert"
-            ):
+            if dungeon == LMF and not entrance == LMF:
                 self.add_patch_to_stage(
                     "F300_5",
                     {
@@ -1169,7 +1178,7 @@ class GamePatcher:
             self.add_patch_to_stage(
                 trial_gate_stage,
                 {
-                    "name": f"Trial gate patch - {trial_gate} to {trial}",
+                    "name": f"Trial gate patch - {trial_gate} gate to {trial}",
                     "type": "objpatch",
                     "index": trial_gate_scen,
                     "room": trial_gate_room,
@@ -1188,7 +1197,7 @@ class GamePatcher:
             self.add_patch_to_stage(
                 scen_stage,
                 {
-                    "name": f"Trial exit patch - {trial} to {trial_gate}",
+                    "name": f"Trial exit patch - {trial} to {trial_gate} gate",
                     "type": "objpatch",
                     "index": scen_index,
                     "room": scen_room,
@@ -1210,7 +1219,10 @@ class GamePatcher:
             normal, discounted, normal_price, discount_price = BEEDLE_TEXT_PATCHES[
                 location
             ]
-            sold_item = self.placement_file.item_locations[location]
+            sold_item = self.placement_file.item_locations[
+                self.areas.short_to_full(location)
+            ]
+            sold_item = strip_item_number(sold_item)
             normal_text = (
                 break_lines(
                     f"That there is a <y<{sold_item}>>. "
@@ -1262,7 +1274,7 @@ class GamePatcher:
                 )
 
     def do_build_arc_cache(self):
-        self.rando.progress_callback("building arc cache...")
+        self.progress_callback("building arc cache...")
 
         with (RANDO_ROOT_PATH / "extracts.yaml").open() as f:
             extracts = yaml.safe_load(f)
@@ -1270,19 +1282,19 @@ class GamePatcher:
 
     def add_startitem_patches(self):
         # Add sword story/itemflags if required
-        start_sword_count = self.placement_file.starting_items.count(
-            "Progressive Sword"
-        )
-        for i in range(start_sword_count):
-            self.startstoryflags.append(PROGRESSIVE_SWORD_STORYFLAGS[i])
-        if start_sword_count > 0:
-            self.startitemflags.append(PROGRESSIVE_SWORD_ITEMIDS[start_sword_count - 1])
+        for i in range(NUMBER_SWORDS):
+            if number(PROGRESSIVE_SWORD, i) in self.placement_file.starting_items:
+                self.startstoryflags.append(PROGRESSIVE_SWORD_STORYFLAGS[i])
+            else:
+                if i > 0:
+                    self.startitemflags.append(PROGRESSIVE_SWORD_ITEMIDS[i - 1])
+                break
 
         # if 'Sailcloth' in self.placement_file.starting_items:
         #     self.startstoryflags.append(32)
         #     self.startitemflags.append(15)
 
-        if "Progressive Pouch" in self.placement_file.starting_items:
+        if number(PROGRESSIVE_POUCH, 0) in self.placement_file.starting_items:
             self.startstoryflags.append(30)  # storyflag for pouch
             self.startstoryflags.append(931)  # rando storyflag for progressive pouch 1
             self.startitemflags.append(112)  # itemflag for pouch
@@ -1295,12 +1307,12 @@ class GamePatcher:
     def add_required_dungeon_patches(self):
         # Add required dungeon patches to eventpatches
         DUNGEON_TO_EVENTFILE = {
-            "Skyview": "201-ForestD1",
-            "Earth Temple": "301-MountainD1",
-            "Lanayru Mining Facility": "400-Desert",
-            "Ancient Cistern": "202-ForestD2",
-            "Sandship": "401-DesertD2",
-            "Fire Sanctuary": "304-MountainD2",
+            SV: "201-ForestD1",
+            ET: "301-MountainD1",
+            LMF: "400-Desert",
+            AC: "202-ForestD2",
+            SSH: "401-DesertD2",
+            FS: "304-MountainD2",
         }
 
         REQUIRED_DUNGEON_STORYFLAGS = [902, 903, 926, 927, 928, 929]
@@ -1439,7 +1451,7 @@ class GamePatcher:
         )
 
     def add_stone_hint_patches(self):
-        for hintname, hintdef in self.rando.stonehint_definitions.items():
+        for hintname, hintdef in self.areas.gossip_stones.items():
             self.add_patch_to_event(
                 hintdef["textfile"],
                 {
@@ -1520,22 +1532,22 @@ class GamePatcher:
 
     def add_keysanity(self):
         DUNGEON_COLORS = {
-            "Skyview": "<g<",
-            "Earth Temple": "<r+<",
-            "Lanayru Mining Facility": "<y<",
-            "Ancient Cistern": "<b<",
-            "Fire Sanctuary": "<r<",
-            "Sandship": "<y+<",
-            "Sky Keep": "<s<",
+            SV: "<g<",
+            ET: "<r+<",
+            LMF: "<y<",
+            AC: "<b<",
+            FS: "<r<",
+            SSH: "<y+<",
+            SK: "<s<",
             "Lanayru Caves": "<ye<",
         }
         KEYS_DUNGEONS = [
             # ('Skyview', 200), # already has a textbox
-            ("Lanayru Mining Facility", 201),
-            ("Ancient Cistern", 202),
-            ("Fire Sanctuary", 203),
-            ("Sandship", 204),
-            ("Sky Keep", 205),
+            (LMF, 201),
+            (AC, 202),
+            (FS, 203),
+            (SSH, 204),
+            (SK, 205),
             ("Lanayru Caves", 206),
         ]
         self.eventpatches["003-ItemGet"].append(
@@ -1555,7 +1567,7 @@ class GamePatcher:
                     "unk1": 5,
                     "unk2": 1,
                     "text": f"You got a {dungeon_and_color} Small Key!"
-                    if dungeon != "Lanayru Mining Facility"
+                    if dungeon != LMF
                     else f"You got a {dungeon_and_color} Small\nKey!",
                 }
             )
@@ -1582,13 +1594,13 @@ class GamePatcher:
                 }
             )
         MAPS_DUNGEONS = [
-            ("Skyview", 207),
-            ("Earth Temple", 208),
-            ("Lanayru Mining Facility", 209),
-            ("Ancient Cistern", 210),
-            ("Fire Sanctuary", 211),
-            ("Sandship", 212),
-            ("Sky Keep", 213),
+            (SV, 207),
+            (ET, 208),
+            (LMF, 209),
+            (AC, 210),
+            (FS, 211),
+            (SSH, 212),
+            (SK, 213),
         ]
         for dungeon, itemid in MAPS_DUNGEONS:
             dungeon_and_color = DUNGEON_COLORS[dungeon] + dungeon + ">>"
@@ -1638,7 +1650,7 @@ class GamePatcher:
             "name": "BLasBos",
         }
 
-        for idx in range(1, self.rando.options["demise-count"]):
+        for idx in range(1, self.options["demise-count"]):
             demise = orig_demise.copy()
             demise["posy"] = 1000 * idx
             self.add_patch_to_stage(
@@ -2030,7 +2042,7 @@ class GamePatcher:
             return None
 
     def do_dol_patch(self):
-        self.rando.progress_callback("patching main.dol...")
+        self.progress_callback("patching main.dol...")
         # patch main.dol
         dol_bytes = BytesIO(
             (
@@ -2079,7 +2091,7 @@ class GamePatcher:
         )
 
     def do_rel_patch(self):
-        self.rando.progress_callback("patching rels...")
+        self.progress_callback("patching rels...")
         rel_arc = U8File.parse_u8(
             BytesIO(
                 (
@@ -2185,7 +2197,7 @@ class GamePatcher:
                 )
 
     def do_patch_object_pack(self):
-        self.rando.progress_callback("patching ObjectPack...")
+        self.progress_callback("patching ObjectPack...")
         # patch object pack
         objpack_data = nlzss11.decompress(
             (
@@ -2203,7 +2215,7 @@ class GamePatcher:
             object_arc.add_file_data(f"oarc/{oarc}.arc", oarc_data)
             objpack_modified = True
         # arc replacements
-        ARC_REPLACEMENTS_PATH = self.rando.exe_root_path / "arc-replacements"
+        ARC_REPLACEMENTS_PATH = self.exe_root_path / "arc-replacements"
         ARC_REPLACEMENTS_PATH.mkdir(exist_ok=True)
         for file in ARC_REPLACEMENTS_PATH.glob("*.arc"):
             arcname = file.parts[-1]  # includes the .arc extension
@@ -2227,7 +2239,7 @@ class GamePatcher:
     def do_patch_title_screen_logo(self):
         # patch title screen logo
         actual_data = (
-            self.rando.actual_extract_path
+            self.actual_extract_path
             / "DATA"
             / "files"
             / "US"
@@ -2235,10 +2247,10 @@ class GamePatcher:
             / "Title2D.arc"
         ).read_bytes()
         actual_arc = U8File.parse_u8(BytesIO(actual_data))
-        logodata = (self.rando.rando_root_path / "assets" / "logo.tpl").read_bytes()
+        logodata = (self.rando_root_path / "assets" / "logo.tpl").read_bytes()
         actual_arc.set_file_data("timg/tr_wiiKing2Logo_00.tpl", logodata)
         (
-            self.rando.modified_extract_path
+            self.modified_extract_path
             / "DATA"
             / "files"
             / "US"

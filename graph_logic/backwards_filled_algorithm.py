@@ -41,7 +41,7 @@ class BFA:
         )
 
         # Initialize item related attributes.
-        self.progress_items: Dict[EIN, None] = {  # type: ignore
+        self.progress_items: Dict[EIN, None] = {
             item: None
             for item in randosettings.must_be_placed_items
             | dict.fromkeys(randosettings.may_be_placed_items)

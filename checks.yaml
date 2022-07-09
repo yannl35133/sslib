@@ -950,17 +950,17 @@ Lanayru - Sand Sea - Pirate Stronghold - Third Chest:
 
 
 Skyview - Chest on Tree Branch:
-  original item: SV Map
+  original item: Skyview Map
   type: faron, dungeon
   Paths:
     - stage/D100/r2/l0/TBox/64
 Skyview - After Crawlspace - Digging Spot:
-  original item: SV Small Key
+  original item: Skyview Small Key
   type: faron, dungeon, digging
   Paths:
     - stage/D100/r4/l0/Soil/15
 Skyview - Chest behind Two Eyes:
-  original item: SV Small Key
+  original item: Skyview Small Key
   type: faron, dungeon
   Paths:
     - stage/D100/r4/l0/TBox/67
@@ -976,7 +976,7 @@ Skyview - Item behind Bars:
   Paths:
     - stage/D100/r5/l0/Item/103
 Skyview - Chest behind Three Eyes:
-  original item: SV Small Key
+  original item: Skyview Small Key
   type: faron, dungeon
   Paths:
     - stage/D100/r7/l0/TBox/68
@@ -988,7 +988,7 @@ Skyview - Last Room - After Rope - Chest:
   Paths:
     - stage/D100/r9/l0/TBox/70
 Skyview - Boss Key Chest:
-  original item: SV Boss Key
+  original item: Skyview Boss Key
   type: faron, dungeon
   Paths:
     - stage/D100/r9/l0/TBox/66
@@ -1026,7 +1026,7 @@ Earth Temple - Chest Left of Main Room Bridge:
   Paths:
     - stage/D200/r1/l0/TBox/70
 Earth Temple - West Room - Chest:
-  original item: ET Map
+  original item: Earth Temple Map
   type: eldin, dungeon
   Paths:
     - stage/D200/r0/l0/TBox/64
@@ -1047,7 +1047,7 @@ Earth Temple - Chest Guarded by Lizalfos:
   Paths:
     - stage/D200/r1/l0/TBox/67
 Earth Temple - Boss Key Chest:
-  original item: ET Boss Key
+  original item: Earth Temple Boss Key
   type: eldin, dungeon
   Paths:
     - stage/D200/r4/l0/TBox/68
@@ -1073,7 +1073,7 @@ Lanayru Mining Facility - Chest behind Bars:
   Paths:
     - stage/D300/r0/l0/TBox/64
 Lanayru Mining Facility - Big Hub - Chest:
-  original item: LMF Small Key
+  original item: Lanayru Mining Facility Small Key
   type: lanayru, dungeon
   Paths:
     - stage/D300_1/r5/l0/TBox/70
@@ -1098,7 +1098,7 @@ Lanayru Mining Facility - First West Room - Chest:
   Paths:
     - stage/D300/r3/l0/TBox/66
 Lanayru Mining Facility - Armos Fight Room - Chest:
-  original item: LMF Map
+  original item: Lanayru Mining Facility Map
   type: lanayru, dungeon
   Paths:
     - stage/D300/r6/l0/TBox/69
@@ -1114,7 +1114,7 @@ Lanayru Mining Facility - Sand Spike Maze - Chest:
   Paths:
     - stage/D300_1/r7/l0/TBox/73
 Lanayru Mining Facility - Boss Key Chest:
-  original item: LMF Boss Key
+  original item: Lanayru Mining Facility Boss Key
   type: lanayru, dungeon
   Paths:
     - stage/D300_1/r8/l0/TBox/71
@@ -1141,7 +1141,7 @@ Lanayru Mining Facility - Great Hall - Goddess Harp:
     - oarc/F300_5/l0
 
 Ancient Cistern - East Part - Chest:
-  original item: AC Small Key
+  original item: Ancient Cistern Small Key
   type: faron, dungeon
   Paths:
     - stage/D101/r1/l0/TBox/67
@@ -1151,7 +1151,7 @@ Ancient Cistern - Whip Chest Room - Chest:
   Paths:
     - stage/D101/r7/l0/TBox/69
 Ancient Cistern - After Whip Hooks - Chest:
-  original item: AC Map
+  original item: Ancient Cistern Map
   type: faron, dungeon
   Paths:
     - stage/D101/r0/l0/TBox/65
@@ -1166,12 +1166,12 @@ Ancient Cistern - Behind the Waterfall - Chest:
   Paths:
     - stage/D101/r3/l0/TBox/84
 Ancient Cistern - Basement Gutters - Bokoblin:
-  original item: AC Small Key
+  original item: Ancient Cistern Small Key
   type: faron, dungeon
   Paths:
     - stage/D101/r4/l0/EBc/0xFC00
 Ancient Cistern - Boss Key Chest:
-  original item: AC Boss Key
+  original item: Ancient Cistern Boss Key
   type: faron, dungeon
   Paths:
     - stage/D101/r4/l0/TBox/68
@@ -1191,7 +1191,7 @@ Ancient Cistern - Farore's Flame:
     - oarc/B101_1/l0
 
 Sandship - Chest behind Combination Lock:
-  original item: SS Small Key
+  original item: Sandship Small Key
   type: lanayru, dungeon
   Paths:
     - stage/D301/r10/l0/TBox/69
@@ -1208,7 +1208,7 @@ Sandship - Stern - Chest:
   Paths:
     - stage/D301/r0/l0/TBox/127
 Sandship - Chest before 4-Door Corridor:
-  original item: SS Map
+  original item: Sandship Map
   type: lanayru, dungeon
   Paths:
     - stage/D301/r3/l0/TBox/71
@@ -1238,13 +1238,13 @@ Sandship - Treasure Room - Fifth Chest:
   Paths:
     - stage/D301/r9/l0/TBox/68
 Sandship - Brig Prison - Robot's Reward:
-  original item: SS Small Key
+  original item: Sandship Small Key
   type: lanayru, dungeon
   Paths:
     - event/401-DesertD2/14
     - oarc/D301/l4
 Sandship - Boss Key Chest:
-  original item: SS Boss Key
+  original item: Sandship Boss Key
   type: lanayru, dungeon
   Paths:
     - stage/D301/r14/l3/TBox/73
@@ -1268,7 +1268,7 @@ Sandship - Nayru's Flame:
 
 
 Fire Sanctuary - First Room - Chest:
-  original item: FS Small Key
+  original item: Fire Sanctuary Small Key
   type: eldin, dungeon
   Paths:
     - stage/D201/r0/l0/TBox/64
@@ -1278,7 +1278,7 @@ Fire Sanctuary - Second Room - Chest:
   Paths:
     - stage/D201_1/r1/l0/TBox/74
 Fire Sanctuary - First Trapped Mogma Room - Chest:
-  original item: FS Small Key
+  original item: Fire Sanctuary Small Key
   type: eldin, dungeon
   Paths:
     - stage/D201_1/r5/l0/TBox/69
@@ -1304,13 +1304,13 @@ Fire Sanctuary - Second Room - Balcony - Chest:
     - stage/D201_1/r6/l0/TBox/70
     - stage/D201/r6/l0/TBox/70
 Fire Sanctuary - Second Trapped Mogma Room - Reward:
-  original item: FS Map
+  original item: Fire Sanctuary Map
   type: eldin, dungeon
   Paths:
     - stage/D201_1/r2/l0/TBox/65
     - stage/D201/r2/l0/TBox/65
 Fire Sanctuary - Second Trapped Mogma Room - Past Bombable Wall - Chest:
-  original item: FS Small Key
+  original item: Fire Sanctuary Small Key
   type: eldin, dungeon
   Paths:
     - stage/D201_1/r11/l0/TBox/71
@@ -1327,7 +1327,7 @@ Fire Sanctuary - Staircase Room - Chest:
   Paths:
     - stage/D201/r9/l0/TBox/75
 Fire Sanctuary - Boss Key Room - Boss Key Chest:
-  original item: FS Boss Key
+  original item: Fire Sanctuary Boss Key
   type: eldin, dungeon
   Paths:
     - stage/D201/r4/l0/TBox/67
@@ -1403,12 +1403,12 @@ Fire Sanctuary - Din's Flame:
 
 
 Sky Keep - First Chest:
-  original item: SK Map
+  original item: Sky Keep Map
   type: skyloft, dungeon
   Paths:
     - stage/D003_7/r0/l0/TBox/64
 Sky Keep - Chest after Dreadfuse:
-  original item: SK Small Key
+  original item: Sky Keep Small Key
   type: skyloft, dungeon
   Paths:
     - stage/D003_6/r0/l0/TBox/65
