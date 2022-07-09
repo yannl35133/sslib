@@ -1,5 +1,6 @@
 # File name is area name (so sky)
 allowed-time-of-day: DayOnly
+hint-region: Sky
 
 North East:
   Bamboo Island:
@@ -239,6 +240,7 @@ Around Skyloft: # Also North West minus Thunderhead
     # others I forgot: null
 
 Thunderhead:
+  hint-region: Thunderhead
   Isle of Songs:
     Inside:
       locations:

@@ -8,6 +8,7 @@ import hashlib
 import json
 import yaml
 import subprocess
+from graph_logic.constants import *
 from graph_logic.inventory import EXTENDED_ITEM
 from graph_logic.logic_input import Areas
 from yaml_files import graph_requirements, checks, hints, map_exits
@@ -18,12 +19,15 @@ from graph_logic.randomize import Rando
 
 # from logic.hints import Hints
 from graph_logic.hints import Hints
-import logic.constants as constants
-from logic.placement_file import PlacementFile
+
+# import logic.constants as constants
+# from logic.placement_file import PlacementFile
+from graph_logic.placement_file import PlacementFile
 from gamepatches import GamePatcher, GAMEPATCH_TOTAL_STEP_COUNT
 from paths import RANDO_ROOT_PATH, IS_RUNNING_FROM_SOURCE
 from options import OPTIONS, Options
-import logic.item_types
+
+# import logic.item_types
 from sslib.utils import encodeBytes
 from version import VERSION, VERSION_WITHOUT_COMMIT
 
@@ -64,9 +68,6 @@ class BaseRandomizer:
             types_string = self.item_locations[location_name]["type"]
             types = types_string.split(",")
             types = set((type.strip() for type in types))
-            unknown_types = [x for x in types if not x in constants.ALL_TYPES]
-            if len(unknown_types) != 0:
-                raise Exception(f"unknown types: {unknown_types}")
             self.item_locations[location_name]["type"] = types
 
         with (RANDO_ROOT_PATH / "hints.yaml").open() as f:
@@ -98,7 +99,7 @@ class Randomizer(BaseRandomizer):
         self.areas = Areas(graph_requirements, checks, hints, map_exits)
         self.rando = Rando(self.areas, self.options, self.rng)
         self.logic = self.rando.logic
-        self.hints = Hints(self.options, self.rng, self.logic)
+        self.hints = Hints(self.options, self.rng, self.areas, self.logic)
 
         self.dry_run = bool(self.options["dry-run"])
         self.banned_types = self.options["banned-types"]
@@ -155,8 +156,7 @@ class Randomizer(BaseRandomizer):
         self.progress_callback("randomizing items...")
         self.rando.randomize()
         del self.rando
-        self.sots_locations = self.logic.get_sots_locations()
-        # self.hints.do_hints()
+        self.hints.do_hints()
         if self.no_logs:
             self.progress_callback("writing anti spoiler log...")
         else:
@@ -171,7 +171,17 @@ class Randomizer(BaseRandomizer):
         else:
             self.write_spoiler_log()
         if not self.dry_run:
-            GamePatcher(self, plcmt_file).do_all_gamepatches()
+            GamePatcher(
+                self.areas,
+                self.options,
+                self.progress_callback,
+                self.actual_extract_path,
+                self.rando_root_path,
+                self.exe_root_path,
+                self.modified_extract_path,
+                self.oarc_cache_path,
+                plcmt_file,
+            ).do_all_gamepatches()
         self.progress_callback("patching done")
 
     def write_spoiler_log(self):
@@ -202,9 +212,9 @@ class Randomizer(BaseRandomizer):
 
         # Write way of the hero (100% required) locations
         spoiler_log += "SotS:\n"
-        for sotsloc in self.sots_locations:
-            item = self.logic.placement.items[sotsloc]
-            spoiler_log += "  %-53s %s\n" % (sotsloc + ":", item)
+        for item in self.logic.get_sots_items():
+            location = self.logic.placement.items[item]
+            spoiler_log += "  %-53s %s\n" % (location + ":", item)
 
         spoiler_log += "\n\n"
 
@@ -307,12 +317,12 @@ class Randomizer(BaseRandomizer):
         spoiler_log += "\n\n\n"
 
         # Write hints
-        # spoiler_log += "Hints:\n"
-        # for hintlocation, hint in self.hints.hints.items():
-        #     spoiler_log += "  %-53s %s\n" % (
-        #         hintlocation + ":",
-        #         hint.to_spoiler_log_text(),
-        #     )
+        spoiler_log += "Hints:\n"
+        for hintlocation, hint in self.hints.hints.items():
+            spoiler_log += "  %-53s %s\n" % (
+                hintlocation + ":",
+                hint.to_spoiler_log_text(),
+            )
 
         spoiler_log += "\n\n\n"
 
@@ -337,17 +347,19 @@ class Randomizer(BaseRandomizer):
             return
         spoiler_log["starting-items"] = self.logic.placement.starting_items
         spoiler_log["required-dungeons"] = self.logic.required_dungeons
-        spoiler_log["sots-locations"] = self.sots_locations
+        spoiler_log["sots-locations"] = [
+            self.logic.placement.items[item] for item in self.logic.get_sots_items()
+        ]
         spoiler_log["barren-regions"] = self.logic.get_barren_regions()[0]
         spoiler_log[
             "playthrough"
         ] = self.logic.calculate_playthrough_progression_spheres()
         spoiler_log["item-locations"] = self.logic.placement.items
         spoiler_log["hints"] = dict(
-            # map(
-            #     lambda kv: (kv[0], kv[1].to_spoiler_log_json()),
-            #     self.hints.hints.items(),
-            # )
+            map(
+                lambda kv: (kv[0], kv[1].to_spoiler_log_json()),
+                self.hints.hints.items(),
+            )
         )
         spoiler_log["entrances"] = self.logic.randomized_dungeon_entrance
         spoiler_log["trial-connections"] = self.logic.randomized_trial_entrance
@@ -434,87 +446,6 @@ class Randomizer(BaseRandomizer):
 
         return header
 
-    # def calculate_playthrough_progression_spheres(self):
-    #     progression_spheres = []
-
-    #     logic = Logic(self)
-    #     previously_accessible_locations = []
-    #     game_beatable = False
-    #     while logic.unplaced_progress_items:
-    #         progress_items_in_this_sphere = OrderedDict()
-
-    #         accessible_locations = logic.get_accessible_remaining_locations()
-    #         assert len(accessible_locations) >= len(previously_accessible_locations)
-    #         locations_in_this_sphere = [
-    #             loc
-    #             for loc in accessible_locations
-    #             if loc not in previously_accessible_locations
-    #         ]
-    #         if not locations_in_this_sphere:
-    #             raise Exception("Failed to calculate progression spheres")
-
-    #         if not self.options.get("keysanity"):
-    #             # If the player gained access to any small keys, we need to give them the keys without counting that as a new sphere.
-    #             newly_accessible_predetermined_item_locations = [
-    #                 loc
-    #                 for loc in locations_in_this_sphere
-    #                 if loc in self.logic.prerandomization_item_locations
-    #             ]
-    #             newly_accessible_small_key_locations = [
-    #                 loc
-    #                 for loc in newly_accessible_predetermined_item_locations
-    #                 if self.logic.prerandomization_item_locations[loc].endswith(
-    #                     " Small Key"
-    #                 )
-    #             ]
-    #             if newly_accessible_small_key_locations:
-    #                 for small_key_location_name in newly_accessible_small_key_locations:
-    #                     item_name = self.logic.prerandomization_item_locations[
-    #                         small_key_location_name
-    #                     ]
-    #                     assert item_name.endswith(" Small Key")
-
-    #                     logic.add_owned_item(item_name)
-
-    #                 previously_accessible_locations += (
-    #                     newly_accessible_small_key_locations
-    #                 )
-    #                 continue  # Redo this loop iteration with the small key locations no longer being considered 'remaining'.
-
-    #         for location_name in locations_in_this_sphere:
-    #             item_name = self.logic.done_item_locations[location_name]
-    #             if item_name in logic.all_progress_items:
-    #                 progress_items_in_this_sphere[location_name] = item_name
-
-    #         if not game_beatable:
-    #             game_beatable = logic.check_requirement_met(
-    #                 "Can Reach and Defeat Demise"
-    #             )
-    #             if game_beatable:
-    #                 progress_items_in_this_sphere["Past - Demise"] = "Defeat Demise"
-
-    #         progression_spheres.append(progress_items_in_this_sphere)
-
-    #         for location_name, item_name in progress_items_in_this_sphere.items():
-    #             if item_name == "Defeat Demise":
-    #                 continue
-    #             logic.add_owned_item(item_name)
-
-    #         previously_accessible_locations = accessible_locations
-
-    #     if not game_beatable:
-    #         # If the game wasn't already beatable on a previous progression sphere but it is now we add one final one just for this.
-    #         game_beatable = logic.check_requirement_met("Can Reach and Defeat Demise")
-    #         if game_beatable:
-    #             final_progression_sphere = OrderedDict(
-    #                 [
-    #                     ("Past - Demise", "Defeat Demise"),
-    #                 ]
-    #             )
-    #             progression_spheres.append(final_progression_sphere)
-
-    #     return progression_spheres
-
     def get_zones_and_max_location_name_len(self, locations):
         zones = OrderedDict()
         max_location_name_length = 0
@@ -536,56 +467,51 @@ class Randomizer(BaseRandomizer):
 
     def get_placement_file(self):
         # temporary placement file stuff
-        # trial_checks = {
-        #     # (getting it text patch, inventory text line)
-        #     "Skyloft Silent Realm - Stone of Trials": "Song of the Hero - Trial Hint",
-        #     "Faron Silent Realm - Water Scale": "Farore's Courage - Trial Hint",
-        #     "Lanayru Silent Realm - Clawshots": "Nayru's Wisdom - Trial Hint",
-        #     "Eldin Silent Realm - Fireshield Earrings": "Din's Power - Trial Hint",
-        # }
-        # trial_hints = {}
-        # for (trial_check_name, hintname) in trial_checks.items():
-        #     trial_gate = constants.SILENT_REALM_CHECKS[trial_check_name]
-        #     randomized_trial = self.logic.trial_connections[trial_gate]
-        #     randomized_trial_check = [
-        #         trial for trial in trial_checks if trial.startswith(randomized_trial)
-        #     ].pop()
-        #     item = self.logic.done_item_locations[randomized_trial_check]
-        #     hint_mode = self.options["song-hints"]
-        #     if hint_mode == "Basic":
-        #         if item in self.logic.all_progress_items:
-        #             useful_text = "You might need what it reveals..."
-        #             # print(f'{item} in {trial_check} is useful')
-        #         else:
-        #             useful_text = "It's probably not too important..."
-        #             # print(f'{item} in {trial_check} is not useful')
-        #     elif hint_mode == "Advanced":
-        #         if randomized_trial_check in self.sots_locations:
-        #             useful_text = "Your spirit will grow by completing this trial"
-        #         elif item in self.logic.all_progress_items:
-        #             useful_text = "You might need what it reveals..."
-        #         else:
-        #             # barren
-        #             useful_text = "It's probably not too important..."
-        #     elif hint_mode == "Direct":
-        #         useful_text = f"This trial holds {item}"
-        #     else:
-        #         useful_text = ""
-        #     trial_hints[hintname] = useful_text
+        trial_checks = {
+            # (getting it text patch, inventory text line)
+            SKYLOFT_TRIAL: "Song of the Hero - Trial Hint",
+            FARON_TRIAL: "Farore's Courage - Trial Hint",
+            LANAYRU_TRIAL: "Nayru's Wisdom - Trial Hint",
+            ELDIN_TRIAL: "Din's Power - Trial Hint",
+        }
+        trial_hints = {}
+        for (trial, hintname) in trial_checks.items():
+            randomized_trial = self.logic.randomized_trial_entrance[trial]
+            randomized_check = TRIAL_CHECKS[randomized_trial]
+            item = self.logic.placement.locations[
+                self.areas.short_to_full(randomized_check)
+            ]
+            hint_mode = self.options["song-hints"]
+            if hint_mode == "Basic":
+                if item in self.logic.get_useful_items():
+                    useful_text = "You might need what it reveals..."
+                    # print(f'{item} in {trial_check} is useful')
+                else:
+                    useful_text = "It's probably not too important..."
+                    # print(f'{item} in {trial_check} is not useful')
+            elif hint_mode == "Advanced":
+                if item in self.logic.get_sots_items():
+                    useful_text = "Your spirit will grow by completing this trial"
+                elif item in self.logic.get_useful_items():
+                    useful_text = "You might need what it reveals..."
+                else:
+                    # barren
+                    useful_text = "It's probably not too important..."
+            elif hint_mode == "Direct":
+                useful_text = f"This trial holds {item}"
+            else:
+                useful_text = ""
+            trial_hints[hintname] = useful_text
 
         plcmt_file = PlacementFile()
-        plcmt_file.entrance_connections = self.logic.randomized_dungeon_entrance
+        plcmt_file.dungeon_connections = self.logic.randomized_dungeon_entrance
         plcmt_file.trial_connections = self.logic.randomized_trial_entrance
         plcmt_file.hash_str = self.randomizer_hash
         plcmt_file.gossip_stone_hints = dict(
-            # (k, v.to_gossip_stone_text()) for (k, v) in self.hints.hints.items()
+            (k, v.to_gossip_stone_text()) for (k, v) in self.hints.hints.items()
         )
-        # plcmt_file.trial_hints = trial_hints
-        plcmt_file.item_locations = dict(
-            (k, v)
-            for (k, v) in self.logic.placement.items.items()
-            if v != "Gratitude Crystal"
-        )
+        plcmt_file.trial_hints = trial_hints
+        plcmt_file.item_locations = self.logic.placement.locations
         plcmt_file.options = self.options
         plcmt_file.required_dungeons = self.logic.required_dungeons
         plcmt_file.starting_items = self.logic.placement.starting_items
@@ -607,7 +533,17 @@ class PlandoRandomizer(BaseRandomizer):
         return GAMEPATCH_TOTAL_STEP_COUNT
 
     def randomize(self):
-        GamePatcher(self, self.placement_file).do_all_gamepatches()
+        GamePatcher(
+            self.areas,
+            self.options,
+            self.progress_callback,
+            self.actual_extract_path,
+            self.rando_root_path,
+            self.exe_root_path,
+            self.modified_extract_path,
+            self.oarc_cache_path,
+            self.placement_file,
+        ).do_all_gamepatches()
 
 
 class YamlOrderedDictLoader(yaml.SafeLoader):

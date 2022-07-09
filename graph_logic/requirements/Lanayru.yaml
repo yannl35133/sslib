@@ -2,8 +2,8 @@ allowed-time-of-day: DayOnly
 
 Mines:
   toplevel-alias: Lanayru Mines
+  hint-region: Lanayru Mines
   Entry:
-    region: "Lanayru Mines"
     locations:
       Unlock Statue: Nothing
       Goddess Cube: Goddess Sword
@@ -15,7 +15,6 @@ Mines:
       Statues Area: Timeshift Stone
 
     Higher Area:
-      region: "Lanayru Mines"
       entrance: Clawshots
       exits:
         Entry: Nothing
@@ -30,7 +29,6 @@ Mines:
         Exit to Caves: Nothing
 
   Statues Area:
-    region: "Lanayru Mines"
     locations:
       Blow Statues Down: Bomb Bag | Hook Beetle
       Chest behind Statue: Blow Statues Down
@@ -39,7 +37,6 @@ Mines:
       End: Blow Statues Down | Lanayru Mines Brakeslide Trick
 
   End:
-    region: "Lanayru Mines"
     locations:
       Blow up Rock on Track: Nothing
       Chest: Nothing # There's a baba in the way
@@ -56,14 +53,13 @@ Mines:
 
 Desert:
   toplevel-alias: Lanayru Desert
+  hint-region: Lanayru Desert
   exits:
     Shared Statue Exit: Impossible  # Common for all, so placed here
 
   Entry:
-    region: "Lanayru Desert"
 
     High Ledge after Vines:
-      region: "Lanayru Desert"
       entrance: Entry - Timeshift Stone
       exit: { Entry: Nothing }
       locations:
@@ -82,7 +78,6 @@ Desert:
       Near Hook Beetle Fight: Nothing
 
   Near Hook Beetle Fight:
-    region: "Lanayru Desert"
     locations:
       Chest: Nothing
       Goddess Cube: Long Range Skyward Strike # Also accessible elsewhere
@@ -324,7 +319,7 @@ Temple of Time:
       North Exit to Desert: Nothing
 
 Silent Realm:
-  region: Lanayru Silent Realm
+  hint-region: Lanayru Silent Realm
   exits:
     Entrance: Nothing
     Exit: Nothing
@@ -333,6 +328,7 @@ Silent Realm:
 
 Caves:
   toplevel-alias: Lanayru Caves
+  hint-region: Lanayru Caves
   locations:
     Chest: Nothing
     Golo's Gift: Nothing
@@ -356,6 +352,7 @@ Caves:
 
 
 Sand Sea:
+  hint-region: Sand Sea
   Ancient Harbour:
     toplevel-alias: Sand Sea Docks
     Near Exit to Caves:

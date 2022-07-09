@@ -28,8 +28,8 @@ LOGIC_OPTIONS = dict.fromkeys(
 
 
 def with_sep_full(pre: str, loc: str) -> EXTENDED_ITEM_NAME:
-    if "/" not in loc:
-        return EIN(pre + "/" + loc)
+    if "\\" not in loc:
+        return EIN(pre + "\\" + loc)
     return EIN(loc)
 
 
@@ -38,7 +38,7 @@ make_night = lambda s: EIN(s + "_NIGHT")
 
 
 def entrance_of_exit(exit):
-    if exit.endswith(" Exit") or exit.endswith("/Exit"):
+    if exit.endswith(" Exit") or exit.endswith("\\Exit"):
         return exit.replace("Exit", "Entrance")
     if "Exit to " in exit:
         return exit.replace("Exit to", "Entrance from")
@@ -79,7 +79,7 @@ def number(name: str, index: int) -> EXTENDED_ITEM_NAME:
 def strip_item_number(item: EXTENDED_ITEM_NAME) -> str:
     if "#" not in item:
         return item
-    return item[: item.index("#")]
+    return item[: item.index("#") - 1]
 
 
 def group(name: str, count: int) -> Dict[EXTENDED_ITEM_NAME, None]:
@@ -128,7 +128,8 @@ EXTRA_WALLET = "Extra Wallet"
 
 GRATITUDE_CRYSTAL_PACKS = group(GRATITUDE_CRYSTAL_PACK, 13)
 GRATITUDE_CRYSTALS = group(GRATITUDE_CRYSTAL, 15)
-PROGRESSIVE_SWORDS = group(PROGRESSIVE_SWORD, 6)
+NUMBER_SWORDS = 6
+PROGRESSIVE_SWORDS = group(PROGRESSIVE_SWORD, NUMBER_SWORDS)
 PROGRESSIVE_MITTS_ALL = group(PROGRESSIVE_MITTS, 2)
 PROGRESSIVE_BEETLES = group(PROGRESSIVE_BEETLE, 2)
 PROGRESSIVE_POUCHES = group(PROGRESSIVE_POUCH, 5)
@@ -416,6 +417,65 @@ BEEDLE_STALL = "Beedle - Stall"
 
 trick: Callable[[str], str] = lambda s: s + " Trick"
 
+UPPER_SKYLOFT = "Upper Skyloft"
+SKYLOFT_CENTRAL = "Skyloft Central"
+SKYLOFT_VILLAGE = "Skyloft Village"
+BATREAUX = "Batreaux"
+BEEDLE = "Beedle"
+
+SKY = "Sky"
+THUNDERHEAD = "Thunderhead"
+
+SEALED_GROUNDS = "Sealed Grounds"
+FARON_WOODS = "Faron Woods"
+LAKE_FLORIA = "Lake Floria"
+
+ELDIN_VOLCANO = "Eldin Volcano"
+MOGMA_TURF = "Mogma Turf"
+VOLCANO_SUMMIT = "Volcano Summit"
+
+LANAYRU_MINES = "Lanayru Mines"
+LANAYRU_DESERT = "Lanayru Desert"
+LANAYRU_CAVES = "Lanayru Caves"
+SAND_SEA = "Sand Sea"
+
+SKYLOFT_SILENT_REALM = "Skyloft Silent Realm"
+FARON_SILENT_REALM = "Faron Silent Realm"
+LANAYRU_SILENT_REALM = "Lanayru Silent Realm"
+ELDIN_SILENT_REALM = "Eldin Silent Realm"
+
+ALL_HINT_REGIONS = dict.fromkeys(
+    [
+        UPPER_SKYLOFT,
+        SKYLOFT_CENTRAL,
+        SKYLOFT_VILLAGE,
+        BATREAUX,
+        BEEDLE,
+        SKY,
+        THUNDERHEAD,
+        SEALED_GROUNDS,
+        FARON_WOODS,
+        LAKE_FLORIA,
+        ELDIN_VOLCANO,
+        MOGMA_TURF,
+        VOLCANO_SUMMIT,
+        LANAYRU_MINES,
+        LANAYRU_DESERT,
+        LANAYRU_CAVES,
+        SAND_SEA,
+        SV,
+        ET,
+        LMF,
+        AC,
+        SSH,
+        FS,
+        SK,
+        SKYLOFT_SILENT_REALM,
+        FARON_SILENT_REALM,
+        LANAYRU_SILENT_REALM,
+        ELDIN_SILENT_REALM,
+    ]
+)
 
 # Retro-compatibility
 
@@ -451,23 +511,3 @@ TRIAL_CHECKS: dict[str, str] = {
 }
 
 TRIAL_CHECKS_REV = {v: k for k, v in TRIAL_CHECKS.items()}
-
-from collections import OrderedDict
-
-SILENT_REALMS = OrderedDict(
-    [
-        ("Skyloft Silent Realm", "Skyloft Trial Gate"),
-        ("Faron Silent Realm", "Faron Trial Gate"),
-        ("Lanayru Silent Realm", "Lanayru Trial Gate"),
-        ("Eldin Silent Realm", "Eldin Trial Gate"),
-    ]
-)
-
-SILENT_REALM_CHECKS = OrderedDict(
-    [
-        ("Skyloft Silent Realm - Stone of Trials", "Trial Gate on Skyloft"),
-        ("Faron Silent Realm - Water Scale", "Trial Gate in Faron Woods"),
-        ("Lanayru Silent Realm - Clawshots", "Trial Gate in Lanayru Desert"),
-        ("Eldin Silent Realm - Fireshield Earrings", "Trial Gate in Eldin Volcano"),
-    ]
-)

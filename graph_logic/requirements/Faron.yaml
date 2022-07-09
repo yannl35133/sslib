@@ -2,12 +2,11 @@ allowed-time-of-day: DayOnly
 
 # SEALED GROUNDS
 Sealed Grounds:
+  hint-region: Sealed Grounds
   Spiral:
     toplevel-alias: Sealed Grounds Spiral
-    region: Sealed Grounds
 
     Upper Part:
-      region: Sealed Grounds
       locations:
         Unlock Statue: Nothing
       exits:
@@ -29,7 +28,6 @@ Sealed Grounds:
       Door: Nothing
 
   Sealed Temple:
-    region: Sealed Grounds
     locations:
       Chest: Nothing
       Song from Impa: Goddess Harp
@@ -42,7 +40,6 @@ Sealed Grounds:
       Gate of Time: Open Gate of Time
 
   Hylia's Temple:
-    region: Sealed Grounds
     locations:
       Zelda's Blessing: Nothing
       Beat Demise: Horde Door Requirement & Sword
@@ -50,7 +47,6 @@ Sealed Grounds:
       Gate of Time: Nothing
 
   Behind the Temple:
-    region: Sealed Grounds
     locations:
       Unlock Statue: Nothing
       Gossip Stone: Nothing
@@ -63,8 +59,8 @@ Sealed Grounds:
 
 Woods:
   toplevel-alias: Faron Woods
+  hint-region: Faron Woods
   Entry:
-    region: Faron Woods
     locations:
       Unlock Statue: Nothing
     exits:
@@ -81,7 +77,6 @@ Woods:
       Faron - Woods: Nothing
       Shortcut Exit to Floria Waterfall: Nothing
 
-  region: Faron Woods
   exits:
     Entry: Nothing
     In the Woods Statue Entrance: Impossible
@@ -120,28 +115,25 @@ Woods:
         Skyloft - Knight Academy - Start Owlan's Quest
 
   West Branch:
-    region: Faron Woods
     exits:
       Woods: Nothing
     locations:
       Goddess Cube on West Great Tree near Exit: Goddess Sword
 
   Clawshot Target Branch:
-    region: Faron Woods
     exits:
       Woods: Nothing
     locations:
       Goddess Cube on East Great Tree with Clawshots Target: Goddess Sword
 
   Rope Branch:
-    region: Faron Woods
     exits:
       Woods: Nothing
     locations:
       Goddess Cube on East Great Tree with Rope: Goddess Sword
 
 Silent Realm:
-  region: Faron Silent Realm
+  hint-region: Faron Silent Realm
   exits:
     Entrance: Nothing
     Exit: Nothing
@@ -152,20 +144,17 @@ Silent Realm:
 
 Great Tree:
   Near Underwater Hole:
-    region: Faron Woods
     exits:
       Faron - Woods: Water Scale # Is it really needed ?
       Underwater Hole: Water Scale
 
   Lower Area: # down in the water
-    region: Faron Woods
     exits:
       Underwater Tunnel: Water Scale
       Path to Chest: Gust Bellows
       Near Exit: Gust Bellows
 
     Path to Chest: # area around the chest
-      region: Faron Woods
       locations:
         Chest: Nothing # Not even something to defeat the quadri-baba ?
       exits:
@@ -178,7 +167,6 @@ Great Tree:
         Lower Exit to Platforms: Nothing
 
   Platforms:
-    region: Faron Woods
     exits:
       Lower Exit to Great Tree: Nothing
       Upper Exit to Great Tree: Nothing
@@ -186,7 +174,6 @@ Great Tree:
       Woods: Nothing
 
   Upper Area: # top with the moblin
-    region: Faron Woods
     locations:
       Remove Void Plane: Can Defeat Moblins
     exits:
@@ -196,7 +183,6 @@ Great Tree:
       Exit to Top: Nothing
 
   Top:
-    region: Faron Woods
     locations:
       Unlock Statue: Nothing
       Talk to Yerbal: Slingshot | Beetle # only those 2 items (and their upgrades) work
@@ -211,13 +197,12 @@ Great Tree:
 
 # DEEP WOODS
 Deep Woods:
+  hint-region: Faron Woods
   Entry:
-    region: Faron Woods
     exits:
       Exit to Woods: Nothing
       Deep Woods: Push Shortcut Logs | Distance Activator | Goddess Sword # bomb bag?
 
-  region: Faron Woods
   locations:
     Chest: Nothing
     Unlock Deep Woods Statue: Nothing
@@ -238,8 +223,8 @@ Deep Woods:
 
 # LAKE FLORIA
 Lake Floria:
+  hint-region: Lake Floria
   Above Rock:
-    region: Lake Floria
     locations:
       Silver Rupee: Water Scale # currently not randomized
       Blow Rock: Water Scale
@@ -249,7 +234,6 @@ Lake Floria:
 
   Below Rock:
     Emerged Area:
-      region: Lake Floria
       locations:
         Chest: Nothing
         Goddess Cube in Lake Floria: Goddess Sword
@@ -264,7 +248,6 @@ Lake Floria:
       Exit to Farore's Lair: Water Scale
 
   Farore's Lair:
-    region: Lake Floria
     locations:
       South Chest: Water Scale
       East Chest: Nothing
@@ -275,7 +258,6 @@ Lake Floria:
 
   Waterfall:
     toplevel-alias: Floria Waterfall
-    region: Lake Floria
     locations:
       Unlock Statue: Nothing
       Gossip Stone: Nothing
