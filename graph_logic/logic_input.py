@@ -32,6 +32,7 @@ class Area(Generic[LE]):
     name: str
     toplevel_alias: str | None = None
     allowed_time_of_day = AllowedTimeOfDay.DayOnly
+    hint_region: str | None = None
     can_sleep: bool = False
     can_save: bool = False
     abstract: bool = False
@@ -57,6 +58,12 @@ class Area(Generic[LE]):
             area.allowed_time_of_day = AllowedTimeOfDay[v]
         elif parent is not None:
             area.allowed_time_of_day = parent.allowed_time_of_day
+        if (v := raw_dict.get("hint-region")) is not None:
+            if v not in ALL_HINT_REGIONS:
+                raise ValueError(f"Unknown hint region {v}")
+            area.hint_region = v
+        elif parent is not None:
+            area.hint_region = parent.hint_region
         if (s := raw_dict.get("toplevel-alias")) is not None:
             area.toplevel_alias = s
         if (b := raw_dict.get("can-sleep")) is not None:
@@ -86,7 +93,7 @@ class Area(Generic[LE]):
         if (v := raw_dict.get("entrance")) is not None:
             if parent is None:
                 raise ValueError("An entrance was given but no parent to give it to")
-            parent.exits[name.rsplit("/", 1)[-1]] = LogicExpression.parse(v)
+            parent.exits[name.rsplit("\\", 1)[-1]] = LogicExpression.parse(v)
 
         area.sub_areas = {
             k: cls.of_yaml(with_sep_full(name, k), v, area)
@@ -132,10 +139,10 @@ class Areas:
         return self.areas[loc]
 
     def search_area(
-        self, base_address_str: str, partial_address_str: str, multiple=False
+        self, base_address_str: str, partial_address_str: str
     ) -> EXTENDED_ITEM_NAME:
         """Computes the thing referred by [partial_address] when located at [base_address]"""
-        base_address = base_address_str.split("/")
+        base_address = base_address_str.split("\\")
         partial_address = partial_address_str.split(" - ")
 
         i, j = 0, 0
@@ -279,27 +286,35 @@ class Areas:
         self.entrance_allowed_time_of_day = {}
         self.checks = {}
         self.gossip_stones = {}
+        self.events = {}
         self.map_exits = {}
         self.map_entrances = {}
 
         for partial_address in checks:
-            full_address = self.search_area("", partial_address, multiple=True)
+            full_address = self.search_area("", partial_address)
+            area_name, suffix = full_address.rsplit("\\", 1)
             self.short_full.append((partial_address, full_address))
             check = checks[partial_address]
             check["req_index"] = EXTENDED_ITEM[full_address]
             check["short_name"] = partial_address
+            check["hint_region"] = self.areas[area_name].hint_region
             self.checks[full_address] = check
 
         for partial_address in gossip_stones:
-            full_address = self.search_area("", partial_address, multiple=True)
+            full_address = self.search_area("", partial_address)
             self.short_full.append((partial_address, full_address))
             stone = gossip_stones[partial_address]
             stone["req_index"] = EXTENDED_ITEM[full_address]
             stone["short_name"] = partial_address
             self.gossip_stones[full_address] = stone
 
+        for event in events:
+            if event in self.checks or event in self.gossip_stones:
+                continue
+            self.events[event] = {"req_index": EXTENDED_ITEM[event]}
+
         for partial_address in map_exits:
-            full_address = self.search_area("", partial_address, multiple=True)
+            full_address = self.search_area("", partial_address)
             self.short_full.append((partial_address, full_address))
             EXTENDED_ITEM.items_list.append(full_address)
             exit = map_exits[partial_address]
@@ -308,8 +323,8 @@ class Areas:
             self.map_exits[full_address] = exit
 
         for partial_address in map_entrances:
-            full_address = self.search_area("", partial_address, multiple=True)
-            area_name, suffix = full_address.rsplit("/", 1)
+            full_address = self.search_area("", partial_address)
+            area_name, suffix = full_address.rsplit("\\", 1)
             entrance = map_entrances[partial_address]
             allowed_time_of_day_str = entrance.get("allowed-time-of-day", None)
             allowed_time_of_day = (

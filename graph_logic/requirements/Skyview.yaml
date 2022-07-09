@@ -1,5 +1,6 @@
 allowed-time-of-day: DayOnly
 toplevel-alias: Skyview Temple
+hint-region: Skyview
 
 # Global macros
 macros:
