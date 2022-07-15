@@ -40,7 +40,10 @@ class DNFInventory(LogicExpression):
         | EXTENDED_ITEM
         | EXTENDED_ITEM_NAME
         | Tuple[str, int] = None,
+        /,
+        complex=False,
     ):
+        self.complex = complex
         if v is None:
             self.disj_pre = empty_inv
             self.disjunction = {}
@@ -107,6 +110,9 @@ class DNFInventory(LogicExpression):
         else:
             raise ValueError
 
+    def is_impossible(self):
+        return not self.disjunction
+
     def day_only(self):
         return DNFInventory(
             {
@@ -133,7 +139,7 @@ def InventoryAtom(item_name: str, quantity: int) -> DNFInventory:
         for index in comb:
             i |= EXTENDED_ITEM[number(item_name, index)]
         disjunction.add(i)
-    return DNFInventory(disjunction)
+    return DNFInventory(disjunction, complex=(ITEM_COUNTS[item_name] != quantity))
 
 
 def EventAtom(event_address: EXTENDED_ITEM_NAME) -> DNFInventory:

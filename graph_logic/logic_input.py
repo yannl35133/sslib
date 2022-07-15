@@ -398,7 +398,7 @@ class Areas:
                     timed_req = req.night_only() & DNFInv(EIN(area_name))
                 loc_bit = EXTENDED_ITEM[with_sep_full(area_name, loc)]
                 reqs[loc_bit] |= timed_req
-                self.opaque[loc_bit] = False
+                self.opaque[loc_bit] = timed_req.complex
 
             for exit, req in area.exits.items():
                 if exit in self.areas:  # Logical exit, the name is the area
@@ -437,11 +437,14 @@ class Areas:
                             raise ValueError("Time makes this exit impossible")
 
                 else:  # Map exit
-                    exit = with_sep_full(area_name, exit)
-                    exit_bit = EXTENDED_ITEM[exit]
+                    exit_full = with_sep_full(area_name, exit)
+                    exit_bit = EXTENDED_ITEM[exit_full]
                     self.opaque[exit_bit] = False
-                    self.exit_to_area[exit] = area
-                    if area.allowed_time_of_day == Both:
+                    self.exit_to_area[exit_full] = area
+                    if area.abstract:
+                        assert exit == START
+                        reqs[exit_bit] = req
+                    elif area.allowed_time_of_day == Both:
                         reqs[exit_bit] |= req.day_only() & DNFInv(make_day(area_name))
                         reqs[exit_bit] |= req.night_only() & DNFInv(
                             make_night(area_name)

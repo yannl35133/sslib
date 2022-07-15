@@ -1,9 +1,3 @@
-# Runtime requirements
-
-GoT Raising Requirement: Nothing
-GoT Opening Requirement: Nothing
-Horde Door Requirement: Nothing
-
 # macros, for logic snippets used in lots of different areas
 
 Practice Sword:
@@ -51,6 +45,15 @@ Giant Wallet:
 Tycoon Wallet:
   Progressive Wallet x 4
 
+1 Extra Wallet:
+  Extra Wallet x 1
+
+2 Extra Wallets:
+  Extra Wallet x 1
+
+3 Extra Wallets:
+  Extra Wallet x 1
+
 Can Afford 50 Rupees:
   Nothing
 
@@ -61,25 +64,25 @@ Can Afford 300 Rupees:
   Can Medium Rupee Farm
 
 Can Afford 600 Rupees:
-  Can High Rupee Farm & (Extra Wallet x 1 | Big Wallet)
+  Medium Purchases Token & Can High Rupee Farm & (1 Extra Wallet | Big Wallet)
 
 Can Afford 800 Rupees:
-  Can High Rupee Farm & (Extra Wallet x 2 | (Medium Wallet & Extra Wallet x 1) | Big Wallet)
+  Medium Purchases Token & Can High Rupee Farm & (2 Extra Wallets | (Medium Wallet & 1 Extra Wallet) | Big Wallet)
 
 Can Afford 1000 Rupees:
-  Can High Rupee Farm & (Extra Wallet x 3 | (Medium Wallet & Extra Wallet x 2) | Big Wallet)
+  Medium Purchases Token & Can High Rupee Farm & (3 Extra Wallets | (Medium Wallet & 2 Extra Wallets) | Big Wallet)
 
 Can Afford 1200 Rupees:
-  Can High Rupee Farm &
+  Expensive Purchases Token & Can High Rupee Farm &
   (
-    Extra Wallet x 3 |
-    (Medium Wallet & Extra Wallet x 3) |
-    (Big Wallet & Extra Wallet x 1) |
+    3 Extra Wallets |
+    (Medium Wallet & 3 Extra Wallets) |
+    (Big Wallet & 1 Extra Wallet) |
     Giant Wallet
   )
 
 Can Afford 1600 Rupees:
-  Can High Rupee Farm & ((Big Wallet & Extra Wallet x 2) | Giant Wallet)
+  Expensive Purchases Token & Can High Rupee Farm & ((Big Wallet & 2 Extra Wallets) | Giant Wallet)
 
 Can Medium Rupee Farm:
   Sky - Clean Cut Minigame | Can High Rupee Farm
@@ -90,8 +93,10 @@ Can High Rupee Farm:
 Song of the Hero:
   Faron Song of the Hero Part & Eldin Song of the Hero Part & Lanayru Song of the Hero Part
 
+Empty Bottle_ : Empty Bottle
+
 Bottle:
-  Pouch & Skyloft - Item Check Access & Empty Bottle
+  Pouch & Skyloft - Item Check Access & Empty Bottle_
 
 Can Collect Water: Impossible # To be completed locally
 
@@ -146,38 +151,52 @@ Water Bottle: Bottle & Can Collect Water
   Gratitude Crystal Pack x 13
 
 5 Gratitude Crystals:
+  May Get 5 Crystals Token & (
   5 Single Gratitude Crystals | 1 Gratitude Crystal Pack
+  )
 
 10 Gratitude Crystals:
+  May Get 10 Crystals Token & (
   10 Single Gratitude Crystals |
   (5 Single Gratitude Crystals & 1 Gratitude Crystal Pack) |
   2 Gratitude Crystal Packs
+  )
 
 30 Gratitude Crystals:
+  May Get 30 Crystals Token & (
   (15 Single Gratitude Crystals & 3 Gratitude Crystal Packs) |
   (10 Single Gratitude Crystals & 4 Gratitude Crystal Packs) |
   (5 Single Gratitude Crystals & 5 Gratitude Crystal Packs) |
   6 Gratitude Crystal Packs
+  )
 
 40 Gratitude Crystals:
+  May Get 40 Crystals Token & (
   (15 Single Gratitude Crystals & 5 Gratitude Crystal Packs) |
   (10 Single Gratitude Crystals & 6 Gratitude Crystal Packs) |
   (5 Single Gratitude Crystals & 7 Gratitude Crystal Packs) |
   8 Gratitude Crystal Packs
+  )
 
 50 Gratitude Crystals:
+  May Get 50 Crystals Token & (
   (15 Single Gratitude Crystals & 7 Gratitude Crystal Packs) |
   (10 Single Gratitude Crystals & 8 Gratitude Crystal Packs) |
   (5 Single Gratitude Crystals & 9 Gratitude Crystal Packs) |
   10 Gratitude Crystal Packs
+  )
 
 70 Gratitude Crystals:
+  May Get 70 Crystals Token & (
   (15 Single Gratitude Crystals & 11 Gratitude Crystal Packs) |
   (10 Single Gratitude Crystals & 12 Gratitude Crystal Packs) |
   (5 Single Gratitude Crystals & 13 Gratitude Crystal Packs)
+  )
 
 80 Gratitude Crystals:
+  May Get 80 Crystals Token & (
   15 Single Gratitude Crystals & 13 Gratitude Crystal Packs
+  )
 
 Sword:
   Practice Sword
@@ -237,7 +256,3 @@ Can Defeat Stalmaster:
 Can Defeat Scervo/Dreadfuse:
   Sword
   # Could add Pouch for a shield
-
-# Location-specific macros
-
-Can Navigate in Oasis: Can Defeat Ampilus | Hook Beetle | Lanayru Desert - Sand Oasis Brakeslide Trick

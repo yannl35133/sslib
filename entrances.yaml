@@ -1237,7 +1237,7 @@ Sky - Faron Pillar - Deep Woods Statue Dive:
 Sky - Faron Pillar - Lake Floria Statue Dive:
   type: exit
   subtype: statue
-  vanilla: Lake Floria - Statue Entrance
+  vanilla: Lake Floria - Below Rock - Statue Entrance
   stage: F020
   room: 0
   index: 47
