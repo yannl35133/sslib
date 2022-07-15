@@ -507,8 +507,21 @@ class Randomizer(BaseRandomizer):
         plcmt_file.dungeon_connections = self.logic.randomized_dungeon_entrance
         plcmt_file.trial_connections = self.logic.randomized_trial_entrance
         plcmt_file.hash_str = self.randomizer_hash
+
+        def norm(s):
+            if s in INVENTORY_ITEMS:
+                return strip_item_number(s)
+            if s in self.areas.checks:
+                check = self.areas.checks[s]
+                if (override := check.get("text")) is not None:
+                    return override
+                return check["short_name"]
+            if s in self.areas.gossip_stones:
+                return self.areas.gossip_stones[s]["short_name"]
+            raise ValueError(f"Can't find a shortname for {s}")
+
         plcmt_file.gossip_stone_hints = dict(
-            (k, v.to_gossip_stone_text()) for (k, v) in self.hints.hints.items()
+            (k, v.to_gossip_stone_text(norm)) for (k, v) in self.hints.hints.items()
         )
         plcmt_file.trial_hints = trial_hints
         plcmt_file.item_locations = self.logic.placement.locations
