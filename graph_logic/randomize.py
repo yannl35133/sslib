@@ -30,7 +30,7 @@ class LogicUtils:
         areas: Areas,
         logic: Logic,
         additional_info: AdditionalInfo,
-        additional_requirements,
+        runtime_requirements,
     ):
 
         self._logic = logic
@@ -40,21 +40,20 @@ class LogicUtils:
         self.placement = logic.placement
         self.required_dungeons = additional_info.required_dungeons
         self.unrequired_dungeons = additional_info.unrequired_dungeons
-        starting_set = self.placement.starting_items | {self.short_to_full(START)}
         self.starting_inventory = Inventory(
-            {EXTENDED_ITEM[item] for item in starting_set}
+            {EXTENDED_ITEM[item] for item in self.placement.starting_items}
         )
         self.randomized_dungeon_entrance = additional_info.randomized_dungeon_entrance
         self.randomized_trial_entrance = additional_info.randomized_trial_entrance
         self.initial_placement = additional_info.initial_placement
-        self.additional_requirements = additional_requirements
+        self.runtime_requirements = runtime_requirements
 
     @cache
     def requirements(self):
         assert len(self.placement.locations) == len(self.areas.checks)
         requirements = self.areas.requirements
-        for loc, req in self.additional_requirements.items():
-            requirements[EXTENDED_ITEM[loc]] &= req
+        for loc, req in self.runtime_requirements.items():
+            requirements[EXTENDED_ITEM[loc]] |= req
 
         for exit, entrance in self.placement.map_transitions.items():
             self._logic._link_connection(exit, entrance, requirements=requirements)
@@ -299,19 +298,16 @@ class Rando:
                 )
             }
         )
-        starting_area = self.short_to_full(START)
-        exit_pools = []
-        # DUNGEON_ENTRANCES_COMPLETE_POOLS + SILENT_REALMNS_COMPLETE_POOLS
 
-        additional_requirements = (
-            self.logic_options_requirements | self.endgame_requirements
+        runtime_requirements = (
+            self.logic_options_requirements
+            | self.endgame_requirements
+            | self.ban_options
         )
 
         logic_settings = LogicSettings(
-            exit_pools,
             starting_inventory_BFA,
-            starting_area,
-            additional_requirements,
+            runtime_requirements,
             self.banned,
         )
         additional_info = AdditionalInfo(
@@ -323,7 +319,7 @@ class Rando:
         )
 
         logic = Logic(areas, logic_settings, self.placement)
-        self.logic = LogicUtils(areas, logic, additional_info, additional_requirements)
+        self.logic = LogicUtils(areas, logic, additional_info, runtime_requirements)
 
         if self.options["logic-mode"] == "No Logic":
             for i in range(len(logic.requirements)):
@@ -336,8 +332,9 @@ class Rando:
         logic = self.logic._logic
 
         # Check
-        starting_set = self.placement.starting_items | {self.short_to_full(START)}
-        logic.inventory = Inventory({EXTENDED_ITEM[item] for item in starting_set})
+        logic.inventory = Inventory(
+            {EXTENDED_ITEM[item] for item in self.placement.starting_items}
+        )
         logic.fill_inventory()
         DEMISE_BIT = EXTENDED_ITEM[self.short_to_full(DEMISE)]
         if not logic.full_inventory[DEMISE_BIT]:
@@ -361,7 +358,7 @@ class Rando:
         # Initialize location related attributes.
         self.randomize_required_dungeons()  # self.required_dungeons, self.unrequired_dungeons
         self.randomize_starting_items()  # self.placement.starting_items
-        self.ban_the_banned()  # self.banned
+        self.ban_the_banned()  # self.banned, self.ban_options
 
         for item in self.placement.starting_items:
             self.placement.items[item] = EIN("Start Item")
@@ -412,10 +409,20 @@ class Rando:
         self.placement.starting_items |= starting_items
 
     def ban_the_banned(self):
-        self.banned: List[EIN] = []
 
-        if self.options["shop-mode"] == "Always Junk":
-            self.banned.append(self.norm(BEEDLE_STALL))
+        banned_req = DNFInventory(EXTENDED_ITEM.banned_bit())
+        nothing_req = DNFInventory(True)
+        maybe_req = lambda b: banned_req if b else nothing_req
+        self.ban_options = {
+            BEEDLE_STALL_ACCESS: maybe_req(self.options["shop-mode"] == "Always Junk"),
+            MEDIUM_PURCHASES: maybe_req("medium" in self.options["banned-types"]),
+            EXPENSIVE_PURCHASES: maybe_req("expensive" in self.options["banned-types"]),
+        } | {
+            MAY_GET_n_CRYSTALS(c): (maybe_req(c > self.options["max-batreaux-reward"]))
+            for c in CRYSTAL_THRESHOLDS
+        }
+
+        self.banned: List[EIN] = []
 
         if self.options["empty-unrequired-dungeons"]:
             self.banned.extend(
@@ -426,13 +433,7 @@ class Rando:
             if self.options["skip-skykeep"]:
                 self.banned.append(self.norm(entrance_of_exit(DUNGEON_MAIN_EXITS[SK])))
 
-        first_banned_batreaux_check = BATREAUX_FIRST_CHECK_ABOVE[
-            self.options["max-batreaux-reward"]
-        ]
-        if first_banned_batreaux_check is not None:
-            self.banned.append(self.norm(first_banned_batreaux_check))
-
-        banned_types = set(self.options["banned-types"])
+        banned_types = set(self.options["banned-types"]) - {"medium", "expensive"}
         for loc in self.areas.checks:
             check_types = set(
                 s.strip() for s in self.areas.checks[loc]["type"].split(",")
@@ -466,9 +467,9 @@ class Rando:
             horde_door_requirement &= DNFInventory(dungeons_req)
 
         self.endgame_requirements = {
-            self.norm(GOT_RAISING_REQUIREMENT): got_raising_requirement,
-            self.norm(GOT_OPENING_REQUIREMENT): got_opening_requirement,
-            self.norm(HORDE_DOOR_REQUIREMENT): horde_door_requirement,
+            GOT_RAISING_REQUIREMENT: got_raising_requirement,
+            GOT_OPENING_REQUIREMENT: got_opening_requirement,
+            HORDE_DOOR_REQUIREMENT: horde_door_requirement,
         }
 
     def initialize_items(self):
