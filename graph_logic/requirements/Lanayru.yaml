@@ -1,4 +1,8 @@
 allowed-time-of-day: DayOnly
+macros:
+  Raise Lanayru Mining Facility: Open LMF option | Desert - North Part - Activate Master Generator
+  Can Navigate in Oasis: Can Defeat Ampilus | Hook Beetle | Lanayru Desert - Sand Oasis Brakeslide Trick
+
 
 Mines:
   toplevel-alias: Lanayru Mines

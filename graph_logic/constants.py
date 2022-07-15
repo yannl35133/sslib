@@ -6,13 +6,24 @@ EIN = EXTENDED_ITEM_NAME
 
 sep = " - "
 
-# Logic options
+# Logic options, runtime requirements
 
 OPEN_THUNDERHEAD_OPTION = EIN("Open Thunderhead option")
 OPEN_LMF_OPTION = EIN("Open LMF option")
 RANDOMIZED_BEEDLE_OPTION = EIN("Randomized Beedle option")
 HERO_MODE = EIN("Hero-mode")
 NO_BIT_CRASHES = EIN("No BiT crashes")
+
+GOT_OPENING_REQUIREMENT = EIN("GoT Opening Requirement")
+GOT_RAISING_REQUIREMENT = EIN("GoT Raising Requirement")
+HORDE_DOOR_REQUIREMENT = EIN("Horde Door Requirement")
+
+BEEDLE_STALL_ACCESS = EIN("Beedle Stall Access Token")
+MEDIUM_PURCHASES = EIN("Medium Purchases Token")
+EXPENSIVE_PURCHASES = EIN("Expensive Purchases Token")
+MAY_GET_n_CRYSTALS = lambda n: EIN(f"May Get {n} Crystals Token")
+
+CRYSTAL_THRESHOLDS = [5, 10, 30, 40, 50, 70, 80]
 
 LOGIC_OPTIONS = dict.fromkeys(
     [
@@ -21,7 +32,14 @@ LOGIC_OPTIONS = dict.fromkeys(
         RANDOMIZED_BEEDLE_OPTION,
         HERO_MODE,
         NO_BIT_CRASHES,
+        GOT_OPENING_REQUIREMENT,
+        GOT_RAISING_REQUIREMENT,
+        HORDE_DOOR_REQUIREMENT,
+        BEEDLE_STALL_ACCESS,
+        MEDIUM_PURCHASES,
+        EXPENSIVE_PURCHASES,
     ]
+    + [MAY_GET_n_CRYSTALS(n) for n in CRYSTAL_THRESHOLDS]
 )
 
 # Locations
@@ -394,26 +412,9 @@ DUNGEON_FINAL_CHECK = {
     SK: SK + sep + "Complete Triforce",
 }
 
-BATn = lambda n: f"Skyloft - Village - Batreaux's House - {n} Crystals"
-BATREAUX_FIRST_CHECK_ABOVE = {
-    0: BATn(5),
-    5: BATn(10),
-    10: BATn(30),
-    30: BATn(40),
-    40: BATn(50),
-    50: BATn(70),
-    70: BATn(80),
-    80: None,
-}
-
-GOT_OPENING_REQUIREMENT = "GoT Opening Requirement"
-GOT_RAISING_REQUIREMENT = "GoT Raising Requirement"
-HORDE_DOOR_REQUIREMENT = "Horde Door Requirement"
-
 START = "Start"
 DEMISE = "Beat Demise"
 SONG_IMPA_CHECK = "Sealed Grounds - Song from Impa"
-BEEDLE_STALL = "Beedle - Stall"
 
 trick: Callable[[str], str] = lambda s: s + " Trick"
 

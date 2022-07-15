@@ -90,12 +90,12 @@ South East:
       Crystal: Night
       Goddess Chest: Faron - Initial Goddess Cube
       Roof Goddess Chest: Skyview - Spring - Goddess Cube & Day
-      Start Kina's Quest: Chandelier Quest Reward & Day
+      Start Kina's Quest: Complete Hot Soup Delivery & Day
       Kina's Crystals: Eldin - Pick up Guld & Day
         # Unlocked after Chandelier Quest
 
       Gossip Stone: Nothing
-      Pumpkin Carrying: Skyloft - Delivered Hot Soup & Day
+      Pumpkin Carrying: Complete Hot Soup Delivery & Day
 
 
     Lumpy Pumpkin:
@@ -106,6 +106,7 @@ South East:
 
         Break the Chandelier: Nothing
         Start Hot Soup Delivery: Break the Chandelier & Bottle
+        Complete Hot Soup Delivery: Skyloft - Delivered Hot Soup
         Play the Harp with Kina: # Play the harp
           Pumpkin Carrying & Goddess Harp & Night
         Chandelier Quest Reward: Play the Harp with Kina
