@@ -1053,7 +1053,7 @@ Skipper's Retreat - Skydive Platform - Chest:
     - stage/F301_3/r0/l0/TBox/77
 Shipyard - Rickety Coaster -- Heart Stopping Track in 1'05:
   original item: Heart Piece
-  type: lanayru, minigame, combat #Molderach 2 makes this a combat check
+  type: lanayru, minigame, combat #Moldarach 2 makes this a combat check
   Paths:
     - event/406-TrolleyRace/77
     - oarc/F301_4/l0
@@ -1268,7 +1268,7 @@ Lanayru Mining Facility - Gust Bellows Room - Gust Bellows Chest:
   type: lanayru, dungeon
   Paths:
     - stage/D300/r4/l0/TBox/68
-Lanayru Mining Facility - Gust Bellows Room - Chest inside Room:
+Lanayru Mining Facility - Gust Bellows Room - Chest in Spike Maze:
   original item: Golden Skull # TODO check again
   type: lanayru, dungeon
   Paths:
@@ -1289,7 +1289,7 @@ Lanayru Mining Facility - Chest behind First Crawlspace:
   Paths:
     - stage/D300_1/r9/l0/TBox/72
     - stage/D300/r9/l0/TBox/72
-Lanayru Mining Facility - Chest in Spike Maze:
+Lanayru Mining Facility - Sand Spike Maze - Chest:
   original item: Red Rupee
   type: lanayru, dungeon
   Paths:
@@ -1302,7 +1302,7 @@ Lanayru Mining Facility - Boss Key Chest:
     - stage/D300_1/r8/l0/TBox/71
   hint: always
   text: deep inside <r<Lanayru Mining Facility, a pair of Armos>> guard
-Lanayru Mining Facility - Shortcut Chest in Main Hub:
+Lanayru Mining Facility - Big Hub - Shortcut Chest:
   original item: Red Rupee
   type: lanayru, dungeon
   Paths:
@@ -1388,7 +1388,7 @@ Ancient Cistern - Vines Area - Chest:
   type: faron, dungeon
   Paths:
     - stage/D101/r0/l0/TBox/66
-Ancient Cistern - Waterfall Area - Chest:
+Ancient Cistern - Behind the Waterfall - Chest:
   original item: Red Rupee
   type: faron, dungeon
   Paths:

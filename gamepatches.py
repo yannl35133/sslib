@@ -245,29 +245,6 @@ DUNGEON_EXIT_SCENS = {
     ],
 }
 
-# fixes for entrance rando, ET, SSH and SK don't need to set storyflags at all
-# for LMF it's the ToT layer change
-POST_DUNGEON_STORYFLAGS = {
-    SV: 5,
-    AC: 900,
-    ET: -1,
-    FS: 901,
-    LMF: 914,
-    SSH: -1,
-    SK: -1,
-}
-
-POST_DUNGEON_CUTSCENE = {
-    # (stage, room, EVNT)
-    SV: ("B100_1", 0, 1),
-    ET: ("B210", 0, 2),
-    LMF: ("F300_4", 0, 20),
-    AC: ("B101_1", 0, 1),
-    SSH: ("B301", 0, 1),
-    FS: ("B201_1", 0, 0),
-    SK: ("F000", 0, 19),
-}
-
 TRIAL_STAGES = {
     SKYLOFT_TRIAL: "S000",
     FARON_TRIAL: "S100",
