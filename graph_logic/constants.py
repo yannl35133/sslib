@@ -412,8 +412,28 @@ DUNGEON_FINAL_CHECK = {
     SK: SK + sep + "Complete Triforce",
 }
 
-START = "Start"
+GHIRAHIM_I = "Ghirahim 1"
+SCALDERA = "Scaldera"
+MOLDARACH = "Moldarach"
+KOLOKTOS = "Koloktos"
+TENTALUS = "Tentalus"
+GHIRAHIM_II = "Ghirahim 2"
 DEMISE = "Beat Demise"
+
+GOALS = [GHIRAHIM_I, SCALDERA, MOLDARACH, KOLOKTOS, TENTALUS, GHIRAHIM_II]
+ALL_GOALS = GOALS + [DEMISE]
+
+GOAL_DUNGEONS = {
+    GHIRAHIM_I: SV,
+    SCALDERA: ET,
+    MOLDARACH: LMF,
+    KOLOKTOS: AC,
+    TENTALUS: SSH,
+    GHIRAHIM_II: FS,
+}
+
+
+START = "Start"
 SONG_IMPA_CHECK = "Sealed Grounds - Song from Impa"
 
 trick: Callable[[str], str] = lambda s: s + " Trick"

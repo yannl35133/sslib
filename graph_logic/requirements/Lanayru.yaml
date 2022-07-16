@@ -94,7 +94,7 @@ Desert:
     exits:
       Entry: Nothing
       Top of Wall: Clawshots
-      Top of LMF: North Part - Raise Lanayru Mining Facility
+      Top of LMF: Raise Lanayru Mining Facility
       East: Temple of Time Skip - Brakeslide Trick | East - Open Wall Shortcut | Clawshots
       Sand Oasis: Blow Statues to Sand Oasis Down | (Defeat Spume to Sand Oasis & Lanayru Desert - Sand Oasis Brakeslide Trick)
 
@@ -161,7 +161,7 @@ Desert:
   North Part:
     locations:
       Water Node: (Bomb Bag | Hook Beetle) & Sword
-      Raise Lanayru Mining Facility: Open LMF option | Water Node & Lightning Node - Lightning Node & East - Fire Node - Fire Node & Sword
+      Activate Master Generator: Water Node & Lightning Node - Lightning Node & East - Fire Node - Fire Node & Sword
       Unlock Statue: Nothing
       Open Trial Gate: Nayru's Wisdom & Goddess Harp
       Open Secret Passageway: Bomb Bag | Hook Beetle & Secret Passageway Hook Beetle Opening Trick
@@ -221,7 +221,7 @@ Desert:
 
     exits:
       North Part: Nothing
-      Top of LMF: North Part - Raise Lanayru Mining Facility
+      Top of LMF: Raise Lanayru Mining Facility
       Near Hook Beetle Fight: Open Wall Shortcut | Temple of Time Skip - Brakeslide Trick
       Desert - Shared Statue Exit: Nothing
       Stone Cache Statue Entrance: Impossible
@@ -435,19 +435,19 @@ Sand Sea:
       Gossip Stone: Nothing # Take the first cart and you've arrived
       Rickety Coaster -- Heart Stopping Track in 1'05:
         # Roller Coaster Minigame
-        Construction Bay - Defeat Molderach
+        Construction Bay - Defeat Moldarach
     exits:
       Statue: Unlock Statue
       Dock: Nothing
       Construction Bay Upper Exit: Nothing
-      Construction Bay Lower Exit: Construction Bay - Defeat Molderach
+      Construction Bay Lower Exit: Construction Bay - Defeat Moldarach
 
     Construction Bay:
       locations:
-        Defeat Molderach: Gust Bellows & Sword
+        Defeat Moldarach: Gust Bellows & Sword
       exits:
         Upper Exit: Nothing
-        Lower Exit: Defeat Molderach
+        Lower Exit: Defeat Moldarach
 
   Pirate Stronghold:
     locations:

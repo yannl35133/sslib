@@ -170,8 +170,8 @@ Can Cut Tree:
 Can Unlock Combination Lock:
   Sword | Whip | Clawshots | Bow
 
-Can Hit Timeshiftstone:
-  Can Cut Tree | Whip | Distance Activator
+Can Hit Timeshift Stone:
+  Sword | Bomb Bag | Whip | Distance Activator
 
 # Can defeat enemy
 
@@ -191,12 +191,12 @@ Can Defeat Lezalfos:
 Can Defeat Ampilus:
   Damaging Item
 
-Can Defeat Molderach:
+Can Defeat Moldarach:
   Sword
   # Bow also works instead of sword but you need a LOT of arrows
 
-Can Uncover and Defeat Molderach:
-  Gust Bellows & Can Defeat Molderach
+Can Uncover and Defeat Moldarach:
+  Gust Bellows & Can Defeat Moldarach
 
 Can Defeat Armos:
   Gust Bellows & Sword
@@ -976,8 +976,8 @@ Central Skyloft - Potion Lady's Gift:
   Nothing
 
 Unlocked Endurance Potion:
-  Can Raise Lanayru Mining Facility | Option "open-lmf" Is "Open"
-  # potion is tied to raising LMF, it's always enabled with open lmf
+  Can Raise Lanayru Mining Facility
+  # Potion is tied to raising LMF, it's always enabled with open lmf
 
 Central Skyloft - Bazaar Goddess Chest:
   Goddess Cube in Ancient Harbour
@@ -1926,7 +1926,7 @@ Can Access Desert Gorge Statue:
   # When using the sword, rush it in the sand to defeat it, drowning in the sand won't make it respawn
 
 Can Access Front of Temple of Time:
-  (Can Access Desert Gorge Statue & (Hook Beetle | Slingshot))
+  Can Access Desert Gorge Statue & (Hook Beetle | Slingshot)
   # The Timeshift Stone in the big tree is reachable with a slingshot trickshot
   # Beating the dungeon will make one spawn inside ToT
   # If you already beat the dungeon and forgot to activate the ToT statue, RBM it with scene flag 8x40 "Check Temple of Time Statue"
@@ -2135,8 +2135,8 @@ Lanayru Sand Sea - Skipper's Retreat - Skydive Chest:
 # Shipyard
 
 Lanayru Sand Sea - Rickety Coaster - Heart Stopping Track in 1'05: # Roller Coaster Minigame
-  Can Access Sand Sea & Gust Bellows & Can Uncover and Defeat Molderach
-  # Do you need to defeat Molderach ? #UNSURE
+  Can Access Sand Sea & Gust Bellows & Can Uncover and Defeat Moldarach
+  # Do you need to defeat Moldarach ? #UNSURE
 
 Sand Sea - Gossip Stone in Shipyard:
   Can Access Sand Sea
