@@ -217,6 +217,9 @@ class HintDistribution:
 
             sots_loc = self.logic.placement.items[item]
 
+            if sots_loc == START_ITEM:
+                continue
+
             hint_region = areas.checks[sots_loc]["hint_region"]
             self.sots_locations.append((hint_region, sots_loc, item))
         self.rng.shuffle(self.sots_locations)
@@ -235,6 +238,8 @@ class HintDistribution:
                     continue
 
                 sots_loc = self.logic.placement.items[item]
+                if sots_loc == START_ITEM:
+                    continue
 
                 hint_region = areas.checks[sots_loc]["hint_region"]
                 goal_locations.append((hint_region, sots_loc, item))
