@@ -437,6 +437,7 @@ GOAL_DUNGEONS = {
 
 
 START = "Start"
+START_ITEM = EIN("Start Item")
 SONG_IMPA_CHECK = "Sealed Grounds - Song from Impa"
 
 trick: Callable[[str], str] = lambda s: s + " Trick"

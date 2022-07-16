@@ -361,7 +361,7 @@ class Rando:
         self.ban_the_banned()  # self.banned, self.ban_options
 
         for item in self.placement.starting_items:
-            self.placement.items[item] = EIN("Start Item")
+            self.placement.items[item] = START_ITEM
 
         self.get_endgame_requirements()  # self.endgame_requirements
 
