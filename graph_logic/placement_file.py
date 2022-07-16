@@ -87,7 +87,7 @@ class PlacementFile:
             raise InvalidPlacementFile("dungeon entries are wrong!")
 
         for item in self.item_locations.values():
-            if strip_item_number(item) not in INVENTORY_ITEMS:
+            if item not in ALL_ITEM_NAMES:
                 raise InvalidPlacementFile(f'invalid item "{item}"')
 
         checks_file = read_yaml_file_cached("checks.yaml")

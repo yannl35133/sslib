@@ -512,7 +512,7 @@ class Randomizer(BaseRandomizer):
         plcmt_file.hash_str = self.randomizer_hash
 
         def norm(s):
-            if s in INVENTORY_ITEMS:
+            if s in ALL_ITEM_NAMES:
                 return strip_item_number(s)
             if s in self.areas.checks:
                 check = self.areas.checks[s]
