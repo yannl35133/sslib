@@ -6,9 +6,8 @@ from abc import ABC
 import re
 from itertools import product, combinations
 
-from .item_types import ALL_ITEM_NAMES
 from .inventory import EXTENDED_ITEM, Inventory
-from .constants import EXTENDED_ITEM_NAME, number, ITEM_COUNTS
+from .constants import EXTENDED_ITEM_NAME, number, ITEM_COUNTS, ALL_ITEM_NAMES
 
 
 class LogicExpression(ABC):
