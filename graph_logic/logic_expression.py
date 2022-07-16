@@ -7,7 +7,7 @@ import re
 from itertools import product, combinations
 
 from .inventory import EXTENDED_ITEM, Inventory
-from .constants import EXTENDED_ITEM_NAME, number, ITEM_COUNTS, ALL_ITEM_NAMES
+from .constants import EXTENDED_ITEM_NAME, number, ITEM_COUNTS, RAW_ITEM_NAMES
 
 
 class LogicExpression(ABC):
@@ -275,11 +275,11 @@ class MakeExpression(Transformer):
 
         if match := item_with_count_re.search(text):
             item_name = match.group(1)
-            if item_name not in ALL_ITEM_NAMES:
+            if item_name not in RAW_ITEM_NAMES:
                 raise ValueError(f"Unknown item {item_name}")
             return InventoryAtom(item_name, int(match.group(2)))
 
-        elif text in ALL_ITEM_NAMES or text in EXTENDED_ITEM:
+        elif text in RAW_ITEM_NAMES or text in EXTENDED_ITEM:
             return InventoryAtom(text, 1)
 
         else:
