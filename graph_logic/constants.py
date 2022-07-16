@@ -174,14 +174,14 @@ SSH_BOSS_KEY = boss_key(SSH)
 FS_BOSS_KEY = boss_key(FS)
 SK_BOSS_KEY = boss_key(SK)
 
-map = lambda d: EIN(d + " Map")
-SV_MAP = map(SV)
-ET_MAP = map(ET)
-LMF_MAP = map(LMF)
-AC_MAP = map(AC)
-SSH_MAP = map(SSH)
-FS_MAP = map(FS)
-SK_MAP = map(SK)
+dungeon_map = lambda d: EIN(d + " Map")
+SV_MAP = dungeon_map(SV)
+ET_MAP = dungeon_map(ET)
+LMF_MAP = dungeon_map(LMF)
+AC_MAP = dungeon_map(AC)
+SSH_MAP = dungeon_map(SSH)
+FS_MAP = dungeon_map(FS)
+SK_MAP = dungeon_map(SK)
 
 CAVES_KEY = EIN("Lanayru Caves Key")
 
@@ -376,6 +376,11 @@ INVENTORY_ITEMS = (
     | SMALL_KEYS
     | BOSS_KEYS
     | MAPS
+)
+
+ALL_ITEM_NAMES = dict.fromkeys(
+    strip_item_number(EIN(k))
+    for k in INVENTORY_ITEMS | DUPLICABLE_ITEMS | DUPLICABLE_COUNTERPROGRESS_ITEMS
 )
 
 TABLETS = [EMERALD_TABLET, RUBY_TABLET, AMBER_TABLET]
