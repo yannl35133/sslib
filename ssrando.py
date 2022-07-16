@@ -220,10 +220,13 @@ class Randomizer(BaseRandomizer):
 
         # Write path locations; locations 100% required to complete a given required dungeon
         spoiler_log += "Path:\n"
-        for goal, goallocs in self.goal_locations.items():
+        for goal in GOALS:
             spoiler_log += f"{goal}:\n"
-            for goalloc, item in goallocs.items():
-                spoiler_log += "  %-53s %s\n" % (goalloc + ":", item)
+            dungeon = GOAL_DUNGEONS[goal]
+            check = DUNGEON_FINAL_CHECK[dungeon]
+            for item in self.logic.get_sots_items(check):
+                loc = self.logic.placement.items[item]
+                spoiler_log += "  %-53s %s\n" % (loc + ":", item)
 
         spoiler_log += "\n\n"
 

@@ -117,25 +117,26 @@ class ZoneItemGossipStoneHint(LocationGossipStoneHint):
 @dataclass
 class SotsGoalGossipStoneHint(LocationGossipStoneHint):
     location_name_override: Optional[str] = field(default=None, init=False)
-    hint_type: str = field(init=False, default="sots")
+    hint_type: str = field(init=False)
     zone: str
-    goal: Optional[str]
+    goal: str | None = None
+
+    def __post_init__(self):
+        self.hint_type = "sots" if self.goal is None else "goal"
 
     def to_gossip_stone_text(self, norm) -> List[str]:
         if self.goal is not None:
             return [
                 f"The servant of the goddess who wishes to vanquish <ye<{self.goal}>> shall venture to <r<{self.zone}>>"
             ]
-        else:
-            return [
-                f"The <b+<Spirit of the Sword>> guides the goddess' chosen hero to <r<{self.zone}>>"
-            ]
+        return [
+            f"The <b+<Spirit of the Sword>> guides the goddess' chosen hero to <r<{self.zone}>>"
+        ]
 
     def to_spoiler_log_text(self) -> str:
-        if goal := self.goal:
+        if self.goal is not None:
             return f"{self.zone} is on the path to {self.goal}"
-        else:
-            return f"{self.zone} is SotS"
+        return f"{self.zone} is SotS"
 
     def to_spoiler_log_json(self):
         return {
@@ -143,32 +144,33 @@ class SotsGoalGossipStoneHint(LocationGossipStoneHint):
             "item": self.item,
             "zone": self.zone,
             "goal": self.goal,
-            "type": "sots" if self.goal is None else "goal",
+            "type": self.hint_type,
         }
 
 
 @dataclass
 class CubeSotsGoalGossipStoneHint(LocationGossipStoneHint):
     location_name_override: Optional[str] = field(default=None, init=False)
-    hint_type: str = field(init=False, default="cube_sots")
+    hint_type: str = field(init=False)
     cube_zone: str
-    goal: Optional[str]
+    goal: str | None = None
+
+    def __post_init__(self):
+        self.hint_type = "cube_sots" if self.goal is None else "cube_goal"
 
     def to_gossip_stone_text(self, norm) -> List[str]:
         if self.goal is not None:
             return [
                 f"The servant of the goddess who wishes to vanquish <ye<{self.goal}>> shall unite <r<{self.cube_zone}>> with the skies."
             ]
-        else:
-            return [
-                f"The <ye<goddess>> left a sacred gift for the hero who unites <r<{self.cube_zone}>> with the skies."
-            ]
+        return [
+            f"The <ye<goddess>> left a sacred gift for the hero who unites <r<{self.cube_zone}>> with the skies."
+        ]
 
     def to_spoiler_log_text(self) -> str:
-        if goal := self.goal:
-            return f"a cube in {self.cube_zone} is on the path to {goal}"
-        else:
-            return f"{self.cube_zone} has a SotS cube"
+        if self.goal is not None:
+            return f"a cube in {self.cube_zone} is on the path to {self.goal}"
+        return f"{self.cube_zone} has a SotS cube"
 
     def to_spoiler_log_json(self):
         return {
@@ -176,7 +178,7 @@ class CubeSotsGoalGossipStoneHint(LocationGossipStoneHint):
             "item": self.item,
             "cube_zone": self.cube_zone,
             "goal": self.goal,
-            "type": "cube_sots" if self.goal is None else "cube_goal",
+            "type": self.hint_type,
         }
 
 

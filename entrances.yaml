@@ -3885,15 +3885,15 @@ Lanayru Mining Facility - Big Hub - Entrance from Armos Fight Room:
 
 Lanayru Mining Facility - First Hub - Exit to Big Hub:
   type: exit
-  vanilla: Lanayru Mining Facility - Big Hub - Entry - Entrance from First Hub
+  vanilla: Lanayru Mining Facility - Big Hub - Entrance from First Hub
 
 Lanayru Mining Facility - Gust Bellows Room - Exit to Big Hub:
   type: exit
-  vanilla: Lanayru Mining Facility - Big Hub - Near Exit to Gust Bellows Room - Entrance from Gust Bellows Room
+  vanilla: Lanayru Mining Facility - Big Hub - Entrance from Gust Bellows Room
 
 Lanayru Mining Facility - Armos Fight Room - Exit to Big Hub:
   type: exit
-  vanilla: Lanayru Mining Facility - Big Hub - Past West Gate - Entrance from Armos Fight Room
+  vanilla: Lanayru Mining Facility - Big Hub - Entrance from Armos Fight Room
 
 Lanayru Mining Facility - Big Hub - Exit to First Hub:
   type: exit
