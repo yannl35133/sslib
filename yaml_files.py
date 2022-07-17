@@ -47,7 +47,8 @@ glitched_requirements = yaml_load(glitched_requirements_file)
 
 
 def requirements(folder: Path):
-    files = filter(lambda s: s[0].isupper() and s.endswith(".yaml"), os.listdir(folder))
+    files = sorted(os.listdir(folder))
+    files = filter(lambda s: s[0].isupper() and s.endswith(".yaml"), files)
     requirements = {
         os.path.splitext(filename)[0]: yaml_load(folder / filename)
         for filename in files
