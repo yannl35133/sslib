@@ -52,7 +52,8 @@ def write(
 
     # Write path locations; locations 100% required to complete a given required dungeon
     file.write("Path:\n")
-    for goal in GOALS:
+    for dungeon in required_dungeons:
+        goal = DUNGEON_GOALS[dungeon]
         file.write(f"{goal}:\n")
         for item in sots_items[goal]:
             location = placement.items[item]
