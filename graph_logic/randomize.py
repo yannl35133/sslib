@@ -504,7 +504,9 @@ class Rando:
 
         options = {
             OPEN_THUNDERHEAD_OPTION: self.options["open-thunderhead"] == "Open",
+            OPEN_ET_OPTION: self.options["open-et"],
             OPEN_LMF_OPTION: self.options["open-lmf"] == "Open",
+            LMF_NODES_ON_OPTION: self.options["open-lmf"] == "Main Node",
             RANDOMIZED_BEEDLE_OPTION: shop_mode != "Vanilla",
             HERO_MODE: self.options["fix-bit-crashes"],
             NO_BIT_CRASHES: self.options["hero-mode"],
