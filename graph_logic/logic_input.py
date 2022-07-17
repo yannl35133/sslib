@@ -190,6 +190,20 @@ class Areas:
                 f"Could not find '{partial_address_str}' from '{base_address_str}'"
             )
 
+    def prettify(self, s, *, custom=False):
+        if s in ALL_ITEM_NAMES:
+            return strip_item_number(s)
+        if s in self.checks:
+            check = self.checks[s]
+            if custom and (override := check.get("text")) is not None:
+                return override
+            return check["short_name"]
+        if s in self.gossip_stones:
+            return self.gossip_stones[s]["short_name"]
+        if "\\" not in s and "#" not in s:
+            return s
+        raise ValueError(f"Can't find a shortname for {s}")
+
     def __init__(
         self,
         raw_area: Dict[str, Any],
@@ -297,7 +311,9 @@ class Areas:
             check = checks[partial_address]
             check["req_index"] = EXTENDED_ITEM[full_address]
             check["short_name"] = partial_address
-            check["hint_region"] = self.areas[area_name].hint_region
+            hint_region = self.areas[area_name].hint_region
+            assert hint_region is not None
+            check["hint_region"] = hint_region
             self.checks[full_address] = check
 
         for partial_address in gossip_stones:

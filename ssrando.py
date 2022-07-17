@@ -12,6 +12,7 @@ from graph_logic.constants import *
 from graph_logic.inventory import EXTENDED_ITEM
 from graph_logic.logic_input import Areas
 from yaml_files import graph_requirements, checks, hints, map_exits
+import SpoilerLog
 
 
 # from logic.logic import Logic
@@ -166,10 +167,50 @@ class Randomizer(BaseRandomizer):
             (self.log_file_path / f"placement_file_{self.seed}.json").write_text(
                 plcmt_file.to_json_str()
             )
+
+        anti = "Anti " if self.no_logs else ""
+        ext = "json" if self.options["json"] else "txt"
+        log_address = self.log_file_path / (
+            f"SS Random {self.seed} - {anti}Spoiler Log.{ext}"
+        )
+
         if self.options["json"]:
-            self.write_spoiler_log_json()
+            dump = SpoilerLog.dump_json(
+                self.logic.placement,
+                self.options,
+                hash=self.randomizer_hash,
+                progression_spheres=self.logic.calculate_playthrough_progression_spheres(),
+                hints=self.hints.hints,
+                required_dungeons=self.logic.required_dungeons,
+                sots_items={
+                    goal: self.logic.get_sots_items(GOAL_CHECKS[goal])
+                    for goal in ALL_GOALS
+                },
+                barren_nonprogress=self.logic.get_barren_regions(),
+                randomized_dungeon_entrance=self.logic.randomized_dungeon_entrance,
+                randomized_trial_entrance=self.logic.randomized_trial_entrance,
+            )
+            with log_address.open("w") as f:
+                json.dump(dump, f, indent=2)
         else:
-            self.write_spoiler_log()
+            with log_address.open("w") as f:
+                SpoilerLog.write(
+                    f,
+                    self.logic.placement,
+                    self.options,
+                    self.areas,
+                    hash=self.randomizer_hash,
+                    progression_spheres=self.logic.calculate_playthrough_progression_spheres(),
+                    hints=self.hints.hints,
+                    required_dungeons=self.logic.required_dungeons,
+                    sots_items={
+                        goal: self.logic.get_sots_items(GOAL_CHECKS[goal])
+                        for goal in ALL_GOALS
+                    },
+                    barren_nonprogress=self.logic.get_barren_regions(),
+                    randomized_dungeon_entrance=self.logic.randomized_dungeon_entrance,
+                    randomized_trial_entrance=self.logic.randomized_trial_entrance,
+                )
         if not self.dry_run:
             GamePatcher(
                 self.areas,
@@ -183,290 +224,6 @@ class Randomizer(BaseRandomizer):
                 plcmt_file,
             ).do_all_gamepatches()
         self.progress_callback("patching done")
-
-    def write_spoiler_log(self):
-        spoiler_log = self.get_log_header()
-
-        if self.no_logs:
-            # We still calculate progression spheres even if we're not going to write them anywhere to catch more errors in testing.
-            self.logic.calculate_playthrough_progression_spheres()
-
-            spoiler_log_output_path = self.log_file_path / (
-                "SS Random %s - Anti Spoiler Log.txt" % self.seed
-            )
-            with spoiler_log_output_path.open("w") as f:
-                f.write(spoiler_log)
-
-            return
-
-        if len(self.logic.placement.starting_items) > 0:
-            spoiler_log += "\n\nStarting items:\n  "
-            spoiler_log += "\n  ".join(self.logic.placement.starting_items)
-        spoiler_log += "\n\n\n"
-
-        # Write required dungeons
-        for i, dungeon in enumerate(self.logic.required_dungeons, start=1):
-            spoiler_log += f"Required Dungeon {i}: " + dungeon + "\n"
-
-        spoiler_log += "\n\n"
-
-        # Write way of the hero (100% required) locations
-        spoiler_log += "SotS:\n"
-        for item in self.logic.get_sots_items():
-            location = self.logic.placement.items[item]
-            spoiler_log += "  %-53s %s\n" % (location + ":", item)
-
-        spoiler_log += "\n\n"
-
-        # Write path locations; locations 100% required to complete a given required dungeon
-        spoiler_log += "Path:\n"
-        for goal in GOALS:
-            spoiler_log += f"{goal}:\n"
-            dungeon = GOAL_DUNGEONS[goal]
-            check = DUNGEON_FINAL_CHECK[dungeon]
-            for item in self.logic.get_sots_items(check):
-                loc = self.logic.placement.items[item]
-                spoiler_log += "  %-53s %s\n" % (loc + ":", item)
-
-        spoiler_log += "\n\n"
-
-        barren, nonprogress = self.logic.get_barren_regions()
-        spoiler_log += "Barren Regions:\n"
-        for region in barren:
-            spoiler_log += "  " + region + "\n"
-        spoiler_log += "\n\n"
-
-        spoiler_log += "Nonprogress Regions:\n"
-        for region in nonprogress:
-            spoiler_log += "  " + region + "\n"
-        spoiler_log += "\n\n"
-
-        # Write progression spheres.
-        spoiler_log += "Playthrough:\n"
-        progression_spheres = self.logic.calculate_playthrough_progression_spheres()
-        all_progression_sphere_locations = [
-            loc for locs in progression_spheres for loc in locs
-        ]
-        zones, max_location_name_length = self.get_zones_and_max_location_name_len(
-            all_progression_sphere_locations
-        )
-        format_string = "      %-" + str(max_location_name_length + 1) + "s %s\n"
-        for i, progression_sphere in enumerate(progression_spheres):
-            # skip single gratitude crystals
-            progression_sphere = [
-                loc
-                for loc in progression_sphere
-                if loc == "Past - Demise"
-                or self.logic.placement.locations[loc] != "Gratitude Crystal"
-            ]
-            spoiler_log += "%d:\n" % (i + 1)
-
-            for zone_name, locations_in_zone in zones.items():
-                if not any(
-                    loc for (loc, _) in locations_in_zone if loc in progression_sphere
-                ):
-                    # No locations in this zone are used in this sphere.
-                    continue
-
-                spoiler_log += "  %s:\n" % zone_name
-
-                for (location_name, specific_location_name) in locations_in_zone:
-                    if location_name in progression_sphere:
-                        if location_name == "Past - Demise":
-                            item_name = "Defeat Demise"
-                        else:
-                            item_name = self.logic.placement.locations[location_name]
-                        spoiler_log += format_string % (
-                            specific_location_name + ":",
-                            item_name,
-                        )
-
-        spoiler_log += "\n\n\n"
-
-        # Write item locations.
-        spoiler_log += "All item locations:\n"
-        zones, max_location_name_length = self.get_zones_and_max_location_name_len(
-            self.logic.placement.locations
-        )
-        format_string = "    %-" + str(max_location_name_length + 1) + "s %s\n"
-        for zone_name in sorted(zones):
-            locations_in_zone = zones[zone_name]
-            spoiler_log += zone_name + ":\n"
-
-            for (location_name, specific_location_name) in locations_in_zone:
-                item_name = self.logic.placement.locations[location_name]
-                # skip single gratitude crystals, since they are forced vanilla
-                if item_name == "Gratitude Crystal":
-                    continue
-                spoiler_log += format_string % (specific_location_name + ":", item_name)
-
-        spoiler_log += "\n\n\n"
-
-        # Write dungeon/secret cave entrances.
-        spoiler_log += "Entrances:\n"
-        for (
-            entrance_name,
-            dungeon_or_cave_name,
-        ) in self.logic.randomized_dungeon_entrance.items():
-            spoiler_log += "  %-48s %s\n" % (entrance_name + ":", dungeon_or_cave_name)
-
-        spoiler_log += "\n\n"
-
-        # Write randomized trials
-        spoiler_log += "Trial Gates:\n"
-        for trial_gate, trial in self.logic.randomized_trial_entrance.items():
-            spoiler_log += "  %-48s %s\n" % (trial_gate + ":", trial)
-
-        spoiler_log += "\n\n\n"
-
-        # Write hints
-        spoiler_log += "Hints:\n"
-        for hintlocation, hint in self.hints.hints.items():
-            spoiler_log += "  %-53s %s\n" % (
-                hintlocation + ":",
-                hint.to_spoiler_log_text(),
-            )
-
-        spoiler_log += "\n\n\n"
-
-        spoiler_log_output_path = self.log_file_path / (
-            "SS Random %s - Spoiler Log.txt" % self.seed
-        )
-        with spoiler_log_output_path.open("w") as f:
-            f.write(spoiler_log)
-
-    def write_spoiler_log_json(self):
-        spoiler_log = self.get_log_header_json()
-        if self.no_logs:
-            # We still calculate progression spheres even if we're not going to write them anywhere to catch more errors in testing.
-            self.logic.calculate_playthrough_progression_spheres()
-
-            spoiler_log_output_path = self.log_file_path / (
-                "SS Random %s - Anti Spoiler Log.json" % self.seed
-            )
-            with spoiler_log_output_path.open("w") as f:
-                json.dump(spoiler_log, f, indent=2)
-
-            return
-        spoiler_log["starting-items"] = sorted(self.logic.placement.starting_items)
-        spoiler_log["required-dungeons"] = self.logic.required_dungeons
-        spoiler_log["sots-locations"] = [
-            self.logic.placement.items[item] for item in self.logic.get_sots_items()
-        ]
-        spoiler_log["barren-regions"] = self.logic.get_barren_regions()[0]
-        spoiler_log[
-            "playthrough"
-        ] = self.logic.calculate_playthrough_progression_spheres()
-        spoiler_log["item-locations"] = self.logic.placement.items
-        spoiler_log["hints"] = dict(
-            map(
-                lambda kv: (kv[0], kv[1].to_spoiler_log_json()),
-                self.hints.hints.items(),
-            )
-        )
-        spoiler_log["entrances"] = self.logic.randomized_dungeon_entrance
-        spoiler_log["trial-connections"] = self.logic.randomized_trial_entrance
-
-        spoiler_log_output_path = self.log_file_path / (
-            "SS Random %s - Spoiler Log.json" % self.seed
-        )
-        with spoiler_log_output_path.open("w") as f:
-            json.dump(spoiler_log, f, indent=2)
-
-    def get_log_header_json(self):
-        header_dict = OrderedDict()
-        header_dict["version"] = VERSION
-        header_dict["permalink"] = self.options.get_permalink()
-        header_dict["seed"] = self.seed
-        header_dict["hash"] = self.randomizer_hash
-        non_disabled_options = [
-            (name, val)
-            for (name, val) in self.options.options.items()
-            if (
-                self.options[name] not in [False, [], {}, OrderedDict()]
-                or OPTIONS[name]["type"] == "int"
-            )
-        ]
-        header_dict["options"] = OrderedDict(
-            filter(
-                lambda tupl: OPTIONS[tupl[0]].get("permalink", True),
-                non_disabled_options,
-            )
-        )
-        header_dict["cosmetic-options"] = OrderedDict(
-            filter(
-                lambda tupl: OPTIONS[tupl[0]].get("cosmetic", False),
-                non_disabled_options,
-            )
-        )
-        return header_dict
-
-    def get_log_header(self):
-        header = ""
-
-        header += "Skyward Sword Randomizer Version %s\n" % VERSION
-
-        header += "Permalink: %s\n" % self.options.get_permalink()
-
-        header += "Seed: %s\n" % self.seed
-
-        header += "Hash : %s\n" % self.randomizer_hash
-
-        header += "Options selected:\n"
-        non_disabled_options = [
-            (name, val)
-            for (name, val) in self.options.options.items()
-            if (
-                self.options[name] not in [False, [], {}, OrderedDict()]
-                or OPTIONS[name]["type"] == "int"
-            )
-        ]
-
-        def format_opts(opts):
-            option_strings = []
-            for option_name, option_value in opts:
-                if isinstance(option_value, bool):
-                    option_strings.append("  %s" % option_name)
-                else:
-                    option_strings.append("  %s: %s" % (option_name, option_value))
-            return "\n".join(option_strings)
-
-        header += format_opts(
-            filter(
-                lambda tupl: OPTIONS[tupl[0]].get("permalink", True),
-                non_disabled_options,
-            )
-        )
-        cosmetic_options = list(
-            filter(
-                lambda tupl: OPTIONS[tupl[0]].get("cosmetic", False),
-                non_disabled_options,
-            )
-        )
-        if cosmetic_options:
-            header += "\n\nCosmetic Options:\n"
-            header += format_opts(cosmetic_options)
-
-        return header
-
-    def get_zones_and_max_location_name_len(self, locations):
-        zones = OrderedDict()
-        max_location_name_length = 0
-        for location_name in locations:
-            zone_name, specific_location_name = (
-                location_name.split(" - ", 1)
-                if " - " in location_name
-                else ("", location_name)
-            )
-
-            if zone_name not in zones:
-                zones[zone_name] = []
-            zones[zone_name].append((location_name, specific_location_name))
-
-            if len(specific_location_name) > max_location_name_length:
-                max_location_name_length = len(specific_location_name)
-
-        return (zones, max_location_name_length)
 
     def get_placement_file(self):
         # temporary placement file stuff
@@ -510,21 +267,9 @@ class Randomizer(BaseRandomizer):
         plcmt_file.dungeon_connections = self.logic.randomized_dungeon_entrance
         plcmt_file.trial_connections = self.logic.randomized_trial_entrance
         plcmt_file.hash_str = self.randomizer_hash
-
-        def norm(s):
-            if s in ALL_ITEM_NAMES:
-                return strip_item_number(s)
-            if s in self.areas.checks:
-                check = self.areas.checks[s]
-                if (override := check.get("text")) is not None:
-                    return override
-                return check["short_name"]
-            if s in self.areas.gossip_stones:
-                return self.areas.gossip_stones[s]["short_name"]
-            raise ValueError(f"Can't find a shortname for {s}")
-
         plcmt_file.gossip_stone_hints = dict(
-            (k, v.to_gossip_stone_text(norm)) for (k, v) in self.hints.hints.items()
+            (k, v.to_gossip_stone_text(lambda s: self.areas.prettify(s, custom=True)))
+            for (k, v) in self.hints.hints.items()
         )
         plcmt_file.trial_hints = trial_hints
         plcmt_file.item_locations = self.logic.placement.locations
