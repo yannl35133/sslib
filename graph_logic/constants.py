@@ -9,7 +9,9 @@ sep = " - "
 # Logic options, runtime requirements
 
 OPEN_THUNDERHEAD_OPTION = EIN("Open Thunderhead option")
+OPEN_ET_OPTION = EIN("Open ET option")
 OPEN_LMF_OPTION = EIN("Open LMF option")
+LMF_NODES_ON_OPTION = EIN("LMF Nodes On option")
 RANDOMIZED_BEEDLE_OPTION = EIN("Randomized Beedle option")
 HERO_MODE = EIN("Hero-mode")
 NO_BIT_CRASHES = EIN("No BiT crashes")
@@ -28,7 +30,9 @@ CRYSTAL_THRESHOLDS = [5, 10, 30, 40, 50, 70, 80]
 LOGIC_OPTIONS = dict.fromkeys(
     [
         OPEN_THUNDERHEAD_OPTION,
+        OPEN_ET_OPTION,
         OPEN_LMF_OPTION,
+        LMF_NODES_ON_OPTION,
         RANDOMIZED_BEEDLE_OPTION,
         HERO_MODE,
         NO_BIT_CRASHES,
