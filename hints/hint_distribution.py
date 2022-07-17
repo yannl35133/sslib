@@ -215,7 +215,9 @@ class HintDistribution:
             self.sots_locations.append((hint_region, sots_loc, item))
         self.rng.shuffle(self.sots_locations)
 
-        self.goals = GOALS.copy()
+        self.goals = [
+            DUNGEON_GOALS[dungeon] for dungeon in self.logic.required_dungeons
+        ]
         # shuffle the goal names that will be chosen in sequence when goal hints are placed to try to ensure one is placed for each goal
         self.rng.shuffle(self.goals)
         # create corresponding list of shuffled goal items
