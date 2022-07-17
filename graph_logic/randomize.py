@@ -266,7 +266,7 @@ class LogicUtils:
                         # i in usefuls:
                         sphere.append(loc)
                     elif i == EXTENDED_ITEM[self.short_to_full(DEMISE)]:
-                        sphere.append("Past - Demise")
+                        sphere.append(DEMISE)
             if sphere:
                 spheres.append(sphere)
         return spheres

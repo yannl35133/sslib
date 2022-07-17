@@ -1,4 +1,4 @@
-Skyloft - Central - Waterfall Island - Gossip Stone:
+Skyloft - Waterfall Island - Gossip Stone:
   textfile: 124-Town6
   textindex: 18
 
@@ -18,23 +18,23 @@ Thunderhead - Bug Heaven - Gossip Stone Near:
   textfile: 004-Object
   textindex: 12
 
-Faron - Sealed Grounds - Behind the Temple - Gossip Stone:
+Sealed Grounds - Behind the Temple - Gossip Stone:
   textfile: 004-Object
   textindex: 13
 
-Faron - Deep Woods - Gossip Stone:
+Deep Woods - Gossip Stone:
   textfile: 004-Object
   textindex: 15
 
-Lake Floria - Waterfall - Gossip Stone:
+Floria Waterfall - Gossip Stone:
   textfile: 004-Object
   textindex: 28
 
-Eldin - Volcano - Gossip Stone next to Earth Temple:
+Eldin Volcano - Gossip Stone next to Earth Temple:
   textfile: 004-Object
   textindex: 14
 
-Eldin - Volcano - Thrill Digger Cave - Gossip Stone:
+Eldin Volcano - Thrill Digger Cave - Gossip Stone:
   textfile: 004-Object
   textindex: 16
 
@@ -50,7 +50,7 @@ Lanayru - Temple of Time - Gossip Stone:
   textfile: 004-Object
   textindex: 25
 
-Lanayru - Sand Sea - Shipyard - Gossip Stone:
+Sand Sea - Shipyard - Gossip Stone:
   textfile: 004-Object
   textindex: 23
 

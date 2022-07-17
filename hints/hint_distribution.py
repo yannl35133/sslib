@@ -221,8 +221,7 @@ class HintDistribution:
         # create corresponding list of shuffled goal items
 
         for goal in self.goals:
-            dungeon = GOAL_DUNGEONS[goal]
-            check = DUNGEON_FINAL_CHECK[dungeon]
+            check = GOAL_CHECKS[goal]
             goal_locations = []
             for item in self.logic.get_sots_items(check):
                 if self.logic.placement.item_placement_limit.get(item, ""):
