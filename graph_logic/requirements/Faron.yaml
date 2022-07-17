@@ -42,7 +42,7 @@ Sealed Grounds:
   Hylia's Temple:
     locations:
       Zelda's Blessing: Nothing
-      Beat Demise: Horde Door Requirement & Sword
+      Defeat Demise: Horde Door Requirement & Sword
     exits:
       Gate of Time: Nothing
 
@@ -143,6 +143,7 @@ Silent Realm:
 # GREAT TREE
 
 Great Tree:
+  hint-region: Faron Woods
   Near Underwater Hole:
     exits:
       Faron - Woods: Water Scale # Is it really needed ?
