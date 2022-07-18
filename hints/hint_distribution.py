@@ -238,7 +238,7 @@ class HintDistribution:
             self.rng.shuffle(goal_locations)
             self.goal_locations.append(goal_locations)
 
-        region_barren, nonprogress = self.logic.get_barren_regions()
+        region_barren, nonprogress = self.logic.get_barren_regions(weak=True)
         for zone in region_barren:
             if "Silent Realm" in zone:
                 continue  # don't hint barren silent realms since they are an always hint
@@ -267,7 +267,7 @@ class HintDistribution:
         self.hintable_items = HINTABLE_ITEMS.copy()
         for item in self.added_items:
             self.hintable_items.extend([item["name"]] * item["amount"])
-        if "Sea Chart" in self.logic.get_useful_items():
+        if "Sea Chart" in self.logic.get_useful_items(weak=True):
             self.hintable_items.append("Sea Chart")
         for item in self.removed_items:
             if item in self.hintable_items:

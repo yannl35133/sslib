@@ -334,18 +334,19 @@ Caves:
   toplevel-alias: Lanayru Caves
   hint-region: Lanayru Caves
   locations:
+    Unlock Door to Sand Sea: Lanayru Caves Key
     Chest: Nothing
     Golo's Gift: Nothing
     Gossip Stone: Nothing
 
   exits:
+    Past Door to Sand Sea: Clawshots & Unlock Door to Sand Sea
     Exit to Mines: Nothing
     Exit to Desert: Nothing
 
   Past Door to Sand Sea:
-    entrance: Clawshots & Lanayru Caves Key
     exits:
-      Caves: Lanayru Caves Key
+      Caves: Caves - Unlock Door to Sand Sea
       Exit to Sand Sea: Nothing
 
   Past Crawlspace:
