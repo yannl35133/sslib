@@ -60,7 +60,7 @@ class LogicUtils:
         banned_bit_inv = DNFInventory(EXTENDED_ITEM.banned_bit())
 
         for it in self.banned:
-            requirements[it] &= banned_bit_inv
+            requirements[EXTENDED_ITEM[it]] &= banned_bit_inv
 
         for exit, entrance in self.placement.map_transitions.items():
             self._logic._link_connection(exit, entrance, requirements=requirements)
@@ -158,7 +158,7 @@ class LogicUtils:
         usefuls = self.get_useful_items()
         return [
             item
-            for item in PROGRESS_ITEMS
+            for item in INVENTORY_ITEMS
             if item in usefuls
             and not self.restricted_test(index, [EXTENDED_ITEM[item]])
         ]
