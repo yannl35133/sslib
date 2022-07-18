@@ -31,6 +31,7 @@ class LogicUtils:
         logic: Logic,
         additional_info: AdditionalInfo,
         runtime_requirements,
+        banned,
     ):
 
         self._logic = logic
@@ -47,6 +48,7 @@ class LogicUtils:
         self.randomized_trial_entrance = additional_info.randomized_trial_entrance
         self.initial_placement = additional_info.initial_placement
         self.runtime_requirements = runtime_requirements
+        self.banned = banned
 
     @cache
     def requirements(self):
@@ -54,6 +56,11 @@ class LogicUtils:
         requirements = self.areas.requirements
         for loc, req in self.runtime_requirements.items():
             requirements[EXTENDED_ITEM[loc]] |= req
+
+        banned_bit_inv = DNFInventory(EXTENDED_ITEM.banned_bit())
+
+        for it in self.banned:
+            requirements[it] &= banned_bit_inv
 
         for exit, entrance in self.placement.map_transitions.items():
             self._logic._link_connection(exit, entrance, requirements=requirements)
@@ -336,7 +343,9 @@ class Rando:
         )
 
         logic = Logic(areas, logic_settings, self.placement)
-        self.logic = LogicUtils(areas, logic, additional_info, runtime_requirements)
+        self.logic = LogicUtils(
+            areas, logic, additional_info, runtime_requirements, self.banned
+        )
 
         if self.options["logic-mode"] == "No Logic":
             for i in range(len(logic.requirements)):
