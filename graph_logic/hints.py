@@ -90,7 +90,9 @@ class Hints:
         ) in self.areas.gossip_stones.items():
             index = gossipstone_def["req_index"]
             hint_banned_stones[gossipstone_name] = {
-                item for item in potential if self.logic.restricted_test(index, [item])
+                item
+                for item in potential
+                if not self.logic.restricted_test(index, [item])
             }
 
         stones_to_banned_locs_sorted = sorted(
@@ -117,10 +119,10 @@ class Hints:
 
             nb_hints = 2
             if len(valid_locations) < nb_hints:
-                print(
+                raise ValueError(
                     f"Not enough valid locations for {gossipstone_name} in seed {self.options['seed']}"
                 )
-                picked_hints = self.rng.sample(unplaced_hints, nb_hints)
+                # picked_hints = self.rng.sample(unplaced_hints, nb_hints)
             else:
                 picked_hints = self.rng.sample(valid_locations, nb_hints)
             self.hints[gossipstone_name] = GossipStoneHintWrapper(*picked_hints)

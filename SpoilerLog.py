@@ -32,7 +32,7 @@ def write(
 
     if len(placement.starting_items) > 0:
         file.write("\n\nStarting items:\n  ")
-        file.write("\n  ".join(placement.starting_items))
+        file.write("\n  ".join(sorted(placement.starting_items)))
     file.write("\n\n\n")
 
     # Write required dungeons
@@ -132,21 +132,22 @@ def write(
         entrance_name,
         dungeon,
     ) in randomized_dungeon_entrance.items():
-        file.write(f"  {entrance_name+':':48} {dungeon}\n")
+        file.write(f"  {entrance_name+' Overworld Entrance:':48} {dungeon}\n")
 
     file.write("\n\n")
 
     # Write randomized trials
     file.write("Trial Gates:\n")
     for trial_gate, trial in randomized_trial_entrance.items():
-        file.write(f"  {trial_gate+':':48} {trial}\n")
+        file.write(f"  {trial_gate+' Gate:':48} {trial}\n")
 
     file.write("\n\n\n")
 
     # Write hints
     file.write("Hints:\n")
-    for hintloc, hint in hints.items():
-        file.write(f"  {norm(hintloc)+':':53} {hint.to_spoiler_log_text()}\n")
+    for hintname in areas.gossip_stones:
+        hint = hints[hintname]
+        file.write(f"  {norm(hintname)+':':53} {hint.to_spoiler_log_text()}\n")
 
     file.write("\n\n\n")
 
