@@ -213,13 +213,25 @@ class LogicUtils:
 
         return self.aggregated_usefuls[item]
 
-    def get_useful_items(self, loc=DEMISE):
+    def aggregate_all_useful_items(self):
+        aggregate = Inventory()
+
+        for item in EXTENDED_ITEM.items():
+            for conj in self.requirements()[item].disjunction:
+                aggregate |= conj
+
+        return aggregate
+
+    def get_useful_items(self, loc=DEMISE, weak=False):
         index = EXTENDED_ITEM[self.short_to_full(loc)]
-        usefuls: Inventory = self.aggregate_useful_items_one(index)
+        if weak:
+            usefuls = self.aggregate_all_useful_items()
+        else:
+            usefuls: Inventory = self.aggregate_useful_items_one(index)
         return [
             loc
             for i in usefuls.intset
-            if (loc := EXTENDED_ITEM.get_item_name(i)) in PROGRESS_ITEMS
+            if (loc := EXTENDED_ITEM.get_item_name(i)) in INVENTORY_ITEMS
         ]
 
     def locations_by_hint_region(self, region):
@@ -228,22 +240,27 @@ class LogicUtils:
                 yield n
 
     @cache
-    def get_barren_regions(self, loc=DEMISE):
+    def get_barren_regions(self, loc=DEMISE, weak=False):
         useful_checks = [
             self.placement.items[item]
-            for item in self.get_useful_items(loc)
+            for item in self.get_useful_items(loc, weak)
             if item not in self.placement.starting_items
         ]
         non_banned = self.fill_restricted()
 
         useless_regions = ALL_HINT_REGIONS.copy()
         for c in useful_checks:
-            useless_regions.pop(self.areas.checks[c]["hint_region"], None)
+            check = self.areas.checks[c]
+            if (region := check.get("cube_region")) is None:
+                region = check["hint_region"]
+            useless_regions.pop(region, None)
 
         inaccessible_regions = ALL_HINT_REGIONS.copy()
         for c in self.areas.checks.values():
             if non_banned[c["req_index"]]:
-                inaccessible_regions.pop(c["hint_region"], None)
+                if (region := c.get("cube_region")) is None:
+                    region = c["hint_region"]
+                inaccessible_regions.pop(region, None)
 
         return [
             reg for reg in useless_regions if reg not in inaccessible_regions
