@@ -186,7 +186,7 @@ class Randomizer(BaseRandomizer):
                     goal: self.logic.get_sots_items(GOAL_CHECKS[goal])
                     for goal in ALL_GOALS
                 },
-                barren_nonprogress=self.logic.get_barren_regions(),
+                barren_nonprogress=self.logic.get_barren_regions(weak=True),
                 randomized_dungeon_entrance=self.logic.randomized_dungeon_entrance,
                 randomized_trial_entrance=self.logic.randomized_trial_entrance,
             )
@@ -207,7 +207,7 @@ class Randomizer(BaseRandomizer):
                         goal: self.logic.get_sots_items(GOAL_CHECKS[goal])
                         for goal in ALL_GOALS
                     },
-                    barren_nonprogress=self.logic.get_barren_regions(),
+                    barren_nonprogress=self.logic.get_barren_regions(weak=True),
                     randomized_dungeon_entrance=self.logic.randomized_dungeon_entrance,
                     randomized_trial_entrance=self.logic.randomized_trial_entrance,
                 )
@@ -243,7 +243,7 @@ class Randomizer(BaseRandomizer):
             ]
             hint_mode = self.options["song-hints"]
             if hint_mode == "Basic":
-                if item in self.logic.get_useful_items():
+                if item in self.logic.get_useful_items(weak=True):
                     useful_text = "You might need what it reveals..."
                     # print(f'{item} in {trial_check} is useful')
                 else:
@@ -252,7 +252,7 @@ class Randomizer(BaseRandomizer):
             elif hint_mode == "Advanced":
                 if item in self.logic.get_sots_items():
                     useful_text = "Your spirit will grow by completing this trial"
-                elif item in self.logic.get_useful_items():
+                elif item in self.logic.get_useful_items(weak=True):
                     useful_text = "You might need what it reveals..."
                 else:
                     # barren
