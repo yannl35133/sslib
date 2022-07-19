@@ -1,5 +1,6 @@
 allowed-time-of-day: DayOnly
 macros:
+  All Three Nodes: LMF Nodes On option | (North Part - Water Node & Lightning Node - Lightning Node & East - Fire Node - Fire Node)
   Raise Lanayru Mining Facility: Open LMF option | Desert - North Part - Activate Master Generator
   Can Navigate in Oasis: Can Defeat Ampilus | Hook Beetle | Lanayru Desert - Sand Oasis Brakeslide Trick
 
@@ -161,7 +162,8 @@ Desert:
   North Part:
     locations:
       Water Node: (Bomb Bag | Hook Beetle) & Sword
-      Activate Master Generator: ((Water Node & Lightning Node - Lightning Node & East - Fire Node - Fire Node) | LMF Nodes On option) & Sword
+      Blow up Rock hiding Timeshift Stone near Master Generator: Bomb Bag | Hook Beetle
+      Activate Master Generator: All Three Nodes & Blow up Rock hiding Timeshift Stone near Master Generator & Sword
       Unlock Statue: Nothing
       Open Trial Gate: Nayru's Wisdom & Goddess Harp
       Open Secret Passageway: Bomb Bag | Hook Beetle & Secret Passageway Hook Beetle Opening Trick
