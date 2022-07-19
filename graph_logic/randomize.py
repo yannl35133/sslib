@@ -512,14 +512,19 @@ class Rando:
         rupoor_mode = self.options["rupoor-mode"]
         if rupoor_mode != "Off":
             duplicable_items = DUPLICABLE_COUNTERPROGRESS_ITEMS  # Rupoors
+            length = len(may_be_placed_items)
+            self.rng.shuffle(may_be_placed_items)
             if rupoor_mode == "Added":
-                may_be_placed_items += [EIN(RUPOOR)] * 15
+                # Coarsely emulate adding 15 rupoors then removing 15 elements
+                for _ in range(15):
+                    if self.rng.randint(1, length + 15) > 15:
+                        may_be_placed_items.pop()
+            elif rupoor_mode == "Rupoor Mayhem":
+                may_be_placed_items = may_be_placed_items[: length // 2]
+            elif rupoor_mode == "Rupoor Insanity":
+                may_be_placed_items = []
             else:
-                self.rng.shuffle(may_be_placed_items)
-                replace_end_index = len(may_be_placed_items)
-                if rupoor_mode == "Rupoor Mayhem":
-                    replace_end_index //= 2
-                may_be_placed_items = may_be_placed_items[replace_end_index:]
+                ValueError(f"Option rupoor-mode has unknown value {rupoor_mode}")
 
         self.randosettings = RandomizationSettings(
             must_be_placed_items, may_be_placed_items, duplicable_items
