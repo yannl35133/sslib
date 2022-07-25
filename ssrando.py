@@ -80,8 +80,11 @@ class BaseRandomizer:
 
 
 class Randomizer(BaseRandomizer):
-    def __init__(self, options: Options, progress_callback=dummy_progress_callback):
+    def __init__(
+        self, areas: Areas, options: Options, progress_callback=dummy_progress_callback
+    ):
         super().__init__(progress_callback)
+        self.areas = areas
         self.options = options
 
         self.no_logs = self.options["no-spoiler-log"]
@@ -97,7 +100,6 @@ class Randomizer(BaseRandomizer):
         if self.no_logs:
             for _ in range(100):
                 self.rng.random()
-        self.areas = Areas(graph_requirements, checks, hints, map_exits)
         self.rando = Rando(self.areas, self.options, self.rng)
         self.logic = self.rando.logic
         self.hints = Hints(self.options, self.rng, self.areas, self.logic)
