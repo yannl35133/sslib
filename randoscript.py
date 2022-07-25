@@ -1,6 +1,8 @@
 from collections import OrderedDict
 import sys
 import argparse
+from graph_logic.logic_input import Areas
+from yaml_files import graph_requirements, checks, hints, map_exits
 
 from ssrando import Randomizer, PlandoRandomizer, VERSION
 from logic.placement_file import PlacementFile
@@ -137,44 +139,48 @@ def main():
             print("high has to be higher than low!")
             exit(1)
         bulk_threads = parsed_args.bulk_threads
-    if options is not None:
-        if bulk_mode:
-            from multiprocessing import Process
 
-            options.set_option("dry-run", True)
+    assert options is not None
 
-            def randothread(start, end, local_opts):
-                for i in range(start, end):
-                    local_opts.set_option("seed", i)
-                    rando = Randomizer(local_opts)
-                    rando.randomize()
+    areas = Areas(graph_requirements, checks, hints, map_exits)
 
-            threads = []
-            for (start, end) in get_ranges(bulk_low, bulk_high, bulk_threads):
-                thread = Process(target=randothread, args=(start, end, options.copy()))
-                thread.start()
-                threads.append(thread)
-            for thread in threads:
-                thread.join()
-        elif options["noui"]:
-            rando = Randomizer(options)
-            if not options["dry-run"]:
-                rando.check_valid_directory_setup()
-            total_progress_steps = rando.get_total_progress_steps()
-            progress_steps = 0
+    if bulk_mode:
+        from multiprocessing import Process
 
-            def progress_callback(action):
-                nonlocal progress_steps
-                print(f"{action} {progress_steps}/{total_progress_steps}")
-                progress_steps += 1
+        options.set_option("dry-run", True)
 
-            rando.progress_callback = progress_callback
-            rando.randomize()
-            print(f"SEED HASH: {rando.randomizer_hash}")
-        else:
-            from gui.randogui import run_main_gui
+        def randothread(start, end, local_opts):
+            for i in range(start, end):
+                local_opts.set_option("seed", i)
+                rando = Randomizer(areas, local_opts)
+                rando.randomize()
 
-            run_main_gui(options)
+        threads = []
+        for (start, end) in get_ranges(bulk_low, bulk_high, bulk_threads):
+            thread = Process(target=randothread, args=(start, end, options.copy()))
+            thread.start()
+            threads.append(thread)
+        for thread in threads:
+            thread.join()
+    elif options["noui"]:
+        rando = Randomizer(areas, options)
+        if not options["dry-run"]:
+            rando.check_valid_directory_setup()
+        total_progress_steps = rando.get_total_progress_steps()
+        progress_steps = 0
+
+        def progress_callback(action):
+            nonlocal progress_steps
+            print(f"{action} {progress_steps}/{total_progress_steps}")
+            progress_steps += 1
+
+        rando.progress_callback = progress_callback
+        rando.randomize()
+        print(f"SEED HASH: {rando.randomizer_hash}")
+    else:
+        from gui.randogui import run_main_gui
+
+        run_main_gui(areas, options)
 
 
 if __name__ == "__main__":
