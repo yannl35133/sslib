@@ -101,7 +101,7 @@ class Logic:
         self.full_to_short = areas.full_to_short
 
         self.requirements = areas.requirements.copy()
-        self.opaque = areas.opaque
+        self.opaque = areas.opaque.copy()
         self.entrance_allowed_time_of_day = areas.entrance_allowed_time_of_day
         self.exit_to_area = areas.exit_to_area
         self.placement = placement.copy() if placement is not None else Placement()
@@ -198,6 +198,11 @@ class Logic:
 
     def deep_simplify(self):
         self._deep_simplify(self.requirements, self.opaque)
+
+    @staticmethod
+    def _simplify_free(requirements):
+        for i in Logic._fill_inventory(requirements, Inventory()):
+            requirements[i] = DNFInventory(True)
 
     @staticmethod
     def _shallow_simplify(requirements, opaques):

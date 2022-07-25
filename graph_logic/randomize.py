@@ -53,23 +53,29 @@ class LogicUtils:
     @cache
     def requirements(self):
         assert len(self.placement.locations) == len(self.areas.checks)
-        requirements = self.areas.requirements
+        requirements = self.areas.requirements.copy()
+        opaque = self.areas.opaque.copy()
         for loc, req in self.runtime_requirements.items():
             requirements[EXTENDED_ITEM[loc]] |= req
+            opaque[EXTENDED_ITEM[loc]] = False
+
+        for k in self.starting_inventory:
+            requirements[k] = DNFInventory(True)
+            opaque[k] = False
 
         banned_bit_inv = DNFInventory(EXTENDED_ITEM.banned_bit())
 
         for it in self.banned:
             requirements[EXTENDED_ITEM[it]] &= banned_bit_inv
 
+        self._logic._simplify_free(requirements)
+        self._logic._shallow_simplify(requirements, opaque)
+
         for exit, entrance in self.placement.map_transitions.items():
             self._logic._link_connection(exit, entrance, requirements=requirements)
 
         for k, v in self.placement.locations.items():
             self._logic._place_item(k, v, requirements)
-
-        for k in self.starting_inventory:
-            requirements[k] = DNFInventory(True)
 
         return requirements
 
@@ -170,12 +176,25 @@ class LogicUtils:
         # if EXTENDED_ITEM[i] in self.checks
         # ]
 
+    def get_sots_locations(self, loc=DEMISE):
+        for item in self.get_sots_items(loc):
+            if self.placement.item_placement_limit.get(item, ""):
+                continue
+
+            sots_loc = self.placement.items[item]
+
+            if sots_loc == START_ITEM:
+                continue
+
+            hint_region = self.areas.checks[sots_loc]["hint_region"]
+            yield (hint_region, sots_loc, item)
+
     def aggregate_useful_items(self, item):
         if hasattr(self, "aggregated_usefuls"):
             return self.aggregated_usefuls[item]
 
         self.aggregated_usefuls: Dict[EXTENDED_ITEM, Inventory] = {
-            item: self.requirements()[item].disj_pre for item in EXTENDED_ITEM
+            item: self.requirements()[item].aggregate() for item in EXTENDED_ITEM
         }
 
         just_added = {k: v.intset for k, v in self.aggregated_usefuls.items()}
@@ -202,7 +221,7 @@ class LogicUtils:
         if not hasattr(self, "aggregated_usefuls"):
             self.aggregated_usefuls: Dict[EXTENDED_ITEM, Inventory] = {}
 
-        aggregate = self.requirements()[item].disj_pre
+        aggregate = self.requirements()[item].aggregate()
 
         just_added = aggregate.intset
 
@@ -211,7 +230,7 @@ class LogicUtils:
             keep_going = False
             new_just_added = set()
             for item2 in just_added:
-                req = self.requirements()[item2].disj_pre
+                req = self.requirements()[item2].aggregate()
                 new_just_added |= req.intset - aggregate.intset
                 aggregate |= req
             just_added = new_just_added
@@ -221,11 +240,25 @@ class LogicUtils:
         return self.aggregated_usefuls[item]
 
     def aggregate_all_useful_items(self):
-        aggregate = Inventory()
+        not_banned = self.fill_restricted()
+        all_checks = self.areas.checks.values()
+        aggregate = Inventory(
+            {i for c in all_checks if (i := c["req_index"]) in not_banned}
+            | {EXTENDED_ITEM[self.short_to_full(DEMISE)]}
+        )
 
-        for item in EXTENDED_ITEM.items():
-            for conj in self.requirements()[item].disjunction:
-                aggregate |= conj
+        just_added = aggregate.intset
+
+        keep_going = True
+        while keep_going:
+            keep_going = False
+            new_just_added = set()
+            for item2 in just_added:
+                req = self.requirements()[item2].aggregate()
+                new_just_added |= req.intset - aggregate.intset
+                aggregate |= req
+            just_added = new_just_added
+            keep_going = keep_going or bool(new_just_added)
 
         return aggregate
 
@@ -252,7 +285,9 @@ class LogicUtils:
             self.placement.items[item]
             for item in self.get_useful_items(loc, weak)
             if item not in self.placement.starting_items
+            if not self.placement.item_placement_limit.get(item, "")
         ]
+
         non_banned = self.fill_restricted()
 
         useless_regions = ALL_HINT_REGIONS.copy()
@@ -327,6 +362,7 @@ class Rando:
             self.logic_options_requirements
             | self.endgame_requirements
             | self.ban_options
+            | {i: DNFInventory(True) for i in self.placement.starting_items}
         )
 
         logic_settings = LogicSettings(
@@ -358,13 +394,11 @@ class Rando:
         logic = self.logic._logic
 
         # Check
-        logic.inventory = Inventory(
-            {EXTENDED_ITEM[item] for item in self.placement.starting_items}
-        )
+        logic.inventory = Inventory()
         logic.fill_inventory()
         DEMISE_BIT = EXTENDED_ITEM[self.short_to_full(DEMISE)]
         if not logic.full_inventory[DEMISE_BIT]:
-            print("Could not reach Demise")
+            print(f"Could not reach Demise for {self.options.get_permalink()}")
             print(f"It would require {logic.backup_requirements[DEMISE_BIT]}")
             exit(1)
 
@@ -539,8 +573,8 @@ class Rando:
             OPEN_LMF_OPTION: self.options["open-lmf"] == "Open",
             LMF_NODES_ON_OPTION: self.options["open-lmf"] == "Main Node",
             RANDOMIZED_BEEDLE_OPTION: shop_mode != "Vanilla",
-            HERO_MODE: self.options["fix-bit-crashes"],
-            NO_BIT_CRASHES: self.options["hero-mode"],
+            NO_BIT_CRASHES: self.options["fix-bit-crashes"],
+            HERO_MODE: self.options["hero-mode"],
         }
 
         self.placement |= SINGLE_CRYSTAL_PLACEMENT(self.norm)

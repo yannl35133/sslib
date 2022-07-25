@@ -202,17 +202,7 @@ class HintDistribution:
         self.hinted_locations.extend(self.logic.initial_placement.items.keys())
 
         # populate our internal list copies for later manipulation
-        for item in self.logic.get_sots_items():
-            if self.logic.placement.item_placement_limit.get(item, ""):
-                continue
-
-            sots_loc = self.logic.placement.items[item]
-
-            if sots_loc == START_ITEM:
-                continue
-
-            hint_region = areas.checks[sots_loc]["hint_region"]
-            self.sots_locations.append((hint_region, sots_loc, item))
+        self.sots_locations = list(self.logic.get_sots_locations())
         self.rng.shuffle(self.sots_locations)
 
         self.goals = [
