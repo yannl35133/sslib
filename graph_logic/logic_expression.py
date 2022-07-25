@@ -26,14 +26,13 @@ empty_inv = Inventory()
 
 
 class DNFInventory(LogicExpression):
-    disj_pre: Inventory
     disjunction: Dict[Inventory, Inventory]
 
     def __init__(
         self,
         v: None
         | Set[Inventory]
-        | Tuple[Dict[Inventory, Inventory], Inventory]
+        | Dict[Inventory, Inventory]
         | bool
         | Inventory
         | EXTENDED_ITEM
@@ -44,25 +43,20 @@ class DNFInventory(LogicExpression):
     ):
         self.complex = complex
         if v is None:
-            self.disj_pre = empty_inv
             self.disjunction = {}
         elif isinstance(v, set):
-            self.disj_pre = reduce(Inventory.__or__, v, empty_inv)
             self.disjunction = {k: k for k in v}
         elif isinstance(v, bool):
-            self.disj_pre = empty_inv
             if v:
                 self.disjunction = {empty_inv: empty_inv}
             else:
                 self.disjunction = {}
         elif isinstance(v, Inventory):
-            self.disj_pre = v
             self.disjunction = {v: v}
-        elif isinstance(v, tuple) and isinstance(v[1], Inventory):
-            self.disjunction, self.disj_pre = v  # type: ignore
+        elif isinstance(v, dict):
+            self.disjunction = v
         else:
-            inv = Inventory(v)  # type: ignore
-            self.disj_pre = inv
+            inv = Inventory(v)
             self.disjunction = {inv: inv}
 
     def eval(self, inventory: Inventory):
@@ -88,9 +82,7 @@ class DNFInventory(LogicExpression):
                     for c in to_pop:
                         del filtered_self[c]
                     filtered_other[conj] = conj_pre
-            return DNFInventory(
-                (filtered_self | filtered_other, self.disj_pre | other.disj_pre)
-            )
+            return DNFInventory((filtered_self | filtered_other))
         else:
             raise ValueError
 
@@ -111,6 +103,12 @@ class DNFInventory(LogicExpression):
 
     def is_impossible(self):
         return not self.disjunction
+
+    def aggregate(self):
+        ag = Inventory()
+        for r in self.disjunction:
+            ag |= r
+        return ag
 
     def day_only(self):
         return DNFInventory(
@@ -172,15 +170,13 @@ class AndCombination(LogicExpression):
     @staticmethod
     def simplifyDNF(arguments: List[DNFInventory]) -> DNFInventory:
         disjunctions = map(lambda x: x.disjunction.items(), arguments)
-        disj_pre = reduce(
-            Inventory.__or__, map(lambda x: x.disj_pre, arguments), empty_inv
-        )
-        new_req = DNFInventory(({}, disj_pre))
+
+        new_req = DNFInventory()
         for conjunction_tuple in product(*disjunctions):
             conj, conj_pre = reduce(
                 and_reducer, conjunction_tuple, (empty_inv, empty_inv)
             )
-            new_req |= DNFInventory(({conj: conj_pre}, empty_inv))
+            new_req |= DNFInventory(({conj: conj_pre}))
         return new_req
 
     @staticmethod
