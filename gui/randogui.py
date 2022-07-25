@@ -20,6 +20,7 @@ from PySide6.QtWidgets import (
     QMessageBox,
     QErrorMessage,
 )
+from graph_logic.logic_input import Areas
 
 from logic.constants import ALL_TYPES
 from options import OPTIONS, Options
@@ -37,7 +38,7 @@ signal.signal(signal.SIGINT, signal.SIG_DFL)
 
 
 class RandoGUI(QMainWindow):
-    def __init__(self, options: Options):
+    def __init__(self, areas: Areas, options: Options):
         super().__init__()
 
         self.wit_manager = WitManager(Path(".").resolve())
@@ -60,6 +61,7 @@ class RandoGUI(QMainWindow):
 
         self.setWindowTitle("Skyward Sword Randomizer v" + VERSION)
 
+        self.areas = areas
         self.options = options
         self.settings_path = "settings.txt"
         if os.path.isfile(self.settings_path):
@@ -243,7 +245,7 @@ class RandoGUI(QMainWindow):
             self.ask_for_clean_iso()
             return
         # make sure user can't mess with the options now
-        self.rando = Randomizer(self.options.copy())
+        self.rando = Randomizer(self.areas, self.options.copy())
 
         if dry_run:
             extra_steps = 1  # done
@@ -586,10 +588,10 @@ class RandoGUI(QMainWindow):
         self.ui.seed.setText(str(random.randrange(0, 1_000_000)))
 
 
-def run_main_gui(options: Options):
+def run_main_gui(areas: Areas, options: Options):
     app = QtWidgets.QApplication([])
 
-    widget = RandoGUI(options)
+    widget = RandoGUI(areas, options)
     widget.show()
 
     sys.exit(app.exec_())
