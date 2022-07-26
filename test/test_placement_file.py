@@ -1,19 +1,22 @@
 import sys
 import os
+from graph_logic.logic_input import Areas
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 from ssrando import Randomizer
 from options import Options
 from graph_logic.placement_file import PlacementFile
+from yaml_files import graph_requirements, checks, hints, map_exits
 
 
 def test_roundtrip():
+    areas = Areas(graph_requirements, checks, hints, map_exits)
     opts = Options()
     opts.set_option("dry-run", True)
     for i in range(5):
         opts.set_option("seed", i)
-        rando = Randomizer(opts)
+        rando = Randomizer(areas, opts)
         rando.rando.randomize()
         rando.hints.do_hints()
         plcmt_file = rando.get_placement_file()
