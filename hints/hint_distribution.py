@@ -13,15 +13,19 @@ from paths import RANDO_ROOT_PATH
 
 
 HINTABLE_ITEMS = (
-    ["Clawshots"]
-    + ["Progressive Beetle"] * 2
-    + ["Progressive Sword"] * 6
-    + ["Emerald Tablet"] * 1
-    + ["Ruby Tablet"] * 1
-    + ["Amber Tablet"] * 1
-    + ["Goddess Harp"] * 1
-    + ["Water Scale"] * 1
-    + ["Fireshield Earrings"] * 1
+    dict.fromkeys(
+        {
+            CLAWSHOTS,
+            EMERALD_TABLET,
+            RUBY_TABLET,
+            AMBER_TABLET,
+            GODDESS_HARP,
+            WATER_SCALE,
+            FIRESHIELD_EARRINGS,
+        }
+    )
+    | PROGRESSIVE_BEETLES
+    | PROGRESSIVE_SWORDS
 )
 
 JUNK_TEXT = [
@@ -143,6 +147,7 @@ class HintDistribution:
         options: Options,
         logic: LogicUtils,
         rng: Random,
+        unhintable: List[EIN],
         always_hints: List[EIN],
         sometimes_hints: List[EIN],
     ):
@@ -150,6 +155,8 @@ class HintDistribution:
         self.logic = logic
         self.areas = areas
         self.options = options
+
+        self.hinted_locations.extend(unhintable)
 
         for loc in self.added_locations:
             location = loc["location"]
@@ -198,9 +205,6 @@ class HintDistribution:
         self.rng.shuffle(self.hints)
         self.rng.shuffle(sometimes_hints)
         self.sometimes_hints = sometimes_hints
-
-        # ensure prerandomized locations cannot be hinted
-        self.hinted_locations.extend(self.logic.initial_placement.items.keys())
 
         # creates a list of boss key locations for required dungeons
         self.required_boss_keys = [
@@ -266,11 +270,11 @@ class HintDistribution:
             else:
                 self.barren_overworld_zones.append(zone)
 
-        self.hintable_items = HINTABLE_ITEMS.copy()
+        self.hintable_items = list(HINTABLE_ITEMS)
         for item in self.added_items:
             self.hintable_items.extend([item["name"]] * item["amount"])
-        if "Sea Chart" in self.logic.get_useful_items(weak=True):
-            self.hintable_items.append("Sea Chart")
+        if SEA_CHART in self.logic.get_useful_items(weak=True):
+            self.hintable_items.append(SEA_CHART)
         for item in self.removed_items:
             if item in self.hintable_items:
                 self.hintable_items.remove(item)
@@ -453,15 +457,10 @@ class HintDistribution:
     def _create_item_hint(self):
         if not self.hintable_items:
             return None
-        hinted_item = self.hintable_items.pop()
-        locs = [
-            (location, item)
-            for location, item in self.logic.placement.locations.items()
-            if item == hinted_item and location not in self.hinted_locations
-        ]
-        if not locs:
+        item = self.hintable_items.pop()
+        location = self.logic.placement.items[item]
+        if location in self.hinted_locations:
             return None
-        location, item = self.rng.choice(locs)
         self.hinted_locations.append(location)
         if self.options["precise-item"]:
             return LocationGossipStoneHint(
