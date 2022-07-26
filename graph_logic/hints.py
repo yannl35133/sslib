@@ -45,6 +45,14 @@ class Hints:
             for loc, check in self.areas.checks.items()
             if check.get("hint") == "always" and not_banned[check["req_index"]]
         ]
+        needed_sometimes_hints = [
+            loc
+            for loc, check in self.areas.checks.items()
+            if check.get("hint") == "sometimes" and not_banned[check["req_index"]]
+        ]
+
+        # ensure prerandomized locations cannot be hinted
+        unhintables = list(self.logic.initial_placement.items.keys())
 
         # in shopsanity, we need to hint some beetle shop items
         # add them manually, cause they need to be kinda weirdly implemented because of bug net
@@ -57,16 +65,16 @@ class Hints:
         if self.options["song-hints"] == "None":
             for check in TRIAL_CHECKS.values():
                 needed_always_hints.append(self.norm(check))
-        needed_sometimes_hints = [
-            loc
-            for loc, check in self.areas.checks.items()
-            if check.get("hint") == "sometimes" and not_banned[check["req_index"]]
-        ]
+        else:
+            for check in TRIAL_CHECKS.values():
+                unhintables.append(self.norm(check))
+
         self.dist.start(
             self.areas,
             self.options,
             self.logic,
             self.rng,
+            unhintables,
             needed_always_hints,
             needed_sometimes_hints,
         )
