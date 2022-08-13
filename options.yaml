@@ -653,3 +653,22 @@
   help: Sets the distribution of hints. Distributions describe how many hints are placed and in what order, as well
     as specifics about what additional items and locations can and cannot be hinted
   ui: option_hint_distribution
+- name: Randomize Settings
+  command: randomize-settings
+  type: boolean
+  default: false
+  help: If enabled, all settings will be randomized, excluding logic settings and cosmetic/setup settings. If the seed fails to generate, try again with a different seed. It is uncommon for generation to fail, but some combinations of settings can cause this.
+  ui: option_randomize_settings
+- name: Random Settings Weighting
+  command: random-settings-weighting
+  type: singlechoice
+  bits: 2
+  choices:
+    - Random
+    - Fast
+    - Balanced
+    - Insanity
+    - RSL Season 1
+  default: Random
+  help: Determines the weighting used when randomizing settings. For fully random settings, select random.
+  ui: option_random_settings_weighting

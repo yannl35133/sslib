@@ -490,6 +490,42 @@
     index: 229
     flow:
       param2: 36 # always trigger
+103-DaiShinkan:
+  - name: Patch Gaepora Text 7
+    type: flowpatch
+    index: 51
+    flow:
+      param4: 6 # Patch to text 6
+  - name: Patch Gaepora Text 16
+    type: flowpatch
+    index: 18
+    flow:
+      param4: 6
+  - name: Patch Gaepora Text 24
+    type: flowpatch
+    index: 61
+    flow:
+      param4: 6
+  - name: Patch Gaepora Text 28
+    type: flowpatch
+    index: 84
+    flow:
+      param4: 6
+  - name: Patch Gaepora Text 30
+    type: flowpatch
+    index: 89
+    flow:
+      param4: 6
+  - name: Patch Gaepora Text 31
+    type: flowpatch
+    index: 91
+    flow:
+      param4: 6
+  - name: Patch Gaepora Text 32
+    type: flowpatch
+    index: 97
+    flow:
+      param4: 6
 105-Terry:
   - name: Beedle's Crystal # Can't reach that right now
     type: flowpatch
@@ -1079,6 +1115,16 @@
     cases:
       - 208
       - 216
+  - name: Patch Old Man Text 116
+    type: flowpatch
+    index: 60
+    flow:
+      param4: 115 # Patch to text 115
+  - name: Patch Old Man Text 117
+    type: flowpatch
+    index: 61
+    flow:
+      param4: 115
   - name: New Kina Text Option
     type: textadd
     text: "Hey, kid, what do you need from me?\n[1]Plowing the fields?[2]Carrying pumpkins![3-]Nothing."

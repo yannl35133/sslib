@@ -222,7 +222,7 @@ class Logic:
         swords_left = 6 - STARTING_SWORD_COUNT[self.rando.options["starting-sword"]]
         self.sworded_dungeon_locations = []
         if self.rando.options["sword-dungeon-reward"] and (
-            "dungeon" not in self.rando.banned_types
+            "dungeon" not in self.rando.options["banned-types"]
         ):
             sworded_dungeons = self.rando.rng.sample(
                 self.required_dungeons,
@@ -334,9 +334,11 @@ class Logic:
     # main randomization method
     def randomize_items(self):
         self.randomize_dungeon_items()  # this will only randomize the appropriate items
-        self.randomize_progression_items()
+        if self.randomize_progression_items() == False:
+            return False
         self.randomize_nonprogress_items()
         self.randomize_consumable_items()
+        return True
 
     def randomize_required_dungeons(self):
         """
@@ -469,7 +471,7 @@ class Logic:
 
     def get_num_progression_locations(self):
         return Logic.get_num_progression_locations_static(
-            self.item_locations, self.rando.banned_types
+            self.item_locations, self.rando.options["banned-types"]
         )
 
     @staticmethod
@@ -727,7 +729,7 @@ class Logic:
         return Logic.filter_locations_for_progression_static(
             locations_to_filter,
             self.item_locations,
-            self.rando.banned_types,
+            self.rando.options["banned-types"],
         )
 
     @staticmethod
@@ -841,7 +843,7 @@ class Logic:
                 if not loc in self.race_mode_banned_locations
             ),
             self.item_locations,
-            self.rando.banned_types,
+            self.rando.options["banned-types"],
         )
 
         # print(progress_locations)
@@ -1096,6 +1098,8 @@ class Logic:
             for_progression=True
         )
         if len(accessible_undone_locations) == 0:
+            if self.rando.options["randomize-settings"]:
+                return False
             raise Exception(
                 "No progress locations are accessible at the very start of the game!"
             )
@@ -1109,6 +1113,8 @@ class Logic:
             )
 
             if not accessible_undone_locations:
+                if self.rando.options["randomize-settings"]:
+                    return False
                 raise Exception("No locations left to place progress items!")
 
             # If the player gained access to any predetermined item locations, we need to give them those items.
@@ -1151,6 +1157,8 @@ class Logic:
                     possible_items.remove(prerand_item)
 
             if len(possible_items) == 0:
+                if self.rando.options["randomize-settings"]:
+                    return False
                 print(self.required_dungeons)
                 print(self.unplaced_progress_items)
                 print(self.entrance_connections)
@@ -1201,6 +1209,8 @@ class Logic:
                 if item_name is None:
                     # This means that no item can unlock a new location
                     if must_place_useful_item:
+                        if self.rando.options["randomize-settings"]:
+                            return False
                         raise Exception("No useful progress items to place!")
                     else:
                         # We'd like to be placing a useful item, but there are no immediately useful items to place.

@@ -9,6 +9,7 @@
 - Obtaining a Tablet in Tablet Randomizer automatically opens the corresponding light pillar
 - Obtaining Ballad of the Goddess in Closed Thunderhead mode will immediately open it
 - The randomizer offers the ability to play on Hero Mode or on Normal Mode. On Normal Mode the skyward strike is weaker, but you take less damage and can get hearts. The logic will change with the option you select: some goddess cubes are assumed obtainable with the Goddess Sword on Hero Mode, but will require True Master Sword on Normal Mode for the longer skyward strike range
+- If you enabled the Randomize Settings option, the locations that cannot have progression items can be found by talking to Gaepora in the Academy. The maximum number of crystals that batreaux can potentially give progression items for can be found by talking to the Old Man in Lumpy Pumpkin (You can select any of his three text options). The requirement of collecting the triforce to access Horde can be found by checking the stone tablet on the light tower on Skyloft. The sword requirement to open the Gate of Time can be found by checking the stone tablet on the Isle of Songs.
 ## Goal
 - The Billboard in the Academy displays the required dungeons (2 by default)
 - All of them have to be beaten and the Master Sword has to be obtained to fight the imprisoned to access the past

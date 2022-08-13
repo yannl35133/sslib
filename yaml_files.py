@@ -62,3 +62,5 @@ def requirements(folder: Path):
 
 graph_requirements_folder = RANDO_ROOT_PATH / "graph_logic" / "requirements"
 graph_requirements = requirements(graph_requirements_folder)
+
+random_setting_distro = lambda s: yaml_load(RANDO_ROOT_PATH / "rs_weightings" / s)

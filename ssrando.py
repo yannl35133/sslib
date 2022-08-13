@@ -105,6 +105,12 @@ class Randomizer(BaseRandomizer):
         if self.no_logs:
             for _ in range(100):
                 self.rng.random()
+
+        self.original_permalink = None
+        if self.options["randomize-settings"]:
+            self.original_permalink = self.options.get_permalink()
+            self.options.randomize_settings(self.rng)
+
         self.rando = Rando(self.areas, self.options, self.rng)
         self.logic = self.rando.logic
         self.hints = Hints(self.options, self.rng, self.areas, self.logic)
@@ -163,7 +169,18 @@ class Randomizer(BaseRandomizer):
     def randomize(self):
         useroutput = UserOutput(GenerationFailed, self.progress_callback)
         self.progress_callback("randomizing items...")
-        self.rando.randomize(useroutput)
+        try:
+            self.rando.randomize(useroutput)
+        except GenerationFailed:
+            if not self.options["randomize-settings"]:
+                raise
+            self.options.randomize_settings(self.rng)
+            self.rando = Rando(self.areas, self.options, self.rng)
+            self.logic = self.rando.logic
+            self.hints = Hints(self.options, self.rng, self.areas, self.logic)
+            self.randomize()
+            return
+
         del self.rando
         self.hints.do_hints()
         if self.no_logs:
@@ -186,6 +203,7 @@ class Randomizer(BaseRandomizer):
             dump = SpoilerLog.dump_json(
                 self.logic.placement,
                 self.options,
+                original_permalink=self.original_permalink,
                 hash=self.randomizer_hash,
                 progression_spheres=self.logic.calculate_playthrough_progression_spheres(),
                 hints=self.hints.hints,
@@ -207,6 +225,7 @@ class Randomizer(BaseRandomizer):
                     self.logic.placement,
                     self.options,
                     self.areas,
+                    original_permalink=self.original_permalink,
                     hash=self.randomizer_hash,
                     progression_spheres=self.logic.calculate_playthrough_progression_spheres(),
                     hints=self.hints.hints,

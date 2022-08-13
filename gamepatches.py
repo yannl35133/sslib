@@ -1138,6 +1138,8 @@ class GamePatcher:
         if self.placement_file.options["impa-sot-hint"]:
             self.add_impa_hint()
         self.add_stone_hint_patches()
+        if self.placement_file.options["randomize-settings"]:
+            self.add_random_settings_hints()
         self.add_race_integrity_patches()
         self.handle_oarc_add_remove()
         self.add_rando_hash()
@@ -1690,6 +1692,98 @@ class GamePatcher:
                     ),
                 },
             )
+
+    def add_random_settings_hints(self):
+        # Banned types hint
+        banned_types = self.options["banned-types"]
+        banned_strs = []
+
+        for btype in banned_types:
+            if btype in ["beedle", "cheap", "medium", "expensive"]:
+                if btype != "beedle" and "beedle" in banned_types:
+                    continue
+                banned_strs.append(f"<y<{POTENTIALLY_BANNED_TYPES[btype]}>>")
+            elif "goddess" in btype:
+                if btype != "goddess" and "goddess" in banned_types:
+                    continue
+                banned_strs.append(f"<b+<{POTENTIALLY_BANNED_TYPES[btype]}>>")
+            else:
+                banned_strs.append(f"<r<{POTENTIALLY_BANNED_TYPES[btype]}>>")
+
+        banned_types_text = [
+            break_lines(
+                "The ancient legend of Skyloft says that the hero who searches these locations will never find anything for their quest:"
+            )
+        ]
+        if len(banned_types) == 0:
+            banned_types_text.append("\n" "<r<None>>")
+
+        for i in range((len(banned_strs) + 3) // 4):  # ceil(len / 4)
+            banned_types_text.append("\n".join(banned_strs[4 * i : 4 * i + 4]))
+
+        banned_types_text.append(
+            break_lines("I wish you luck in saving my daughter. Be safe out there.")
+        )
+
+        self.add_patch_to_event(
+            "103-DaiShinkan",
+            {
+                "name": f"Gaepora Banned Type Hint",
+                "type": "textpatch",
+                "index": 6,
+                "text": make_mutliple_textboxes(banned_types_text),
+            },
+        )
+
+        # Batreaux max reward hint
+        max_batreaux_hint_texts = [
+            "There's a fiendish demon living in\nSkyloft!",
+            "I'm tellin' ya, I came this close to\ngetting eaten by that evil beast!",
+            "You look like you've gotten a little\nknight training, but you'd better keep\nyour guard up, or he'll take a bite out\nof you too!",
+            break_lines(
+                "Rumor has it, the monster wants to become one of us, but needs <y+<{} tokens of gratitude>>.".format(
+                    self.options["max-batreaux-reward"]
+                )
+            ),
+        ]
+        self.add_patch_to_event(
+            "117-Pumpkin",
+            {
+                "name": f"Max Batreaux Hint 1",
+                "type": "textpatch",
+                "index": 115,
+                "text": make_mutliple_textboxes(max_batreaux_hint_texts),
+            },
+        )
+
+        # Gate of Time sword requirement hint
+        self.add_patch_to_event(
+            "107-Kanban",
+            {
+                "name": f"Gate of Time Sword Requirement Hint",
+                "type": "textpatch",
+                "index": 44,
+                "text": "According to legend, the\nchosen hero may travel to\nthe past upon acquiring\nthe <b+<{}>>.".format(
+                    self.options["got-sword-requirement"]
+                ),
+            },
+        )
+
+        # Sky Keep hint
+        if self.options["skip-skykeep"]:
+            skykeep_hint = "True to legend, the chosen hero\ndoes not need to complete the\nTriforce to vanquish Demise."
+        else:
+            skykeep_hint = "True to legend, the <y<Triforce>> is\nthe one thing with the power\nto vanquish Demise."
+
+        self.add_patch_to_event(
+            "107-Kanban",
+            {
+                "name": f"Skykeep Hint",
+                "type": "textpatch",
+                "index": 30,
+                "text": skykeep_hint,
+            },
+        )
 
     def add_race_integrity_patches(self):
         self.add_patch_to_event(

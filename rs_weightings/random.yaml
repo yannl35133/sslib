@@ -1,0 +1,256 @@
+- name: Banned Types
+  command: banned-types
+  min_banned_types: 0
+  max_banned_types: 25
+  choices:
+    dungeon: 1
+    mini dungeon: 1
+    free gift: 1
+    freestanding: 1
+    miscellaneous: 1
+    silent realm: 1
+    digging: 1
+    bombable: 1
+    combat: 1
+    song: 1
+    spiral charge: 1
+    minigame: 1
+    short: 1
+    long: 1
+    fetch: 1
+    crystal quest: 1
+    scrapper: 1
+    peatrice: 1
+    beedle: 1
+    cheap: 1
+    medium: 1
+    expensive: 1
+    goddess: 1
+    faron goddess: 1
+    eldin goddess: 1
+    lanayru goddess: 1
+    floria goddess: 1
+    summit goddess: 1
+    sand sea goddess: 1
+
+
+- name: Starting Tablet Count
+  command: starting-tablet-count
+  type: int
+  choices:
+    0: 1
+    1: 1
+    2: 1
+    3: 1
+- name: Required Dungeon Count
+  command: required-dungeon-count
+  type: int
+  choices:
+    0: 1
+    1: 1
+    2: 1
+    3: 1
+    4: 1
+    5: 1
+    6: 1
+- name: Demise Count
+  command: demise-count
+  type: int
+  choices:
+    1: 1
+    2: 1
+    3: 1
+    4: 1 # Cutoff at 4 to prevent too much lag
+    5: 0
+    6: 0
+    7: 0
+    8: 0
+    9: 0
+    10: 0
+
+
+- name: Open Thunderhead
+  command: open-thunderhead
+  type: singlechoice
+  choices:
+    Ballad: 1
+    Open: 1
+- name: Starting Sword
+  command: starting-sword
+  type: singlechoice
+  choices:
+    Swordless: 1
+    Practice Sword: 1
+    Goddess Sword: 1
+    Goddess Longsword: 1
+    Goddess White Sword: 1
+    Master Sword: 1
+    True Master Sword: 1
+- name: Randomize Entrances
+  command: randomize-entrances
+  type: singlechoice
+  choices:
+    None: 1
+    Required Dungeons Separately: 1
+    All Dungeons: 1
+    All Dungeons + Sky Keep: 1
+- name: Max Batreaux Reward
+  command: max-batreaux-reward
+  type: singlechoice
+  choices:
+    0: 1
+    5: 1
+    10: 1
+    30: 1
+    40: 1
+    50: 1
+    70: 1
+    80: 1
+- name: Shop Mode
+  command: shop-mode
+  type: singlechoice
+  choices:
+    Vanilla: 1
+    Always Junk: 0 # Should always be 0
+    Randomized: 1
+- name: Rupoor Mode
+  command: rupoor-mode
+  type: singlechoice
+  choices:
+    "Off": 1
+    Added: 1
+    Rupoor Mayhem: 1
+    Rupoor Insanity: 1
+- name: Gate of Time Sword Requirement
+  command: got-sword-requirement
+  type: singlechoice
+  choices:
+    Goddess Sword: 1
+    Goddess Longsword: 1
+    Goddess Whitesword: 1
+    Master Sword: 1
+    True Master Sword: 1
+- name: Open LMF
+  command: open-lmf
+  type: singlechoice
+  choices:
+    Nodes: 1
+    Open: 1
+    Main Node: 1
+- name: Map Mode
+  command: map-mode
+  type: singlechoice
+  choices:
+    Removed: 1
+    Vanilla: 1
+    Own Dungeon - Restricted: 1
+    Own Dungeon - Unrestricted: 1
+    Anywhere: 1
+- name: Small Key Mode
+  command: small-key-mode
+  type: singlechoice
+  choices:
+    Vanilla: 1
+    Own Dungeon - Restricted: 1
+    Lanayru Caves Key Only: 1
+    Anywhere: 1
+- name: Boss Key Mode
+  command: boss-key-mode
+  type: singlechoice
+  choices:
+    Vanilla: 1
+    Own Dungeon: 1
+    Anywhere: 1
+- name: Song Hints
+  command: song-hints
+  type: singlechoice
+  choices:
+    None: 1
+    Basic: 1
+    Advanced: 1
+    Direct: 1
+
+
+- name: Skip Imp 2
+  command: imp2-skip
+  type: boolean
+  checked: 1
+  unchecked: 1
+- name: Empty unrequired Dungeons
+  command: empty-unrequired-dungeons
+  type: boolean
+  checked: 1
+  unchecked: 1
+- name: Skip Sky Keep
+  command: skip-skykeep
+  type: boolean
+  checked: 1
+  unchecked: 1
+- name: Hero Mode
+  command: hero-mode
+  type: boolean
+  checked: 1
+  unchecked: 1
+- name: Randomize Silent Realms
+  command: randomize-trials
+  type: boolean
+  checked: 1
+  unchecked: 1
+- name: Start with Adventure Pouch
+  command: start-with-pouch
+  type: boolean
+  checked: 1
+  unchecked: 1
+- name: Skip Horde
+  command: skip-horde
+  type: boolean
+  checked: 1
+  unchecked: 1
+- name: Skip Ghirahim 3
+  command: skip-g3
+  type: boolean
+  checked: 1
+  unchecked: 1
+- name: Skip Demise
+  command: skip-demise
+  type: boolean
+  checked: 1
+  unchecked: 1
+- name: Past Impa Stone of Trials Hint
+  command: impa-sot-hint
+  type: boolean
+  checked: 1
+  unchecked: 1
+- name: Force Sword Dungeon Reward
+  command: sword-dungeon-reward
+  type: boolean
+  checked: 1
+  unchecked: 1
+- name: Open Earth Temple
+  command: open-et
+  type: boolean
+  checked: 1
+  unchecked: 1
+
+
+- name: Separate Cube SotS
+  command: cube-sots
+  type: boolean
+  checked: 1
+  unchecked: 1
+- name: Precise Item Hints
+  command: precise-item
+  type: boolean
+  checked: 1
+  unchecked: 1
+- name: Hint Distribution
+  command: hint-distribution
+  type: singlechoice
+  choices:
+    Weak: 1
+    Balanced: 1
+    Junk: 1
+    Co-op S1: 1
+    S2 - 2D: 1
+    S2 - 3D: 1
+    S2 - 3D EUD Off: 1

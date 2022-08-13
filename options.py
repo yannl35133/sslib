@@ -1,13 +1,9 @@
-from logic.constants import ALL_TYPES
+from yaml_files import options as OPTIONS_LIST, random_setting_distro
 from packedbits import PackedBitsReader, PackedBitsWriter
-from paths import RANDO_ROOT_PATH
 from pathlib import Path
 
 import yaml
 from collections import OrderedDict
-
-with (RANDO_ROOT_PATH / "options.yaml").open("r") as f:
-    OPTIONS_LIST = yaml.safe_load(f)
 
 OPTIONS = OrderedDict((option["command"], option) for option in OPTIONS_LIST)
 
@@ -203,6 +199,82 @@ class Options:
             else:
                 raise Exception(f'unknown type: {option["type"]}')
             self.set_option(option_name, value)
+
+    def get_weight_distro(self):
+        distro_option = "random-settings-weighting"
+        chosen_distro = self[distro_option]
+        if chosen_distro == "Random":
+            RS_WEIGHTING = random_setting_distro("random.yaml")
+        elif chosen_distro == "Fast":
+            RS_WEIGHTING = random_setting_distro("fast.yaml")
+        elif chosen_distro == "Balanced":
+            RS_WEIGHTING = random_setting_distro("balanced.yaml")
+        elif chosen_distro == "Insanity":
+            RS_WEIGHTING = random_setting_distro("insanity.yaml")
+        elif chosen_distro == "RSL Season 1":
+            RS_WEIGHTING = random_setting_distro("rsl_season1.yaml")
+        else:
+            raise ValueError(f"Invalid value for {distro_option}: {chosen_distro}")
+        return RS_WEIGHTING
+
+    def randomize_settings(self, rng):
+        RS_WEIGHTING = self.get_weight_distro()
+
+        for opt in RS_WEIGHTING:
+            optkey = opt["command"]
+            opttype = opt.get("type")  # Banned types doesn't have one
+            if opttype == "boolean":
+                chosen = rng.choices(
+                    [True, False],
+                    weights=[opt["checked"], opt["unchecked"]],
+                    k=1,
+                )[0]
+                self.set_option(opt["command"], chosen)
+            elif opttype == "int":
+                chosen = rng.choices(
+                    list(opt["choices"].keys()),
+                    weights=opt["choices"].values(),
+                    k=1,
+                )[0]
+                self.set_option(optkey, chosen)
+            elif opttype == "singlechoice":
+                chosen = rng.choices(
+                    list(opt["choices"].keys()),
+                    weights=opt["choices"].values(),
+                    k=1,
+                )[0]
+                self.set_option(optkey, chosen)
+            elif opttype == "multichoice":
+                nb_chosen = rng.randint(0, len(opt["choices"]))
+                chosen = rng.sample(opt["choices"], nb_chosen)
+                self.set_option(optkey, chosen)
+
+            elif opttype is None:
+                # Randomize banned types
+                assert optkey == "banned-types"
+                nb_chosen = rng.randint(
+                    opt["min_banned_types"], opt["max_banned_types"]
+                )
+
+                potentially_banned_types = opt["choices"].copy()
+                if not (
+                    self["small-key-mode"] == "Anywhere"
+                    and self["boss-key-mode"] == "Anywhere"
+                ):
+                    del potentially_banned_types["dungeon"]
+
+                banned_types = []
+
+                while nb_chosen > 0:
+                    bt = rng.choices(
+                        list(potentially_banned_types.keys()),
+                        weights=potentially_banned_types.values(),
+                        k=1,
+                    )[0]
+                    if bt not in banned_types:
+                        banned_types.append(bt)
+                        nb_chosen -= 1
+                self.set_option("banned-types", banned_types)
 
     def to_dict(self):
         opts = self.options.copy()

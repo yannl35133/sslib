@@ -16,6 +16,7 @@ def write(
     areas: Areas,
     *,
     hash,
+    original_permalink,
     progression_spheres,
     hints,
     required_dungeons,
@@ -24,11 +25,40 @@ def write(
     randomized_dungeon_entrance,
     randomized_trial_entrance,
 ):
-    write_header(file, options, hash)
+    write_header(file, options, original_permalink, hash)
     norm = areas.prettify
 
     if options["no-spoiler-log"]:
         return
+
+    # Write randomized settings
+    if options["randomize-settings"]:
+        file.write("\n\nRandomized Settings:\n")
+        RS_WEIGHTING = options.get_weight_distro()
+        BANNED_TYPES = "banned-types"
+        for opt in RS_WEIGHTING:
+            if opt["command"] == BANNED_TYPES:
+                continue
+            file.write("  {}: {}\n".format(opt["name"], options[opt["command"]]))
+
+        file.write("\nBanned Types:\n")
+        banned_types = options[BANNED_TYPES]
+        if len(banned_types) == 0:
+            file.write("  None\n")
+
+        for banned_type in banned_types:
+            if (
+                banned_type.endswith("goddess")
+                and banned_type != "goddess"
+                and "goddess" in banned_types
+            ):
+                continue
+            if (
+                banned_type in ["cheap", "medium", "expensive"]
+                and "beedle" in banned_types
+            ):
+                continue
+            file.write("  {}\n".format(POTENTIALLY_BANNED_TYPES[banned_type]))
 
     if len(placement.starting_items) > 0:
         file.write("\n\nStarting items:\n  ")
@@ -156,6 +186,7 @@ def dump_json(
     placement: Placement,
     options: Options,
     *,
+    original_permalink,
     hash,
     progression_spheres,
     hints,
@@ -165,7 +196,9 @@ def dump_json(
     randomized_dungeon_entrance,
     randomized_trial_entrance,
 ):
-    spoiler_log = dump_header_json(options, hash)
+    spoiler_log = dump_header_json(
+        options, original_permalink, options["no-spoiler-log"], hash
+    )
     if options["no-spoiler-log"]:
         return spoiler_log
     spoiler_log["starting-items"] = sorted(placement.starting_items)
@@ -181,7 +214,10 @@ def dump_json(
     spoiler_log["trial-connections"] = randomized_trial_entrance
 
 
-def dump_header_json(options: Options, hash):
+def dump_header_json(options: Options, original_permalink, no_log, hash):
+    if options["randomize-settings"] and no_log:
+        options.update_from_permalink(original_permalink)
+
     header_dict = OrderedDict()
     header_dict["version"] = VERSION
     header_dict["permalink"] = options.get_permalink()
@@ -210,17 +246,26 @@ def dump_header_json(options: Options, hash):
     return header_dict
 
 
-def write_header(file: TextIO, options: Options, hash):
+def write_header(file: TextIO, options: Options, original_permalink, hash):
 
     file.write("Skyward Sword Randomizer Version %s\n" % VERSION)
 
-    file.write("Permalink: %s\n" % options.get_permalink())
+    permalink = (
+        original_permalink if options["randomize-settings"] else options.get_permalink()
+    )
+    file.write("Permalink: %s\n" % permalink)
 
     file.write("Seed: %s\n" % options["seed"])
 
     file.write("Hash : %s\n" % hash)
 
-    file.write("Options selected:\n")
+    if options["randomize-settings"]:
+        options = options.copy()
+        options.update_from_permalink(original_permalink)
+        file.write("Original options:\n")
+    else:
+        file.write("Options selected:\n")
+
     non_disabled_options = [
         (name, val)
         for (name, val) in options.options.items()

@@ -22,7 +22,7 @@ from PySide6.QtWidgets import (
 )
 from graph_logic.logic_input import Areas
 
-from logic.constants import ALL_TYPES
+from logic.constants import ALL_TYPES, NON_RANDOMIZED_SETTINGS, HINT_SETTINGS
 from options import OPTIONS, Options
 from gui.progressdialog import ProgressDialog
 from gui.guithreads import RandomizerThread, ExtractSetupThread
@@ -208,6 +208,9 @@ class RandoGUI(QMainWindow):
         self.ui.permalink.textChanged.connect(self.permalink_updated)
         self.ui.seed.textChanged.connect(self.update_settings)
         self.ui.progression_goddess.clicked.connect(self.goddess_cubes_toggled)
+        self.ui.option_randomize_settings.clicked.connect(
+            self.randomize_settings_toggled
+        )
         self.ui.seed_button.clicked.connect(self.gen_new_seed)
         self.update_ui_for_settings()
         self.set_option_description(None)
@@ -583,6 +586,20 @@ class RandoGUI(QMainWindow):
         self.ui.progression_floria_goddess.setEnabled(enabled)
         self.ui.progression_summit_goddess.setEnabled(enabled)
         self.ui.progression_sand_sea_goddess.setEnabled(enabled)
+
+    def randomize_settings_toggled(self):
+        settings_randomized = not self.ui.option_randomize_settings.isChecked()
+        RS_WEIGHTING = self.options.get_weight_distro()
+        for opt0 in RS_WEIGHTING:
+            opt = OPTIONS[opt0["command"]]
+            if opt["name"] == "Banned Types":
+                continue
+            getattr(self.ui, opt["ui"]).setEnabled(settings_randomized)
+
+        for banned_type in ALL_TYPES:
+            getattr(
+                self.ui, "progression_{}".format(banned_type.replace(" ", "_"))
+            ).setEnabled(settings_randomized)
 
     def gen_new_seed(self):
         self.ui.seed.setText(str(random.randrange(0, 1_000_000)))

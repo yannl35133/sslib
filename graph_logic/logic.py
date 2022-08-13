@@ -149,6 +149,18 @@ class Logic:
 
         self.inventory = logic_settings.starting_inventory
 
+        for it in self.banned:
+            if (
+                True
+                or self.areas.requirements[it].is_impossible()
+                or it not in pure_usefuls
+            ):
+                self.requirements[it] &= banned_bit_inv
+            else:
+                raise ValueError(
+                    f"Cannot ban potentially inlined away requirement {it}"
+                )
+
         self.backup_requirements = self.requirements.copy()
 
         for exit, entrance in self.placement.map_transitions.items():
@@ -161,16 +173,8 @@ class Logic:
         for loc, req in logic_settings.runtime_requirements.items():
             it = EXTENDED_ITEM[loc]
             assert self.opaque[it]
-            self.requirements[it] |= req
+            self.requirements[it] |= self.ban_if(it, req)
             self.opaque[it] = False
-
-        for it in self.banned:
-            if self.areas.requirements[it].is_impossible() or it not in pure_usefuls:
-                self.requirements[it] &= banned_bit_inv
-            else:
-                raise ValueError(
-                    f"Cannot ban potentially inlined away requirement {it}"
-                )
 
         self.shallow_simplify()
         self.backup_requirements = self.requirements.copy()

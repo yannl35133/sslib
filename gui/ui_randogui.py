@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'randogui.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.2.4
+## Created by: Qt User Interface Compiler version 6.2.0
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -113,7 +113,7 @@ class Ui_MainWindow(object):
         self.groupBox_12.setGeometry(QRect(10, 130, 181, 131))
         self.verticalLayoutWidget_13 = QWidget(self.groupBox_12)
         self.verticalLayoutWidget_13.setObjectName(u"verticalLayoutWidget_13")
-        self.verticalLayoutWidget_13.setGeometry(QRect(10, 20, 166, 89))
+        self.verticalLayoutWidget_13.setGeometry(QRect(10, 20, 167, 89))
         self.verticalLayout_33 = QVBoxLayout(self.verticalLayoutWidget_13)
         self.verticalLayout_33.setObjectName(u"verticalLayout_33")
         self.verticalLayout_33.setContentsMargins(0, 0, 0, 0)
@@ -177,7 +177,7 @@ class Ui_MainWindow(object):
         self.groupBox_15.setGeometry(QRect(510, 130, 181, 131))
         self.verticalLayoutWidget_11 = QWidget(self.groupBox_15)
         self.verticalLayoutWidget_11.setObjectName(u"verticalLayoutWidget_11")
-        self.verticalLayoutWidget_11.setGeometry(QRect(10, 20, 161, 106))
+        self.verticalLayoutWidget_11.setGeometry(QRect(10, 20, 161, 108))
         self.verticalLayout_35 = QVBoxLayout(self.verticalLayoutWidget_11)
         self.verticalLayout_35.setObjectName(u"verticalLayout_35")
         self.verticalLayout_35.setContentsMargins(0, 0, 0, 0)
@@ -209,6 +209,39 @@ class Ui_MainWindow(object):
         self.verticalSpacer_16 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
 
         self.verticalLayout_35.addItem(self.verticalSpacer_16)
+
+        self.groupBox_16 = QGroupBox(self.tab)
+        self.groupBox_16.setObjectName(u"groupBox_16")
+        self.groupBox_16.setGeometry(QRect(710, 130, 181, 131))
+        self.verticalLayoutWidget_15 = QWidget(self.groupBox_16)
+        self.verticalLayoutWidget_15.setObjectName(u"verticalLayoutWidget_15")
+        self.verticalLayoutWidget_15.setGeometry(QRect(10, 20, 161, 108))
+        self.verticalLayout_37 = QVBoxLayout(self.verticalLayoutWidget_15)
+        self.verticalLayout_37.setObjectName(u"verticalLayout_37")
+        self.verticalLayout_37.setContentsMargins(0, 0, 0, 0)
+        self.option_randomize_settings = QCheckBox(self.verticalLayoutWidget_15)
+        self.option_randomize_settings.setObjectName(u"option_randomize_settings")
+
+        self.verticalLayout_37.addWidget(self.option_randomize_settings)
+
+        self.verticalLayout_39 = QVBoxLayout()
+        self.verticalLayout_39.setObjectName(u"verticalLayout_39")
+        self.label_for_option_random_settings_weighting = QLabel(self.verticalLayoutWidget_15)
+        self.label_for_option_random_settings_weighting.setObjectName(u"label_for_option_random_settings_weighting")
+
+        self.verticalLayout_39.addWidget(self.label_for_option_random_settings_weighting)
+
+        self.option_random_settings_weighting = QComboBox(self.verticalLayoutWidget_15)
+        self.option_random_settings_weighting.setObjectName(u"option_random_settings_weighting")
+
+        self.verticalLayout_39.addWidget(self.option_random_settings_weighting)
+
+
+        self.verticalLayout_37.addLayout(self.verticalLayout_39)
+
+        self.verticalSpacer_17 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
+
+        self.verticalLayout_37.addItem(self.verticalSpacer_17)
 
         self.tabWidget.addTab(self.tab, "")
         self.tab_3 = QWidget()
@@ -771,7 +804,7 @@ class Ui_MainWindow(object):
         self.groupBox_9.setGeometry(QRect(10, 270, 201, 241))
         self.verticalLayoutWidget_5 = QWidget(self.groupBox_9)
         self.verticalLayoutWidget_5.setObjectName(u"verticalLayoutWidget_5")
-        self.verticalLayoutWidget_5.setGeometry(QRect(10, 20, 181, 211))
+        self.verticalLayoutWidget_5.setGeometry(QRect(10, 20, 181, 213))
         self.verticalLayout_15 = QVBoxLayout(self.verticalLayoutWidget_5)
         self.verticalLayout_15.setObjectName(u"verticalLayout_15")
         self.verticalLayout_15.setContentsMargins(0, 0, 0, 0)
@@ -1149,6 +1182,9 @@ class Ui_MainWindow(object):
         self.label_for_option_music_rando.setText(QCoreApplication.translate("MainWindow", u"Randomize Music", None))
         self.option_cutoff_gameover_music.setText(QCoreApplication.translate("MainWindow", u"Cutoff Game Over Music", None))
         self.option_allow_custom_music.setText(QCoreApplication.translate("MainWindow", u"Allow Custom Music", None))
+        self.groupBox_16.setTitle(QCoreApplication.translate("MainWindow", u"Randomize Settings", None))
+        self.option_randomize_settings.setText(QCoreApplication.translate("MainWindow", u"Randomize Settings", None))
+        self.label_for_option_random_settings_weighting.setText(QCoreApplication.translate("MainWindow", u"RS Weighting", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), QCoreApplication.translate("MainWindow", u"Setup", None))
         self.groupBox_4.setTitle(QCoreApplication.translate("MainWindow", u"What areas of the world should progress items appear?", None))
         self.progression_skyloft.setText(QCoreApplication.translate("MainWindow", u"Skyloft", None))
