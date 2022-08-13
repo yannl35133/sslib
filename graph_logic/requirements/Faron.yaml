@@ -208,6 +208,8 @@ Great Tree:
 Deep Woods:
   hint-region: Faron Woods
   Entry:
+    locations:
+      Hornet Larvae Farming: Nothing # Bonk the tree
     exits:
       Exit to Woods: Nothing
       Deep Woods: Push Shortcut Logs | Distance Activator | Goddess Sword # bomb bag?

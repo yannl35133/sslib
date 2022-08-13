@@ -35,6 +35,7 @@ class Placement:
     items: Dict[EXTENDED_ITEM_NAME, EXTENDED_ITEM_NAME] = field(default_factory=dict)
     hints: Dict[EXTENDED_ITEM_NAME, Any] = field(default_factory=dict)
     starting_items: Set[EIN] = field(default_factory=set)
+    unplaced_items: Set[EIN] = field(default_factory=set)
 
     def copy(self):
         return Placement(
@@ -79,6 +80,23 @@ class Placement:
             self.items | other.items,
             self.hints | other.hints,
             self.starting_items | other.starting_items,
+            self.unplaced_items | other.unplaced_items,
+        )
+
+    def add_starting_items(self, items: Set[EIN]):
+        for i in items:
+            if i in self.items and self.items[i] != START_ITEM:
+                raise ValueError
+
+        return Placement(
+            self.item_placement_limit,
+            self.map_transitions,
+            self.reverse_map_transitions,
+            self.locations,
+            self.items | {k: START_ITEM for k in items},
+            self.hints,
+            self.starting_items | items,
+            self.unplaced_items,
         )
 
 
@@ -389,7 +407,11 @@ class Logic:
     def place_item(self, location: EIN, item: EIN):
         if location in self.placement.locations:
             raise ValueError(f"Location {location} is already taken")
-        if item in self.placement.items:
+        if (
+            item in self.placement.items
+            and item not in DUPLICABLE_ITEMS
+            and item not in DUPLICABLE_COUNTERPROGRESS_ITEMS
+        ):
             raise ValueError(f"Item {item} is already placed")
         self._place_item(location, item)
         return True
