@@ -351,10 +351,8 @@ class Rando:
                 item
                 for item in EXTENDED_ITEM.items()
                 if (item_name := EXTENDED_ITEM.get_item_name(item)) in INVENTORY_ITEMS
-                and (
-                    item_name not in self.placement.items
-                    or item_name in self.placement.starting_items
-                )
+                and self.placement.items.get(item_name, START_ITEM) == START_ITEM
+                # Either not placed yet or a start item
             }
         )
 
@@ -420,9 +418,6 @@ class Rando:
         self.randomize_starting_items()  # self.placement.starting_items
         self.ban_the_banned()  # self.banned, self.ban_options
 
-        for item in self.placement.starting_items:
-            self.placement.items[item] = START_ITEM
-
         self.get_endgame_requirements()  # self.endgame_requirements
 
         self.initialize_items()  # self.randosettings
@@ -466,7 +461,7 @@ class Rando:
         if self.options["start-with-pouch"]:
             starting_items.add(number(PROGRESSIVE_POUCH, 0))
 
-        self.placement.starting_items |= starting_items
+        self.placement = self.placement.add_starting_items(starting_items)
 
     def ban_the_banned(self):
 

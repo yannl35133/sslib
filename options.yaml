@@ -530,7 +530,6 @@
   command: enabled-tricks-bitless
   type: multichoice
   choices:
-    - Upgrade Hook Beetle
     - Bomb Throws
     - Long Range Skyward Strike Jumpslash
     # Skyloft / Sky
