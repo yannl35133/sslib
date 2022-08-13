@@ -152,6 +152,18 @@ Central:
       West Exit: Nothing
       South Exit: Nothing
 
+    Gondo's Upgrades:
+      entrance: Nothing
+      exits:
+        Bazaar: Nothing
+      locations:
+        Upgrade to Quick Beetle:
+          Hook Beetle &
+          Faron - Deep Woods - Hornet Larvae Farming &
+          Lanayru - Mines - Ancient Flower Farming &
+          Sky - Clean Cut Minigame # Golden Skull farming
+
+
   Orielle and Parrow's House:
     locations:
       Crystal: Nothing
