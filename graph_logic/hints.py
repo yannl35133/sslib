@@ -52,7 +52,7 @@ class Hints:
         ]
 
         # ensure prerandomized locations cannot be hinted
-        unhintables = list(self.logic.initial_placement.items.keys())
+        unhintables = list(self.logic.initial_placement.locations.keys())
 
         # in shopsanity, we need to hint some beetle shop items
         # add them manually, cause they need to be kinda weirdly implemented because of bug net

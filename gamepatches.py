@@ -1507,12 +1507,11 @@ class GamePatcher:
     def add_startitem_patches(self):
         # Add sword story/itemflags if required
         for i in range(NUMBER_SWORDS):
-            if number(PROGRESSIVE_SWORD, i) in self.placement_file.starting_items:
-                self.startstoryflags.append(PROGRESSIVE_SWORD_STORYFLAGS[i])
-            else:
-                if i > 0:
-                    self.startitemflags.append(PROGRESSIVE_SWORD_ITEMIDS[i - 1])
+            if number(PROGRESSIVE_SWORD, i) not in self.placement_file.starting_items:
                 break
+            self.startstoryflags.append(PROGRESSIVE_SWORD_STORYFLAGS[i])
+        if i > 0:
+            self.startitemflags.append(PROGRESSIVE_SWORD_ITEMIDS[i - 1])
 
         # if 'Sailcloth' in self.placement_file.starting_items:
         #     self.startstoryflags.append(32)
