@@ -617,6 +617,8 @@ class Rando:
             for trick_name in OPTIONS["enabled-tricks-bitless"]["choices"]
         }
 
+        # self.placement |= HARDCODED_PLACEMENT(self.norm)
+
         if shop_mode == "Vanilla":
             self.placement |= VANILLA_BEEDLE_PLACEMENT(self.norm)
         elif shop_mode == "Randomized":
