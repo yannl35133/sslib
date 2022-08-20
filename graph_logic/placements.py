@@ -50,6 +50,8 @@ def norm_values(dict: Dict[EIN, str]):
     return norm_values
 
 
+HARDCODED_PLACEMENT = norm_keys({})
+
 VANILLA_BEEDLE = {
     "Beedle's Shop - 300 Rupee Item": number(PROGRESSIVE_POUCH, 1),
     "Beedle's Shop - 600 Rupee Item": number(PROGRESSIVE_POUCH, 2),
