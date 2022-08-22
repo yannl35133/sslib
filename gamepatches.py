@@ -1205,7 +1205,7 @@ class GamePatcher:
             to_remove = map(self.areas.short_to_full, RUPEE_CHECKS)
         elif rupeesanity_option == "No Quick Beetle":
             to_remove = map(self.areas.short_to_full, QUICK_BEETLE_CHECKS)
-        elif to_remove == "All":
+        elif rupeesanity_option == "All":
             to_remove = []
 
         for rupee_check in to_remove:
