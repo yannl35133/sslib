@@ -1,3 +1,4 @@
+from typing import Any, List
 from .constants import *
 from .logic import Placement
 
@@ -155,3 +156,16 @@ DUNGEON_MAPS_RESTRICTED_RESTRICTION = norm_values(
         SK_MAP: SK + sep + "Main",
     }
 )
+
+
+def norm_vanilla(list: List[str]):
+    def norm_keys(norm: Callable[[str], EIN], checks: Dict[EIN, Any]) -> Placement:
+        list2 = map(norm, list)
+        dict = {k: EIN(checks[k]["original item"]) for k in list2}
+        return Placement(locations=dict, items={v: k for k, v in dict.items()})
+
+    return norm_keys
+
+
+VANILLA_RUPEES = norm_vanilla(RUPEE_CHECKS)
+VANILLA_QUICK_BEETLE_RUPEES = norm_vanilla(QUICK_BEETLE_CHECKS)

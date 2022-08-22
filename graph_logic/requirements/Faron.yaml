@@ -66,7 +66,8 @@ Woods:
     exits:
       Faron Woods Entry Statue Entrance: Impossible
       Woods - Shared Statue Exit: Unlock Statue
-      Faron - Woods: Sword | Bomb Bag | Clawshots # Main - Push a Log # either cut trees or clawshot vines
+      Faron - Woods: Sword | Bomb Bag | Clawshots | Woods - Push Log to Sealed Grounds
+      # Either cut trees or clawshot vines
       Exit to Behind the Temple: Nothing
 
   Ledge to Lake Floria:
@@ -85,14 +86,18 @@ Woods:
     Trial Gate: Open Trial Gate
     Great Tree - Near Underwater Hole: Water Scale
     Great Tree - Platforms: Clawshots
-    Lake Floria Dive: Great Tree - Top - Talk to Yerbal & Goddess Sword & Water Scale
+    Lake Floria Dive: Open Door to Lake Floria
     Clawshot Target Branch: Clawshots
   locations:
     Unlock Viewing Platform Statue: Nothing
     Unlock In the Woods Statue: Nothing
-    # Push a log: Nothing
+    Push Log to Sealed Grounds: Nothing
     Hit Vine to Deep Woods: Distance Activator
     Open Trial Gate: Goddess Harp & Farore's Courage
+    Open Door to Lake Floria: Great Tree - Top - Talk to Yerbal & Goddess Sword
+    Rupee on Hollow Tree Root: Beetle
+    Rupee on Hollow Tree Branch: Nothing
+    Rupee on Platform near Floria Door: Beetle
     Slingshot: Bomb Bag | Sword # to kill bokos and cut grass
     Item on Tree: Nothing
     Item behind Bombable Rock: Bomb Bag
@@ -187,7 +192,9 @@ Great Tree:
   Top:
     locations:
       Unlock Statue: Nothing
-      Talk to Yerbal: Slingshot | Beetle # only those 2 items (and their upgrades) work
+      Rupee on North Branch: Beetle
+      Rupee on West Branch: Beetle
+      Talk to Yerbal: Water Scale & (Slingshot | Beetle) # only those 2 items (and their upgrades) work
     exits:
       Faron - Woods - Shared Statue Exit: Unlock Statue
       The Great Tree Statue Entrance: Impossible
@@ -228,11 +235,14 @@ Lake Floria:
   hint-region: Lake Floria
   Above Rock:
     locations:
-      Silver Rupee: Water Scale # currently not randomized
+      Rupee behind Southwest Boulder: Water Scale
+      Left Rupee behind Northwest Boulder: Water Scale
+      Right Rupee behind Northwest Boulder: Water Scale
+      Rupee under Central Boulder: Water Scale
       Blow Rock: Water Scale
     exits:
       Dive from Faron Woods: Impossible
-      Below Rock: Water Scale
+      Below Rock: Blow Rock & Water Scale
 
   Below Rock:
     Emerged Area:
@@ -246,7 +256,7 @@ Lake Floria:
 
     exits:
       Emerged Area: Water Scale
-      Above Rock: Water Scale
+      Above Rock: Above Rock - Blow Rock & Water Scale
       Exit to Farore's Lair: Water Scale
 
   Farore's Lair:
@@ -264,7 +274,7 @@ Lake Floria:
       Unlock Statue: Nothing
       Gossip Stone: Nothing
       Goddess Cube in Floria Waterfall: Clawshots & Goddess Sword
-      Golden Rupee: Beetle # Currently not randomized
+      Rupee on High Ledge: Beetle
     exits:
       Statue: Unlock Statue
       Exit to Farore's Lair: Nothing

@@ -111,6 +111,7 @@ Main:
     First Platform:
       locations:
         Lever: Nothing
+        Rupee in Alcove: Beetle
       exits:
         Triforce Room: Beetle & Clawshots
 

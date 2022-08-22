@@ -136,6 +136,8 @@ FARON_SOTH_PART = EIN("Faron Song of the Hero Part")
 ELDIN_SOTH_PART = EIN("Eldin Song of the Hero Part")
 LANAYRU_SOTH_PART = EIN("Lanayru Song of the Hero Part")
 SPIRAL_CHARGE = EIN("Spiral Charge")
+LIFE_TREE_SEEDLING = EIN("Life Tree Seedling")
+LIFE_TREE_FRUIT = EIN("Life Tree Fruit")
 
 GRATITUDE_CRYSTAL_PACK = "Gratitude Crystal Pack"
 GRATITUDE_CRYSTAL = "Gratitude Crystal"
@@ -287,6 +289,8 @@ PROGRESS_ITEMS = (
             ELDIN_SOTH_PART,
             LANAYRU_SOTH_PART,
             SPIRAL_CHARGE,
+            # LIFE_TREE_SEEDLING,
+            LIFE_TREE_FRUIT,
         ]
     )
     | GRATITUDE_CRYSTAL_PACKS
@@ -476,6 +480,7 @@ VOLCANO_SUMMIT = "Volcano Summit"
 LANAYRU_MINES = "Lanayru Mines"
 LANAYRU_DESERT = "Lanayru Desert"
 LANAYRU_CAVES = "Lanayru Caves"
+LANAYRU_GORGE = "Lanayru Gorge"
 SAND_SEA = "Sand Sea"
 
 SKYLOFT_SILENT_REALM = "Skyloft Silent Realm"
@@ -501,6 +506,7 @@ ALL_HINT_REGIONS = dict.fromkeys(
         LANAYRU_MINES,
         LANAYRU_DESERT,
         LANAYRU_CAVES,
+        LANAYRU_GORGE,
         SAND_SEA,
         SV,
         ET,
@@ -550,3 +556,53 @@ TRIAL_CHECKS: dict[str, str] = {
 }
 
 TRIAL_CHECKS_REV = {v: k for k, v in TRIAL_CHECKS.items()}
+
+
+RUPEE_CHECKS = [
+    "Skyloft - Waterfall Cave - Rupee in Crawlspace",
+    "Great Tree - Top - Rupee on North Branch",
+    "Great Tree - Top - Rupee on West Branch",
+    "Faron Woods - Rupee on Platform near Floria Door",
+    "Faron Woods - Rupee on Hollow Tree Root",
+    "Faron Woods - Rupee on Hollow Tree Branch",
+    "Lake Floria - Rupee under Central Boulder",
+    "Lake Floria - Right Rupee behind Northwest Boulder",
+    "Lake Floria - Left Rupee behind Northwest Boulder",
+    "Lake Floria - Rupee behind Southwest Boulder",
+    "Floria Waterfall - Rupee on High Ledge",
+    "Eldin Volcano - Entry - Rupee on Ledge",
+    "Eldin Volcano - First Room - Rupee behind Bombable Wall",
+    "Eldin Volcano - First Room - Rupee in Crawlspace",
+    "Eldin Volcano - Southeast Rupee above Mogma Turf Entrance",
+    "Eldin Volcano - North Rupee above Mogma Turf Entrance",
+    "Eldin Volcano - Near Thrill Digger Cave - Left Rupee behind Bombable Wall",
+    "Eldin Volcano - Near Thrill Digger Cave - Right Rupee behind Bombable Wall",
+    "Ancient Harbour - Rupee on First Pillar",
+    "Ancient Harbour - Left Rupee on Entrance Crown",
+    "Ancient Harbour - Right Rupee on Entrance Crown",
+    "Pirate Stronghold - Rupee on West Sea Pillar",
+    "Pirate Stronghold - Rupee on East Sea Pillar",
+    "Pirate Stronghold - Rupee on Bird Statue Pillar or Nose",
+    "Skyview - Second Hub - Rupee in Southeast Tunnel",
+    "Skyview - Second Hub - Rupee in Southwest Tunnel",
+    "Skyview - Second Hub - Rupee in East Tunnel",
+    "Skyview - Spring - Rupee on Pillar",
+    "Earth Temple - Rupee above Drawbridge",
+    "Earth Temple - Rupee in Lava Tunnel",
+    "Ancient Cistern - East Part - Rupee in Main Tunnel",
+    "Ancient Cistern - East Part - Rupee in Cubby",
+    "Ancient Cistern - East Part - Third Rupee in Short Tunnel",
+    "Ancient Cistern - East Part - Second Rupee in Short Tunnel",
+    "Ancient Cistern - East Part - First Rupee in Short Tunnel",
+    # "Ancient Cistern - After Gutters - Rupee under Lilypad",
+    "Ancient Cistern - Rupee in Left Hand",
+    "Ancient Cistern - Rupee in Right Hand",
+    "Sky Keep - Fire Sanctuary Room - Rupee in Alcove",
+]
+
+QUICK_BEETLE_CHECKS = [
+    "Ancient Harbour - Left Rupee on Entrance Crown",
+    "Ancient Harbour - Right Rupee on Entrance Crown",
+    "Pirate Stronghold - Rupee on West Sea Pillar",
+    "Pirate Stronghold - Rupee on East Sea Pillar",
+]

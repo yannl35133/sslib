@@ -12,7 +12,7 @@ Mines:
     locations:
       Unlock Statue: Nothing
       Goddess Cube: Goddess Sword
-      Timeshift Stone: Distance Activator | Bomb Bag | Sword | Itemless First Timeshift Stone Trick
+      Timeshift Stone: Can Hit Timeshift Stone | Itemless First Timeshift Stone Trick
       Chest near First Timeshift Stone: Timeshift Stone
     exits:
       First Time Entrance: Impossible
@@ -339,22 +339,26 @@ Caves:
     Unlock Door to Sand Sea: Lanayru Caves Key
     Chest: Nothing
     Golo's Gift: Nothing
-    Gossip Stone: Nothing
+    Gossip Stone in Center: Nothing
 
   exits:
     Past Door to Sand Sea: Clawshots & Unlock Door to Sand Sea
+    Past Crawlspace: Nothing
     Exit to Mines: Nothing
     Exit to Desert: Nothing
 
   Past Door to Sand Sea:
+    locations:
+      Caves - Unlock Door to Sand Sea: Lanayru Caves Key
     exits:
       Caves: Caves - Unlock Door to Sand Sea
       Exit to Sand Sea: Nothing
 
   Past Crawlspace:
-    entrance: Impossible
+    locations:
+      Gossip Stone towards Gorge: Nothing
     exits:
-      Caves: Impossible
+      Caves: Nothing
       Exit to Gorge: Nothing
 
 
@@ -368,7 +372,9 @@ Sand Sea:
         Exit to Caves: Nothing
         Ancient Harbour: Clawshots
       locations:
-        Gold Rupee: Impossible # Upgraded Hook Beetle
+        Left Rupee on Entrance Crown: Quick Beetle
+        Right Rupee on Entrance Crown: Quick Beetle
+        Rupee on First Pillar: Beetle
 
     locations:
       Goddess Cube: Clawshots & Goddess Sword
@@ -455,6 +461,9 @@ Sand Sea:
   Pirate Stronghold:
     locations:
       Unlock Statue: Nothing
+      Rupee on West Sea Pillar: Quick Beetle
+      Rupee on East Sea Pillar: Quick Beetle
+      Rupee on Bird Statue Pillar or Nose: Beetle
       Goddess Cube: Inside - Finish Minidungeon & Clawshots & Goddess Sword
 
     exits:
@@ -478,14 +487,25 @@ Sand Sea:
 
   Gorge:
     toplevel-alias: Lanayru Gorge
+    hint-region: Lanayru Gorge
     locations:
-      Unlock Statue: Impossible
-      Goddess Cube: Goddess Sword & Impossible # Did Minecart
-      Heal Thunder Dragon: Impossible
-      Thunder Dragon's Song: Heal Thunder Dragon
-      Boss Rush -- 4 Bosses: Thunder Dragon's Song
-      Boss Rush -- 8 Bosses: Thunder Dragon's Song
+      Unlock Statue: Nothing
+      Item on Pillar: Beetle
+      Activate Timeshift Stone: Can Hit Timeshift Stone
+      Thunder Dragon's Reward: Activate Timeshift Stone & Life Tree Fruit
+
+      Boss Rush -- 4 Bosses: Thunder Dragon's Reward & Impossible
+      Boss Rush -- 8 Bosses: Thunder Dragon's Reward & Impossible
+
+    Beyond Bridge:
+      locations:
+        Activate Timeshift Stone: Gust Bellows & Can Hit Timeshift Stone
+        Goddess Cube: Goddess Sword
+        Life Tree Seedling: Activate Timeshift Stone & Digging Mitts
+      exits:
+        Gorge: Beetle | Bow # To activate the main Timeshift Stone
 
     exits:
       Statue: Unlock Statue
+      Beyond Bridge: Activate Timeshift Stone
       Exit: Nothing
