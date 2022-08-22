@@ -158,8 +158,10 @@ class HintDistribution:
 
         self.hinted_locations.extend(unhintable)
 
+        self.banned_stones = list(map(areas.short_to_full, self.banned_stones))
+
         for loc in self.added_locations:
-            location = loc["location"]
+            location = areas.short_to_full(loc["location"])
             if loc["type"] == "always":
                 if location in always_hints:
                     continue
@@ -174,6 +176,7 @@ class HintDistribution:
                     always_hints.remove(location)
 
         for loc in self.removed_locations:
+            loc = areas.short_to_full(loc)
             if loc in always_hints:
                 always_hints.remove(loc)
             if loc in sometimes_hints:

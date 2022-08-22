@@ -82,6 +82,9 @@ Main:
 
   Second Hub:
     locations:
+      Rupee in Southeast Tunnel: Beetle
+      Rupee in Southwest Tunnel: Beetle
+      Rupee in East Tunnel: Beetle
       Switch to Miniboss Room: Distance Activator
       Switch for Bars: Beetle | (Slingshot & Skyview Slingshot Shot Trick)
       Switch to Left Room: Beetle
@@ -161,6 +164,7 @@ Boss Room:
 Spring:
   toplevel-alias: Skyview Spring
   locations:
+    Rupee on Pillar: Beetle
     Ruby Tablet: Goddess Sword
     Goddess Cube: Goddess Sword
     Sacred Water: Bottle & Skyview 2

@@ -5,6 +5,7 @@ Main:
   First Room:
     locations:
       Vent Chest: Digging Mitts
+      Rupee above Drawbridge: Beetle
       Lower Drawbridge:
         Beetle | Bow | (Long Range Skyward Strike & Earth Temple - Keese Yeet Trick)
       Dislodge Boulder:
@@ -17,13 +18,15 @@ Main:
   Hub Room:
     locations:
       Access to Boulder: First Room - Dislodge Boulder
+      First Room - Rupee above Drawbridge: Beetle
       Chest behind Bombable Rock: Access to Boulder
       Chest Left of Main Room Bridge: Access to Boulder
       Ledd's Gift: East Room - Bomb Bag
 
       Rock to West Room: Bomb Bag | Hook Beetle & Access to Boulder
       Wall to Lava Section: Bomb Bag | Hook Beetle & Access to Boulder
-      Lower Lava Section Portcullis: Beetle
+      Rupee in Lava Tunnel: Wall to Lava Section & Beetle
+      Lower Lava Section Portcullis: Wall to Lava Section & Beetle
 
       Left Peg: Access to Boulder
       Raise Bridge: Left Peg & Past Lava Section - Right Peg
