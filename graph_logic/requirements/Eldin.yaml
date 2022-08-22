@@ -7,46 +7,54 @@ Volcano:
     locations:
       Goddess Cube: Goddess Sword
       Unlock Statue: Nothing
-      Unlock shortcut between Entry and Ascent: Bomb Bag # I'm pretty sure Hook Beetle won't work here
+      Rupee on Ledge: Nothing
+      Ascent - Unlock Shortcut to Entry: Bomb Bag # I'm pretty sure Hook Beetle won't work here
     exits:
       First Time Entrance: Impossible
       Volcano Entrance Statue: Unlock Statue
-      Ascent: Unlock shortcut between Entry and Ascent
+      Ascent: Ascent - Unlock Shortcut to Entry
       First Room: Nothing
 
   First Room: # Until the rocks
     locations:
       Chest behind Bombable Wall: Nothing
-      Blow up Rock between First Room and East: Nothing
+      Rupee behind Bombable Wall: Nothing
+      Rupee in Crawlspace: Nothing
+      Blow up Rock to East: Nothing
     exits:
-      East: Blow up Rock between First Room and East
+      East: Blow up Rock to East
 
   East:
     locations:
-      Blow up Rock between First Room and East: Bomb Bag # can probably also use hook beetle
+      First Room - Blow up Rock to East: Bomb Bag # can probably also use hook beetle
       Unlock Statue: Nothing
       Goddess Cube near Mogma Turf Entrance: Goddess Sword
       Chest after Crawlspace: Nothing
       Chest behind Bombable Wall: Nothing
       Item on Cliff: Nothing
       Drain Lava: Nothing
-      Blow up Rock between Pre and Past Mogma Turf: Bomb Bag | Hook Beetle
+      Southeast Rupee above Mogma Turf Entrance: Beetle
+      North Rupee above Mogma Turf Entrance: Beetle
+      Past Mogma Turf - Unlock Shortcut to Pre Turf: Bomb Bag | Hook Beetle
     exits:
       Volcano East Statue Entrance: Impossible
       Volcano East / Volcano Ascent Statue: Unlock Statue
+      Entry: Clawshots
       Dive to Mogma Turf: Drain Lava
       First Vent from Mogma Turf: Impossible
-      First Room: Blow up Rock between First Room and East
-      Past Mogma Turf: Blow up Rock between Pre and Past Mogma Turf
+      First Room: First Room - Blow up Rock to East
+      Past Mogma Turf: Past Mogma Turf - Unlock Shortcut to Pre Turf
 
 
   Past Mogma Turf:
     locations:
-      Blow up Rock between Pre and Past Mogma Turf: Nothing
+      Unlock Shortcut to Pre Turf: Nothing
       Watch Bridge Cutscene: Nothing
-      Goddess Cube near Mogma Turf Entrance: Goddess Sword
+      East - Southeast Rupee above Mogma Turf Entrance: Beetle
+      East - North Rupee above Mogma Turf Entrance: Beetle
+      East - Goddess Cube near Mogma Turf Entrance: Goddess Sword
     exits:
-      East: Blow up Rock between Pre and Past Mogma Turf
+      East: Unlock Shortcut to Pre Turf
       Second Vent from Mogma Turf: Impossible
       Ascent: Watch Bridge Cutscene
 
@@ -54,20 +62,22 @@ Volcano:
     locations:
       Chest behind Bombable Wall: Nothing
       Unlock Statue: Nothing
-      Unlock shortcut between Entry and Ascent: Nothing
-      Unlock shortcut between Ascent and Past Slide: Bomb Bag | Hook Beetle # | (Whip & Whip Bomb Trick)
+      Unlock Shortcut to Entry: Nothing
+      Past Slide - Unlock Shortcut to Ascent: Bomb Bag | Hook Beetle # | (Whip & Whip Bomb Trick)
       Defeat Slope Bokoblins: Bow | Slingshot | Beetle
       Open Trial Gate: Goddess Harp & Din's Power
     exits:
       Volcano Ascent Statue Entrance: Impossible
       East - Volcano East / Volcano Ascent Statue Exit: Unlock Statue
       Trial Gate Exit: Open Trial Gate
-      Entry: Unlock shortcut between Entry and Ascent
+      Entry: Unlock Shortcut to Entry
       Near Thrill Digger Cave: Defeat Slope Bokoblins | Stuttersprint Trick
-      Past Slide: Unlock shortcut between Ascent and Past Slide
+      Past Slide: Past Slide - Unlock Shortcut to Ascent
 
   Near Thrill Digger Cave:
     locations:
+      Left Rupee behind Bombable Wall: Nothing
+      Right Rupee behind Bombable Wall: Nothing
       Blow down Watchtower: Nothing
     exits:
       Ascent: Nothing
@@ -117,9 +127,9 @@ Volcano:
   Past Slide:
     locations:
       Digging Spot after Draining Lava: Digging Mitts
-      Unlock shortcut between Ascent and Past Slide: Nothing
+      Unlock Shortcut to Ascent: Nothing
     exits:
-      Ascent: Unlock shortcut between Ascent and Past Slide
+      Ascent: Unlock Shortcut to Ascent
       Vent Exit near Ascent: Nothing
 
 

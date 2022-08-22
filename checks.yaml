@@ -1097,6 +1097,35 @@ Pirate Stronghold - Rupee on Bird Statue Pillar or Nose:
     - stage/F301_6/r0/l2/Item/13
 
 
+Lanayru Gorge - Item on Pillar:
+  original item: Red Rupee
+  type: lanayru, freestanding
+  Paths:
+    - stage/F302/r0/l0/Item/9
+
+Lanayru Gorge - Life Tree Seedling:
+  original item: Life Tree Seedling
+  type: lanayru, digging
+  Paths:
+    - stage/F302/r0/l0/Soil/30
+
+Lanayru Gorge - Thunder Dragon's Reward:
+  original item: Lanayru Song of the Hero Part
+  type: lanayru
+  Paths:
+    - event/404-DesertF3/give item after Healing Thunderdragon
+    - oarc/F302/l0
+
+#Lanayru Gorge - Boss Rush - 4 Bosses
+#   original item: Heart Piece
+#   Paths:
+#    - event/
+#Lanayru Gorge - Boss Rush - 8 Bosses
+#   original item: Hylian Shield
+#   Paths:
+#    - event/
+
+
 Skyview - Chest on Tree Branch:
   original item: Skyview Map
   type: faron, dungeon
@@ -1375,12 +1404,12 @@ Ancient Cistern - After Whip Hooks - Chest:
   type: faron, dungeon
   Paths:
     - stage/D101/r0/l0/TBox/65
-Ancient Cistern - Rupee East Hand:
+Ancient Cistern - Rupee in Left Hand:
   original item: Silver Rupee
   type: faron, dungeon, freestanding
   Paths:
     - stage/D101/r0/l0/Item/92
-Ancient Cistern - Rupee West Hand:
+Ancient Cistern - Rupee in Right Hand:
   original item: Silver Rupee
   type: faron, dungeon, freestanding
   Paths:
@@ -1579,34 +1608,6 @@ Fire Sanctuary - Din's Flame:
     - event/304-MountainD2/5
     - oarc/B201_1/l0
 
-
-Lanayru Gorge - Item on Pillar:
-  original item: Red Rupee
-  type: lanayru, freestanding
-  Paths:
-    - stage/F302/r0/l0/Item/9
-
-Lanayru Gorge - Life Tree Seedling:
-  original item: Life Tree Seedling
-  type: lanayru, digging
-  Paths:
-    - stage/F302/r0/l0/Soil/30
-
-Lanayru Gorge - Thunder Dragon's Reward:
-  original item: Lanayru Song of the Hero Part
-  type: lanayru
-  Paths:
-    - event/404-DesertF3/give item after Healing Thunderdragon
-    - oarc/F302/l0
-
-#Lanayru Gorge - Boss Rush - 4 Bosses
-#   original item: Heart Piece
-#   Paths:
-#    - event/
-#Lanayru Gorge - Boss Rush - 8 Bosses
-#   original item: Hylian Shield
-#   Paths:
-#    - event/
 
 
 #Flooded Faron Woods - Water Dragon's Reward

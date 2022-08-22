@@ -78,8 +78,9 @@ Central:
     Crystal between Wooden Planks: Night
     Crystal on West Cliff: Night
     Crystal on Light Tower: Night
-    Crystal after Waterfall Cave: Night & Waterfall Cave Crystals
-    Crystal in Loftwing Prison: Night & Waterfall Cave Crystals
+    Past Waterfall Cave - Crystal after Waterfall Cave: Night & Waterfall Cave Crystals
+    Past Waterfall Cave - Crystal in Loftwing Prison: Night & Waterfall Cave Crystals
+    Waterfall Island - Crystal: Night & Quick Beetle
     West Cliff Goddess Chest: Faron - Goddess Cube on West Great Tree near Exit
     Parrow's Gift: Sky - Talk to Orielle & Day
     Parrow's Crystals: Sky - Save Orielle & Day
@@ -125,6 +126,7 @@ Central:
     locations:
       First Chest: Nothing
       Second Chest: Nothing
+      Rupee in Crawlspace: Nothing
     exits:
       Upper Exit: Nothing
       Lower Exit: Nothing

@@ -11,6 +11,8 @@ Main:
       Lock Combination Knowledge: Nothing
       Lever to East Part: Nothing
       Lever to Block Waterfall: Whip
+      Rupee in Left Hand: Water Scale
+      Rupee in Right Hand: Water Scale
     exits:
       Main Exit: Nothing
       East Part: Lever to East Part
@@ -56,6 +58,7 @@ Main:
         Lower Lever: Nothing
         Flip First Lilypad: Water Scale & Whip
         Flip Second Lilypad 1: Flip First Lilypad
+        Rupee under Lilypad: Flip Second Lilypad 1 & Water Scale & Impossible  # Can be skipped
         Activate Water Geyser: Flip Second Lilypad 1 & Water Scale
         Flip Second Lilypad 2: Flip First Lilypad & Activate Water Geyser & Whip
       exits:
@@ -81,10 +84,28 @@ Main:
   East Part:
     locations:
       Unlock Combination Lock Door: Can Unlock Combination Lock & Main Room - Lock Combination Knowledge
-      Get Past Underwater Section: Water Scale  # or Lilypad Skip
-      Chest: Unlock Combination Lock Door & Get Past Underwater Section
     exits:
       Main Room: Nothing
+      Second Room: Unlock Combination Lock Door
+
+    Second Room:
+      locations:
+        Flip Side Lilypad: Nothing
+        Flip Main Lilypad: Nothing
+        Rupee in Cubby: Flip Side Lilypad & Water Scale
+        First Rupee in Short Tunnel: Water Scale
+        Second Rupee in Short Tunnel: Water Scale
+        Third Rupee in Short Tunnel: Water Scale
+        Rupee in Main Tunnel: Flip Main Lilypad & Water Scale
+      exits:
+        East Part: Nothing
+        East Part - Chest Ledge: Flip Main Lilypad & Water Scale  # or Lilypad Skip
+
+    Chest Ledge:
+      exits:
+        Main Room: Nothing
+      locations:
+        Chest: Nothing
 
   Basement Gutters:
     locations:
