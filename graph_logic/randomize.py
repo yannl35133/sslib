@@ -98,7 +98,7 @@ class LogicUtils:
 
         banned_intset = 0
         for i in banned_indices:
-            banned_intset += 1 << i
+            banned_intset |= 1 << i
 
         return self._fill_for_test(banned_intset, starting_inventory)
 
@@ -108,14 +108,8 @@ class LogicUtils:
         banned_indices: List[EXTENDED_ITEM] = [],
         starting_inventory: None | Inventory = None,
     ):
-        if starting_inventory is None:
-            starting_inventory = self.starting_inventory
 
-        banned_intset = 0
-        for i in banned_indices:
-            banned_intset += 1 << i
-
-        restricted_full = self._fill_for_test(banned_intset, starting_inventory)
+        restricted_full = self.fill_restricted(banned_indices, starting_inventory)
 
         return restricted_full[test_index]
 

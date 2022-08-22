@@ -41,7 +41,7 @@ def write(
 
     file.write("\n\n")
 
-    # Write way of the hero (100% required) locations
+    # Write spirit of the sword (100% required) locations
     file.write("SotS:\n")
     for item in sots_items[DEMISE]:
         location = placement.items[item]
@@ -126,7 +126,7 @@ def write(
 
     file.write("\n\n\n")
 
-    # Write dungeon/secret cave entrances.
+    # Write dungeon entrances.
     file.write("Entrances:\n")
     for (
         entrance_name,
