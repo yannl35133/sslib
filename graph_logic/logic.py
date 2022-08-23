@@ -128,7 +128,7 @@ class Logic:
         self,
         areas: Areas,
         logic_settings: LogicSettings,
-        placement: Placement | None = None,
+        placement: Placement,
     ):
         self.areas = areas
         self.short_to_full = areas.short_to_full
@@ -138,7 +138,8 @@ class Logic:
         self.opaque = areas.opaque.copy()
         self.entrance_allowed_time_of_day = areas.entrance_allowed_time_of_day
         self.exit_to_area = areas.exit_to_area
-        self.placement = placement.copy() if placement is not None else Placement()
+        self.placement = placement.copy()
+        self.fixed_locations = list(placement.locations)
 
         self.banned = {EXTENDED_ITEM[loc] for loc in logic_settings.banned}
         banned_bit_inv = DNFInventory(EXTENDED_ITEM.banned_bit())
@@ -336,12 +337,15 @@ class Logic:
             placement_limit2, loc = placement_limit.rsplit("\\", 1)
             locations = self.areas[placement_limit2].locations
             assert loc in locations
-            return [EIN(placement_limit2)]
+            if placement_limit in self.fixed_locations:
+                return []
+            return [EIN(placement_limit)]
         else:
             return [
                 loc
                 for loc in self.check_list(placement_limit)
                 if self.full_inventory[EXTENDED_ITEM[loc]]
+                and loc not in self.fixed_locations
             ]
 
     def accessible_exits(self, exit_pool: Iterable[PoolExit]) -> Iterable[PoolExit]:

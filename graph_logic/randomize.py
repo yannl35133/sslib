@@ -5,7 +5,7 @@ import random
 from typing import List  # Only for typing purposes
 
 from options import Options, OPTIONS
-from .backwards_filled_algorithm import BFA, RandomizationSettings, timeit
+from .backwards_filled_algorithm import BFA, RandomizationSettings, UserOutput
 from .logic import Logic, Placement, LogicSettings
 from .logic_input import Areas
 from .logic_expression import DNFInventory, InventoryAtom
@@ -133,10 +133,7 @@ class LogicUtils:
         ].disjunction.items():
             aggregate_ = Inventory(conj_pre)
             for req_item in possibility:
-                ag = timeit(
-                    f"Aggr reqs {req_item}",
-                    lambda: self.aggregate_requirements(req_item),
-                )
+                ag = self.aggregate_requirements(req_item)
                 if ag is False:
                     break
                 aggregate_ |= ag
@@ -381,8 +378,8 @@ class Rando:
 
         self.rando_algo = BFA(logic, self.rng, self.randosettings)
 
-    def randomize(self):
-        self.rando_algo.randomize()
+    def randomize(self, useroutput: UserOutput):
+        self.rando_algo.randomize(useroutput)
         logic = self.logic._logic
 
         # Check
@@ -390,9 +387,7 @@ class Rando:
         logic.fill_inventory()
         DEMISE_BIT = EXTENDED_ITEM[self.short_to_full(DEMISE)]
         if not logic.full_inventory[DEMISE_BIT]:
-            print(f"Could not reach Demise for {self.options.get_permalink()}")
-            print(f"It would require {logic.backup_requirements[DEMISE_BIT]}")
-            exit(1)
+            raise useroutput.GenerationFailed(f"Could not reach Demise")
 
         logic.add_item(EXTENDED_ITEM.banned_bit())
         all_checks = Inventory(
@@ -400,11 +395,9 @@ class Rando:
         )
 
         if not all_checks <= logic.full_inventory:
-            print("Everything is not accessible")
-            print(all_checks.intset - logic.full_inventory.intset)
             i = next(iter(all_checks.intset - logic.full_inventory.intset))
-            print(f"For example, {i} would require {logic.backup_requirements[i]}")
-            exit(1)
+            check = self.areas.full_to_short(EXTENDED_ITEM.get_item_name(i))
+            raise useroutput.GenerationFailed(f"Could not reach check {check}")
 
     def parse_options(self):
         # Initialize location related attributes.
