@@ -358,8 +358,7 @@ class HintDistribution:
         if zone in ALL_DUNGEONS:
             self.sots_dungeon_placed += 1
         self.hinted_locations.append(loc)
-        if "Goddess Chest" in loc:
-            zone = self.areas.checks[loc]["cube_region"]
+        if (zone := self.areas.checks[loc].get("cube_region")) is not None:
             # place cube sots hint & catch specific zones and fit them into their general zone (as seen in the cube progress options)
             if self.options["cube-sots"]:
                 if zone == "Skyview":
@@ -395,8 +394,7 @@ class HintDistribution:
         goal = self.goals[self.goal_index]
         self.goal_index += 1
         self.goal_index %= len(self.goals)
-        if "Goddess Chest" in loc:
-            zone = self.areas.checks[loc]["cube_region"]
+        if (zone := self.areas.checks[loc].get("cube_region")) is not None:
             # place cube sots hint & catch specific zones and fit them into their general zone (as seen in the cube progress options)
             if self.options["cube-sots"]:
                 if zone == "Skyview":
@@ -472,9 +470,9 @@ class HintDistribution:
                 item,
                 self.areas.checks[location].get("text"),
             )
-        zone_override = self.areas.checks[location]["hint_region"]
-        if "Goddess Chest" in location:
-            zone_override = self.areas.checks[location]["cube_region"]
+        if (zone_override := self.areas.checks[location].get("cube_region")) is None:
+            zone_override = self.areas.checks[location]["hint_region"]
+
         return ZoneItemGossipStoneHint(location, item, zone_override)
 
     def _create_random_hint(self):
