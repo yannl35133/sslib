@@ -1,5 +1,6 @@
 import sys
 import os
+from graph_logic.backwards_filled_algorithm import UserOutput
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
@@ -12,6 +13,7 @@ import time
 import json
 
 areas = Areas(graph_requirements, checks, hints, map_exits)
+useroutput = UserOutput(Exception, lambda s: None)
 
 
 def check_logs():
@@ -22,7 +24,7 @@ def check_logs():
         opts.set_option("seed", i)
         rando = Randomizer(areas, opts)
         old_time = time.process_time()
-        rando.rando.randomize()
+        rando.rando.randomize(useroutput)
         print(time.process_time() - old_time)
         prog_spheres = rando.logic.calculate_playthrough_progression_spheres()
         with open(f"testlogs/log_{i:02}.json", "r") as f:
@@ -38,7 +40,7 @@ def write_logs():
         opts.set_option("seed", i)
         rando = Randomizer(areas, opts)
         old_time = time.process_time()
-        rando.rando.randomize()
+        rando.rando.randomize(useroutput)
         print(time.process_time() - old_time)
         prog_spheres = rando.logic.calculate_playthrough_progression_spheres()
         # prog_spheres = rando.calculate_playthrough_progression_spheres()
@@ -53,7 +55,7 @@ def test_woth():
     for i in range(5):
         opts.set_option("seed", i)
         rando = Randomizer(areas, opts)
-        rando.rando.randomize()
+        rando.rando.randomize(useroutput)
         woth_items = {}
         not_woth_prog = {}
         # check for every progress item, if it's hard required
@@ -75,7 +77,7 @@ def test_barren():
     for i in range(5):
         opts.set_option("seed", i)
         rando = Randomizer(areas, opts)
-        rando.rando.randomize()
+        rando.rando.randomize(useroutput)
         rando.logic.get_barren_regions()
         # with open(f'testlogs/log4_{i:02}.json','w') as f:
         #     json.dump(rando.logic.get_barren_regions(), f, indent=2)
