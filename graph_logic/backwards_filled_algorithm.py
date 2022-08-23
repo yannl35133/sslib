@@ -1,7 +1,7 @@
 from __future__ import annotations
 from dataclasses import dataclass
 import random  # Only for typing purposes
-from typing import List, Set
+from typing import List
 
 
 from .constants import *
@@ -16,15 +16,10 @@ class RandomizationSettings:
     duplicable_items: Dict[str, None]
 
 
-from time import time
-
-
-def timeit(name, f):
-    t = time()
-    r = f()
-    t2 = time()
-    print(name, "took", t2 - t, "seconds")
-    return r
+@dataclass
+class UserOutput:
+    GenerationFailed: Callable[[str], Exception]
+    progress_callback: Callable[[str], None]
 
 
 class BFA:
@@ -48,13 +43,16 @@ class BFA:
             if truly_progress_item[EXTENDED_ITEM[item]]
         }
 
-    def randomize(self):
+    def randomize(self, useroutput: UserOutput):
+        self.useroutput = useroutput
+
         # The order of operations is a guess at this point
         progress_list = list(self.progress_items)
         self.rng.shuffle(progress_list)
 
         for item in progress_list:
-            timeit("Place item", lambda: self.place_item(item))
+            self.useroutput.progress_callback("placing progress items...")
+            assert self.place_item(item)
 
         # for i, (e, _) in enumerate(self.logic.pools):
         #     for _ in range(len(e)):
@@ -75,11 +73,11 @@ class BFA:
 
         self.logic.add_item(EXTENDED_ITEM.banned_bit())
         for item in must_be_placed_items:
-            assert timeit("Place nonprogress", lambda: self.place_item(item))
+            self.useroutput.progress_callback("placing nonprogress items...")
+            assert self.place_item(item)
         for item in may_be_placed_items:
-            if not timeit(
-                "Place non-mandatory", lambda: self.place_item(item, force=False)
-            ):
+            self.useroutput.progress_callback("placing nonprogress items...")
+            if not self.place_item(item, force=False):
                 break
         self.fill_with_junk(self.randosettings.duplicable_items)
 
@@ -118,8 +116,10 @@ class BFA:
         if not force or depth > 50:
             return False
         if not accessible_locations:
-            print(f"No location accessible for {item}")
-            exit(1)
+            raise self.useroutput.GenerationFailed(
+                f"no more location accessible for {item}"
+            )
+
         new_item = self.logic.replace_item(self.rng.choice(accessible_locations), item)
         return self.place_item(new_item, depth + 1)
 

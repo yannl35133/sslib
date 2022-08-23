@@ -8,6 +8,7 @@ import hashlib
 import json
 import yaml
 import subprocess
+from graph_logic.backwards_filled_algorithm import UserOutput
 from graph_logic.constants import *
 from graph_logic.inventory import EXTENDED_ITEM
 from graph_logic.logic_input import Areas
@@ -36,6 +37,10 @@ from typing import List, Callable
 
 
 class StartupException(Exception):
+    pass
+
+
+class GenerationFailed(Exception):
     pass
 
 
@@ -156,8 +161,9 @@ class Randomizer(BaseRandomizer):
         self.progress_callback = progress_callback
 
     def randomize(self):
+        useroutput = UserOutput(GenerationFailed, self.progress_callback)
         self.progress_callback("randomizing items...")
-        self.rando.randomize()
+        self.rando.randomize(useroutput)
         del self.rando
         self.hints.do_hints()
         if self.no_logs:
