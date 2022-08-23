@@ -1,5 +1,6 @@
 import sys
 import os
+from graph_logic.backwards_filled_algorithm import UserOutput
 from graph_logic.logic_input import Areas
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
@@ -12,12 +13,13 @@ from yaml_files import graph_requirements, checks, hints, map_exits
 
 def test_roundtrip():
     areas = Areas(graph_requirements, checks, hints, map_exits)
+    useroutput = UserOutput(Exception, lambda s: None)
     opts = Options()
     opts.set_option("dry-run", True)
     for i in range(5):
         opts.set_option("seed", i)
         rando = Randomizer(areas, opts)
-        rando.rando.randomize()
+        rando.rando.randomize(useroutput)
         rando.hints.do_hints()
         plcmt_file = rando.get_placement_file()
         round_tripped_file = PlacementFile()
