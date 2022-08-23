@@ -99,6 +99,22 @@ class Placement:
             self.unplaced_items,
         )
 
+    def add_unplaced_items(self, items: Set[EIN]):
+        for i in items:
+            if i in self.items and self.items[i] != UNPLACED_ITEM:
+                raise ValueError
+
+        return Placement(
+            self.item_placement_limit,
+            self.map_transitions,
+            self.reverse_map_transitions,
+            self.locations,
+            self.items | {k: UNPLACED_ITEM for k in items},
+            self.hints,
+            self.starting_items,
+            self.unplaced_items | items,
+        )
+
 
 @dataclass
 class LogicSettings:

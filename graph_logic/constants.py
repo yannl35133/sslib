@@ -456,6 +456,7 @@ GOAL_CHECKS = {
 
 START = "Start"
 START_ITEM = EIN("Start Item")
+UNPLACED_ITEM = EIN("Unplaced Item")
 SONG_IMPA_CHECK = "Sealed Grounds - Song from Impa"
 
 trick: Callable[[str], str] = lambda s: s + " Trick"
