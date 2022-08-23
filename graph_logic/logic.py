@@ -330,7 +330,9 @@ class Logic:
 
     @cache
     def check_list(self, placement_limit: EIN) -> List[EIN]:
-        return list(self.explore(self.areas.checks, self.areas[placement_limit]))
+        return list(
+            dict.fromkeys(self.explore(self.areas.checks, self.areas[placement_limit]))
+        )
 
     def accessible_checks(self, placement_limit: EIN = EIN("")) -> List[EIN]:
         if placement_limit in self.areas.checks:
