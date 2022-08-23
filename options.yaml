@@ -302,6 +302,7 @@
   bits: 2
   choices:
     - None
+    - Required Dungeons Separately
     - Dungeons
     - Dungeons + Sky Keep
   default: None
