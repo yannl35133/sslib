@@ -15,6 +15,18 @@ from .placements import *
 from .pools import *
 
 
+def shuffle_indices(self, list, indices=None):
+    if indices is None:
+        return self.shuffle(list)
+    else:
+        n = len(indices)
+        for i in range(n - 1):
+            j = self.randint(i, n - 1)
+            ii, jj = indices[i], indices[j]
+            list[ii], list[jj] = list[jj], list[ii]
+        return
+
+
 @dataclass
 class AdditionalInfo:
     required_dungeons: List[str]
@@ -679,19 +691,28 @@ class Rando:
     def randomize_dungeons_trials(self):
         # Do this in a deliberately hacky way, this is not supposed to be how ER works
         der = self.options["randomize-entrances"]
+        dungeons = ALL_DUNGEONS.copy()
         if der == "Dungeons":
-            pool = REGULAR_DUNGEONS.copy()
-            self.rng.shuffle(pool)
-            pool.append(SK)
+            indices = list(range(len(REGULAR_DUNGEONS)))
+            shuffle_indices(self.rng, dungeons, indices=indices)
+
         elif der == "Dungeons + Sky Keep":
-            pool = ALL_DUNGEONS.copy()
-            self.rng.shuffle(pool)
+            self.rng.shuffle(dungeons)
+
+        elif der == "Required Dungeons Separately":
+            req_indices = [ALL_DUNGEONS.index(d) for d in self.required_dungeons]
+            unreq_indices = [ALL_DUNGEONS.index(d) for d in self.unrequired_dungeons]
+            if self.options["skip-skykeep"]:
+                unreq_indices.append(ALL_DUNGEONS.index(SK))
+            else:
+                req_indices.append(ALL_DUNGEONS.index(SK))
+            shuffle_indices(self.rng, dungeons, indices=req_indices)
+            shuffle_indices(self.rng, dungeons, indices=unreq_indices)
         else:
             assert der == "None"
-            pool = ALL_DUNGEONS
 
         self.randomized_dungeon_entrance = {}
-        for i, e in enumerate(pool):
+        for i, e in enumerate(dungeons):
             self.randomized_dungeon_entrance[ALL_DUNGEONS[i]] = e
 
         dungeon_entrances = [
