@@ -396,7 +396,7 @@
   ui: option_sword_dungeon_reward
 
 
-- name: Imp 2
+- name: Skip Imp 2
   command: imp2-skip
   type: boolean
   default: true
