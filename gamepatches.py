@@ -1143,7 +1143,7 @@ class GamePatcher:
         self.add_rando_hash()
         self.add_keysanity()
         self.add_demises()
-        if not self.options["shuffle-trial-objects"] == "None":
+        if not self.placement_file.options["shuffle-trial-objects"] == "None":
             self.shuffle_trial_objects()
 
         self.patcher.set_bzs_patch(self.bzs_patch_func)
@@ -1157,7 +1157,7 @@ class GamePatcher:
         self.do_patch_object_pack()
         self.do_patch_title_screen_logo()
 
-        music_rando(self)
+        music_rando(self.placement_file, self.modified_extract_path)
 
     def filter_option_requirement(self, entry):
         return not (
@@ -1927,7 +1927,8 @@ class GamePatcher:
                 else:
                     params.extend([ITEM_PARAM_MAP[item_type]] * len(objlist))
 
-            self.rando.rng.shuffle(locs)
+            rng = random.Random(self.placement_file.trial_object_seed)
+            rng.shuffle(locs)
             # print(locs)
 
             for ((id, room), (params, actor_name)) in zip(

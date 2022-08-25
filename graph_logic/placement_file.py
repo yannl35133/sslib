@@ -22,6 +22,8 @@ class PlacementFile:
         self.trial_hints = {}
         self.dungeon_connections = {}
         self.trial_connections = {}
+        self.trial_object_seed = -1
+        self.music_rando_seed = -1
 
     def read_from_file(self, f):
         self._read_from_json(json.load(f))
@@ -41,6 +43,8 @@ class PlacementFile:
             "trial-hints": self.trial_hints,
             "entrance-connections": self.dungeon_connections,
             "trial-connections": self.trial_connections,
+            "trial-object-seed": self.trial_object_seed,
+            "music-rando-seed": self.music_rando_seed,
         }
         return json.dumps(retval, indent=2)
 
@@ -56,6 +60,8 @@ class PlacementFile:
         self.trial_hints = jsn["trial-hints"]
         self.dungeon_connections = jsn["entrance-connections"]
         self.trial_connections = jsn["trial-connections"]
+        self.trial_object_seed = jsn["trial-object-seed"]
+        self.music_rando_seed = jsn["music-rando-seed"]
 
     def check_valid(self):
         """checks, if the current state is valid, throws an exception otherwise
