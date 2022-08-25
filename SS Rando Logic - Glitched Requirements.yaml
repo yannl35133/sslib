@@ -1385,7 +1385,7 @@ Can Raise Gate of Time:
 Meets Gate of Time Sword Requirement:
   (Option "got-sword-requirement" Is "Goddess Sword" & Goddess Sword) |
   (Option "got-sword-requirement" Is "Goddess Longsword" & Goddess Longsword) |
-  (Option "got-sword-requirement" Is "Goddess Whitesword" & Goddess White Sword) |
+  (Option "got-sword-requirement" Is "Goddess White Sword" & Goddess White Sword) |
   (Option "got-sword-requirement" Is "Master Sword" & Master Sword) |
   (Option "got-sword-requirement" Is "True Master Sword" & True Master Sword)
 
@@ -1488,7 +1488,7 @@ Faron Woods - Rupee on Hollow Tree Root:
 
 Faron Woods - Rupee on Hollow Tree Branch:
   Can Access Most of Faron Woods & Beetle
-  
+
 ## Deep Woods
 
 Can Access Deep Woods:
@@ -2567,7 +2567,7 @@ Ancient Cistern - Rupee East Hand:
 
 Ancient Cistern - Rupee West Hand:
   Can Access Ancient Cistern & Water Scale
-  
+
 Can Lower Ancient Cistern Statue:
   ((Can Access AC Main Room Vines | Can Access AC Thread) & Whip) | Can Access Ancient Cistern Boss Key Chest
   # From main room or from under, or using the boss key sequence
