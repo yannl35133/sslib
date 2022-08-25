@@ -692,11 +692,11 @@ class Rando:
         # Do this in a deliberately hacky way, this is not supposed to be how ER works
         der = self.options["randomize-entrances"]
         dungeons = ALL_DUNGEONS.copy()
-        if der == "Dungeons":
+        if der == "All Dungeons":
             indices = list(range(len(REGULAR_DUNGEONS)))
             shuffle_indices(self.rng, dungeons, indices=indices)
 
-        elif der == "Dungeons + Sky Keep":
+        elif der == "All Dungeons + Sky Keep":
             self.rng.shuffle(dungeons)
 
         elif der == "Required Dungeons Separately":

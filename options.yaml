@@ -295,8 +295,8 @@
   choices:
     - None
     - Required Dungeons Separately
-    - Dungeons
-    - Dungeons + Sky Keep
+    - All Dungeons
+    - All Dungeons + Sky Keep
   default: None
   help: "Shuffles entrances with one another"
   ui: option_randomize_entrances

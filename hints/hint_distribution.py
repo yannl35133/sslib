@@ -14,7 +14,7 @@ from paths import RANDO_ROOT_PATH
 
 HINTABLE_ITEMS = (
     dict.fromkeys(
-        {
+        [
             CLAWSHOTS,
             EMERALD_TABLET,
             RUBY_TABLET,
@@ -22,7 +22,7 @@ HINTABLE_ITEMS = (
             GODDESS_HARP,
             WATER_SCALE,
             FIRESHIELD_EARRINGS,
-        }
+        ]
     )
     | PROGRESSIVE_BEETLES
     | PROGRESSIVE_SWORDS
@@ -361,6 +361,7 @@ class HintDistribution:
                 elif zone == "Lanayru Gorge":
                     zone = "Lanayru Sand Sea"
                 return CubeSotsGoalGossipStoneHint(loc, item, zone)
+        zone = self.areas.checks[loc]["hint_region"]
         return SotsGoalGossipStoneHint(loc, item, zone)
 
     def _create_goal_hint(self):
@@ -397,6 +398,7 @@ class HintDistribution:
                 elif zone == "Lanayru Gorge":
                     zone = "Lanayru Sand Sea"
                 return CubeSotsGoalGossipStoneHint(loc, item, zone, goal)
+        zone = self.areas.checks[loc]["hint_region"]
         return SotsGoalGossipStoneHint(loc, item, zone, goal)
 
     def _create_barren_hint(self):

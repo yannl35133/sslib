@@ -76,7 +76,7 @@ class BFA:
             self.useroutput.progress_callback("placing nonprogress items...")
             assert self.place_item(item)
         for item in may_be_placed_items:
-            self.useroutput.progress_callback("placing nonprogress items...")
+            self.useroutput.progress_callback("placing erasable items...")
             if not self.place_item(item, force=False):
                 break
         self.fill_with_junk(self.randosettings.duplicable_items)
