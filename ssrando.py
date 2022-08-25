@@ -234,6 +234,7 @@ class Randomizer(BaseRandomizer):
         self.progress_callback("patching done")
 
     def get_placement_file(self):
+        MAX_SEED = 1_000_000
         # temporary placement file stuff
         trial_checks = {
             # (getting it text patch, inventory text line)
@@ -285,6 +286,8 @@ class Randomizer(BaseRandomizer):
         plcmt_file.required_dungeons = self.logic.required_dungeons
         plcmt_file.starting_items = sorted(self.logic.placement.starting_items)
         plcmt_file.version = VERSION
+        plcmt_file.trial_object_seed = self.rng.randint(1, MAX_SEED)
+        plcmt_file.music_rando_seed = self.rng.randint(1, MAX_SEED)
 
         # plcmt_file.check_valid()
 
