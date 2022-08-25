@@ -26,7 +26,7 @@ class Options:
                 self.options[option_name] = option["default"]
 
     @staticmethod
-    def parse_and_validate_option(value: str, option: dict):
+    def parse_and_validate_option(value, option: dict):
         validation_errors = []
         if option["type"] == "boolean":
             value = value.lower() == "true"
