@@ -288,6 +288,7 @@ class LogicUtils:
             self.placement.items[item]
             for item in self.get_useful_items(loc, weak)
             if item not in self.placement.starting_items
+            if item not in self.placement.unplaced_items
             if not self.placement.item_placement_limit.get(item, "")
         ]
 
