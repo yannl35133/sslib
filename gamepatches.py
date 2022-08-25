@@ -1239,7 +1239,7 @@ class GamePatcher:
         GOT_SWORD_MODES = {
             "Goddess Sword": 1,
             "Goddess Longsword": 2,
-            "Goddess Whitesword": 3,
+            "Goddess White Sword": 3,
             "Master Sword": 4,
             "True Master Sword": 5,
         }
