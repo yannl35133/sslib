@@ -46,6 +46,7 @@ class Placement:
             self.items.copy(),
             self.hints.copy(),
             self.starting_items.copy(),
+            self.unplaced_items.copy(),
         )
 
     def __or__(self, other: Placement) -> Placement:
