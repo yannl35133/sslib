@@ -483,10 +483,11 @@ class HintDistribution:
             for loc in self.logic.placement.locations
             if loc not in self.hinted_locations
             and EXTENDED_ITEM[loc] in self.logic.fill_restricted()
-            and loc not in self.logic.fixed_locations
+            and loc not in self.logic.known_locations
             and self.areas.checks[loc]["hint_region"] not in self.barren_hinted_areas
         ]
 
+        assert all_locations_without_hint
         loc = self.rng.choice(all_locations_without_hint)
         self.hinted_locations.append(loc)
         return LocationGossipStoneHint(

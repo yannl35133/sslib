@@ -40,7 +40,7 @@ class AdditionalInfo:
     unrequired_dungeons: List[str]
     randomized_dungeon_entrance: dict[str, str]
     randomized_trial_entrance: dict[str, str]
-    fixed_locations: List[EIN]
+    known_locations: List[EIN]
 
 
 class LogicUtils(Logic):
@@ -61,7 +61,7 @@ class LogicUtils(Logic):
         self.unrequired_dungeons = additional_info.unrequired_dungeons
         self.randomized_dungeon_entrance = additional_info.randomized_dungeon_entrance
         self.randomized_trial_entrance = additional_info.randomized_trial_entrance
-        self.fixed_locations = additional_info.fixed_locations
+        self.known_locations = additional_info.known_locations
 
     def check(self, useroutput):
         self.inventory = Inventory()

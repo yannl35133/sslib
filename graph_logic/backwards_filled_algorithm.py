@@ -6,7 +6,7 @@ from typing import List
 
 from .constants import *
 from .logic import Logic
-from .inventory import EVERYTHING_UNBANNED_BIT, EXTENDED_ITEM, BANNED_BIT
+from .inventory import EVERYTHING_UNBANNED_BIT, EXTENDED_ITEM
 
 
 @dataclass
@@ -53,7 +53,8 @@ class BFA:
 
         for item in progress_list:
             self.useroutput.progress_callback("placing progress items...")
-            assert self.place_item(item)
+            if not self.place_item(item):
+                raise self.useroutput.GenerationFailed(f"could not place {item}")
 
         # for i, (e, _) in enumerate(self.logic.pools):
         #     for _ in range(len(e)):
@@ -72,7 +73,7 @@ class BFA:
         self.rng.shuffle(must_be_placed_items)
         self.rng.shuffle(may_be_placed_items)
 
-        self.logic.add_item(BANNED_BIT)
+        self.logic.enable_banned()
         for item in must_be_placed_items:
             self.useroutput.progress_callback("placing nonprogress items...")
             assert self.place_item(item)

@@ -304,7 +304,7 @@ class Logic:
 
         self.full_inventory = self.inventory
         for k, v in self.placement.locations.items():
-            self.place_item(k, v)
+            self.place_item(k, v, fill=False)
 
         self.fill_inventory_i(monotonic=True)
         pure_usefuls = self.aggregate_requirements(areas.requirements, None)
@@ -338,6 +338,10 @@ class Logic:
         self.free_simplify(self.requirements)
         inventory = self.full_inventory if monotonic else self.inventory
         self.full_inventory = self.fill_inventory(self.requirements, inventory)
+
+    def enable_banned(self):
+        self.fixed_locations = list(self.placement.locations)
+        self.add_item(BANNED_BIT)
 
     @staticmethod
     def explore(checks, area: Area) -> Iterable[EIN]:
@@ -425,31 +429,7 @@ class Logic:
                 req = self.ban_if(bit, req)
                 requirements[bit] |= req
 
-    def _place_item(self, location: EIN, item: EIN, requirements=None):
-        req = DNFInventory(location)
-        if item in self.placement.item_placement_limit and not location.startswith(
-            self.placement.item_placement_limit[item]
-        ):
-            raise ValueError(
-                "This item cannot be placed in this area, "
-                f"it must be placed in {self.placement.item_placement_limit[item]}"
-            )
-        if item in EXTENDED_ITEM:
-            item_bit = EXTENDED_ITEM[item]
-            if requirements is not None:
-                req = self.ban_if(item_bit, req)
-                requirements[item_bit] = req
-            else:
-                req = self.ban_if(item_bit, req)
-                self.requirements[item_bit] = req
-                self.backup_requirements[item_bit] = req
-                self.opaque[item_bit] = False
-                self.fill_inventory_i(monotonic=True)
-            self.placement.items[item] = location
-
-        self.placement.locations[location] = item
-
-    def place_item(self, location: EIN, item: EIN):
+    def place_item(self, location: EIN, item: EIN, fill=True):
         if (
             location in self.placement.locations
             and self.placement.locations[location] != item
@@ -462,7 +442,26 @@ class Logic:
             and item not in DUPLICABLE_COUNTERPROGRESS_ITEMS
         ):
             raise ValueError(f"Item {item} is already placed")
-        self._place_item(location, item)
+
+        req = DNFInventory(location)
+        if item in self.placement.item_placement_limit and not location.startswith(
+            self.placement.item_placement_limit[item]
+        ):
+            raise ValueError(
+                "This item cannot be placed in this area, "
+                f"it must be placed in {self.placement.item_placement_limit[item]}"
+            )
+        if item in EXTENDED_ITEM:
+            item_bit = EXTENDED_ITEM[item]
+            req = self.ban_if(item_bit, req)
+            self.requirements[item_bit] = req
+            self.backup_requirements[item_bit] = req
+            self.opaque[item_bit] = False
+            if fill:
+                self.fill_inventory_i(monotonic=True)
+            self.placement.items[item] = location
+
+        self.placement.locations[location] = item
         return True
 
     def replace_item(self, location: EIN, item: EIN):
