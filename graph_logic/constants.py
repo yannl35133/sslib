@@ -140,6 +140,9 @@ LANAYRU_SOTH_PART = EIN("Lanayru Song of the Hero Part")
 SPIRAL_CHARGE = EIN("Spiral Charge")
 LIFE_TREE_SEEDLING = EIN("Life Tree Seedling")
 LIFE_TREE_FRUIT = EIN("Life Tree Fruit")
+TRIFORCE_OF_COURAGE = EIN("Triforce of Courage")
+TRIFORCE_OF_WISDOM = EIN("Triforce of Wisdom")
+TRIFORCE_OF_POWER = EIN("Triforce of Power")
 
 GRATITUDE_CRYSTAL_PACK = "Gratitude Crystal Pack"
 GRATITUDE_CRYSTAL = "Gratitude Crystal"
@@ -295,6 +298,9 @@ PROGRESS_ITEMS = (
             SPIRAL_CHARGE,
             # LIFE_TREE_SEEDLING,
             LIFE_TREE_FRUIT,
+            TRIFORCE_OF_COURAGE,
+            TRIFORCE_OF_WISDOM,
+            TRIFORCE_OF_POWER,
         ]
     )
     | GRATITUDE_CRYSTAL_PACKS
@@ -425,7 +431,6 @@ DUNGEON_FINAL_CHECK = {
     AC: AC + sep + "Farore's Flame",
     SSH: SSH + sep + "Nayru's Flame",
     FS: FS + sep + "Din's Flame",
-    SK: SK + sep + "Complete Triforce",
 }
 
 GHIRAHIM_I = "Ghirahim 1"
@@ -463,6 +468,7 @@ START = "Start"
 START_ITEM = EIN("Start Item")
 UNPLACED_ITEM = EIN("Unplaced Item")
 SONG_IMPA_CHECK = "Sealed Grounds - Song from Impa"
+COMPLETE_TRIFORCE = "Complete Triforce"
 
 trick: Callable[[str], str] = lambda s: s + " Trick"
 
