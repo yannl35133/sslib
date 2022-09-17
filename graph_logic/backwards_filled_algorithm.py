@@ -6,13 +6,13 @@ from typing import List
 
 from .constants import *
 from .logic import Logic
-from .inventory import EXTENDED_ITEM
+from .inventory import EVERYTHING_UNBANNED_BIT, EXTENDED_ITEM, BANNED_BIT
 
 
 @dataclass
 class RandomizationSettings:
     must_be_placed_items: Dict[EXTENDED_ITEM_NAME, None]
-    may_be_placed_items: List[EXTENDED_ITEM_NAME]
+    may_be_placed_items: Dict[EXTENDED_ITEM_NAME, None]
     duplicable_items: Dict[str, None]
 
 
@@ -31,8 +31,9 @@ class BFA:
         self.rng = rng
         self.randosettings = randosettings
 
-        truly_progress_item = self.logic.aggregate_required_items(
-            self.logic.requirements, self.logic.inventory
+        full_inventory = Logic.get_everything_unbanned(self.logic.requirements)
+        truly_progress_item = Logic.aggregate_requirements(
+            self.logic.requirements, full_inventory, EVERYTHING_UNBANNED_BIT
         )
 
         # Initialize item related attributes.
@@ -71,7 +72,7 @@ class BFA:
         self.rng.shuffle(must_be_placed_items)
         self.rng.shuffle(may_be_placed_items)
 
-        self.logic.add_item(EXTENDED_ITEM.banned_bit())
+        self.logic.add_item(BANNED_BIT)
         for item in must_be_placed_items:
             self.useroutput.progress_callback("placing nonprogress items...")
             assert self.place_item(item)

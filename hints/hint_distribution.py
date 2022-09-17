@@ -483,7 +483,7 @@ class HintDistribution:
             for loc in self.logic.placement.locations
             if loc not in self.hinted_locations
             and EXTENDED_ITEM[loc] in self.logic.fill_restricted()
-            and loc not in self.logic.initial_placement.locations
+            and loc not in self.logic.fixed_locations
             and self.areas.checks[loc]["hint_region"] not in self.barren_hinted_areas
         ]
 

@@ -7,7 +7,8 @@ from .constants import *
 
 def extended_item_generator():
     yield from ["Day", "Night"]  # Dummy events, will be removed from the requirements
-    yield from ["Banned", "Everything"]  # Technical dummy events
+    yield from ["Banned", EVERYTHING, "Everything unbanned", "Hint bypass"]
+    # Technical dummy events
 
     yield from sorted(INVENTORY_ITEMS)
 
@@ -32,18 +33,6 @@ class MetaContainer(type):
 
 class EXTENDED_ITEM(int, metaclass=MetaContainer):
     items_list: List[EXTENDED_ITEM_NAME] = list(extended_item_generator())  # type: ignore
-
-    @classmethod
-    def day_bit(cls):
-        return cls["Day"]
-
-    @classmethod
-    def night_bit(cls):
-        return cls["Night"]
-
-    @classmethod
-    def banned_bit(cls):
-        return cls["Banned"]
 
     @classmethod
     def items(cls):
@@ -209,3 +198,12 @@ class Inventory:
                 if self[item]
             )
         )
+
+
+EMPTY_INV = Inventory()
+DAY_BIT: EXTENDED_ITEM = EXTENDED_ITEM["Day"]
+NIGHT_BIT: EXTENDED_ITEM = EXTENDED_ITEM["Night"]
+BANNED_BIT: EXTENDED_ITEM = EXTENDED_ITEM["Banned"]
+EVERYTHING_BIT: EXTENDED_ITEM = EXTENDED_ITEM["Everything"]
+EVERYTHING_UNBANNED_BIT: EXTENDED_ITEM = EXTENDED_ITEM["Everything unbanned"]
+HINT_BYPASS_BIT: EXTENDED_ITEM = EXTENDED_ITEM["Hint bypass"]

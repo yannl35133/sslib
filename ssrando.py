@@ -106,8 +106,6 @@ class Randomizer(BaseRandomizer):
             for _ in range(100):
                 self.rng.random()
         self.rando = Rando(self.areas, self.options, self.rng)
-        self.logic = self.rando.logic
-        self.hints = Hints(self.options, self.rng, self.areas, self.logic)
 
         self.dry_run = bool(self.options["dry-run"])
         self.banned_types = self.options["banned-types"]
@@ -164,7 +162,10 @@ class Randomizer(BaseRandomizer):
         useroutput = UserOutput(GenerationFailed, self.progress_callback)
         self.progress_callback("randomizing items...")
         self.rando.randomize(useroutput)
+        self.logic = self.rando.extract_hint_logic()
         del self.rando
+        self.logic.check(useroutput)
+        self.hints = Hints(self.options, self.rng, self.areas, self.logic)
         self.hints.do_hints()
         if self.no_logs:
             self.progress_callback("writing anti spoiler log...")
