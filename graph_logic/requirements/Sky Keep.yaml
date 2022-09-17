@@ -1,10 +1,5 @@
 allowed-time-of-day: DayOnly
 hint-region: Sky Keep
-macros:
-  Complete Triforce:
-    Ancient Cistern Room - Triforce of Courage &
-    Fire Sanctuary Room - Triforce of Power &
-    Sandship Room - Triforce of Wisdom
 
 Main:
   First Room:

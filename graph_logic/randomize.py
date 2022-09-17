@@ -390,7 +390,10 @@ class Rando:
                 for dungeon in self.unrequired_dungeons
             )
 
-            if self.options["skip-skykeep"]:
+            if (
+                not self.options["triforce-required"]
+                or self.options["triforce-shuffle"] == "Anywhere"
+            ):
                 self.banned.append(self.norm(entrance_of_exit(DUNGEON_MAIN_EXITS[SK])))
 
         banned_types = set(self.options["banned-types"]) - {"medium", "expensive"}
@@ -412,8 +415,8 @@ class Rando:
             PROGRESSIVE_SWORD, SWORD_COUNT[self.options["got-sword-requirement"]]
         )
         horde_door_requirement = (
-            DNFInventory(self.short_to_full(DUNGEON_FINAL_CHECK[SK]))
-            if not self.options["skip-skykeep"]
+            DNFInventory(self.short_to_full(COMPLETE_TRIFORCE))
+            if self.options["triforce-required"]
             else DNFInventory(True)
         )
 
@@ -544,6 +547,7 @@ class Rando:
         small_key_mode = self.options["small-key-mode"]
         boss_key_mode = self.options["boss-key-mode"]
         map_mode = self.options["map-mode"]
+        triforce_mode = self.options["triforce-shuffle"]
         # remove small keys from the dungeon pool if small key sanity is enabled
         if small_key_mode == "Vanilla":
             self.placement |= VANILLA_SMALL_KEYS_PLACEMENT(self.norm, self.areas.checks)
@@ -583,6 +587,13 @@ class Rando:
         elif rupeesanity == "All":
             pass
 
+        if triforce_mode == "Vanilla":
+            self.placement |= VANILLA_TRIFORCES_PLACEMENT(self.norm, self.areas.checks)
+        elif triforce_mode == "Sky Keep":
+            self.placement |= TRIFORCES_RESTRICTION(self.norm)
+        elif triforce_mode == "Anywhere":
+            pass
+
     #
     #
     # Retro-compatibility
@@ -620,7 +631,10 @@ class Rando:
         elif der == "Required Dungeons Separately":
             req_indices = [ALL_DUNGEONS.index(d) for d in self.required_dungeons]
             unreq_indices = [ALL_DUNGEONS.index(d) for d in self.unrequired_dungeons]
-            if self.options["skip-skykeep"]:
+            if (
+                not self.options["triforce-required"]
+                or self.options["triforce-shuffle"] == "Anywhere"
+            ):
                 unreq_indices.append(ALL_DUNGEONS.index(SK))
             else:
                 req_indices.append(ALL_DUNGEONS.index(SK))

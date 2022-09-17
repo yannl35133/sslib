@@ -156,6 +156,17 @@ DUNGEON_MAPS_RESTRICTED_RESTRICTION = norm_values(
     }
 )
 
+TRIFORCES_CHECKS = [
+    "Sky Keep - Triforce of Courage",
+    "Sky Keep - Triforce of Wisdom",
+    "Sky Keep - Triforce of Power",
+]
+VANILLA_TRIFORCES_PLACEMENT = norm_vanilla(TRIFORCES_CHECKS)
+
+TRIFORCES_RESTRICTION = norm_values(
+    {TRIFORCE_OF_COURAGE: SK, TRIFORCE_OF_WISDOM: SK, TRIFORCE_OF_COURAGE: SK}
+)
+
 
 VANILLA_RUPEES = norm_vanilla(RUPEE_CHECKS)
 VANILLA_QUICK_BEETLE_RUPEES = norm_vanilla(QUICK_BEETLE_CHECKS)
