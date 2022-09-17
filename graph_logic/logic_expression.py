@@ -6,7 +6,7 @@ from abc import ABC
 import re
 from itertools import product, combinations
 
-from .inventory import EXTENDED_ITEM, Inventory
+from .inventory import EXTENDED_ITEM, Inventory, EMPTY_INV, DAY_BIT, NIGHT_BIT
 from .constants import EXTENDED_ITEM_NAME, number, ITEM_COUNTS, RAW_ITEM_NAMES
 
 
@@ -20,9 +20,6 @@ class LogicExpression(ABC):
     @staticmethod
     def parse(text: str) -> LogicExpression:
         raise NotImplementedError
-
-
-empty_inv = Inventory()
 
 
 class DNFInventory(LogicExpression):
@@ -48,7 +45,7 @@ class DNFInventory(LogicExpression):
             self.disjunction = {k: k for k in v}
         elif isinstance(v, bool):
             if v:
-                self.disjunction = {empty_inv: empty_inv}
+                self.disjunction = {EMPTY_INV: EMPTY_INV}
             else:
                 self.disjunction = {}
         elif isinstance(v, Inventory):
@@ -112,20 +109,12 @@ class DNFInventory(LogicExpression):
 
     def day_only(self):
         return DNFInventory(
-            {
-                inv.remove(EXTENDED_ITEM.day_bit())
-                for inv in self.disjunction
-                if not inv[EXTENDED_ITEM.night_bit()]
-            }
+            {inv.remove(DAY_BIT) for inv in self.disjunction if not inv[NIGHT_BIT]}
         )
 
     def night_only(self):
         return DNFInventory(
-            {
-                inv.remove(EXTENDED_ITEM.night_bit())
-                for inv in self.disjunction
-                if not inv[EXTENDED_ITEM.day_bit()]
-            }
+            {inv.remove(NIGHT_BIT) for inv in self.disjunction if not inv[DAY_BIT]}
         )
 
 
@@ -174,7 +163,7 @@ class AndCombination(LogicExpression):
         new_req = DNFInventory()
         for conjunction_tuple in product(*disjunctions):
             conj, conj_pre = reduce(
-                and_reducer, conjunction_tuple, (empty_inv, empty_inv)
+                and_reducer, conjunction_tuple, (EMPTY_INV, EMPTY_INV)
             )
             new_req |= DNFInventory(({conj: conj_pre}))
         return new_req

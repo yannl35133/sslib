@@ -6,6 +6,8 @@ EIN = EXTENDED_ITEM_NAME
 
 sep = " - "
 
+EVERYTHING = EIN("Everything")
+
 # Logic options, runtime requirements
 
 OPEN_THUNDERHEAD_OPTION = EIN("Open Thunderhead option")
@@ -223,12 +225,13 @@ HEART_PIECE = "Heart Piece"
 HEART_CONTAINER = "Heart Container"
 LIFE_MEDAL = "Life Medal"
 
-HEART_MEDALS = group("Heart Medal", 2)
-RUPEE_MEDALS = group("Rupee Medal", 2)
-HEART_PIECES = group("Heart Piece", 24)
-HEART_CONTAINERS = group("Heart Container", 6)
-LIFE_MEDALS = group("Life Medal", 2)
+HEART_MEDALS = group(HEART_MEDAL, 2)
+RUPEE_MEDALS = group(RUPEE_MEDAL, 2)
+HEART_PIECES = group(HEART_PIECE, 24)
+HEART_CONTAINERS = group(HEART_CONTAINER, 6)
+LIFE_MEDALS = group(LIFE_MEDAL, 2)
 
+GREEN_RUPEE = "Green Rupee"
 BLUE_RUPEE = "Blue Rupee"
 RED_RUPEE = "Red Rupee"
 SILVER_RUPEE = "Silver Rupee"
@@ -243,10 +246,11 @@ DUSK_RELIC = "Dusk Relic"
 TUMBLEWEED = "Tumbleweed"
 FIVE_BOMBS = "5 Bombs"
 
-BLUE_RUPEES = group(BLUE_RUPEE, 4)
-RED_RUPEES = group(RED_RUPEE, 25)
-SILVER_RUPEES = group(SILVER_RUPEE, 12)
-GOLD_RUPEES = group(GOLD_RUPEE, 10)
+GREEN_RUPEES = group(GREEN_RUPEE, 3)
+BLUE_RUPEES = group(BLUE_RUPEE, 11)
+RED_RUPEES = group(RED_RUPEE, 42)
+SILVER_RUPEES = group(SILVER_RUPEE, 22)
+GOLD_RUPEES = group(GOLD_RUPEE, 11)
 SEMI_RARE_TREASURES = group(SEMI_RARE_TREASURE, 10)
 GOLDEN_SKULLS = group(GOLDEN_SKULL, 1)
 RARE_TREASURES = group(RARE_TREASURE, 12)
@@ -327,7 +331,8 @@ NONPROGRESS_ITEMS = (
 )
 
 CONSUMABLE_ITEMS = (
-    BLUE_RUPEES
+    GREEN_RUPEES
+    | BLUE_RUPEES
     | RED_RUPEES
     | SILVER_RUPEES
     | GOLD_RUPEES

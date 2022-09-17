@@ -22,17 +22,16 @@ SINGLE_CRYSTAL_CHECKS = [
 ]
 
 
-def SINGLE_CRYSTAL_PLACEMENT(norm: Callable[[str], EIN]):
-    return Placement(
-        items={
-            crystal: norm(loc)
-            for loc, crystal in zip(SINGLE_CRYSTAL_CHECKS, GRATITUDE_CRYSTALS)
-        },
-        locations={
-            norm(loc): crystal
-            for loc, crystal in zip(SINGLE_CRYSTAL_CHECKS, GRATITUDE_CRYSTALS)
-        },
-    )
+def norm_vanilla(list: List[str]):
+    def norm_keys(norm: Callable[[str], EIN], checks: Dict[EIN, Any]) -> Placement:
+        list2 = map(norm, list)
+        dict = {k: EIN(checks[k]["original item"]) for k in list2}
+        return Placement(locations=dict, items={v: k for k, v in dict.items()})
+
+    return norm_keys
+
+
+SINGLE_CRYSTAL_PLACEMENT = norm_vanilla(SINGLE_CRYSTAL_CHECKS)
 
 
 def norm_keys(dict: Dict[str, EIN]):
@@ -53,35 +52,35 @@ def norm_values(dict: Dict[EIN, str]):
 
 HARDCODED_PLACEMENT = norm_keys({})
 
-VANILLA_BEEDLE = {
-    "Beedle's Shop - 300 Rupee Item": number(PROGRESSIVE_POUCH, 1),
-    "Beedle's Shop - 600 Rupee Item": number(PROGRESSIVE_POUCH, 2),
-    "Beedle's Shop - 1200 Rupee Item": number(PROGRESSIVE_POUCH, 3),
-    "Beedle's Shop - 800 Rupee Item": number(LIFE_MEDAL, 0),
-    "Beedle's Shop - 1600 Rupee Item": number(HEART_PIECE, 0),
-    "Beedle's Shop - First 100 Rupee Item": number(EXTRA_WALLET, 0),
-    "Beedle's Shop - Second 100 Rupee Item": number(EXTRA_WALLET, 1),
-    "Beedle's Shop - Third 100 Rupee Item": number(EXTRA_WALLET, 2),
-    "Beedle's Shop - 50 Rupee Item": BUG_NET,
-    "Beedle's Shop - 1000 Rupee Item": BUG_MEDAL,
-}
-VANILLA_BEEDLE_PLACEMENT = norm_keys(VANILLA_BEEDLE)
+BEEDLE_CHECKS = [
+    "Beedle's Shop - 300 Rupee Item",
+    "Beedle's Shop - 600 Rupee Item",
+    "Beedle's Shop - 1200 Rupee Item",
+    "Beedle's Shop - 800 Rupee Item",
+    "Beedle's Shop - 1600 Rupee Item",
+    "Beedle's Shop - First 100 Rupee Item",
+    "Beedle's Shop - Second 100 Rupee Item",
+    "Beedle's Shop - Third 100 Rupee Item",
+    "Beedle's Shop - 50 Rupee Item",
+    "Beedle's Shop - 1000 Rupee Item",
+]
+VANILLA_BEEDLE_PLACEMENT = norm_vanilla(BEEDLE_CHECKS)
 
-VANILLA_SMALL_KEYS = {
-    "Skyview - Chest behind Two Eyes": number(SV_SMALL_KEY, 0),
-    "Skyview - Chest behind Three Eyes": number(SV_SMALL_KEY, 1),
-    "Lanayru Mining Facility - Big Hub - Chest": number(LMF_SMALL_KEY, 0),
-    "Ancient Cistern - East Part - Chest": number(AC_SMALL_KEY, 0),
-    "Ancient Cistern - Basement Gutters - Bokoblin": number(AC_SMALL_KEY, 1),
-    "Sandship - Chest behind Combination Lock": number(SSH_SMALL_KEY, 0),
-    "Sandship - Brig Prison - Robot's Reward": number(SSH_SMALL_KEY, 1),
-    "Fire Sanctuary - First Room - Chest": number(FS_SMALL_KEY, 0),
-    "Fire Sanctuary - First Trapped Mogma Room - Chest": number(FS_SMALL_KEY, 1),
-    "Fire Sanctuary - Second Trapped Mogma Room - Chest": number(FS_SMALL_KEY, 2),
-    "Sky Keep - Chest after Dreadfuse": number(SK_SMALL_KEY, 0),
-    "Lanayru Caves - Golo's Gift": CAVES_KEY,
-}
-VANILLA_SMALL_KEYS_PLACEMENT = norm_keys(VANILLA_SMALL_KEYS)
+SMALL_KEY_CHECKS = [
+    "Skyview - Chest behind Two Eyes",
+    "Skyview - Chest behind Three Eyes",
+    "Lanayru Mining Facility - Big Hub - Chest",
+    "Ancient Cistern - East Part - Chest",
+    "Ancient Cistern - Basement Gutters - Bokoblin",
+    "Sandship - Chest behind Combination Lock",
+    "Sandship - Brig Prison - Robot's Reward",
+    "Fire Sanctuary - First Room - Chest",
+    "Fire Sanctuary - First Trapped Mogma Room - Chest",
+    "Fire Sanctuary - Second Trapped Mogma Room - Chest",
+    "Sky Keep - Chest after Dreadfuse",
+    "Lanayru Caves - Golo's Gift",
+]
+VANILLA_SMALL_KEYS_PLACEMENT = norm_vanilla(SMALL_KEY_CHECKS)
 
 DUNGEON_SMALL_KEYS_RESTRICTION = norm_values(
     {
@@ -102,15 +101,15 @@ DUNGEON_SMALL_KEYS_RESTRICTION = norm_values(
 CAVES_KEY_RESTRICTION = norm_values({CAVES_KEY: "Lanayru - Caves"})
 
 
-VANILLA_BOSS_KEYS = {
-    "Skyview - Boss Key Chest": SV_BOSS_KEY,
-    "Earth Temple - Boss Key Chest": ET_BOSS_KEY,
-    "Lanayru Mining Facility - Boss Key Chest": LMF_BOSS_KEY,
-    "Ancient Cistern - Boss Key Chest": AC_BOSS_KEY,
-    "Sandship - Boss Key Chest": SSH_BOSS_KEY,
-    "Fire Sanctuary - Boss Key Chest": FS_BOSS_KEY,
-}
-VANILLA_BOSS_KEYS_PLACEMENT = norm_keys(VANILLA_BOSS_KEYS)
+BOSS_KEY_CHECKS = [
+    "Skyview - Boss Key Chest",
+    "Earth Temple - Boss Key Chest",
+    "Lanayru Mining Facility - Boss Key Chest",
+    "Ancient Cistern - Boss Key Chest",
+    "Sandship - Boss Key Chest",
+    "Fire Sanctuary - Boss Key Chest",
+]
+VANILLA_BOSS_KEYS_PLACEMENT = norm_vanilla(BOSS_KEY_CHECKS)
 
 DUNGEON_BOSS_KEYS_RESTRICTION = norm_values(
     {
@@ -123,16 +122,16 @@ DUNGEON_BOSS_KEYS_RESTRICTION = norm_values(
     }
 )
 
-VANILLA_MAPS = {
-    "Skyview - Chest on Tree Branch": SV_MAP,
-    "Earth Temple - West Room - Chest": ET_MAP,
-    "Lanayru Mining Facility - Armos Fight Room - Chest": LMF_MAP,
-    "Ancient Cistern - After Whip Hooks - Chest": AC_MAP,
-    "Sandship - Chest before 4-Door Corridor": SSH_MAP,
-    "Fire Sanctuary - Second Trapped Mogma Room - Reward": FS_MAP,
-    "Sky Keep - First Chest": SK_MAP,
-}
-VANILLA_MAPS_PLACEMENT = norm_keys(VANILLA_MAPS)
+MAP_CHECKS = [
+    "Skyview - Chest on Tree Branch",
+    "Earth Temple - West Room - Chest",
+    "Lanayru Mining Facility - Armos Fight Room - Chest",
+    "Ancient Cistern - After Whip Hooks - Chest",
+    "Sandship - Chest before 4-Door Corridor",
+    "Fire Sanctuary - Second Trapped Mogma Room - Reward",
+    "Sky Keep - First Chest",
+]
+VANILLA_MAPS_PLACEMENT = norm_vanilla(MAP_CHECKS)
 
 DUNGEON_MAPS_RESTRICTION = norm_values(
     {
@@ -156,15 +155,6 @@ DUNGEON_MAPS_RESTRICTED_RESTRICTION = norm_values(
         SK_MAP: SK + sep + "Main",
     }
 )
-
-
-def norm_vanilla(list: List[str]):
-    def norm_keys(norm: Callable[[str], EIN], checks: Dict[EIN, Any]) -> Placement:
-        list2 = map(norm, list)
-        dict = {k: EIN(checks[k]["original item"]) for k in list2}
-        return Placement(locations=dict, items={v: k for k, v in dict.items()})
-
-    return norm_keys
 
 
 VANILLA_RUPEES = norm_vanilla(RUPEE_CHECKS)

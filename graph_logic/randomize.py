@@ -9,7 +9,14 @@ from .backwards_filled_algorithm import BFA, RandomizationSettings, UserOutput
 from .logic import Logic, Placement, LogicSettings
 from .logic_input import Areas
 from .logic_expression import DNFInventory, InventoryAtom
-from .inventory import Inventory, EXTENDED_ITEM
+from .inventory import (
+    Inventory,
+    EXTENDED_ITEM,
+    EMPTY_INV,
+    EVERYTHING_BIT,
+    EVERYTHING_UNBANNED_BIT,
+    BANNED_BIT,
+)
 from .constants import *
 from .placements import *
 from .pools import *
@@ -33,72 +40,52 @@ class AdditionalInfo:
     unrequired_dungeons: List[str]
     randomized_dungeon_entrance: dict[str, str]
     randomized_trial_entrance: dict[str, str]
-    initial_placement: Placement
+    fixed_locations: List[EIN]
 
 
-class LogicUtils:
+class LogicUtils(Logic):
     def __init__(
         self,
         areas: Areas,
-        logic: Logic,
+        placement: Placement,
         additional_info: AdditionalInfo,
         runtime_requirements,
         banned,
     ):
-
-        self._logic = logic
-        self.areas = areas
-        self.short_to_full = logic.short_to_full
-        self.full_to_short = logic.full_to_short
-        self.placement = logic.placement
+        starting_inventory = Inventory(
+            {EXTENDED_ITEM[itemname] for itemname in placement.starting_items}
+        )
+        logic_settings = LogicSettings(starting_inventory, runtime_requirements, banned)
+        super().__init__(areas, logic_settings, placement, optim=False)
         self.required_dungeons = additional_info.required_dungeons
         self.unrequired_dungeons = additional_info.unrequired_dungeons
-        self.starting_inventory = Inventory(
-            {EXTENDED_ITEM[item] for item in self.placement.starting_items}
-        )
         self.randomized_dungeon_entrance = additional_info.randomized_dungeon_entrance
         self.randomized_trial_entrance = additional_info.randomized_trial_entrance
-        self.initial_placement = additional_info.initial_placement
-        self.runtime_requirements = runtime_requirements
-        self.banned = banned
+        self.fixed_locations = additional_info.fixed_locations
 
-    @cache
-    def requirements(self):
-        assert len(self.placement.locations) == len(self.areas.checks)
-        requirements = self.areas.requirements.copy()
-        opaque = self.areas.opaque.copy()
-        for loc, req in self.runtime_requirements.items():
-            requirements[EXTENDED_ITEM[loc]] |= req
-            opaque[EXTENDED_ITEM[loc]] = False
+    def check(self, useroutput):
+        self.inventory = Inventory()
+        self.fill_inventory(self.requirements, EMPTY_INV)
+        DEMISE_BIT = EXTENDED_ITEM[self.short_to_full(DEMISE)]
+        if not self.full_inventory[DEMISE_BIT]:
+            raise useroutput.GenerationFailed(f"Could not reach Demise")
 
-        for k in self.starting_inventory:
-            requirements[k] = DNFInventory(True)
-            opaque[k] = False
+        self.add_item(BANNED_BIT)
 
-        banned_bit_inv = DNFInventory(EXTENDED_ITEM.banned_bit())
-
-        for it in self.banned:
-            requirements[EXTENDED_ITEM[it]] &= banned_bit_inv
-
-        self._logic._simplify_free(requirements)
-        self._logic._shallow_simplify(requirements, opaque)
-
-        for exit, entrance in self.placement.map_transitions.items():
-            self._logic._link_connection(exit, entrance, requirements=requirements)
-
-        for k, v in self.placement.locations.items():
-            self._logic._place_item(k, v, requirements)
-
-        return requirements
+        if not self.full_inventory[EVERYTHING_BIT]:
+            (everything_req,) = self.requirements[EVERYTHING_BIT].disjunction
+            i = next(iter(everything_req.intset - self.full_inventory.intset))
+            check = self.areas.full_to_short(EXTENDED_ITEM.get_item_name(i))
+            raise useroutput.GenerationFailed(f"Could not reach check {check}")
 
     @cache
     def _fill_for_test(self, banned_intset, inventory):
-        custom_requirements = self.requirements().copy()
+        custom_requirements = self.requirements.copy()
         for index, e in enumerate(reversed(bin(banned_intset))):
             if e == "1":
                 custom_requirements[index] = DNFInventory(False)
 
-        return Logic._fill_inventory(custom_requirements, inventory)
+        return Logic.fill_inventory(custom_requirements, inventory)
 
     def fill_restricted(
         self,
@@ -106,7 +93,7 @@ class LogicUtils:
         starting_inventory: None | Inventory = None,
     ):
         if starting_inventory is None:
-            starting_inventory = self.starting_inventory
+            starting_inventory = self.inventory
 
         banned_intset = 0
         for i in banned_indices:
@@ -125,11 +112,11 @@ class LogicUtils:
 
         return restricted_full[test_index]
 
-    def aggregate_requirements(self, item):
-        if not hasattr(self, "aggregated_reqs"):
+    def congregate_requirements(self, item):
+        if not hasattr(self, "congregated_reqs"):
             self._isvisited_agg = set()
             self.aggregated_reqs: List[None | bool | Inventory] = [
-                None for _ in self.requirements()
+                None for _ in self.requirements
             ]
 
         if item in self._isvisited_agg:
@@ -140,12 +127,10 @@ class LogicUtils:
 
         self._isvisited_agg.add(item)
         aggregate = False
-        for (possibility, (_, conj_pre)) in self._logic.requirements[
-            item
-        ].disjunction.items():
+        for (possibility, (_, conj_pre)) in self.requirements[item].disjunction.items():
             aggregate_ = Inventory(conj_pre)
             for req_item in possibility:
-                ag = self.aggregate_requirements(req_item)
+                ag = self.congregate_requirements(req_item)
                 if ag is False:
                     break
                 aggregate_ |= ag
@@ -172,7 +157,7 @@ class LogicUtils:
             and not self.restricted_test(index, [EXTENDED_ITEM[item]])
         ]
 
-        # requireds: Inventory = self.aggregate_requirements(index)  # type: ignore
+        # requireds: Inventory = self.congregate_requirements(index)  # type: ignore
         # return [
         # self.full_to_short(EXTENDED_ITEM[i])
         # for i in requireds.intset
@@ -192,85 +177,14 @@ class LogicUtils:
             hint_region = self.areas.checks[sots_loc]["hint_region"]
             yield (hint_region, sots_loc, item)
 
-    def aggregate_useful_items(self, item):
-        if hasattr(self, "aggregated_usefuls"):
-            return self.aggregated_usefuls[item]
-
-        self.aggregated_usefuls: Dict[EXTENDED_ITEM, Inventory] = {
-            item: self.requirements()[item].aggregate() for item in EXTENDED_ITEM
-        }
-
-        just_added = {k: v.intset for k, v in self.aggregated_usefuls.items()}
-
-        keep_going = True
-        while keep_going:
-            keep_going = False
-            for i in EXTENDED_ITEM:
-                new_just_added = set()
-                for item in just_added[i]:
-                    new_just_added |= (
-                        self.aggregated_usefuls[item].intset
-                        - self.aggregated_usefuls[i].intset
-                    )
-                    self.aggregated_usefuls[i] |= self.aggregated_usefuls[item]
-                just_added[i] = new_just_added
-                keep_going = keep_going or bool(new_just_added)
-
-        return self.aggregated_usefuls[item]
-
-    def aggregate_useful_items_one(self, item):
-        if hasattr(self, "aggregated_usefuls") and item in self.aggregated_usefuls:
-            return self.aggregated_usefuls[item]
-        if not hasattr(self, "aggregated_usefuls"):
-            self.aggregated_usefuls: Dict[EXTENDED_ITEM, Inventory] = {}
-
-        aggregate = self.requirements()[item].aggregate()
-
-        just_added = aggregate.intset
-
-        keep_going = True
-        while keep_going:
-            keep_going = False
-            new_just_added = set()
-            for item2 in just_added:
-                req = self.requirements()[item2].aggregate()
-                new_just_added |= req.intset - aggregate.intset
-                aggregate |= req
-            just_added = new_just_added
-            keep_going = keep_going or bool(new_just_added)
-        self.aggregated_usefuls[item] = aggregate
-
-        return self.aggregated_usefuls[item]
-
-    def aggregate_all_useful_items(self):
-        not_banned = self.fill_restricted()
-        all_checks = self.areas.checks.values()
-        aggregate = Inventory(
-            {i for c in all_checks if (i := c["req_index"]) in not_banned}
-            | {EXTENDED_ITEM[self.short_to_full(DEMISE)]}
-        )
-
-        just_added = aggregate.intset
-
-        keep_going = True
-        while keep_going:
-            keep_going = False
-            new_just_added = set()
-            for item2 in just_added:
-                req = self.requirements()[item2].aggregate()
-                new_just_added |= req.intset - aggregate.intset
-                aggregate |= req
-            just_added = new_just_added
-            keep_going = keep_going or bool(new_just_added)
-
-        return aggregate
-
+    @cache
     def get_useful_items(self, loc=DEMISE, weak=False):
-        index = EXTENDED_ITEM[self.short_to_full(loc)]
+        full_inventory = Logic.get_everything_unbanned(self.requirements)
         if weak:
-            usefuls = self.aggregate_all_useful_items()
+            bit = EVERYTHING_UNBANNED_BIT
         else:
-            usefuls: Inventory = self.aggregate_useful_items_one(index)
+            bit = EXTENDED_ITEM[self.short_to_full(loc)]
+        usefuls = self.aggregate_requirements(self.requirements, full_inventory, bit)
         return [
             loc
             for i in usefuls.intset
@@ -315,8 +229,8 @@ class LogicUtils:
     def calculate_playthrough_progression_spheres(self):
         spheres = []
         keep_going = True
-        inventory = self.starting_inventory
-        requirements = self.requirements()
+        inventory = self.inventory
+        requirements = self.requirements
         # usefuls = self.aggregate_useful_items(EXTENDED_ITEM[self.short_to_full(DEMISE)])
         while keep_going:
             sphere = []
@@ -352,10 +266,9 @@ class Rando:
 
         starting_inventory_BFA = Inventory(
             {
-                item
-                for item in EXTENDED_ITEM.items()
-                if (item_name := EXTENDED_ITEM.get_item_name(item)) in INVENTORY_ITEMS
-                and self.placement.items.get(item_name, START_ITEM) == START_ITEM
+                EXTENDED_ITEM[itemname]
+                for itemname in INVENTORY_ITEMS
+                if self.placement.items.get(itemname, START_ITEM) == START_ITEM
                 # Either not placed yet or a start item
             }
         )
@@ -365,6 +278,7 @@ class Rando:
             | self.endgame_requirements
             | self.ban_options
             | {i: DNFInventory(True) for i in self.placement.starting_items}
+            | self.no_logic_requirements
         )
 
         logic_settings = LogicSettings(
@@ -377,40 +291,30 @@ class Rando:
             self.unrequired_dungeons,
             self.randomized_dungeon_entrance,
             self.randomized_trial_entrance,
-            self.placement.copy(),
+            list(self.placement.locations),
         )
 
         logic = Logic(areas, logic_settings, self.placement)
-        self.logic = LogicUtils(
-            areas, logic, additional_info, runtime_requirements, self.banned
-        )
+        self.randomised = False
 
-        if self.options["logic-mode"] == "No Logic":
-            for i in range(len(logic.requirements)):
-                logic.requirements[i] = DNFInventory(True)
+        def f():
+            if not self.randomised:
+                raise ValueError("Cannot extract hint logic before randomisation")
+            return LogicUtils(
+                areas,
+                logic.placement,
+                additional_info,
+                runtime_requirements,
+                self.banned,
+            )
+
+        self.extract_hint_logic = f
 
         self.rando_algo = BFA(logic, self.rng, self.randosettings)
 
     def randomize(self, useroutput: UserOutput):
         self.rando_algo.randomize(useroutput)
-        logic = self.logic._logic
-
-        # Check
-        logic.inventory = Inventory()
-        logic.fill_inventory()
-        DEMISE_BIT = EXTENDED_ITEM[self.short_to_full(DEMISE)]
-        if not logic.full_inventory[DEMISE_BIT]:
-            raise useroutput.GenerationFailed(f"Could not reach Demise")
-
-        logic.add_item(EXTENDED_ITEM.banned_bit())
-        all_checks = Inventory(
-            {check["req_index"] for check in self.areas.checks.values()}
-        )
-
-        if not all_checks <= logic.full_inventory:
-            i = next(iter(all_checks.intset - logic.full_inventory.intset))
-            check = self.areas.full_to_short(EXTENDED_ITEM.get_item_name(i))
-            raise useroutput.GenerationFailed(f"Could not reach check {check}")
+        self.randomised = True
 
     def parse_options(self):
         # Initialize location related attributes.
@@ -428,6 +332,7 @@ class Rando:
 
         for item in self.placement.items:
             self.randosettings.must_be_placed_items.pop(item, None)
+            self.randosettings.may_be_placed_items.pop(item, None)
 
     def randomize_required_dungeons(self):
         """
@@ -465,7 +370,7 @@ class Rando:
 
     def ban_the_banned(self):
 
-        banned_req = DNFInventory(EXTENDED_ITEM.banned_bit())
+        banned_req = DNFInventory(BANNED_BIT)
         nothing_req = DNFInventory(True)
         maybe_req = lambda b: banned_req if b else nothing_req
         self.ban_options = {
@@ -521,10 +426,16 @@ class Rando:
         elif self.options["got-dungeon-requirement"] == "Unrequired":
             horde_door_requirement &= DNFInventory(dungeons_req)
 
+        everything_list = {
+            check["req_index"] for check in self.areas.checks.values()
+        } | {EXTENDED_ITEM[self.short_to_full(DEMISE)]}
+        everything_req = DNFInventory(Inventory(everything_list))
+
         self.endgame_requirements = {
             GOT_RAISING_REQUIREMENT: got_raising_requirement,
             GOT_OPENING_REQUIREMENT: got_opening_requirement,
             HORDE_DOOR_REQUIREMENT: horde_door_requirement,
+            EVERYTHING: everything_req,
         }
 
     def initialize_items(self):
@@ -556,7 +467,7 @@ class Rando:
                 ValueError(f"Option rupoor-mode has unknown value {rupoor_mode}")
 
         self.randosettings = RandomizationSettings(
-            must_be_placed_items, may_be_placed_items, duplicable_items
+            must_be_placed_items, dict.fromkeys(may_be_placed_items), duplicable_items
         )
 
     def set_placement_options(self):
@@ -572,7 +483,22 @@ class Rando:
             HERO_MODE: self.options["hero-mode"],
         }
 
-        self.placement |= SINGLE_CRYSTAL_PLACEMENT(self.norm)
+        enabled_tricks = set(self.options["enabled-tricks-bitless"])
+
+        self.logic_options_requirements = {
+            k: DNFInventory(b) for k, b in options.items()
+        } | {
+            EIN(trick(trick_name)): DNFInventory(trick_name in enabled_tricks)
+            for trick_name in OPTIONS["enabled-tricks-bitless"]["choices"]
+        }
+
+        self.no_logic_requirements = {}
+        if self.options["logic-mode"] == "No Logic":
+            self.no_logic_requirements = {
+                item: DNFInventory(True) for item in EXTENDED_ITEM.items_list
+            }
+
+        self.placement |= SINGLE_CRYSTAL_PLACEMENT(self.norm, self.areas.checks)
 
         vanilla_map_transitions = {}
         vanilla_reverse_map_transitions = {}
@@ -603,22 +529,13 @@ class Rando:
                     locations={final_check: sword},
                 )
 
-        enabled_tricks = set(self.options["enabled-tricks-bitless"])
-
-        self.logic_options_requirements = {
-            k: DNFInventory(b) for k, b in options.items()
-        } | {
-            EIN(trick(trick_name)): DNFInventory(trick_name in enabled_tricks)
-            for trick_name in OPTIONS["enabled-tricks-bitless"]["choices"]
-        }
-
         # self.placement |= HARDCODED_PLACEMENT(self.norm)
 
         if self.options["open-et"]:
             self.placement = self.placement.add_unplaced_items(set(KEY_PIECES))
 
         if shop_mode == "Vanilla":
-            self.placement |= VANILLA_BEEDLE_PLACEMENT(self.norm)
+            self.placement |= VANILLA_BEEDLE_PLACEMENT(self.norm, self.areas.checks)
         elif shop_mode == "Randomized":
             pass
         elif shop_mode == "Always Junk":
@@ -629,7 +546,7 @@ class Rando:
         map_mode = self.options["map-mode"]
         # remove small keys from the dungeon pool if small key sanity is enabled
         if small_key_mode == "Vanilla":
-            self.placement |= VANILLA_SMALL_KEYS_PLACEMENT(self.norm)
+            self.placement |= VANILLA_SMALL_KEYS_PLACEMENT(self.norm, self.areas.checks)
         elif small_key_mode == "Own Dungeon - Restricted":
             self.placement |= DUNGEON_SMALL_KEYS_RESTRICTION(self.norm)
             self.placement |= CAVES_KEY_RESTRICTION(self.norm)
@@ -640,7 +557,7 @@ class Rando:
 
         # remove boss keys from the dungeon pool if boss key sanity is enabled
         if boss_key_mode == "Vanilla":
-            self.placement |= VANILLA_BOSS_KEYS_PLACEMENT(self.norm)
+            self.placement |= VANILLA_BOSS_KEYS_PLACEMENT(self.norm, self.areas.checks)
         elif boss_key_mode == "Own Dungeon":
             self.placement |= DUNGEON_BOSS_KEYS_RESTRICTION(self.norm)
         elif boss_key_mode == "Anywhere":
@@ -650,7 +567,7 @@ class Rando:
         if map_mode == "Removed":
             pass  # Dealt with during item initialization
         elif map_mode == "Vanilla":
-            self.placement |= VANILLA_MAPS_PLACEMENT(self.norm)
+            self.placement |= VANILLA_MAPS_PLACEMENT(self.norm, self.areas.checks)
         elif map_mode == "Own Dungeon - Restricted":
             self.placement |= DUNGEON_MAPS_RESTRICTED_RESTRICTION(self.norm)
         elif map_mode == "Own Dungeon - Unrestricted":
