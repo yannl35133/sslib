@@ -1106,6 +1106,7 @@ class GamePatcher:
         exe_root_path,
         modified_extract_path,
         oarc_cache_path,
+        arc_replacement_path,
         placement_file,
     ):
         self.areas = areas

@@ -284,6 +284,9 @@ class HintDistribution:
         for item in self.logic.placement.starting_items:
             if item in self.hintable_items:
                 self.hintable_items.remove(item)
+        for item in self.logic.placement.unplaced_items:
+            if item in self.hintable_items:
+                self.hintable_items.remove(item)
         self.rng.shuffle(self.hintable_items)
 
         needed_fixed = []

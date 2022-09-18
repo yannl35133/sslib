@@ -15,6 +15,7 @@ OPEN_ET_OPTION = EIN("Open ET option")
 OPEN_LMF_OPTION = EIN("Open LMF option")
 LMF_NODES_ON_OPTION = EIN("LMF Nodes On option")
 RANDOMIZED_BEEDLE_OPTION = EIN("Randomized Beedle option")
+GONDO_UPGRADES_ON_OPTION = EIN("Gondo Upgrades On option")
 HERO_MODE = EIN("Hero-mode")
 NO_BIT_CRASHES = EIN("No BiT crashes")
 
@@ -36,6 +37,7 @@ LOGIC_OPTIONS = dict.fromkeys(
         OPEN_LMF_OPTION,
         LMF_NODES_ON_OPTION,
         RANDOMIZED_BEEDLE_OPTION,
+        GONDO_UPGRADES_ON_OPTION,
         HERO_MODE,
         NO_BIT_CRASHES,
         GOT_OPENING_REQUIREMENT,
@@ -111,12 +113,9 @@ def group(name: str, count: int) -> Dict[EXTENDED_ITEM_NAME, None]:
     return {number(name, i): None for i in range(count)}
 
 
-SLINGSHOT = EIN("Slingshot")
 BOMB_BAG = EIN("Bomb Bag")
 GUST_BELLOWS = EIN("Gust Bellows")
 WHIP = EIN("Whip")
-BOW = EIN("Bow")
-BUG_NET = EIN("Bug Net")
 CLAWSHOTS = EIN("Clawshots")
 WATER_SCALE = EIN("Water Scale")
 FIRESHIELD_EARRINGS = EIN("Fireshield Earrings")
@@ -148,7 +147,10 @@ GRATITUDE_CRYSTAL_PACK = "Gratitude Crystal Pack"
 GRATITUDE_CRYSTAL = "Gratitude Crystal"
 PROGRESSIVE_SWORD = "Progressive Sword"
 PROGRESSIVE_MITTS = "Progressive Mitts"
+PROGRESSIVE_SLINGSHOT = "Progressive Slingshot"
 PROGRESSIVE_BEETLE = "Progressive Beetle"
+PROGRESSIVE_BOW = "Progressive Bow"
+PROGRESSIVE_BUG_NET = "Progressive Bug Net"
 PROGRESSIVE_POUCH = "Progressive Pouch"
 KEY_PIECE = "Key Piece"
 EMPTY_BOTTLE = "Empty Bottle"
@@ -160,7 +162,10 @@ GRATITUDE_CRYSTALS = group(GRATITUDE_CRYSTAL, 15)
 NUMBER_SWORDS = 6
 PROGRESSIVE_SWORDS = group(PROGRESSIVE_SWORD, NUMBER_SWORDS)
 PROGRESSIVE_MITTS_ALL = group(PROGRESSIVE_MITTS, 2)
-PROGRESSIVE_BEETLES = group(PROGRESSIVE_BEETLE, 2)
+PROGRESSIVE_SLINGSHOTS = group(PROGRESSIVE_SLINGSHOT, 2)
+PROGRESSIVE_BEETLES = group(PROGRESSIVE_BEETLE, 4)
+PROGRESSIVE_BOWS = group(PROGRESSIVE_BOW, 3)
+PROGRESSIVE_BUG_NETS = group(PROGRESSIVE_BUG_NET, 2)
 PROGRESSIVE_POUCHES = group(PROGRESSIVE_POUCH, 5)
 KEY_PIECES = group(KEY_PIECE, 5)
 EMPTY_BOTTLES = group(EMPTY_BOTTLE, 5)
@@ -270,12 +275,9 @@ RUPOOR = "Rupoor"
 PROGRESS_ITEMS = (
     dict.fromkeys(
         [
-            SLINGSHOT,
             BOMB_BAG,
             GUST_BELLOWS,
             WHIP,
-            BOW,
-            BUG_NET,
             CLAWSHOTS,
             WATER_SCALE,
             FIRESHIELD_EARRINGS,
@@ -307,7 +309,10 @@ PROGRESS_ITEMS = (
     | GRATITUDE_CRYSTALS
     | PROGRESSIVE_SWORDS
     | PROGRESSIVE_MITTS_ALL
+    | PROGRESSIVE_SLINGSHOTS
     | PROGRESSIVE_BEETLES
+    | PROGRESSIVE_BOWS
+    | PROGRESSIVE_BUG_NETS
     | PROGRESSIVE_POUCHES
     | KEY_PIECES
     | EMPTY_BOTTLES
@@ -618,3 +623,12 @@ QUICK_BEETLE_CHECKS = [
     "Pirate Stronghold - Rupee on West Sea Pillar",
     "Pirate Stronghold - Rupee on East Sea Pillar",
 ]
+
+GONDO_ITEMS = {
+    number(PROGRESSIVE_BEETLE, 2),
+    number(PROGRESSIVE_BEETLE, 3),
+    number(PROGRESSIVE_SLINGSHOT, 1),
+    number(PROGRESSIVE_BOW, 1),
+    number(PROGRESSIVE_BOW, 2),
+    number(PROGRESSIVE_BUG_NET, 1),
+}
