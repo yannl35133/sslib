@@ -64,17 +64,16 @@ class LogicUtils(Logic):
         self.known_locations = additional_info.known_locations
 
     def check(self, useroutput):
-        self.inventory = Inventory()
-        self.fill_inventory(self.requirements, EMPTY_INV)
+        full_inventory = Logic.fill_inventory(self.requirements, EMPTY_INV)
         DEMISE_BIT = EXTENDED_ITEM[self.short_to_full(DEMISE)]
-        if not self.full_inventory[DEMISE_BIT]:
+        if not full_inventory[DEMISE_BIT]:
             raise useroutput.GenerationFailed(f"Could not reach Demise")
 
-        self.add_item(BANNED_BIT)
+        full_inventory = Logic.fill_inventory(self.requirements, Inventory(BANNED_BIT))
 
-        if not self.full_inventory[EVERYTHING_BIT]:
+        if not full_inventory[EVERYTHING_BIT]:
             (everything_req,) = self.requirements[EVERYTHING_BIT].disjunction
-            i = next(iter(everything_req.intset - self.full_inventory.intset))
+            i = next(iter(everything_req.intset - full_inventory.intset))
             check = self.areas.full_to_short(EXTENDED_ITEM.get_item_name(i))
             raise useroutput.GenerationFailed(f"Could not reach check {check}")
 

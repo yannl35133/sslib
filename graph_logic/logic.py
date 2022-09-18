@@ -306,7 +306,6 @@ class Logic:
         for k, v in self.placement.locations.items():
             self.place_item(k, v, fill=False)
 
-        self.fill_inventory_i(monotonic=True)
         pure_usefuls = self.aggregate_requirements(areas.requirements, None)
         for it in self.banned:
             if self.areas.requirements[it].is_impossible() or it not in pure_usefuls:
@@ -319,8 +318,8 @@ class Logic:
         if optim:
             self.free_simplify(self.requirements)
             self.shallow_simplify(self.requirements, self.opaque)
+            self.fill_inventory_i(monotonic=True)
         self.backup_requirements = self.requirements.copy()
-        self.fill_inventory_i(monotonic=True)
         self.aggregate = self.aggregate_requirements(self.requirements, None)
 
     def add_item(self, item: EXTENDED_ITEM | str):
