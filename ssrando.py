@@ -61,6 +61,7 @@ class BaseRandomizer:
         self.actual_extract_path = self.exe_root_path / "actual-extract"
         self.modified_extract_path = self.exe_root_path / "modified-extract"
         self.oarc_cache_path = self.exe_root_path / "oarc"
+        self.arc_replacement_path = self.exe_root_path / "arc-replacements"
         self.log_file_path = self.exe_root_path / "logs"
         self.log_file_path.mkdir(exist_ok=True, parents=True)
 
@@ -232,6 +233,7 @@ class Randomizer(BaseRandomizer):
                 self.exe_root_path,
                 self.modified_extract_path,
                 self.oarc_cache_path,
+                self.arc_replacement_path,
                 plcmt_file,
             ).do_all_gamepatches()
         self.progress_callback("patching done")
@@ -317,6 +319,7 @@ class PlandoRandomizer(BaseRandomizer):
             self.exe_root_path,
             self.modified_extract_path,
             self.oarc_cache_path,
+            self.arc_replacement_path,
             self.placement_file,
         ).do_all_gamepatches()
 
