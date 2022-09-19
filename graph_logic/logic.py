@@ -338,10 +338,6 @@ class Logic:
         inventory = self.full_inventory if monotonic else self.inventory
         self.full_inventory = self.fill_inventory(self.requirements, inventory)
 
-    def enable_banned(self):
-        self.fixed_locations = list(self.placement.locations)
-        self.add_item(BANNED_BIT)
-
     @staticmethod
     def explore(checks, area: Area) -> Iterable[EIN]:
         def explore(area):

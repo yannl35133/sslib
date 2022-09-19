@@ -6,7 +6,7 @@ from typing import List
 
 from .constants import *
 from .logic import Logic
-from .inventory import EVERYTHING_UNBANNED_BIT, EXTENDED_ITEM
+from .inventory import BANNED_BIT, EVERYTHING_UNBANNED_BIT, EXTENDED_ITEM
 
 
 @dataclass
@@ -73,7 +73,7 @@ class BFA:
         self.rng.shuffle(must_be_placed_items)
         self.rng.shuffle(may_be_placed_items)
 
-        self.logic.enable_banned()
+        self.logic.add_item(BANNED_BIT)
         for item in must_be_placed_items:
             self.useroutput.progress_callback("placing nonprogress items...")
             assert self.place_item(item)
@@ -122,8 +122,13 @@ class BFA:
                 f"no more location accessible for {item}"
             )
 
+        if had_banned := self.logic.inventory[BANNED_BIT]:
+            self.logic.remove_item(BANNED_BIT)
         new_item = self.logic.replace_item(self.rng.choice(accessible_locations), item)
-        return self.place_item(new_item, depth + 1)
+        ret = self.place_item(new_item, depth + 1)
+        if had_banned:
+            self.logic.add_item(BANNED_BIT)
+        return ret
 
     def link(self, pool: int, entrance=None, depth=0):
         entrance_pool, exit_pool = self.logic.pools[pool]
