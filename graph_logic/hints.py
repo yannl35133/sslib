@@ -85,7 +85,7 @@ class Hints:
             needed_sometimes_hints,
         )
         hints = self.dist.get_hints(MAX_HINTS)
-        self.useroutput.progress_callback("starting placing hints...")
+        self.useroutput.progress_callback("placing hints...")
         hints = {hintname: hint for hint, hintname in zip(hints, HINTS)}
         self.randomize(hints)
 
@@ -109,7 +109,6 @@ class Hints:
         self.logic.fill_inventory_i(monotonic=False)
 
         for hintname in HINTS:
-            self.useroutput.progress_callback("placing hints...")
             if not self.place_hint(hintname):
                 raise self.useroutput.GenerationFailed(f"could not place {hintname}")
 
