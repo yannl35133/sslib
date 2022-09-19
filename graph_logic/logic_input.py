@@ -414,7 +414,7 @@ class Areas:
                     timed_req = req.night_only() & DNFInv(EIN(area_name))
                 loc_bit = EXTENDED_ITEM[with_sep_full(area_name, loc)]
                 reqs[loc_bit] |= timed_req
-                self.opaque[loc_bit] = timed_req.complex
+                self.opaque[loc_bit] = timed_req.opaque
 
             for exit, req in area.exits.items():
                 if exit in self.areas:  # Logical exit, the name is the area
