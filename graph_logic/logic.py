@@ -227,7 +227,7 @@ class Logic:
         )
 
         for item, req in enumerate(requirements):
-            if item == EVERYTHING_BIT or len(req.disjunction) >= 30:
+            if item == EVERYTHING_BIT or len(req.disjunction) >= 80:
                 continue
             new_req = DNFInventory()
             for conj in req.disjunction:

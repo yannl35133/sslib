@@ -1,8 +1,8 @@
 from __future__ import annotations
 from dataclasses import dataclass
-from functools import cache
+from functools import cache, reduce
 import random
-from typing import List  # Only for typing purposes
+from typing import List, Literal  # Only for typing purposes
 
 from options import Options, OPTIONS
 from .random_fill import RandomFill
@@ -135,62 +135,137 @@ class LogicUtils(Logic):
 
     def congregate_requirements(self, item):
         if not hasattr(self, "congregated_reqs"):
-            self._isvisited_agg = set()
-            self.aggregated_reqs: List[None | bool | Inventory] = [
+            self.congregated_reqs: List[None | Literal[False] | Inventory] = [
                 None for _ in self.requirements
             ]
 
-        if item in self._isvisited_agg:
-            return False
+        self._congregated_cache = defaultdict(set)
 
-        if self.aggregated_reqs[item] is not None:
-            return self.aggregated_reqs[item]
+        def simplify(
+            item: EXTENDED_ITEM, visited: int
+        ) -> tuple[Inventory | Literal[False], int]:
+            hit_a_visited: int = 0
+            shifted_item = 1 << item
 
-        self._isvisited_agg.add(item)
-        aggregate = False
-        for (possibility, (_, conj_pre)) in self.requirements[item].disjunction.items():
-            aggregate_ = Inventory(conj_pre)
-            for req_item in possibility:
-                ag = self.congregate_requirements(req_item)
-                if ag is False:
+            if shifted_item & visited:
+                return False, shifted_item
+
+            if (ag := self.congregated_reqs[item]) is not None:
+                return ag, 0
+
+            cached = self._congregated_cache[item]
+            for (res, hav) in cached:
+                if hav | visited == visited:
+                    return (res, hav)
+
+            visited_ = visited | shifted_item
+            aggregate = False
+            assert len(self.requirements[item].disjunction) < 30
+
+            for possibility in self.requirements[item].disjunction:
+                if aggregate and aggregate.bitset == 0:
                     break
-                aggregate_ |= ag
-            else:
-                if aggregate is False:
-                    aggregate = aggregate_
+                aggregate_ = Inventory()
+                for req_item in possibility:
+                    ag, h_a_v = simplify(req_item, visited_)
+                    hit_a_visited = hit_a_visited | h_a_v
+                    if ag is False:
+                        break
+                    aggregate_ |= ag
                 else:
-                    aggregate &= aggregate_
+                    if aggregate is False:
+                        aggregate = aggregate_
+                    else:
+                        aggregate &= aggregate_
 
-        self._isvisited_agg.remove(item)
-        if not self._isvisited_agg:
-            self.aggregated_reqs[item] = aggregate
+            if aggregate:
+                aggregate |= item
 
-        return aggregate
+            if shifted_item & hit_a_visited:
+                hit_a_visited ^= shifted_item
+            if not hit_a_visited or aggregate and aggregate.bitset == shifted_item:
+                hit_a_visited = 0
+                self.congregated_reqs[item] = aggregate
+
+            cached = self._congregated_cache[item]
+            for (res, hav) in list(cached):
+                if hit_a_visited | hav == hav:
+                    cached.remove((res, hav))
+            cached.add((aggregate, hit_a_visited))
+
+            return aggregate, hit_a_visited
+
+        def handle_crystals():
+            n_packs = lambda n: EXTENDED_ITEM[
+                self.areas.short_to_full(
+                    f"{n} Gratitude Crystal Packs"
+                    if n > 1
+                    else f"1 Gratitude Crystal Pack"
+                )
+            ]
+            itemname = "Gratitude Crystal Pack"
+            MAX = 13
+            if self.congregated_reqs[n_packs(MAX)] is not None:
+                return
+            visited = 0
+            for i in range(1, MAX + 1):
+                visited |= 1 << n_packs(i)
+
+            sotshav = [
+                simplify(EXTENDED_ITEM[number(itemname, i)], visited)
+                for i in range(MAX)
+            ]
+
+            for i in range(1, MAX + 1):
+                avail = [aggr for aggr, _ in sotshav if aggr]
+                nb_avail = len(avail)
+                i_packs = n_packs(i)
+                if nb_avail < i:
+                    self.congregated_reqs[i_packs] = False
+                else:
+                    nb_times_sots = defaultdict(int)
+                    for avail_crys in avail:
+                        for sots_item in avail_crys:
+                            nb_times_sots[sots_item] += 1
+
+                    sots = {it for it, n in nb_times_sots.items() if n + i > nb_avail}
+
+                    self.congregated_reqs[i_packs] = Inventory(sots)
+
+                visited ^= 1 << (i_packs)
+
+                for i in range(MAX):
+                    hav = sotshav[i][1]
+                    if (1 << i_packs) & hav:
+                        sotshav[i] = simplify(
+                            EXTENDED_ITEM[number(itemname, i)], visited
+                        )
+
+        handle_crystals()
+        return simplify(item, visited=0)[0]
 
     @cache
     def _get_sots_items(self, index: EXTENDED_ITEM):
-        usefuls = self.get_useful_items(index)
-        return [
-            item
-            for item in INVENTORY_ITEMS
-            if item in usefuls
-            and not self.restricted_test(
-                index,
-                [EXTENDED_ITEM[item]],
-                starting_inventory=self.inventory | HINT_BYPASS_BIT,
-            )
-        ]
-
-        # requireds: Inventory = self.congregate_requirements(index)  # type: ignore
+        # usefuls = self.get_useful_items(index)
         # return [
-        # self.full_to_short(EXTENDED_ITEM[i])
-        # for i in requireds.intset
-        # if EXTENDED_ITEM[i] in self.checks
+        #     item
+        #     for item in INVENTORY_ITEMS
+        #     if item in usefuls
+        #     and not self.restricted_test(
+        #         index,
+        #         [EXTENDED_ITEM[item]],
+        #         starting_inventory=self.inventory | HINT_BYPASS_BIT,
+        #     )
         # ]
+
+        requireds = self.congregate_requirements(index)
+        assert requireds
+        required_names = [EXTENDED_ITEM.get_item_name(i) for i in requireds.intset]
+        return [itemname for itemname in required_names if itemname in INVENTORY_ITEMS]
 
     def get_sots_items(self, index: EXTENDED_ITEM | None = None):
         if index is None:
-            index = EXTENDED_ITEM[self.short_to_full(DEMISE)]
+            return self._get_sots_items(EXTENDED_ITEM[self.short_to_full(DEMISE)])
         return self._get_sots_items(index)
 
     def get_sots_locations(self, index: EXTENDED_ITEM | None = None):
@@ -357,7 +432,11 @@ class Rando:
             list(self.placement.locations),
         )
 
-        logic = Logic(areas, logic_settings, self.placement)
+        from .optimisations.optimize import get_requirements
+
+        reqs = get_requirements()
+
+        logic = Logic(areas, logic_settings, self.placement, requirements=reqs)
 
         self.rando_algo = FillAlgorithm(logic, self.rng, self.randosettings)
 
@@ -372,6 +451,7 @@ class Rando:
                 additional_info,
                 runtime_requirements,
                 self.banned,
+                reqs=reqs,
             )
 
         self.extract_hint_logic = fun

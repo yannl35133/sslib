@@ -182,3 +182,7 @@ settings.txt
 presets.txt
 
 custom-music/
+
+**/_build/**
+graph_logic/optimisations/*.txt
+graph_logic/optimisations/*.json
