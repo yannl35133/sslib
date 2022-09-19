@@ -23,8 +23,8 @@ def test_roundtrip():
         rando.logic = rando.rando.extract_hint_logic()
         del rando.rando
         rando.logic.check(useroutput)
-        rando.hints = Hints(rando.options, rando.rng, rando.areas, rando.logic)
-        rando.hints.do_hints()
+        rando.hints_gen = Hints(rando.options, rando.rng, rando.areas, rando.logic)
+        rando.hints = rando.hints_gen.do_hints(useroutput)
         plcmt_file = rando.get_placement_file()
         round_tripped_file = PlacementFile()
         round_tripped_file.read_from_str(plcmt_file.to_json_str())
