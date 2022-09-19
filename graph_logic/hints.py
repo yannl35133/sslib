@@ -1,5 +1,5 @@
 from graph_logic.constants import EIN, HINTS, MAX_HINTS, TRIAL_CHECKS
-from graph_logic.inventory import EXTENDED_ITEM
+from graph_logic.inventory import EXTENDED_ITEM, HINT_BYPASS_BIT, Inventory
 from graph_logic.logic import DNFInventory
 from graph_logic.logic_input import Areas
 from hints.hint_distribution import HintDistribution
@@ -86,12 +86,14 @@ class Hints:
             hint_bit = EXTENDED_ITEM[hintname]
             if isinstance(hint, LocationGossipStoneHint) and hint.item in EXTENDED_ITEM:
                 itembit = EXTENDED_ITEM[hint.item]
-                self.logic.backup_requirements[itembit] &= DNFInventory(hint_bit)
+                self.logic.backup_requirements[itembit] &= DNFInventory(
+                    {Inventory(hint_bit), Inventory(HINT_BYPASS_BIT)}
+                )
 
             self.logic.inventory |= hint_bit
 
         self.logic.aggregate = self.logic.aggregate_requirements(
-            self.logic.requirements, None
+            self.logic.backup_requirements, None
         )
         self.logic.fill_inventory_i(monotonic=False)
 
