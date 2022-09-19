@@ -7,19 +7,7 @@ from hints.hint_types import *
 from .randomize import LogicUtils, UserOutput
 from options import Options
 from paths import RANDO_ROOT_PATH
-import yaml
-from collections import OrderedDict, defaultdict
-from dataclasses import dataclass
-from typing import Dict, List, Set
-
-# from .constants import (
-#     EXTENDED_ITEM_NAME,
-#     POTENTIALLY_REQUIRED_DUNGEONS,
-#     ALL_DUNGEON_AREAS,
-#     SILENT_REALMS,
-#     SILENT_REALM_CHECKS,
-# )
-from util import textbox_utils
+from typing import Dict, List
 
 
 MAX_HINTS_PER_STONE = 2
@@ -34,7 +22,6 @@ class Hints:
         self.options = options
         self.rng = rng
 
-        self.hints = OrderedDict()
         with open(
             RANDO_ROOT_PATH
             / f"hints/distributions/{self.options['hint-distribution']}.json"
