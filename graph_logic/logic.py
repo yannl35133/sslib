@@ -40,7 +40,8 @@ class Placement:
 
     locations: Dict[EIN, EIN] = field(default_factory=dict)
     items: Dict[EXTENDED_ITEM_NAME, EXTENDED_ITEM_NAME] = field(default_factory=dict)
-    hints: Dict[EXTENDED_ITEM_NAME, Any] = field(default_factory=dict)
+    stones: Dict[EIN, List[EIN]] = field(default_factory=lambda: defaultdict(list))
+    hints: Dict[EXTENDED_ITEM_NAME, EXTENDED_ITEM_NAME] = field(default_factory=dict)
     starting_items: Set[EIN] = field(default_factory=set)
     unplaced_items: Set[EIN] = field(default_factory=set)
 
@@ -51,6 +52,7 @@ class Placement:
             self.reverse_map_transitions.copy(),
             self.locations.copy(),
             self.items.copy(),
+            self.stones.copy(),
             self.hints.copy(),
             self.starting_items.copy(),
             self.unplaced_items.copy(),
@@ -77,6 +79,9 @@ class Placement:
         for k, v in other.items.items():
             if k in self.items and v != self.items[k]:
                 raise ValueError
+        for k, v in other.stones.items():
+            if k in self.stones and v != self.stones[k]:
+                raise ValueError
         for k, v in other.hints.items():
             if k in self.hints and v != self.hints[k]:
                 raise ValueError
@@ -86,6 +91,7 @@ class Placement:
             self.reverse_map_transitions | other.reverse_map_transitions,
             self.locations | other.locations,
             self.items | other.items,
+            self.stones | other.stones,
             self.hints | other.hints,
             self.starting_items | other.starting_items,
             self.unplaced_items | other.unplaced_items,
@@ -102,6 +108,7 @@ class Placement:
             self.reverse_map_transitions,
             self.locations,
             self.items | {k: START_ITEM for k in items},
+            self.stones,
             self.hints,
             self.starting_items | items,
             self.unplaced_items,
@@ -118,6 +125,7 @@ class Placement:
             self.reverse_map_transitions,
             self.locations,
             self.items | {k: UNPLACED_ITEM for k in items},
+            self.stones,
             self.hints,
             self.starting_items,
             self.unplaced_items | items,
@@ -322,7 +330,7 @@ class Logic:
         self.backup_requirements = self.requirements.copy()
         self.aggregate = self.aggregate_requirements(self.requirements, None)
 
-    def add_item(self, item: EXTENDED_ITEM | str):
+    def add_item(self, item: EXTENDED_ITEM):
         self.inventory |= item
         self.full_inventory |= item
         self.fill_inventory_i(monotonic=True)
@@ -371,6 +379,11 @@ class Logic:
                 if self.full_inventory[EXTENDED_ITEM[loc]]
                 and loc not in self.fixed_locations
             ]
+
+    def accessible_stones(self) -> Iterable[EIN]:
+        for stone in self.areas.gossip_stones:
+            if self.full_inventory[self.areas.gossip_stones[stone]["req_index"]]:
+                yield stone
 
     def accessible_exits(self, exit_pool: Iterable[PoolExit]) -> Iterable[PoolExit]:
         for exit in exit_pool:
@@ -424,19 +437,26 @@ class Logic:
                 req = self.ban_if(bit, req)
                 requirements[bit] |= req
 
-    def place_item(self, location: EIN, item: EIN, fill=True):
+    def place_item(self, location: EIN, item: EIN, hint_mode=False, fill=True):
         if (
-            location in self.placement.locations
+            not hint_mode
+            and location in self.placement.locations
             and self.placement.locations[location] != item
         ):
             raise ValueError(f"Location {location} is already taken")
+
+        items = self.placement.hints if hint_mode else self.placement.items
         if (
-            item in self.placement.items
-            and self.placement.items[item] != location
+            item in items
+            and items[item] != location
             and item not in DUPLICABLE_ITEMS
             and item not in DUPLICABLE_COUNTERPROGRESS_ITEMS
         ):
-            raise ValueError(f"Item {item} is already placed")
+            if hint_mode:
+                name = ""
+            else:
+                name = "Item "
+            raise ValueError(f"{name}{item} is already placed")
 
         req = DNFInventory(location)
         if item in self.placement.item_placement_limit and not location.startswith(
@@ -454,19 +474,34 @@ class Logic:
             self.opaque[item_bit] = False
             if fill:
                 self.fill_inventory_i(monotonic=True)
-            self.placement.items[item] = location
+            items[item] = location
 
-        self.placement.locations[location] = item
+        if hint_mode:
+            self.placement.stones[location].append(item)
+        else:
+            self.placement.locations[location] = item
         return True
 
-    def replace_item(self, location: EIN, item: EIN):
-        if location not in self.placement.locations:
-            raise ValueError(f"Location {location} is not taken")
-        if item in self.placement.items:
-            raise ValueError(f"Item {item} is already placed")
-        old_item = self.placement.locations[location]
-        del self.placement.locations[location]
-        del self.placement.items[old_item]
+    def replace_item(self, location: EIN, item: EIN, old_hint: EIN | None = None):
+
+        if hint_mode := old_hint is not None:
+            if location not in self.placement.stones:
+                raise ValueError(f"Hint stone {location} is empty")
+            if old_hint not in self.placement.stones[location]:
+                raise ValueError(f"Hint stone {location} does not contain {old_hint}")
+            if item in self.placement.hints:
+                raise ValueError(f"{item} is already placed")
+            self.placement.stones[location].remove(old_hint)
+            del self.placement.hints[old_hint]
+            old_item = old_hint
+        else:
+            if location not in self.placement.locations:
+                raise ValueError(f"Location {location} is not taken")
+            if item in self.placement.items:
+                raise ValueError(f"Item {item} is already placed")
+            old_item = self.placement.locations[location]
+            del self.placement.locations[location]
+            del self.placement.items[old_item]
 
         if old_item in EXTENDED_ITEM:
             # We should always be in this case
@@ -476,5 +511,5 @@ class Logic:
             self.requirements = self.backup_requirements.copy()
             self.fill_inventory_i()
 
-        self.place_item(location, item)
+        self.place_item(location, item, hint_mode=hint_mode)
         return old_item
