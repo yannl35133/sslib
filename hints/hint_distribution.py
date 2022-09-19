@@ -221,17 +221,7 @@ class HintDistribution:
 
         for goal in self.goals:
             check = GOAL_CHECKS[goal]
-            goal_locations = []
-            for item in self.logic.get_sots_items(check):
-                if self.logic.placement.item_placement_limit.get(item, ""):
-                    continue
-
-                sots_loc = self.logic.placement.items[item]
-                if sots_loc == START_ITEM:
-                    continue
-
-                hint_region = areas.checks[sots_loc]["hint_region"]
-                goal_locations.append((hint_region, sots_loc, item))
+            goal_locations = list(self.logic.get_sots_locations(check))
             self.rng.shuffle(goal_locations)
             self.goal_locations.append(goal_locations)
 
