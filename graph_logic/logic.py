@@ -257,7 +257,7 @@ class Logic:
             if (
                 item == EVERYTHING_BIT
                 or not isinstance(req, DNFInventory)
-                or len(req.disjunction) >= 30
+                or len(req.disjunction) >= 80
             ):
                 continue
             new_req = DNFInventory()

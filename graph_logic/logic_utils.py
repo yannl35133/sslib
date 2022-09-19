@@ -1,11 +1,11 @@
 from __future__ import annotations
 from dataclasses import dataclass
 from functools import cache
-from typing import List  # Only for typing purposes
+from typing import List, Literal  # Only for typing purposes
 
 from .logic import Logic, Placement, LogicSettings
 from .logic_input import Areas
-from .logic_expression import DNFInventory, Requirement
+from .logic_expression import CounterThreshold, DNFInventory, Requirement
 from .inventory import (
     Inventory,
     EXTENDED_ITEM,
@@ -116,30 +116,159 @@ class LogicUtils(Logic):
 
         return restricted_full[test_index]
 
+    def congregate_requirements(self, item):
+        if not hasattr(self, "congregated_reqs"):
+            self.congregated_reqs: List[None | Literal[False] | Inventory] = [
+                None for _ in self.requirements
+            ]
+
+        self._congregated_cache = defaultdict(set)
+
+        def simplify(
+            item: EXTENDED_ITEM, visited: int
+        ) -> tuple[Inventory | Literal[False], int]:
+            hit_a_visited: int = 0
+            shifted_item = 1 << item
+
+            if shifted_item & visited:
+                return False, shifted_item
+
+            if (ag := self.congregated_reqs[item]) is not None:
+                return ag, 0
+
+            cached = self._congregated_cache[item]
+            for (res, hav) in cached:
+                if hav | visited == visited:
+                    return (res, hav)
+
+            req = self.requirements[item]
+            if isinstance(req, CounterThreshold):
+                return handle_counters(item, visited)
+            assert isinstance(req, DNFInventory)
+            visited_ = visited | shifted_item
+            aggregate = False
+            assert len(req.disjunction) < 30
+
+            for possibility in req.disjunction:
+                if aggregate and aggregate.bitset == 0:
+                    break
+                aggregate_ = Inventory()
+                for req_item in possibility:
+                    ag, h_a_v = simplify(req_item, visited_)
+                    hit_a_visited = hit_a_visited | h_a_v
+                    if ag is False:
+                        break
+                    aggregate_ |= ag
+                else:
+                    if aggregate is False:
+                        aggregate = aggregate_
+                    else:
+                        aggregate &= aggregate_
+
+            if aggregate:
+                aggregate |= item
+
+            if shifted_item & hit_a_visited:
+                hit_a_visited ^= shifted_item
+            if not hit_a_visited or aggregate and aggregate.bitset == shifted_item:
+                hit_a_visited = 0
+                self.congregated_reqs[item] = aggregate
+
+            cached = self._congregated_cache[item]
+            for (res, hav) in list(cached):
+                if hit_a_visited | hav == hav:
+                    cached.remove((res, hav))
+            cached.add((aggregate, hit_a_visited))
+
+            return aggregate, hit_a_visited
+
+        def handle_counters(item, visited=0):
+            cached = self._congregated_cache[item]
+            for (res, hav) in cached:
+                if hav | visited == visited:
+                    return (res, hav)
+
+            item_req: CounterThreshold = self.requirements[item]  # type: ignore
+            item_counter = item_req.counter
+            counter_thresholds = [
+                (i, req.threshold)
+                for i, req in enumerate(self.requirements)
+                if isinstance(req, CounterThreshold)
+                if req.counter == item_counter
+            ]
+            counter_thresholds.sort(key=lambda c: c[1])
+
+            counter_targets = item_counter.targets.keys()
+
+            if any(self.congregated_reqs[i] is not None for i, _ in counter_thresholds):
+                return simplify(item, visited)
+            visited_ = visited
+            for i, _ in counter_thresholds:
+                visited_ |= 1 << i
+
+            sotshav = {i: simplify(i, visited_) for i in counter_targets}
+
+            for i, threshold in counter_thresholds:
+                avail = {i: aggr for i, (aggr, _) in sotshav.items() if aggr}
+                avail_count = item_counter.compute(Inventory(set(avail)))
+                margin = avail_count - threshold
+                if margin < 0:
+                    aggregate = False
+                else:
+                    nb_times_sots = defaultdict(int)
+                    for avail_targ in avail.values():
+                        for sots_item in avail_targ:
+                            nb_times_sots[sots_item] += item_counter.targets[sots_item]
+
+                    sots = {it for it, n in nb_times_sots.items() if n > margin}
+                    aggregate = Inventory(sots)
+
+                hit_a_visited = 0
+                for _, hav in sotshav.values():
+                    hit_a_visited |= hav
+                hit_a_visited &= visited
+
+                cached = self._congregated_cache[item]
+                for (res, hav) in list(cached):
+                    if hit_a_visited | hav == hav:
+                        cached.remove((res, hav))
+                cached.add((aggregate, hit_a_visited))
+
+                visited_ ^= 1 << i
+
+                for j in sotshav:
+                    hav = sotshav[j][1]
+                    if (1 << i) & hav:
+                        sotshav[j] = simplify(j, visited_)
+            return simplify(item, visited)
+
+        for i, req in enumerate(self.requirements):
+            if isinstance(req, CounterThreshold):
+                handle_counters(i, 0)
+        return simplify(item, visited=0)[0]
+
     @cache
     def _get_sots_items(self, index: EXTENDED_ITEM):
-        usefuls = self.get_useful_items(index)
-        return [
-            item
-            for item in INVENTORY_ITEMS
-            if item in usefuls
-            and not self.restricted_test(
-                index,
-                [EXTENDED_ITEM[item]],
-                starting_inventory=self.inventory | HINT_BYPASS_BIT,
-            )
-        ]
-
-        # requireds: Inventory = self.congregate_requirements(index)  # type: ignore
+        # usefuls = self.get_useful_items(index)
         # return [
-        # self.full_to_short(EXTENDED_ITEM[i])
-        # for i in requireds.intset
-        # if EXTENDED_ITEM[i] in self.checks
+        #     item
+        #     for item in INVENTORY_ITEMS
+        #     if item in usefuls
+        #     and not self.restricted_test(
+        #         index,
+        #         [EXTENDED_ITEM[item]],
+        #         starting_inventory=self.inventory | HINT_BYPASS_BIT,
+        #     )
         # ]
+
+        requireds = self.congregate_requirements(index)
+        assert requireds
+        required_names = [EXTENDED_ITEM.get_item_name(i) for i in requireds.intset]
+        return [itemname for itemname in required_names if itemname in INVENTORY_ITEMS]
 
     def get_sots_items(self, index: EXTENDED_ITEM | None = None):
         if index is None:
-            index = EXTENDED_ITEM[self.short_to_full(DEMISE)]
+            return self._get_sots_items(EXTENDED_ITEM[self.short_to_full(DEMISE)])
         return self._get_sots_items(index)
 
     def get_sots_locations(self, index: EXTENDED_ITEM | None = None):

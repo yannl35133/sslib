@@ -82,16 +82,16 @@ Can Afford 300 Rupees:
   Can Medium Rupee Farm
 
 Can Afford 600 Rupees:
-  Medium Purchases Token & Can High Rupee Farm & (1 Extra Wallet | Big Wallet)
+  ~ Medium Purchases Token & Can High Rupee Farm & (1 Extra Wallet | Big Wallet)
 
 Can Afford 800 Rupees:
-  Medium Purchases Token & Can High Rupee Farm & (2 Extra Wallets | (Medium Wallet & 1 Extra Wallet) | Big Wallet)
+  ~ Medium Purchases Token & Can High Rupee Farm & (2 Extra Wallets | (Medium Wallet & 1 Extra Wallet) | Big Wallet)
 
 Can Afford 1000 Rupees:
-  Medium Purchases Token & Can High Rupee Farm & (3 Extra Wallets | (Medium Wallet & 2 Extra Wallets) | Big Wallet)
+  ~ Medium Purchases Token & Can High Rupee Farm & (3 Extra Wallets | (Medium Wallet & 2 Extra Wallets) | Big Wallet)
 
 Can Afford 1200 Rupees:
-  Expensive Purchases Token & Can High Rupee Farm &
+  ~ Expensive Purchases Token & Can High Rupee Farm &
   (
     3 Extra Wallets |
     (Medium Wallet & 3 Extra Wallets) |
@@ -100,7 +100,7 @@ Can Afford 1200 Rupees:
   )
 
 Can Afford 1600 Rupees:
-  Expensive Purchases Token & Can High Rupee Farm & ((Big Wallet & 2 Extra Wallets) | Giant Wallet)
+  ~ Expensive Purchases Token & Can High Rupee Farm & ((Big Wallet & 2 Extra Wallets) | Giant Wallet)
 
 Can Medium Rupee Farm:
   Sky - Clean Cut Minigame | Can High Rupee Farm

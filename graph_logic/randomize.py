@@ -104,7 +104,11 @@ class Rando:
             list(self.placement.locations),
         )
 
-        logic = Logic(areas, logic_settings, self.placement)
+        from .optimisations.optimize import get_requirements
+
+        reqs = get_requirements()
+
+        logic = Logic(areas, logic_settings, self.placement, requirements=reqs)
 
         self.rando_algo = FillAlgorithm(logic, self.rng, self.randosettings)
 
@@ -119,6 +123,7 @@ class Rando:
                 additional_info,
                 runtime_requirements,
                 self.banned,
+                reqs=reqs,
             )
 
         self.extract_hint_logic = fun

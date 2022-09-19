@@ -146,6 +146,9 @@ def main():
 
     if bulk_mode:
         from multiprocessing import Process
+        from graph_logic.optimisations.optimize import get_requirements
+
+        get_requirements()
 
         options.set_option("dry-run", True)
 

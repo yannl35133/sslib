@@ -575,6 +575,16 @@ DUNGEON_ENTRANCE_EXITS: dict[str, list[str]] = {
 
 LMF_SECOND_EXIT = LMF + sep + "Great Hall" + sep + "Exit to Temple of Time"
 
+DUNGEON_EXITS: dict[str, list[str]] = {
+    SV: [DUNGEON_MAIN_EXITS[SV]],
+    ET: [DUNGEON_MAIN_EXITS[ET]],
+    LMF: [DUNGEON_MAIN_EXITS[LMF], LMF_SECOND_EXIT],
+    AC: [DUNGEON_MAIN_EXITS[AC]],
+    SSH: [DUNGEON_MAIN_EXITS[SSH]],
+    FS: [DUNGEON_MAIN_EXITS[FS]],
+    SK: [DUNGEON_MAIN_EXITS[SK]],
+}
+
 SKYLOFT_TRIAL_GATE = "Trial Gate on Skyloft"
 FARON_TRIAL_GATE = "Trial Gate in Faron Woods"
 LANAYRU_TRIAL_GATE = "Trial Gate in Lanayru Desert"
