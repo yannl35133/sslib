@@ -15,6 +15,7 @@ from .inventory import (
     EMPTY_INV,
     EVERYTHING_BIT,
     EVERYTHING_UNBANNED_BIT,
+    HINT_BYPASS_BIT,
     BANNED_BIT,
 )
 from .constants import *
@@ -230,8 +231,8 @@ class LogicUtils(Logic):
     def calculate_playthrough_progression_spheres(self):
         spheres = []
         keep_going = True
-        inventory = self.inventory
-        requirements = self.requirements
+        inventory = self.inventory | HINT_BYPASS_BIT
+        requirements = self.backup_requirements
         # usefuls = self.aggregate_useful_items(EXTENDED_ITEM[self.short_to_full(DEMISE)])
         while keep_going:
             sphere = []
