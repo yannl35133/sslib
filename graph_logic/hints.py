@@ -84,7 +84,7 @@ class Hints:
     def randomize(self, hints: Dict[EIN, GossipStoneHint]):
         for hintname, hint in hints.items():
             hint_bit = EXTENDED_ITEM[hintname]
-            if isinstance(hint, LocationGossipStoneHint):
+            if isinstance(hint, LocationGossipStoneHint) and hint.item in EXTENDED_ITEM:
                 itembit = EXTENDED_ITEM[hint.item]
                 self.logic.backup_requirements[itembit] &= DNFInventory(hint_bit)
 
