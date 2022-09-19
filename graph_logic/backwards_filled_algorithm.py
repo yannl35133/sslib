@@ -77,8 +77,8 @@ class BFA:
         for item in must_be_placed_items:
             self.useroutput.progress_callback("placing nonprogress items...")
             assert self.place_item(item)
+        self.useroutput.progress_callback("placing remaining items...")
         for item in may_be_placed_items:
-            self.useroutput.progress_callback("placing erasable items...")
             if not self.place_item(item, force=False):
                 break
         self.fill_with_junk(self.randosettings.duplicable_items)
@@ -92,7 +92,7 @@ class BFA:
         junk = list(junk)
 
         for location in empty_locations:
-            result = self.logic.place_item(location, self.rng.choice(junk))
+            result = self.logic.place_item(location, self.rng.choice(junk), fill=False)
             assert result
 
     def place_item(self, item: EXTENDED_ITEM_NAME, depth=0, force=True) -> bool:
@@ -110,7 +110,8 @@ class BFA:
         ]
 
         if empty_locations:
-            result = self.logic.place_item(self.rng.choice(empty_locations), item)
+            location = self.rng.choice(empty_locations)
+            result = self.logic.place_item(location, item, fill=force)
             assert result  # Undefined if False
             return True
 
