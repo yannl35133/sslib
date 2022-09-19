@@ -168,8 +168,8 @@ class Randomizer(BaseRandomizer):
         del self.rando
         self.logic.check(useroutput)
         self.progress_callback("generating hints...")
-        self.hints = Hints(self.options, self.rng, self.areas, self.logic)
-        self.hints.do_hints()
+        self.hints_gen = Hints(self.options, self.rng, self.areas, self.logic)
+        self.hints = self.hints_gen.do_hints(useroutput)
         if self.no_logs:
             self.progress_callback("writing anti spoiler log...")
         else:
@@ -192,7 +192,7 @@ class Randomizer(BaseRandomizer):
                 self.options,
                 hash=self.randomizer_hash,
                 progression_spheres=self.logic.calculate_playthrough_progression_spheres(),
-                hints=self.hints.hints,
+                hints=self.hints,
                 required_dungeons=self.logic.required_dungeons,
                 sots_items={
                     goal: self.logic.get_sots_items(GOAL_CHECKS[goal])
@@ -213,7 +213,7 @@ class Randomizer(BaseRandomizer):
                     self.areas,
                     hash=self.randomizer_hash,
                     progression_spheres=self.logic.calculate_playthrough_progression_spheres(),
-                    hints=self.hints.hints,
+                    hints=self.hints,
                     required_dungeons=self.logic.required_dungeons,
                     sots_items={
                         goal: self.logic.get_sots_items(GOAL_CHECKS[goal])
@@ -283,7 +283,7 @@ class Randomizer(BaseRandomizer):
         plcmt_file.hash_str = self.randomizer_hash
         plcmt_file.gossip_stone_hints = dict(
             (k, v.to_gossip_stone_text(lambda s: self.areas.prettify(s, custom=True)))
-            for (k, v) in self.hints.hints.items()
+            for (k, v) in self.hints.items()
         )
         plcmt_file.trial_hints = trial_hints
         plcmt_file.item_locations = self.logic.placement.locations

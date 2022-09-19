@@ -19,6 +19,9 @@ def extended_item_generator():
             for trick in option["choices"]:
                 yield f"{trick} Trick"
 
+    for i in range(MAX_HINTS):
+        yield number(HINT, i)
+
 
 class MetaContainer(type):
     def __getitem__(self, arg):

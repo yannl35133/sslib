@@ -8,6 +8,8 @@ sep = " - "
 
 EVERYTHING = EIN("Everything")
 
+MAX_HINTS = 32
+
 # Logic options, runtime requirements
 
 OPEN_THUNDERHEAD_OPTION = EIN("Open Thunderhead option")
@@ -112,6 +114,9 @@ def group(name: str, count: int) -> Dict[EXTENDED_ITEM_NAME, None]:
     ITEM_COUNTS[name] = count
     return {number(name, i): None for i in range(count)}
 
+
+HINT = "Hint"
+HINTS = group(HINT, MAX_HINTS)
 
 BOMB_BAG = EIN("Bomb Bag")
 GUST_BELLOWS = EIN("Gust Bellows")

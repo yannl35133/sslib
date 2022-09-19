@@ -1,9 +1,10 @@
-from graph_logic.constants import EIN, TRIAL_CHECKS
+from graph_logic.constants import EIN, HINTS, MAX_HINTS, TRIAL_CHECKS
 from graph_logic.inventory import EXTENDED_ITEM
+from graph_logic.logic import DNFInventory
 from graph_logic.logic_input import Areas
 from hints.hint_distribution import HintDistribution
 from hints.hint_types import *
-from .randomize import LogicUtils
+from .randomize import LogicUtils, UserOutput
 from options import Options
 from paths import RANDO_ROOT_PATH
 import yaml
@@ -19,6 +20,9 @@ from typing import Dict, List, Set
 #     SILENT_REALM_CHECKS,
 # )
 from util import textbox_utils
+
+
+MAX_HINTS_PER_STONE = 2
 
 
 class Hints:
@@ -38,7 +42,9 @@ class Hints:
             self.dist = HintDistribution()
             self.dist.read_from_file(f)
 
-    def do_hints(self):
+    def do_hints(self, useroutput: UserOutput):
+        self.useroutput = useroutput
+
         not_banned = self.logic.fill_restricted()
         needed_always_hints: List[EIN] = [
             loc
@@ -78,61 +84,64 @@ class Hints:
             needed_always_hints,
             needed_sometimes_hints,
         )
-        hints = self.dist.get_hints(32)
-        self._place_hints_for_locations(hints)
+        hints = self.dist.get_hints(MAX_HINTS)
+        self.useroutput.progress_callback("starting placing hints...")
+        hints = {hintname: hint for hint, hintname in zip(hints, HINTS)}
+        self.randomize(hints)
 
-    def _place_hints_for_locations(self, hints: List[GossipStoneHint]):
-        # make sure hint locations aren't locked by the item they hint
+        return {
+            stone: GossipStoneHintWrapper(*(hints[name] for name in hintnames))
+            for stone, hintnames in self.logic.placement.stones.items()
+        }
 
-        potential: List[EXTENDED_ITEM] = [
-            EXTENDED_ITEM[hint.location]
-            for hint in hints
-            if isinstance(hint, LocationGossipStoneHint)
-            and self.placement.locations[hint.location] in self.logic.get_useful_items()
+    def randomize(self, hints: Dict[EIN, GossipStoneHint]):
+        for hintname, hint in hints.items():
+            hint_bit = EXTENDED_ITEM[hintname]
+            if isinstance(hint, LocationGossipStoneHint):
+                itembit = EXTENDED_ITEM[hint.item]
+                self.logic.backup_requirements[itembit] &= DNFInventory(hint_bit)
+
+            self.logic.inventory |= hint_bit
+
+        self.logic.aggregate = self.logic.aggregate_requirements(
+            self.logic.requirements, None
+        )
+        self.logic.fill_inventory_i(monotonic=False)
+
+        for hintname in HINTS:
+            self.useroutput.progress_callback("placing hints...")
+            if not self.place_hint(hintname):
+                raise self.useroutput.GenerationFailed(f"could not place {hintname}")
+
+    def place_hint(self, hintname: EXTENDED_ITEM_NAME, depth=0) -> bool:
+        hint_bit = EXTENDED_ITEM[hintname]
+        self.logic.remove_item(hint_bit)
+
+        accessible_stones = self.logic.accessible_stones()
+
+        available_stones = [
+            stone
+            for stone in accessible_stones
+            if len(self.logic.placement.stones[stone]) < MAX_HINTS_PER_STONE
         ]
 
-        hint_banned_stones: Dict[EIN, Set[EXTENDED_ITEM]] = {}
-        for (
-            gossipstone_name,
-            gossipstone_def,
-        ) in self.areas.gossip_stones.items():
-            index = gossipstone_def["req_index"]
-            hint_banned_stones[gossipstone_name] = {
-                item
-                for item in potential
-                if not self.logic.restricted_test(index, [item])
-            }
+        if available_stones:
+            stone = self.rng.choice(available_stones)
+            result = self.logic.place_item(stone, hintname, hint_mode=True)
+            assert result  # Undefined if False
+            return True
 
-        stones_to_banned_locs_sorted = sorted(
-            hint_banned_stones.items(), key=lambda x: len(x[1]), reverse=True
-        )
+        # We have to replace an already placed hint
+        if depth > 50:
+            return False
+        if not available_stones:
+            raise self.useroutput.GenerationFailed(
+                f"no more location accessible for {hintname}"
+            )
 
-        assert len(hints) == len(self.areas.gossip_stones) * 2
-        unplaced_hints = hints.copy()
-
-        # place locations that are restricted in locations
-        for gossipstone_name, banned_locations in stones_to_banned_locs_sorted:
-            if gossipstone_name in self.dist.banned_stones:
-                self.hints[gossipstone_name] = EmptyGossipStoneHint(
-                    self.dist.get_junk_text()
-                )
-                continue
-
-            valid_locations: List[GossipStoneHint] = [
-                hint
-                for hint in unplaced_hints
-                if not isinstance(hint, LocationGossipStoneHint)
-                or EXTENDED_ITEM[hint.location] not in banned_locations
-            ]
-
-            nb_hints = 2
-            if len(valid_locations) < nb_hints:
-                raise ValueError(
-                    f"Not enough valid locations for {gossipstone_name} in seed {self.options['seed']}"
-                )
-                # picked_hints = self.rng.sample(unplaced_hints, nb_hints)
-            else:
-                picked_hints = self.rng.sample(valid_locations, nb_hints)
-            self.hints[gossipstone_name] = GossipStoneHintWrapper(*picked_hints)
-            for hint in picked_hints:
-                unplaced_hints.remove(hint)
+        stone = self.rng.choice(accessible_stones)
+        old_hints = self.placement.stones[stone]
+        assert old_hints
+        old_hint = self.rng.choice(old_hints)
+        new_hint = self.logic.replace_item(stone, hintname, old_hint)
+        return self.place_hint(new_hint, depth + 1)
