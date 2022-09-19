@@ -245,8 +245,6 @@ class Logic:
             if simplified[item]:
                 return requirements[item], set()
 
-            print(item)
-
             visited.add(item)
             new_req = DNFInventory()
             for possibility in requirements[item].disjunction:
@@ -262,13 +260,12 @@ class Logic:
             if not hit_a_visited:
                 requirements[item] = new_req
                 simplified[item] = True
-            else:
+            elif len(todo_list) < 50:
                 todo_list.append(item)
             return new_req, hit_a_visited
 
         while todo_list:
             item = EXTENDED_ITEM(todo_list.pop())
-            print(item)
             simplify(item)
 
     def __init__(
@@ -276,7 +273,9 @@ class Logic:
         areas: Areas,
         logic_settings: LogicSettings,
         placement: Placement,
+        /,
         optim=True,
+        requirements: List[DNFInventory] | None = None,
     ):
         self.areas = areas
         self.short_to_full = areas.short_to_full
@@ -284,6 +283,10 @@ class Logic:
 
         self.requirements = areas.requirements.copy()
         self.opaque = areas.opaque.copy()
+
+        if requirements is not None:
+            self.requirements = requirements.copy()
+
         self.entrance_allowed_time_of_day = areas.entrance_allowed_time_of_day
         self.exit_to_area = areas.exit_to_area
         self.placement = placement

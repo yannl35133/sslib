@@ -51,12 +51,14 @@ class LogicUtils(Logic):
         additional_info: AdditionalInfo,
         runtime_requirements,
         banned,
+        /,
+        reqs: List[DNFInventory] | None = None,
     ):
         starting_inventory = Inventory(
             {EXTENDED_ITEM[itemname] for itemname in placement.starting_items}
         )
-        logic_settings = LogicSettings(starting_inventory, runtime_requirements, banned)
-        super().__init__(areas, logic_settings, placement, optim=False)
+        settings = LogicSettings(starting_inventory, runtime_requirements, banned)
+        super().__init__(areas, settings, placement, optim=False, requirements=reqs)
         self.required_dungeons = additional_info.required_dungeons
         self.unrequired_dungeons = additional_info.unrequired_dungeons
         self.randomized_dungeon_entrance = additional_info.randomized_dungeon_entrance
@@ -296,7 +298,7 @@ class Rando:
         logic = Logic(areas, logic_settings, self.placement)
         self.randomised = False
 
-        def f():
+        def fun():
             if not self.randomised:
                 raise ValueError("Cannot extract hint logic before randomisation")
             return LogicUtils(
@@ -307,7 +309,7 @@ class Rando:
                 self.banned,
             )
 
-        self.extract_hint_logic = f
+        self.extract_hint_logic = fun
 
         self.rando_algo = BFA(logic, self.rng, self.randosettings)
 

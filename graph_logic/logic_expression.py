@@ -11,6 +11,8 @@ from .constants import EXTENDED_ITEM_NAME, number, ITEM_COUNTS, RAW_ITEM_NAMES
 
 
 class LogicExpression(ABC):
+    opaque: bool = False
+
     def localize(self, localizer: Callable[[str], Optional[str]]) -> LogicExpression:
         raise NotImplementedError
 
@@ -35,10 +37,8 @@ class DNFInventory(LogicExpression):
         | EXTENDED_ITEM
         | EXTENDED_ITEM_NAME
         | Tuple[str, int] = None,
-        /,
-        complex=False,
     ):
-        self.complex = complex
+
         if v is None:
             self.disjunction = {}
         elif isinstance(v, set):
@@ -125,7 +125,7 @@ def InventoryAtom(item_name: str, quantity: int) -> DNFInventory:
         for index in comb:
             i |= EXTENDED_ITEM[number(item_name, index)]
         disjunction.add(i)
-    return DNFInventory(disjunction, complex=(ITEM_COUNTS[item_name] != quantity))
+    return DNFInventory(disjunction)
 
 
 def EventAtom(event_address: EXTENDED_ITEM_NAME) -> DNFInventory:
@@ -143,7 +143,9 @@ class BasicTextAtom(LogicExpression):
         if (v := localizer(self.text)) is None:
             raise ValueError(f"Unknown event {self.text}")
         else:
-            return EventAtom(v)
+            ret = EventAtom(v)
+            ret.opaque = self.opaque
+            return ret
 
 
 def and_reducer(v, v1):
@@ -176,7 +178,9 @@ class AndCombination(LogicExpression):
             return AndCombination(arguments)
 
     def localize(self, localizer):
-        return self.simplify([arg.localize(localizer) for arg in self.arguments])
+        ret = self.simplify([arg.localize(localizer) for arg in self.arguments])
+        ret.opaque = self.opaque
+        return ret
 
     def eval(self, *args):
         raise TypeError(
@@ -204,7 +208,9 @@ class OrCombination(LogicExpression):
             return OrCombination(arguments)
 
     def localize(self, localizer):
-        return self.simplify([arg.localize(localizer) for arg in self.arguments])
+        ret = self.simplify([arg.localize(localizer) for arg in self.arguments])
+        ret.opaque = self.opaque
+        return ret
 
     def eval(self, *args):
         raise TypeError(
@@ -218,6 +224,7 @@ from lark import Lark, Transformer, v_args
 
 exp_grammar = """
     ?start: disjunction
+        | "$" disjunction -> mk_opaque
 
     ?disjunction: conjunction
         | disjunction "|" conjunction -> mk_or
@@ -228,7 +235,7 @@ exp_grammar = """
     ?atom: TEXT -> mk_atom
          | "(" disjunction ")"
 
-    TEXT: /[^|&())]+/
+    TEXT: /[^$|&())]+/
 
     %import common.WS
     %ignore WS
@@ -239,6 +246,10 @@ item_with_count_re = re.compile(r"^(.+) [x][ ]*(\d+)$")
 
 @v_args(inline=True)  # Affects the signatures of the methods
 class MakeExpression(Transformer):
+    def mk_opaque(self, exp):
+        exp.opaque = True
+        return exp
+
     def mk_or(self, left, right):
         if isinstance(left, OrCombination):
             return OrCombination(left.arguments + [right])
