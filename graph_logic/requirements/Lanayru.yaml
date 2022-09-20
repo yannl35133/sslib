@@ -75,7 +75,7 @@ Desert:
     locations:
       Unlock Statue: Nothing
       Blow up Rock for Timeshift Stone: Bomb Bag
-      Timeshift Stone: Blow up Rock for Timeshift Stone
+      Timeshift Stone: Blow up Rock for Timeshift Stone & Can Hit Timeshift Stone
 
     exits:
       Exit to Mines: Timeshift Stone # I can't assume the minecart is available, right ?
@@ -88,7 +88,7 @@ Desert:
       Chest: Nothing
       Goddess Cube: Long Range Skyward Strike # Also accessible elsewhere
       Blow up Rock for Timeshift Stone: Bomb Bag | Hook Beetle
-      Timeshift Stone: Blow up Rock for Timeshift Stone & (Bomb Bag | Hook Beetle | Goddess Sword | Bow) # What exactly ?
+      Timeshift Stone: Blow up Rock for Timeshift Stone & Nothing # Use the nearby bombflower ?
       Hook Beetle Fight: Timeshift Stone & Can Defeat Bokoblins
 
       Defeat Spume to Sand Oasis: Long Range Skyward Strike | Bomb Bag | Bow | Hook Beetle | (Goddess Sword & Lanayru Desert - Spume Brakeslide Trick)
@@ -163,8 +163,9 @@ Desert:
   North Part:
     locations:
       Water Node: (Bomb Bag | Hook Beetle) & Sword
-      Blow up Rock hiding Timeshift Stone near Master Generator: Bomb Bag | Hook Beetle
-      Activate Master Generator: All Three Nodes & Blow up Rock hiding Timeshift Stone near Master Generator & Sword
+      Blow up Master Generator Timeshift Stone Rock: Bomb Bag | Hook Beetle
+      Master Generator Timeshift Stone: Blow up Master Generator Timeshift Stone Rock & Can Hit Timeshift Stone
+      Activate Master Generator: All Three Nodes & Master Generator Timeshift Stone & Sword
       Unlock Statue: Nothing
       Open Trial Gate: Nayru's Wisdom & Goddess Harp
       Open Secret Passageway: Bomb Bag | Hook Beetle & Secret Passageway Hook Beetle Opening Trick | Tough Beetle
@@ -198,7 +199,7 @@ Desert:
           Past: Timeshift Stone
         locations:
           Blow up Rock for Timeshift Stone: Bomb Bag
-          Timeshift Stone: Blow up Rock for Timeshift Stone & (Distance Activator | Sword | Whip)
+          Timeshift Stone: Blow up Rock for Timeshift Stone & Can Hit Timeshift Stone
 
       Past:
         exits:
@@ -242,7 +243,7 @@ Desert:
             Can Defeat Ampilus | Fire Node - Brakeslide Trick | Present after Sand - Push Box
         locations:
           Blow up Rock for Timeshift Stone: Bomb Bag
-          Timeshift Stone: Blow up Rock for Timeshift Stone & (Distance Activator | Sword | Whip)
+          Timeshift Stone: Blow up Rock for Timeshift Stone & Can Hit Timeshift Stone
 
       Present after Sand:
         exits:
@@ -495,7 +496,7 @@ Sand Sea:
     locations:
       Unlock Statue: Nothing
       Item on Pillar: Beetle
-      Activate Timeshift Stone: Can Hit Timeshift Stone
+      Activate Timeshift Stone: Can Hit Timeshift Stone in Minecart
       Thunder Dragon's Reward: Activate Timeshift Stone & Life Tree Fruit
 
       Boss Rush -- 4 Bosses: Thunder Dragon's Reward & Impossible

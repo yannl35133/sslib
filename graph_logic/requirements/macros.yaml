@@ -243,6 +243,10 @@ Can Unlock Combination Lock:
 Can Hit Timeshift Stone:
   Sword | Bomb Bag | Whip | Distance Activator
 
+Can Hit Timeshift Stone in Minecart:
+  Sword | Bomb Bag | Distance Activator
+  # I don't think Whip works when the stone is in a minecart
+
 # Can defeat enemy
 
 Can Defeat Bokoblins:
