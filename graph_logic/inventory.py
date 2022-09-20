@@ -59,7 +59,7 @@ class EXTENDED_ITEM(int, metaclass=MetaContainer):
         return cls.items_list[i]
 
     def __str__(self) -> str:
-        return super().__str__() + f" ({self.items_list[self]})"
+        return super().__repr__() + f" ({self.items_list[self]})"
 
     def __repr__(self) -> str:
         return f"{self.__class__.__name__}({super().__repr__()})"

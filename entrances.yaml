@@ -3324,7 +3324,7 @@ Temple of Time - North Exit to Desert:
 Temple of Time - Exit to Lanayru Mining Facility:
   type: exit
   subtype: vanilla
-  vanilla: Lanayru Mining Facility - Great Hall - Entrance from Temple of Time
+  # vanilla: Lanayru Mining Facility - Great Hall - Entrance from Temple of Time
   stage: F300_4
   room: 0
   index: 4
