@@ -174,9 +174,11 @@ Desert:
       Open Lightning Node: Nothing # There's a bombflower nearby
 
     exits:
+      North Exit to Temple of Time: Nothing
+      East: Nothing
+      Top of LMF: Raise Lanayru Mining Facility
       Desert - Shared Statue Exit: Unlock Statue
       North Desert Statue Entrance: Impossible
-      North Exit to Temple of Time: Nothing
       Trial Gate: Open Trial Gate
       Lightning Node: Open Lightning Node
 
@@ -299,23 +301,24 @@ Temple of Time:
         Hook Beetle | Bomb Throws Trick & (Bomb Bag | Cactus Bomb Whip Trick & Whip)
       Timeshift Stone: Blow up Rock for Timeshift Stone & Distance Activator
       Save Robot: Timeshift Stone & Can Defeat Bokoblins
+      Near Goddess Cube - Timeshift Stone: Long Range Skyward Strike | Distance Activator
 
     exits:
-      Inside: Inside - Blow up Wall
-      Near Goddess Cube: Timeshift Stone & Save Robot
+      Inside: Nothing
+      Near Goddess Cube: Near Goddess Cube - Timeshift Stone
 
   Inside:
     locations:
-      Blow up Wall: Nothing
       Unlock Statue: Nothing
     exits:
       Temple of Time - Shared Statue Exit: Unlock Statue
       Temple of Time Statue Entrance: Impossible
-      Exit to Lanayru Mining Facility: Nothing  # I don't know if it is enabled
-      Front: Blow up Wall
+      Exit to Lanayru Mining Facility: Nothing  # The exit is left unbound internally
+      Front: Nothing
 
   Near Goddess Cube:
     locations:
+      Timeshift Stone: Impossible
       Goddess Cube: Goddess Sword
     exits:
       North East: Nothing

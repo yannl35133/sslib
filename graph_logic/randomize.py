@@ -510,7 +510,11 @@ class Rando:
         vanilla_map_transitions = {}
         vanilla_reverse_map_transitions = {}
         for exit, v in self.areas.map_exits.items():
-            if v["type"] == "entrance" or v.get("disabled", False):
+            if (
+                v["type"] == "entrance"
+                or v.get("disabled", False)
+                or "vanilla" not in v
+            ):
                 continue
             entrance = self.norm(v["vanilla"])
             vanilla_map_transitions[exit] = entrance
