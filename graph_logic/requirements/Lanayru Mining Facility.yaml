@@ -97,7 +97,7 @@ Main:
         Chest behind First Crawlspace: Blow Off Pile for First Crawlspace
       exits:
         Entry: Open Gate
-        Exit to Armos Fight Room: Impossible
+        Exit to Armos Fight Room: Nothing
         Sand Spike Maze: Blow Off Pile for Second Crawlspace
 
     Sand Spike Maze:
