@@ -654,13 +654,18 @@ class Rando:
         for i, e in enumerate(dungeons):
             self.randomized_dungeon_entrance[ALL_DUNGEONS[i]] = e
 
+        pre_LMF_index = dungeons.index(LMF)
+
         dungeon_entrances = [
             [self.norm(e) for e in DUNGEON_OVERWORLD_EXITS[k]] for k in ALL_DUNGEONS
         ]
         dungeons = [
-            self.norm(DUNGEON_MAIN_EXITS[self.randomized_dungeon_entrance[k]])
+            [self.norm(DUNGEON_MAIN_EXITS[self.randomized_dungeon_entrance[k]])]
             for k in ALL_DUNGEONS
         ]
+
+        if ALL_DUNGEONS[pre_LMF_index] != LMF:
+            dungeons[pre_LMF_index].append(self.norm(LMF_SECOND_EXIT))
 
         self.reassign_entrances(dungeon_entrances, dungeons)
 

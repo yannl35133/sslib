@@ -556,6 +556,8 @@ DUNGEON_OVERWORLD_EXITS: dict[str, list[str]] = {
     SK: ["Skyloft - Exit to Sky Keep"],
 }
 
+LMF_SECOND_EXIT = LMF + sep + "Great Hall" + sep + "Exit to Temple of Time"
+
 TRIAL_EXITS: dict[str, str] = {
     SKYLOFT_TRIAL: "Skyloft - Trial Gate Exit",
     FARON_TRIAL: "Faron Woods - Trial Gate Exit",
