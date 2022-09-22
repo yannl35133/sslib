@@ -126,6 +126,8 @@ class BFA:
         if had_banned := self.logic.inventory[BANNED_BIT]:
             self.logic.remove_item(BANNED_BIT)
         new_item = self.logic.replace_item(self.rng.choice(accessible_locations), item)
+        if new_item not in self.progress_items and had_banned:
+            self.logic.add_item(BANNED_BIT)
         ret = self.place_item(new_item, depth + 1)
         if had_banned:
             self.logic.add_item(BANNED_BIT)
