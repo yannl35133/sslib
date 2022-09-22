@@ -239,6 +239,7 @@ class Areas:
                 all_areas[area.toplevel_alias] = area
         all_areas |= areas | self.all_areas.sub_areas
 
+        assert not EXTENDED_ITEM.complete
         EXTENDED_ITEM.items_list.extend(events)
         for area in areas_list:
             if area.allowed_time_of_day == Both:
@@ -360,6 +361,8 @@ class Areas:
             entrance["short_name"] = partial_address
             self.map_entrances[full_address] = entrance
 
+        EXTENDED_ITEM.complete = True
+
         def short_to_full(elt: str):
             if elt in LOGIC_OPTIONS or "Trick" in elt:
                 return EIN(elt)
@@ -414,7 +417,7 @@ class Areas:
                     timed_req = req.night_only() & DNFInv(EIN(area_name))
                 loc_bit = EXTENDED_ITEM[with_sep_full(area_name, loc)]
                 reqs[loc_bit] |= timed_req
-                self.opaque[loc_bit] = timed_req.opaque
+                self.opaque[loc_bit] = req.opaque
 
             for exit, req in area.exits.items():
                 if exit in self.areas:  # Logical exit, the name is the area

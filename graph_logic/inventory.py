@@ -36,6 +36,7 @@ class MetaContainer(type):
 
 class EXTENDED_ITEM(int, metaclass=MetaContainer):
     items_list: List[EXTENDED_ITEM_NAME] = list(extended_item_generator())  # type: ignore
+    complete = False
 
     @classmethod
     def items(cls):

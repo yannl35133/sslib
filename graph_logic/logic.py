@@ -411,11 +411,11 @@ class Logic:
                 EXTENDED_ITEM[make_night(exit_area.name)]
             )
         elif exit_area.allowed_time_of_day == DayOnly:
-            day_req = exit_as_req & DNFInventory(EXTENDED_ITEM[exit_area.name])
+            day_req = exit_as_req
             night_req = DNFInventory()
         else:
             day_req = DNFInventory()
-            night_req = exit_as_req & DNFInventory(EXTENDED_ITEM[exit_area.name])
+            night_req = exit_as_req
 
         if allowed_times == Both:
             bit_req = [
