@@ -63,7 +63,7 @@ class PlacementFile:
         self.trial_object_seed = jsn["trial-object-seed"]
         self.music_rando_seed = jsn["music-rando-seed"]
 
-    def check_valid(self):
+    def check_valid(self, areas):
         """checks, if the current state is valid, throws an exception otherwise
         This does not check consistency with all the settings"""
         if VERSION != self.version:
@@ -96,25 +96,17 @@ class PlacementFile:
             if item not in ALL_ITEM_NAMES:
                 raise InvalidPlacementFile(f'invalid item "{item}"')
 
-        checks_file = read_yaml_file_cached("checks.yaml")
         check_sets_equal(
-            set(
-                k
-                for (k, v) in checks_file.items()
-                if v["original item"] != "Gratitude Crystal"
-            ),
+            set(areas.checks.keys()),
             set(self.item_locations.keys()),
             "Checks",
         )
-        # WRONG: Now long names here
 
-        hint_file = read_yaml_file_cached("hints.yaml")
         check_sets_equal(
-            set(hint_file.keys()),
+            set(areas.gossip_stones.keys()),
             set(self.gossip_stone_hints.keys()),
             "Gossip Stone Hints",
         )
-        # WRONG: Now long names here
 
         for hintlist in self.gossip_stone_hints.values():
             if not isinstance(hintlist, list):
@@ -137,7 +129,6 @@ class PlacementFile:
         )
 
         check_sets_equal(trial_check_names, set(self.trial_hints.keys()), "Trial Hints")
-        # WRONG: Not done
 
 
 def check_sets_equal(orig: set, actual: set, name: str):
