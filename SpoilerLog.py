@@ -23,6 +23,7 @@ def write(
     barren_nonprogress,
     randomized_dungeon_entrance,
     randomized_trial_entrance,
+    check_names,
 ):
     write_header(file, options, hash)
     norm = areas.prettify
@@ -43,9 +44,26 @@ def write(
 
     # Write spirit of the sword (100% required) locations
     file.write("SotS:\n")
-    for item in sots_items[DEMISE]:
-        location = placement.items[item]
-        location = norm(location) + ":"
+
+    sorted_regions = []
+    norm_check_list = []
+    for short_loc in check_names:
+        loc = areas.short_to_full(short_loc)
+        norm_check_list.append(norm(loc))
+        if areas.checks[loc]["hint_region"] in sorted_regions:
+            continue
+        sorted_regions.append(areas.checks[loc]["hint_region"])
+
+    sots_locations = {goal: [] for goal in sots_items.keys()}
+    for goal in sots_locations.keys():
+        for item in sots_items[goal]:
+            location = placement.items[item]
+            if norm(location) != START_ITEM:
+                sots_locations[goal].append((norm(location), item))
+        sots_locations[goal].sort(key=lambda check: (norm_check_list.index(check[0])))
+
+    for loc, item in sots_locations[DEMISE]:
+        location = loc + ":"
         file.write(f"  {location:53} {item}\n")
 
     file.write("\n\n")
@@ -55,9 +73,8 @@ def write(
     for dungeon in required_dungeons:
         goal = DUNGEON_GOALS[dungeon]
         file.write(f"{goal}:\n")
-        for item in sots_items[goal]:
-            location = placement.items[item]
-            location = norm(location) + ":"
+        for loc, item in sots_locations[goal]:
+            location = loc + ":"
             file.write(f"  {location:53} {item}\n")
 
     file.write("\n\n")
@@ -113,7 +130,13 @@ def write(
         for loc, item in placement.locations.items()
         if norm(item) != GRATITUDE_CRYSTAL
     ]
-    with_regions.sort()
+
+    with_regions.sort(
+        key=lambda check: (
+            sorted_regions.index(check[0]),
+            norm_check_list.index(check[1]),
+        )
+    )
 
     max_location_name_length = 1 + max(
         len(loc[1]) for sphere in prettified_spheres for loc in sphere
@@ -147,7 +170,7 @@ def write(
     file.write("Hints:\n")
     for hintname in areas.gossip_stones:
         hint = hints[hintname]
-        file.write(f"  {norm(hintname)+':':53} {hint.to_spoiler_log_text()}\n")
+        file.write(f"  {norm(hintname)+':':53} {hint.to_spoiler_log_text(norm)}\n")
 
     file.write("\n\n\n")
 

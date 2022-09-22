@@ -201,6 +201,7 @@ class Randomizer(BaseRandomizer):
                 barren_nonprogress=self.logic.get_barren_regions(weak=True),
                 randomized_dungeon_entrance=self.logic.randomized_dungeon_entrance,
                 randomized_trial_entrance=self.logic.randomized_trial_entrance,
+                check_names=self.item_locations.keys(),
             )
             with log_address.open("w") as f:
                 json.dump(dump, f, indent=2)
@@ -222,6 +223,7 @@ class Randomizer(BaseRandomizer):
                     barren_nonprogress=self.logic.get_barren_regions(weak=True),
                     randomized_dungeon_entrance=self.logic.randomized_dungeon_entrance,
                     randomized_trial_entrance=self.logic.randomized_trial_entrance,
+                    check_names=self.item_locations.keys(),
                 )
         if not self.dry_run:
             GamePatcher(

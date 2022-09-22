@@ -17,7 +17,7 @@ class GossipStoneHint:
         """each string in the list appear in a separate textbox and will be line broken"""
         raise NotImplementedError("abstract")
 
-    def to_spoiler_log_text(self) -> str:
+    def to_spoiler_log_text(self, norm=None) -> str:
         raise NotImplementedError("abstract")
 
     def to_spoiler_log_json(self):
@@ -37,8 +37,8 @@ class GossipStoneHintWrapper:
         secondary_text = self.secondary_hint.to_gossip_stone_text(norm)
         return primary_text + secondary_text
 
-    def to_spoiler_log_text(self) -> str:
-        return f"{self.primary_hint.to_spoiler_log_text()} / {self.secondary_hint.to_spoiler_log_text()}"
+    def to_spoiler_log_text(self, norm=None) -> str:
+        return f"{self.primary_hint.to_spoiler_log_text(norm)} / {self.secondary_hint.to_spoiler_log_text(norm)}"
 
     def to_spoiler_log_json(self):
         return [
@@ -61,8 +61,8 @@ class LocationGossipStoneHint(GossipStoneHint):
                 f"They say that <r<{norm(self.location)}>> has <y<{norm(self.item)}>>"
             ]
 
-    def to_spoiler_log_text(self) -> str:
-        return f"{self.location} has {self.item}"
+    def to_spoiler_log_text(self, norm) -> str:
+        return f"{norm(self.location)} has {self.item}"
 
     def to_spoiler_log_json(self):
         return {
@@ -87,7 +87,7 @@ class TrialGateGossipStoneHint(LocationGossipStoneHint):
             f"They say that opening the <r<{norm(self.trial_gate)}>> will reveal <y<{norm(self.item)}>>"
         ]
 
-    def to_spoiler_log_text(self) -> str:
+    def to_spoiler_log_text(self, norm) -> str:
         return f"{self.trial_gate} has {self.item}"
 
     def to_spoiler_log_json(self):
@@ -103,7 +103,7 @@ class ZoneItemGossipStoneHint(LocationGossipStoneHint):
     def to_gossip_stone_text(self, norm) -> List[str]:
         return [f"<y<{norm(self.item)}>> can be found in <r<{self.zone_override}>>"]
 
-    def to_spoiler_log_text(self) -> str:
+    def to_spoiler_log_text(self, norm) -> str:
         return f"{self.item} is in {self.zone_override}"
 
     def to_spoiler_log_json(self):
@@ -134,7 +134,7 @@ class SotsGoalGossipStoneHint(LocationGossipStoneHint):
             f"The <b+<Spirit of the Sword>> guides the goddess' chosen hero to <r<{self.zone}>>"
         ]
 
-    def to_spoiler_log_text(self) -> str:
+    def to_spoiler_log_text(self, norm) -> str:
         if self.goal is not None:
             return f"{self.zone} is on the path to {self.goal}"
         return f"{self.zone} is SotS"
@@ -168,7 +168,7 @@ class CubeSotsGoalGossipStoneHint(LocationGossipStoneHint):
             f"The <ye<goddess>> left a sacred gift for the hero who unites <r<{self.cube_zone}>> with the skies."
         ]
 
-    def to_spoiler_log_text(self) -> str:
+    def to_spoiler_log_text(self, norm) -> str:
         if self.goal is not None:
             return f"a cube in {self.cube_zone} is on the path to {self.goal}"
         return f"{self.cube_zone} has a SotS cube"
@@ -193,7 +193,7 @@ class BarrenGossipStoneHint(GossipStoneHint):
             f"They say that those who travel to <r<{self.zone}>> will never find anything for their quest"
         ]
 
-    def to_spoiler_log_text(self) -> str:
+    def to_spoiler_log_text(self, norm) -> str:
         return f"{self.zone} is barren"
 
     def to_spoiler_log_json(self):
@@ -211,7 +211,7 @@ class EmptyGossipStoneHint(GossipStoneHint):
     def to_gossip_stone_text(self, norm) -> List[str]:
         return [self.text]
 
-    def to_spoiler_log_text(self) -> str:
+    def to_spoiler_log_text(self, norm) -> str:
         return self.text
 
     def to_spoiler_log_json(self):
