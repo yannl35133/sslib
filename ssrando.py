@@ -241,41 +241,6 @@ class Randomizer(BaseRandomizer):
     def get_placement_file(self):
         MAX_SEED = 1_000_000
         # temporary placement file stuff
-        trial_checks = {
-            # (getting it text patch, inventory text line)
-            SKYLOFT_TRIAL: "Song of the Hero - Trial Hint",
-            FARON_TRIAL: "Farore's Courage - Trial Hint",
-            LANAYRU_TRIAL: "Nayru's Wisdom - Trial Hint",
-            ELDIN_TRIAL: "Din's Power - Trial Hint",
-        }
-        trial_hints = {}
-        for (trial, hintname) in trial_checks.items():
-            randomized_trial = self.logic.randomized_trial_entrance[trial]
-            randomized_check = TRIAL_CHECKS[randomized_trial]
-            item = self.logic.placement.locations[
-                self.areas.short_to_full(randomized_check)
-            ]
-            hint_mode = self.options["song-hints"]
-            if hint_mode == "Basic":
-                if item in self.logic.get_useful_items(weak=True):
-                    useful_text = "You might need what it reveals..."
-                    # print(f'{item} in {trial_check} is useful')
-                else:
-                    useful_text = "It's probably not too important..."
-                    # print(f'{item} in {trial_check} is not useful')
-            elif hint_mode == "Advanced":
-                if item in self.logic.get_sots_items():
-                    useful_text = "Your spirit will grow by completing this trial"
-                elif item in self.logic.get_useful_items(weak=True):
-                    useful_text = "You might need what it reveals..."
-                else:
-                    # barren
-                    useful_text = "It's probably not too important..."
-            elif hint_mode == "Direct":
-                useful_text = f"This trial holds {item}"
-            else:
-                useful_text = ""
-            trial_hints[hintname] = useful_text
 
         plcmt_file = PlacementFile()
         plcmt_file.dungeon_connections = self.logic.randomized_dungeon_entrance
@@ -285,7 +250,7 @@ class Randomizer(BaseRandomizer):
             (k, v.to_gossip_stone_text(lambda s: self.areas.prettify(s, custom=True)))
             for (k, v) in self.hints.items()
         )
-        plcmt_file.trial_hints = trial_hints
+        plcmt_file.trial_hints = self.logic.placement.song_hints
         plcmt_file.item_locations = self.logic.placement.locations
         plcmt_file.options = self.options
         plcmt_file.required_dungeons = self.logic.required_dungeons

@@ -111,7 +111,8 @@ def strip_item_number(item: EXTENDED_ITEM_NAME) -> str:
 
 
 def group(name: str, count: int) -> Dict[EXTENDED_ITEM_NAME, None]:
-    ITEM_COUNTS[name] = count
+    if name not in ITEM_COUNTS:
+        ITEM_COUNTS[name] = count
     return {number(name, i): None for i in range(count)}
 
 

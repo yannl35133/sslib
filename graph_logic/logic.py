@@ -42,6 +42,7 @@ class Placement:
     items: Dict[EXTENDED_ITEM_NAME, EXTENDED_ITEM_NAME] = field(default_factory=dict)
     stones: Dict[EIN, List[EIN]] = field(default_factory=lambda: defaultdict(list))
     hints: Dict[EXTENDED_ITEM_NAME, EXTENDED_ITEM_NAME] = field(default_factory=dict)
+    song_hints: Dict[EIN, str] = field(default_factory=dict)
     starting_items: Set[EIN] = field(default_factory=set)
     unplaced_items: Set[EIN] = field(default_factory=set)
 
@@ -54,6 +55,7 @@ class Placement:
             self.items.copy(),
             self.stones.copy(),
             self.hints.copy(),
+            self.song_hints.copy(),
             self.starting_items.copy(),
             self.unplaced_items.copy(),
         )
@@ -85,6 +87,9 @@ class Placement:
         for k, v in other.hints.items():
             if k in self.hints and v != self.hints[k]:
                 raise ValueError
+        for k, v in other.song_hints.items():
+            if k in self.song_hints and v != self.song_hints[k]:
+                raise ValueError
         return Placement(
             self.item_placement_limit | other.item_placement_limit,
             self.map_transitions | other.map_transitions,
@@ -93,6 +98,7 @@ class Placement:
             self.items | other.items,
             self.stones | other.stones,
             self.hints | other.hints,
+            self.song_hints | other.song_hints,
             self.starting_items | other.starting_items,
             self.unplaced_items | other.unplaced_items,
         )
@@ -110,6 +116,7 @@ class Placement:
             self.items | {k: START_ITEM for k in items},
             self.stones,
             self.hints,
+            self.song_hints,
             self.starting_items | items,
             self.unplaced_items,
         )
@@ -127,6 +134,7 @@ class Placement:
             self.items | {k: UNPLACED_ITEM for k in items},
             self.stones,
             self.hints,
+            self.song_hints,
             self.starting_items,
             self.unplaced_items | items,
         )

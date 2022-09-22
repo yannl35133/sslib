@@ -1,4 +1,4 @@
-from graph_logic.constants import EIN, HINTS, MAX_HINTS, TRIAL_CHECKS
+from graph_logic.constants import *
 from graph_logic.inventory import EXTENDED_ITEM, HINT_BYPASS_BIT, Inventory
 from graph_logic.logic import DNFInventory
 from graph_logic.logic_input import Areas
@@ -55,12 +55,47 @@ class Hints:
         ):
             needed_always_hints.append(self.norm("Beedle - 1200 Rupee Item"))
             needed_always_hints.append(self.norm("Beedle - 1600 Rupee Item"))
-        if self.options["song-hints"] == "None":
+
+        hint_mode = self.options["song-hints"]
+        if hint_mode == "None":
             for check in TRIAL_CHECKS.values():
                 needed_always_hints.append(self.norm(check))
         else:
             for check in TRIAL_CHECKS.values():
                 unhintables.append(self.norm(check))
+
+        trial_checks = {
+            # (getting it text patch, inventory text line)
+            SKYLOFT_TRIAL: EIN("Song of the Hero - Trial Hint"),
+            FARON_TRIAL: EIN("Farore's Courage - Trial Hint"),
+            LANAYRU_TRIAL: EIN("Nayru's Wisdom - Trial Hint"),
+            ELDIN_TRIAL: EIN("Din's Power - Trial Hint"),
+        }
+
+        for (trial, hintname) in trial_checks.items():
+            randomized_trial = self.logic.randomized_trial_entrance[trial]
+            randomized_check = TRIAL_CHECKS[randomized_trial]
+            item = self.logic.placement.locations[
+                self.areas.short_to_full(randomized_check)
+            ]
+
+            if hint_mode == "Basic":
+                if item in self.logic.get_useful_items(weak=True):
+                    useful_text = "You might need what it reveals..."
+                else:
+                    useful_text = "It's probably not too important..."
+            elif hint_mode == "Advanced":
+                if item in self.logic.get_sots_items():
+                    useful_text = "Your spirit will grow by completing this trial"
+                elif item in self.logic.get_useful_items(weak=True):
+                    useful_text = "You might need what it reveals..."
+                else:  # barren
+                    useful_text = "It's probably not too important..."
+            elif hint_mode == "Direct":
+                useful_text = f"This trial holds {item}"
+            else:
+                useful_text = ""
+            self.placement.song_hints[hintname] = useful_text
 
         self.dist.start(
             self.areas,
