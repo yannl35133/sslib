@@ -62,7 +62,7 @@ class LocationGossipStoneHint(GossipStoneHint):
             ]
 
     def to_spoiler_log_text(self) -> str:
-        return f"{self.location} has {self.item}"
+        return f"{self.location} has {self.item} [{self.hint_type}]"
 
     def to_spoiler_log_json(self):
         return {
@@ -104,7 +104,7 @@ class ZoneItemGossipStoneHint(LocationGossipStoneHint):
         return [f"<y<{norm(self.item)}>> can be found in <r<{self.zone_override}>>"]
 
     def to_spoiler_log_text(self) -> str:
-        return f"{self.item} is in {self.zone_override}"
+        return f"{self.item} is in {self.zone_override} [zone]"
 
     def to_spoiler_log_json(self):
         return {
@@ -136,8 +136,8 @@ class SotsGoalGossipStoneHint(LocationGossipStoneHint):
 
     def to_spoiler_log_text(self) -> str:
         if self.goal is not None:
-            return f"{self.zone} is on the path to {self.goal}"
-        return f"{self.zone} is SotS"
+            return f"{self.zone} is on the path to {self.goal} [{self.item}]"
+        return f"{self.zone} is SotS [{self.item}]"
 
     def to_spoiler_log_json(self):
         return {
@@ -170,8 +170,8 @@ class CubeSotsGoalGossipStoneHint(LocationGossipStoneHint):
 
     def to_spoiler_log_text(self) -> str:
         if self.goal is not None:
-            return f"a cube in {self.cube_zone} is on the path to {self.goal}"
-        return f"{self.cube_zone} has a SotS cube"
+            return f"a cube in {self.cube_zone} is on the path to {self.goal} [{self.item}]"
+        return f"{self.cube_zone} has a SotS cube [{self.item}]"
 
     def to_spoiler_log_json(self):
         return {
