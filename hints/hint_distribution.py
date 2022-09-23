@@ -269,12 +269,8 @@ class HintDistribution:
         if SEA_CHART in self.logic.get_useful_items(weak=True):
             self.hintable_items.append(SEA_CHART)
         for item in self.removed_items:
-            if item in self.hintable_items:
-                self.hintable_items.remove(item)
-        for item in self.logic.placement.starting_items:
-            if item in self.hintable_items:
-                self.hintable_items.remove(item)
-        for item in self.logic.placement.unplaced_items:
+            if (loc := self.logic.placement.items[item]) not in self.hinted_locations:
+                self.hinted_locations.append(loc)
             if item in self.hintable_items:
                 self.hintable_items.remove(item)
         self.rng.shuffle(self.hintable_items)
