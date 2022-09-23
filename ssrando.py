@@ -151,10 +151,11 @@ class Randomizer(BaseRandomizer):
             raise StartupException("ERROR: the randomizer only supports NTSC-U 1.00")
 
     def get_total_progress_steps(self):
+        rando_steps = self.rando.get_total_progress_steps() + 3
         if self.dry_run:
-            return 2
+            return rando_steps + 1
         else:
-            return 2 + GAMEPATCH_TOTAL_STEP_COUNT
+            return rando_steps + 1 + 1 + GAMEPATCH_TOTAL_STEP_COUNT
 
     def set_progress_callback(self, progress_callback: Callable[[str], None]):
         self.progress_callback = progress_callback

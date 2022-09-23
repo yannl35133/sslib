@@ -321,6 +321,9 @@ class Rando:
 
         self.rando_algo = BFA(logic, self.rng, self.randosettings)
 
+    def get_total_progress_steps(self):
+        return self.rando_algo.get_total_progress_steps()
+
     def randomize(self, useroutput: UserOutput):
         self.rando_algo.randomize(useroutput)
         self.randomised = True

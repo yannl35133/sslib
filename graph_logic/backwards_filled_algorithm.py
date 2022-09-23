@@ -44,6 +44,20 @@ class BFA:
             if truly_progress_item[EXTENDED_ITEM[item]]
         }
 
+        self.must_be_placed_items = [
+            item
+            for item in self.randosettings.must_be_placed_items
+            if item not in self.progress_items
+        ]
+        self.may_be_placed_items = [
+            item
+            for item in self.randosettings.may_be_placed_items
+            if item not in self.progress_items
+        ]
+
+    def get_total_progress_steps(self):
+        return len(self.progress_items) + len(self.must_be_placed_items) + 1
+
     def randomize(self, useroutput: UserOutput):
         self.useroutput = useroutput
 
@@ -60,25 +74,15 @@ class BFA:
         #     for _ in range(len(e)):
         #         self.link(i)
 
-        must_be_placed_items = [
-            item
-            for item in self.randosettings.must_be_placed_items
-            if item not in self.progress_items
-        ]
-        may_be_placed_items = [
-            item
-            for item in self.randosettings.may_be_placed_items
-            if item not in self.progress_items
-        ]
-        self.rng.shuffle(must_be_placed_items)
-        self.rng.shuffle(may_be_placed_items)
+        self.rng.shuffle(self.must_be_placed_items)
+        self.rng.shuffle(self.may_be_placed_items)
 
         self.logic.add_item(BANNED_BIT)
-        for item in must_be_placed_items:
+        for item in self.must_be_placed_items:
             self.useroutput.progress_callback("placing nonprogress items...")
             assert self.place_item(item)
         self.useroutput.progress_callback("placing remaining items...")
-        for item in may_be_placed_items:
+        for item in self.may_be_placed_items:
             if not self.place_item(item, force=False):
                 break
         self.fill_with_junk(self.randosettings.duplicable_items)
