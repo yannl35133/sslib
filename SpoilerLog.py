@@ -176,7 +176,7 @@ def write(
     for (
         entrance_name,
         exit_name,
-    ) in sorted(exits_connections):
+    ) in sorted(exits_connections.items()):
         file.write("  %-48s %s\n" % (entrance_name + ":", exit_name))
 
     file.write("\n\n")

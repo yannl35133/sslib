@@ -271,7 +271,7 @@ class Randomizer(BaseRandomizer):
         plcmt_file.trial_object_seed = self.rng.randint(1, MAX_SEED)
         plcmt_file.music_rando_seed = self.rng.randint(1, MAX_SEED)
 
-        plcmt_file.check_valid()
+        plcmt_file.check_valid(self.areas)
 
         return plcmt_file
 
