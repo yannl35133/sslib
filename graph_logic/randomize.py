@@ -456,10 +456,10 @@ class Rando:
     def initialize_items(self):
         # Initialize item related attributes.
         must_be_placed_items = (
-            PROGRESS_ITEMS | NONPROGRESS_ITEMS | SMALL_KEYS | BOSS_KEYS
+            PROGRESS_ITEMS | NONPROGRESS_ITEMS | ALL_SMALL_KEYS | ALL_BOSS_KEYS
         )
         if self.options["map-mode"] != "Removed":
-            must_be_placed_items |= MAPS
+            must_be_placed_items |= ALL_MAPS
 
         may_be_placed_items: List[EIN] = list(CONSUMABLE_ITEMS)
         duplicable_items = DUPLICABLE_ITEMS

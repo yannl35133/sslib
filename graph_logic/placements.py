@@ -84,17 +84,17 @@ VANILLA_SMALL_KEYS_PLACEMENT = norm_vanilla(SMALL_KEY_CHECKS)
 
 DUNGEON_SMALL_KEYS_RESTRICTION = norm_values(
     {
-        number(SV_SMALL_KEY, 0): SV + sep + "Main",
-        number(SV_SMALL_KEY, 1): SV + sep + "Main",
-        number(LMF_SMALL_KEY, 0): LMF + sep + "Main",
-        number(AC_SMALL_KEY, 0): AC + sep + "Main",
-        number(AC_SMALL_KEY, 1): AC + sep + "Main",
-        number(SSH_SMALL_KEY, 0): SSH + sep + "Main",
-        number(SSH_SMALL_KEY, 1): SSH + sep + "Main",
-        number(FS_SMALL_KEY, 0): FS + sep + "Main",
-        number(FS_SMALL_KEY, 1): FS + sep + "Main",
-        number(FS_SMALL_KEY, 2): FS + sep + "Main",
-        number(SK_SMALL_KEY, 0): SK,
+        number(SMALL_KEY[SV], 0): SV + sep + "Main",
+        number(SMALL_KEY[SV], 1): SV + sep + "Main",
+        number(SMALL_KEY[LMF], 0): LMF + sep + "Main",
+        number(SMALL_KEY[AC], 0): AC + sep + "Main",
+        number(SMALL_KEY[AC], 1): AC + sep + "Main",
+        number(SMALL_KEY[SSH], 0): SSH + sep + "Main",
+        number(SMALL_KEY[SSH], 1): SSH + sep + "Main",
+        number(SMALL_KEY[FS], 0): FS + sep + "Main",
+        number(SMALL_KEY[FS], 1): FS + sep + "Main",
+        number(SMALL_KEY[FS], 2): FS + sep + "Main",
+        number(SMALL_KEY[SK], 0): SK,
     }
 )
 
@@ -113,12 +113,12 @@ VANILLA_BOSS_KEYS_PLACEMENT = norm_vanilla(BOSS_KEY_CHECKS)
 
 DUNGEON_BOSS_KEYS_RESTRICTION = norm_values(
     {
-        SV_BOSS_KEY: SV,
-        ET_BOSS_KEY: ET,
-        LMF_BOSS_KEY: LMF,
-        AC_BOSS_KEY: AC,
-        SSH_BOSS_KEY: SSH,
-        FS_BOSS_KEY: FS,
+        BOSS_KEY[SV]: SV,
+        BOSS_KEY[ET]: ET,
+        BOSS_KEY[LMF]: LMF,
+        BOSS_KEY[AC]: AC,
+        BOSS_KEY[SSH]: SSH,
+        BOSS_KEY[FS]: FS,
     }
 )
 
@@ -135,24 +135,24 @@ VANILLA_MAPS_PLACEMENT = norm_vanilla(MAP_CHECKS)
 
 DUNGEON_MAPS_RESTRICTION = norm_values(
     {
-        SV_MAP: SV,
-        ET_MAP: ET,
-        LMF_MAP: LMF,
-        AC_MAP: AC,
-        SSH_MAP: SSH,
-        FS_MAP: FS,
-        SK_MAP: SK,
+        MAP[SV]: SV,
+        MAP[ET]: ET,
+        MAP[LMF]: LMF,
+        MAP[AC]: AC,
+        MAP[SSH]: SSH,
+        MAP[FS]: FS,
+        MAP[SK]: SK,
     }
 )
 DUNGEON_MAPS_RESTRICTED_RESTRICTION = norm_values(
     {
-        SV_MAP: SV + sep + "Main",
-        ET_MAP: ET + sep + "Main",
-        LMF_MAP: LMF + sep + "Main",
-        AC_MAP: AC + sep + "Main",
-        SSH_MAP: SSH + sep + "Main",
-        FS_MAP: FS + sep + "Main",
-        SK_MAP: SK + sep + "Main",
+        MAP[SV]: SV + sep + "Main",
+        MAP[ET]: ET + sep + "Main",
+        MAP[LMF]: LMF + sep + "Main",
+        MAP[AC]: AC + sep + "Main",
+        MAP[SSH]: SSH + sep + "Main",
+        MAP[FS]: FS + sep + "Main",
+        MAP[SK]: SK + sep + "Main",
     }
 )
 

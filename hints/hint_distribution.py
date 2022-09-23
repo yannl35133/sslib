@@ -9,7 +9,6 @@ from hints.hint_types import *
 from graph_logic.constants import *
 from graph_logic.randomize import LogicUtils
 from options import Options
-from paths import RANDO_ROOT_PATH
 
 
 HINTABLE_ITEMS = (
@@ -452,7 +451,7 @@ class HintDistribution:
         item = self.hintable_items.pop()
         location = self.logic.placement.items[item]
         if location in self.hinted_locations:
-            return None
+            return self._create_item_hint()
         self.hinted_locations.append(location)
         if self.options["precise-item"]:
             return LocationGossipStoneHint(

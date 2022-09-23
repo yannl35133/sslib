@@ -179,49 +179,35 @@ PROGRESSIVE_WALLETS = group(PROGRESSIVE_WALLET, 4)
 EXTRA_WALLETS = group(EXTRA_WALLET, 3)
 
 small_key = lambda d: d + " Small Key"
-SV_SMALL_KEY = small_key(SV)
-ET_SMALL_KEY = small_key(ET)
-LMF_SMALL_KEY = small_key(LMF)
-AC_SMALL_KEY = small_key(AC)
-SSH_SMALL_KEY = small_key(SSH)
-FS_SMALL_KEY = small_key(FS)
-SK_SMALL_KEY = small_key(SK)
+SMALL_KEY = {dun: small_key(dun) for dun in ALL_DUNGEONS}
 
 boss_key = lambda d: d + " Boss Key"
-SV_BOSS_KEY = boss_key(SV)
-ET_BOSS_KEY = boss_key(ET)
-LMF_BOSS_KEY = boss_key(LMF)
-AC_BOSS_KEY = boss_key(AC)
-SSH_BOSS_KEY = boss_key(SSH)
-FS_BOSS_KEY = boss_key(FS)
-SK_BOSS_KEY = boss_key(SK)
+BOSS_KEY = {dun: boss_key(dun) for dun in ALL_DUNGEONS}
 
 dungeon_map = lambda d: EIN(d + " Map")
-SV_MAP = dungeon_map(SV)
-ET_MAP = dungeon_map(ET)
-LMF_MAP = dungeon_map(LMF)
-AC_MAP = dungeon_map(AC)
-SSH_MAP = dungeon_map(SSH)
-FS_MAP = dungeon_map(FS)
-SK_MAP = dungeon_map(SK)
+MAP = {dun: dungeon_map(dun) for dun in ALL_DUNGEONS}
 
 CAVES_KEY = EIN("Lanayru Caves Key")
 
-SV_SMALL_KEYS = group(SV_SMALL_KEY, 2)
-ET_SMALL_KEYS = group(ET_SMALL_KEY, 0)
-LMF_SMALL_KEYS = group(LMF_SMALL_KEY, 1)
-AC_SMALL_KEYS = group(AC_SMALL_KEY, 2)
-SSH_SMALL_KEYS = group(SSH_SMALL_KEY, 2)
-FS_SMALL_KEYS = group(FS_SMALL_KEY, 3)
-SK_SMALL_KEYS = group(SK_SMALL_KEY, 1)
+SMALL_KEYS = {
+    SV: group(SMALL_KEY[SV], 2),
+    ET: group(SMALL_KEY[ET], 0),
+    LMF: group(SMALL_KEY[LMF], 1),
+    AC: group(SMALL_KEY[AC], 2),
+    SSH: group(SMALL_KEY[SSH], 2),
+    FS: group(SMALL_KEY[FS], 3),
+    SK: group(SMALL_KEY[SK], 1),
+}
 
-SV_BOSS_KEYS = group(SV_BOSS_KEY, 1)
-ET_BOSS_KEYS = group(ET_BOSS_KEY, 1)
-LMF_BOSS_KEYS = group(LMF_BOSS_KEY, 1)
-AC_BOSS_KEYS = group(AC_BOSS_KEY, 1)
-SSH_BOSS_KEYS = group(SSH_BOSS_KEY, 1)
-FS_BOSS_KEYS = group(FS_BOSS_KEY, 1)
-SK_BOSS_KEYS = group(SK_BOSS_KEY, 0)
+BOSS_KEYS = {
+    SV: group(BOSS_KEY[SV], 1),
+    ET: group(BOSS_KEY[ET], 1),
+    LMF: group(BOSS_KEY[LMF], 1),
+    AC: group(BOSS_KEY[AC], 1),
+    SSH: group(BOSS_KEY[SSH], 1),
+    FS: group(BOSS_KEY[FS], 1),
+    SK: group(BOSS_KEY[SK], 0),
+}
 
 WOODEN_SHIELD = EIN("Wooden Shield")
 HYLIAN_SHIELD = EIN("Hylian Shield")
@@ -378,34 +364,34 @@ DUPLICABLE_ITEMS = dict.fromkeys(
 DUPLICABLE_COUNTERPROGRESS_ITEMS = {RUPOOR: None}
 
 # note: Lanayru Caves is technically not a dungeon, but has to be treated as such for non key sanity
-SMALL_KEYS = (
-    SV_SMALL_KEYS
-    | ET_SMALL_KEYS
-    | LMF_SMALL_KEYS
-    | AC_SMALL_KEYS
-    | SSH_SMALL_KEYS
-    | FS_SMALL_KEYS
-    | SK_SMALL_KEYS
+ALL_SMALL_KEYS = (
+    SMALL_KEYS[SV]
+    | SMALL_KEYS[ET]
+    | SMALL_KEYS[LMF]
+    | SMALL_KEYS[AC]
+    | SMALL_KEYS[SSH]
+    | SMALL_KEYS[FS]
+    | SMALL_KEYS[SK]
     | {CAVES_KEY: None}
 )
-BOSS_KEYS = (
-    SV_BOSS_KEYS
-    | ET_BOSS_KEYS
-    | LMF_BOSS_KEYS
-    | AC_BOSS_KEYS
-    | SSH_BOSS_KEYS
-    | FS_BOSS_KEYS
-    | SK_BOSS_KEYS
+ALL_BOSS_KEYS = (
+    BOSS_KEYS[SV]
+    | BOSS_KEYS[ET]
+    | BOSS_KEYS[LMF]
+    | BOSS_KEYS[AC]
+    | BOSS_KEYS[SSH]
+    | BOSS_KEYS[FS]
+    | BOSS_KEYS[SK]
 )
-MAPS = dict.fromkeys([SV_MAP, ET_MAP, LMF_MAP, AC_MAP, SSH_MAP, FS_MAP, SK_MAP])
+ALL_MAPS = dict.fromkeys(MAP.values())
 
 INVENTORY_ITEMS = (
     PROGRESS_ITEMS
     | NONPROGRESS_ITEMS
     | CONSUMABLE_ITEMS
-    | SMALL_KEYS
-    | BOSS_KEYS
-    | MAPS
+    | ALL_SMALL_KEYS
+    | ALL_BOSS_KEYS
+    | ALL_MAPS
 )
 
 ALL_ITEM_NAMES = INVENTORY_ITEMS | DUPLICABLE_ITEMS | DUPLICABLE_COUNTERPROGRESS_ITEMS
