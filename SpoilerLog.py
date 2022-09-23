@@ -59,7 +59,7 @@ def write(
     file.write("SotS:\n")
 
     sorted_regions = ["Past"] + list(ALL_HINT_REGIONS)
-    sorted_checks = [START_ITEM, DEMISE] + list(areas.checks)
+    sorted_checks = [START_ITEM, UNPLACED_ITEM, DEMISE] + list(areas.checks)
 
     sots_locations = {
         goal: sorted(
