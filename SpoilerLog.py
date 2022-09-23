@@ -9,6 +9,20 @@ import itertools
 from version import VERSION
 
 
+def remove_prefix(region, location):
+    t = location.split(sep, 1)
+    if len(t) == 1:
+        return location
+    prefix, loc = t
+    if prefix == region:
+        return loc
+    if region == UPPER_SKYLOFT and prefix in ["Knight Academy", "Skyloft"]:
+        return loc
+    if region in [SKYLOFT_CENTRAL, SKYLOFT_VILLAGE] and prefix == "Skyloft":
+        return loc
+    return location
+
+
 def write(
     file: TextIO,
     placement: Placement,
@@ -44,8 +58,8 @@ def write(
     # Write spirit of the sword (100% required) locations
     file.write("SotS:\n")
 
-    sorted_regions = list(ALL_HINT_REGIONS)
-    sorted_checks = [START_ITEM] + list(areas.checks)
+    sorted_regions = ["Past"] + list(ALL_HINT_REGIONS)
+    sorted_checks = [START_ITEM, DEMISE] + list(areas.checks)
 
     sots_locations = {
         goal: sorted(
@@ -91,12 +105,22 @@ def write(
         pretty_sphere = []
         for loc in sphere:
             if loc == DEMISE:
-                pretty_sphere.append(("Past", "Demise", DEMISE))
+                pretty_sphere.append(("Past", DEMISE, "End Credits"))
             elif norm(item := placement.locations[loc]) != GRATITUDE_CRYSTAL:
-                pretty_sphere.append(
-                    (areas.checks[loc]["hint_region"], norm(loc), item)
-                )
-        prettified_spheres.append(sorted(pretty_sphere))
+                hint_region = areas.checks[loc]["hint_region"]
+                pretty_sphere.append((hint_region, loc, item))
+        pretty_sphere.sort(
+            key=lambda check: (
+                sorted_regions.index(check[0]),
+                sorted_checks.index(check[1]),
+            ),
+        )
+        prettified_spheres.append(
+            [
+                (reg, remove_prefix(reg, norm(loc)), item)
+                for (reg, loc, item) in pretty_sphere
+            ],
+        )
 
     max_location_name_length = 1 + max(
         len(loc[1]) for sphere in prettified_spheres for loc in sphere
@@ -131,7 +155,9 @@ def write(
         )
     )
 
-    with_regions = [(reg, norm(loc), item) for (reg, loc, item) in with_regions]
+    with_regions = [
+        (reg, remove_prefix(reg, norm(loc)), item) for (reg, loc, item) in with_regions
+    ]
 
     max_location_name_length = 1 + max(
         len(loc[1]) for sphere in prettified_spheres for loc in sphere
