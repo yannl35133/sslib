@@ -230,24 +230,31 @@ class LogicUtils(Logic):
 
     def calculate_playthrough_progression_spheres(self):
         spheres = []
-        keep_going = True
         inventory = self.inventory | HINT_BYPASS_BIT
+        inventory2 = inventory
         requirements = self.backup_requirements
-        # usefuls = self.aggregate_useful_items(EXTENDED_ITEM[self.short_to_full(DEMISE)])
-        while keep_going:
+        usefuls = self.get_useful_items()
+        while True:
             sphere = []
-            keep_going = False
-            for i in EXTENDED_ITEM.items():
-                if not inventory[i] and requirements[i].eval(inventory):
-                    inventory |= i
-                    keep_going = True
-                    if (loc := EXTENDED_ITEM.get_item_name(i)) in self.areas.checks:
-                        # i in usefuls:
-                        sphere.append(loc)
-                    elif i == EXTENDED_ITEM[self.short_to_full(DEMISE)]:
-                        sphere.append(DEMISE)
+            keep_going = True
+            while keep_going:
+                keep_going = False
+                for i in EXTENDED_ITEM.items():
+                    if not inventory2[i] and requirements[i].eval(inventory):
+                        keep_going = True
+                        inventory2 |= i
+                        if (item := EXTENDED_ITEM.get_item_name(i)) in usefuls:
+                            loc = self.placement.items[item]
+                            sphere.append(loc)
+                        elif i == EXTENDED_ITEM[self.short_to_full(DEMISE)]:
+                            sphere.append(DEMISE)
+                        else:
+                            inventory |= i
+            inventory = inventory2
             if sphere:
                 spheres.append(sphere)
+            else:
+                break
         return spheres
 
 
