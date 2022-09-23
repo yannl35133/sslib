@@ -121,14 +121,16 @@ class Hints:
             hint_bit = EXTENDED_ITEM[hintname]
             if isinstance(hint, LocationGossipStoneHint) and hint.item in EXTENDED_ITEM:
                 itembit = EXTENDED_ITEM[hint.item]
-                self.logic.backup_requirements[itembit] &= DNFInventory(
+                hint_req = DNFInventory(
                     {Inventory(hint_bit), Inventory(HINT_BYPASS_BIT)}
                 )
+                self.logic.backup_requirements[itembit] &= hint_req
+                self.logic.requirements[itembit] &= hint_req
 
             self.logic.inventory |= hint_bit
 
         self.logic.aggregate = self.logic.aggregate_requirements(
-            self.logic.backup_requirements, None
+            self.logic.requirements, None
         )
         self.logic.fill_inventory_i(monotonic=False)
 
@@ -140,7 +142,7 @@ class Hints:
         hint_bit = EXTENDED_ITEM[hintname]
         self.logic.remove_item(hint_bit)
 
-        accessible_stones = self.logic.accessible_stones()
+        accessible_stones = list(self.logic.accessible_stones())
 
         available_stones = [
             stone
@@ -157,7 +159,7 @@ class Hints:
         # We have to replace an already placed hint
         if depth > 50:
             return False
-        if not available_stones:
+        if not accessible_stones:
             raise self.useroutput.GenerationFailed(
                 f"no more location accessible for {hintname}"
             )
