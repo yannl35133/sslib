@@ -73,7 +73,7 @@ class PlacementFile:
 
         ALLOWED_STARTING_ITEMS = (
             dict.fromkeys((EMERALD_TABLET, AMBER_TABLET, RUBY_TABLET))
-            | group(PROGRESSIVE_SWORD, 6)
+            | PROGRESSIVE_SWORDS
             | group(PROGRESSIVE_POUCH, 1)
         )
         for item in self.starting_items:
