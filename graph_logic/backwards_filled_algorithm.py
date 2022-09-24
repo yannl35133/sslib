@@ -127,6 +127,8 @@ class BFA:
                 f"no more location accessible for {item}"
             )
 
+        self.check_known_failures(item)
+
         if had_banned := self.logic.inventory[BANNED_BIT]:
             self.logic.remove_item(BANNED_BIT)
         new_item = self.logic.replace_item(self.rng.choice(accessible_locations), item)
@@ -136,6 +138,28 @@ class BFA:
         if had_banned:
             self.logic.add_item(BANNED_BIT)
         return ret
+
+    def check_known_failures(self, item):
+        if (
+            item in SMALL_KEYS[SSH]
+            and self.logic.placement.items.get(number(PROGRESSIVE_BOW, 1))
+            == UNPLACED_ITEM
+            and self.logic.placement.items.get(number(PROGRESSIVE_BOW, 2))
+            == UNPLACED_ITEM
+            and not self.logic.full_inventory[EXTENDED_ITEM[number(PROGRESSIVE_BOW, 0)]]
+        ):
+            raise self.useroutput.GenerationFailed(
+                f"Known generation failure : Vanilla Bow"
+            )
+
+        if (
+            item in SMALL_KEYS[AC]
+            and not self.logic.full_inventory[EXTENDED_ITEM[CISTERN_CLIP]]
+            and not self.logic.full_inventory[EXTENDED_ITEM[number(PROGRESSIVE_BOW, 0)]]
+        ):
+            raise self.useroutput.GenerationFailed(
+                f"Known generation failure : Vanilla Whip"
+            )
 
     def link(self, pool: int, entrance=None, depth=0):
         entrance_pool, exit_pool = self.logic.pools[pool]

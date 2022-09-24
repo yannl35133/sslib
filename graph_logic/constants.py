@@ -469,6 +469,8 @@ COMPLETE_TRIFORCE = "Complete Triforce"
 
 trick: Callable[[str], str] = lambda s: s + " Trick"
 
+CISTERN_CLIP = EIN(trick("Ancient Cistern - Cistern Clip"))
+
 UPPER_SKYLOFT = "Upper Skyloft"
 SKYLOFT_CENTRAL = "Skyloft Central"
 SKYLOFT_VILLAGE = "Skyloft Village"
