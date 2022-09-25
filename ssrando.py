@@ -187,6 +187,14 @@ class Randomizer(BaseRandomizer):
             f"SS Random {self.seed} - {anti}Spoiler Log.{ext}"
         )
 
+        goals = [DUNGEON_GOALS[dun] for dun in self.logic.required_dungeons] + [DEMISE]
+        sots_items = {
+            goal: self.logic.get_sots_items(
+                EXTENDED_ITEM[self.areas.short_to_full(GOAL_CHECKS[goal])]
+            )
+            for goal in goals
+        }
+
         if self.options["json"]:
             dump = SpoilerLog.dump_json(
                 self.logic.placement,
@@ -195,11 +203,8 @@ class Randomizer(BaseRandomizer):
                 progression_spheres=self.logic.calculate_playthrough_progression_spheres(),
                 hints=self.hints,
                 required_dungeons=self.logic.required_dungeons,
-                sots_items={
-                    goal: self.logic.get_sots_items(GOAL_CHECKS[goal])
-                    for goal in ALL_GOALS
-                },
-                barren_nonprogress=self.logic.get_barren_regions(weak=True),
+                sots_items=sots_items,
+                barren_nonprogress=self.logic.get_barren_regions(),
                 randomized_dungeon_entrance=self.logic.randomized_dungeon_entrance,
                 randomized_trial_entrance=self.logic.randomized_trial_entrance,
             )
@@ -216,11 +221,8 @@ class Randomizer(BaseRandomizer):
                     progression_spheres=self.logic.calculate_playthrough_progression_spheres(),
                     hints=self.hints,
                     required_dungeons=self.logic.required_dungeons,
-                    sots_items={
-                        goal: self.logic.get_sots_items(GOAL_CHECKS[goal])
-                        for goal in ALL_GOALS
-                    },
-                    barren_nonprogress=self.logic.get_barren_regions(weak=True),
+                    sots_items=sots_items,
+                    barren_nonprogress=self.logic.get_barren_regions(),
                     randomized_dungeon_entrance=self.logic.randomized_dungeon_entrance,
                     randomized_trial_entrance=self.logic.randomized_trial_entrance,
                 )
@@ -237,7 +239,7 @@ class Randomizer(BaseRandomizer):
                 self.arc_replacement_path,
                 plcmt_file,
             ).do_all_gamepatches()
-        self.progress_callback("patching done")
+            self.progress_callback("patching done")
 
     def get_placement_file(self):
         MAX_SEED = 1_000_000

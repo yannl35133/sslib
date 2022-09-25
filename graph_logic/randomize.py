@@ -58,8 +58,11 @@ class LogicUtils(Logic):
         starting_inventory = Inventory(
             {EXTENDED_ITEM[itemname] for itemname in placement.starting_items}
         )
-        settings = LogicSettings(starting_inventory, runtime_requirements, banned)
+        settings = LogicSettings(
+            starting_inventory, EMPTY_INV, runtime_requirements, banned
+        )
         super().__init__(areas, settings, placement, optim=False, requirements=reqs)
+        self.full_inventory = Logic.get_everything_unbanned(self.requirements)
         self.required_dungeons = additional_info.required_dungeons
         self.unrequired_dungeons = additional_info.unrequired_dungeons
         self.randomized_dungeon_entrance = additional_info.randomized_dungeon_entrance
@@ -149,14 +152,17 @@ class LogicUtils(Logic):
         return aggregate
 
     @cache
-    def get_sots_items(self, loc=DEMISE):
-        index = EXTENDED_ITEM[self.short_to_full(loc)]
-        usefuls = self.get_useful_items()
+    def _get_sots_items(self, index: EXTENDED_ITEM):
+        usefuls = self.get_useful_items(index)
         return [
             item
             for item in INVENTORY_ITEMS
             if item in usefuls
-            and not self.restricted_test(index, [EXTENDED_ITEM[item]])
+            and not self.restricted_test(
+                index,
+                [EXTENDED_ITEM[item]],
+                starting_inventory=self.inventory | HINT_BYPASS_BIT,
+            )
         ]
 
         # requireds: Inventory = self.congregate_requirements(index)  # type: ignore
@@ -166,8 +172,15 @@ class LogicUtils(Logic):
         # if EXTENDED_ITEM[i] in self.checks
         # ]
 
-    def get_sots_locations(self, loc=DEMISE):
-        for item in self.get_sots_items(loc):
+    def get_sots_items(self, index: EXTENDED_ITEM | None = None):
+        if index is None:
+            index = EXTENDED_ITEM[self.short_to_full(DEMISE)]
+        return self._get_sots_items(index)
+
+    def get_sots_locations(self, index: EXTENDED_ITEM | None = None):
+        if index is None:
+            index = EXTENDED_ITEM[self.short_to_full(DEMISE)]
+        for item in self.get_sots_items(index):
             if self.placement.item_placement_limit.get(item, ""):
                 continue
 
@@ -180,18 +193,18 @@ class LogicUtils(Logic):
             yield (hint_region, sots_loc, item)
 
     @cache
-    def get_useful_items(self, loc=DEMISE, weak=False):
-        full_inventory = Logic.get_everything_unbanned(self.requirements)
-        if weak:
-            bit = EVERYTHING_UNBANNED_BIT
-        else:
-            bit = EXTENDED_ITEM[self.short_to_full(loc)]
-        usefuls = self.aggregate_requirements(self.requirements, full_inventory, bit)
+    def _get_useful_items(self, index: EXTENDED_ITEM):
+        usefuls = self.aggregate_requirements(
+            self.requirements, self.full_inventory, index
+        )
         return [
             loc
             for i in usefuls.intset
             if (loc := EXTENDED_ITEM.get_item_name(i)) in INVENTORY_ITEMS
         ]
+
+    def get_useful_items(self, bit=EVERYTHING_UNBANNED_BIT):
+        return self._get_useful_items(bit)
 
     def locations_by_hint_region(self, region):
         for n, c in self.areas.checks.items():
@@ -199,34 +212,35 @@ class LogicUtils(Logic):
                 yield n
 
     @cache
-    def get_barren_regions(self, loc=DEMISE, weak=False):
-        useful_checks = [
+    def _get_barren_regions(self, index: EXTENDED_ITEM):
+        useful_checks = (
             self.placement.items[item]
-            for item in self.get_useful_items(loc, weak)
+            for item in self.get_useful_items(index)
             if item not in self.placement.starting_items
             if item not in self.placement.unplaced_items
             if not self.placement.item_placement_limit.get(item, "")
-        ]
+        )
 
         non_banned = self.fill_restricted()
 
-        useless_regions = ALL_HINT_REGIONS.copy()
+        useless_regions = set(ALL_HINT_REGIONS)
         for c in useful_checks:
             check = self.areas.checks[c]
             if (region := check.get("cube_region")) is None:
                 region = check["hint_region"]
-            useless_regions.pop(region, None)
+            useless_regions.discard(region)
 
-        inaccessible_regions = ALL_HINT_REGIONS.copy()
+        inacc_regions = set(ALL_HINT_REGIONS)
         for c in self.areas.checks.values():
             if non_banned[c["req_index"]]:
                 if (region := c.get("cube_region")) is None:
                     region = c["hint_region"]
-                inaccessible_regions.pop(region, None)
+                inacc_regions.discard(region)
 
-        return [
-            reg for reg in useless_regions if reg not in inaccessible_regions
-        ], list(inaccessible_regions)
+        return sorted(useless_regions - inacc_regions), sorted(inacc_regions)
+
+    def get_barren_regions(self, bit=EVERYTHING_UNBANNED_BIT):
+        return self._get_barren_regions(bit)
 
     def calculate_playthrough_progression_spheres(self):
         spheres = []
@@ -273,13 +287,19 @@ class Rando:
         self.parse_options()
         self.initial_placement = self.placement.copy()
 
-        starting_inventory_BFA = Inventory(
+        full_inventory_BFA = Inventory(
             {
                 EXTENDED_ITEM[itemname]
                 for itemname in INVENTORY_ITEMS
                 if self.placement.items.get(itemname, START_ITEM) == START_ITEM
                 # Either not placed yet or a start item
             }
+            | {HINT_BYPASS_BIT}
+        )
+
+        frees_BFA = Inventory(
+            {EXTENDED_ITEM[itemname] for itemname in self.placement.starting_items}
+            | {HINT_BYPASS_BIT}
         )
 
         runtime_requirements = (
@@ -291,7 +311,8 @@ class Rando:
         )
 
         logic_settings = LogicSettings(
-            starting_inventory_BFA,
+            full_inventory_BFA,
+            frees_BFA,
             runtime_requirements,
             self.banned,
         )

@@ -80,14 +80,14 @@ class Hints:
             ]
 
             if hint_mode == "Basic":
-                if item in self.logic.get_useful_items(weak=True):
+                if item in self.logic.get_useful_items():
                     useful_text = "You might need what it reveals..."
                 else:
                     useful_text = "It's probably not too important..."
             elif hint_mode == "Advanced":
                 if item in self.logic.get_sots_items():
                     useful_text = "Your spirit will grow by completing this trial"
-                elif item in self.logic.get_useful_items(weak=True):
+                elif item in self.logic.get_useful_items():
                     useful_text = "You might need what it reveals..."
                 else:  # barren
                     useful_text = "It's probably not too important..."
@@ -121,9 +121,7 @@ class Hints:
             hint_bit = EXTENDED_ITEM[hintname]
             if isinstance(hint, LocationGossipStoneHint) and hint.item in EXTENDED_ITEM:
                 itembit = EXTENDED_ITEM[hint.item]
-                hint_req = DNFInventory(
-                    {Inventory(hint_bit), Inventory(HINT_BYPASS_BIT)}
-                )
+                hint_req = DNFInventory(hint_bit)
                 self.logic.backup_requirements[itembit] &= hint_req
                 self.logic.requirements[itembit] &= hint_req
 

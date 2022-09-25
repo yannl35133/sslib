@@ -228,12 +228,12 @@ class HintDistribution:
         # create corresponding list of shuffled goal items
 
         for goal in self.goals:
-            check = GOAL_CHECKS[goal]
-            goal_locations = list(self.logic.get_sots_locations(check))
+            check = areas.short_to_full(GOAL_CHECKS[goal])
+            goal_locations = list(self.logic.get_sots_locations(EXTENDED_ITEM[check]))
             self.rng.shuffle(goal_locations)
             self.goal_locations.append(goal_locations)
 
-        region_barren, nonprogress = self.logic.get_barren_regions(weak=True)
+        region_barren, nonprogress = self.logic.get_barren_regions()
         for zone in region_barren:
             if "Silent Realm" in zone:
                 continue  # don't hint barren silent realms since they are an always hint
@@ -265,7 +265,7 @@ class HintDistribution:
         self.hintable_items = list(HINTABLE_ITEMS)
         for item in self.added_items:
             self.hintable_items.extend([item["name"]] * item["amount"])
-        if SEA_CHART in self.logic.get_useful_items(weak=True):
+        if SEA_CHART in self.logic.get_useful_items():
             self.hintable_items.append(SEA_CHART)
         for item in self.removed_items:
             if (loc := self.logic.placement.items[item]) not in self.hinted_locations:

@@ -142,9 +142,20 @@ class Inventory:
         else:
             raise ValueError
 
+    def __sub__(self, other):
+        if isinstance(other, EXTENDED_ITEM):
+            return Inventory((self.bitset & ~(1 << other), self.intset - {other}))
+        elif isinstance(other, Inventory):
+            return Inventory((self.bitset & ~other.bitset, self.intset - other.intset))
+        else:
+            raise ValueError
+
     def __le__(self, other):
         """Define inclusion"""
         return self.bitset | other.bitset == other.bitset
+
+    def __eq__(self, other):
+        return self.bitset == other.bitset
 
     def __hash__(self):
         return hash(self.bitset)

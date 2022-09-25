@@ -8,6 +8,7 @@ from .constants import *
 from .logic_input import Area, Areas, DayOnly, NightOnly, Both
 from .logic_expression import DNFInventory, AndCombination
 from .inventory import (
+    HINT_BYPASS_BIT,
     EVERYTHING_BIT,
     EVERYTHING_UNBANNED_BIT,
     Inventory,
@@ -142,6 +143,7 @@ class Placement:
 
 @dataclass
 class LogicSettings:
+    full_inventory: Inventory
     starting_inventory: Inventory
     runtime_requirements: Dict[EIN, DNFInventory]
     banned: List[EIN]
@@ -188,7 +190,10 @@ class Logic:
 
     @staticmethod
     def get_everything_unbanned(requirements: List[DNFInventory]):
-        inventory = Inventory({EXTENDED_ITEM[itemname] for itemname in INVENTORY_ITEMS})
+        inventory = Inventory(
+            {EXTENDED_ITEM[itemname] for itemname in INVENTORY_ITEMS}
+            | {HINT_BYPASS_BIT}
+        )
         full_inventory = Logic.fill_inventory(requirements, inventory)
         (everything_req,) = requirements[EVERYTHING_BIT].disjunction
         everything_unbanned_req = DNFInventory(
@@ -198,9 +203,10 @@ class Logic:
         return Logic.fill_inventory(requirements, full_inventory)
 
     @staticmethod
-    def free_simplify(requirements):
-        for i in Logic.fill_inventory(requirements, EMPTY_INV):
-            requirements[i] = DNFInventory(True)
+    def free_simplify(requirements, free: Inventory):
+        req = DNFInventory(True)
+        for i in Logic.fill_inventory(requirements, free) - free:
+            requirements[i] = req
 
     @staticmethod
     def shallow_simplify(requirements, opaques):
@@ -305,7 +311,8 @@ class Logic:
 
         self.ban_if = lambda it, r: r & banned_bit_inv if it in self.banned else r
 
-        self.inventory = logic_settings.starting_inventory
+        self.inventory = logic_settings.full_inventory
+        self.frees = logic_settings.starting_inventory
 
         self.backup_requirements = self.requirements.copy()
 
@@ -335,7 +342,7 @@ class Logic:
                 )
 
         if optim:
-            self.free_simplify(self.requirements)
+            self.free_simplify(self.requirements, self.frees)
             self.shallow_simplify(self.requirements, self.opaque)
             self.fill_inventory_i(monotonic=True)
         self.backup_requirements = self.requirements.copy()
@@ -353,7 +360,7 @@ class Logic:
 
     def fill_inventory_i(self, monotonic=False):
         # self.shallow_simplify()
-        self.free_simplify(self.requirements)
+        self.free_simplify(self.requirements, self.frees)
         inventory = self.full_inventory if monotonic else self.inventory
         self.full_inventory = self.fill_inventory(self.requirements, inventory)
 
@@ -469,7 +476,6 @@ class Logic:
                 name = "Item "
             raise ValueError(f"{name}{item} is already placed")
 
-        req = DNFInventory(location)
         if item in self.placement.item_placement_limit and not location.startswith(
             self.placement.item_placement_limit[item]
         ):
@@ -477,6 +483,13 @@ class Logic:
                 "This item cannot be placed in this area, "
                 f"it must be placed in {self.placement.item_placement_limit[item]}"
             )
+
+        if hint_mode:
+            req = DNFInventory({Inventory(location), Inventory(HINT_BYPASS_BIT)})
+            # loc | Hint Bypass
+        else:
+            req = DNFInventory(EXTENDED_ITEM[location])
+
         if item in EXTENDED_ITEM:
             item_bit = EXTENDED_ITEM[item]
             req = self.ban_if(item_bit, req)
