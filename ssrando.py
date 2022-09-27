@@ -166,7 +166,7 @@ class Randomizer(BaseRandomizer):
         self.rando.randomize(useroutput)
         self.progress_callback("preparing for hints...")
         self.logic = self.rando.extract_hint_logic()
-        del self.rando
+
         self.logic.check(useroutput)
         self.progress_callback("generating hints...")
         self.hints_gen = Hints(self.options, self.rng, self.areas, self.logic)
