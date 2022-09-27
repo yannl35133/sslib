@@ -163,12 +163,23 @@ Mogma Turf: # when randomizing this, need to find a way to force the skydiving a
       Second Vent: Nothing
 
 Silent Realm:
+  toplevel-alias: Eldin Silent Realm
   hint-region: Eldin Silent Realm
   exits:
     Entrance: Nothing
     Exit: Nothing
   locations:
     Fireshield Earrings: Nothing
+    Relic 1: Nothing
+    Relic 2: Nothing
+    Relic 3: Nothing
+    Relic 4: Nothing
+    Relic 5: Nothing
+    Relic 6: Nothing
+    Relic 7: Nothing
+    Relic 8: Nothing
+    Relic 9: Nothing
+    Relic 10: Nothing
 
 # VOLCANO SUMMIT
 Volcano Summit:

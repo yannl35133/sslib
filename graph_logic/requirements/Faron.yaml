@@ -140,12 +140,23 @@ Woods:
       Goddess Cube on East Great Tree with Rope: Goddess Sword
 
 Silent Realm:
+  toplevel-alias: Faron Silent Realm
   hint-region: Faron Silent Realm
   exits:
     Entrance: Nothing
     Exit: Nothing
   locations:
     Water Scale: Nothing
+    Relic 1: Nothing
+    Relic 2: Nothing
+    Relic 3: Nothing
+    Relic 4: Nothing
+    Relic 5: Nothing
+    Relic 6: Nothing
+    Relic 7: Nothing
+    Relic 8: Nothing
+    Relic 9: Nothing
+    Relic 10: Nothing
 
 # GREAT TREE
 

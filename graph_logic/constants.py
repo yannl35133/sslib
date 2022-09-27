@@ -257,7 +257,7 @@ RARE_TREASURES = group(RARE_TREASURE, 12)
 EVIL_CRYSTALS = group(EVIL_CRYSTAL, 2)
 ELDIN_ORES = group(ELDIN_ORE, 2)
 GODDESS_PLUMES = group(GODDESS_PLUME, 1)
-DUSK_RELICS = group(DUSK_RELIC, 1)
+DUSK_RELICS = group(DUSK_RELIC, 41)
 TUMBLEWEEDS = group(TUMBLEWEED, 1)
 FIVE_BOMBS_GROUP = group(FIVE_BOMBS, 1)
 
@@ -619,6 +619,51 @@ QUICK_BEETLE_CHECKS = [
     "Pirate Stronghold - Rupee on West Sea Pillar",
     "Pirate Stronghold - Rupee on East Sea Pillar",
 ]
+
+SILENT_REALM_RELIC_CHECKS = [
+    "Skyloft Silent Realm - Relic 10",
+    "Faron Silent Realm - Relic 10",
+    "Lanayru Silent Realm - Relic 10",
+    "Eldin Silent Realm - Relic 10",
+    "Skyloft Silent Realm - Relic 9",
+    "Faron Silent Realm - Relic 9",
+    "Lanayru Silent Realm - Relic 9",
+    "Eldin Silent Realm - Relic 9",
+    "Skyloft Silent Realm - Relic 8",
+    "Faron Silent Realm - Relic 8",
+    "Lanayru Silent Realm - Relic 8",
+    "Eldin Silent Realm - Relic 8",
+    "Skyloft Silent Realm - Relic 7",
+    "Faron Silent Realm - Relic 7",
+    "Lanayru Silent Realm - Relic 7",
+    "Eldin Silent Realm - Relic 7",
+    "Skyloft Silent Realm - Relic 6",
+    "Faron Silent Realm - Relic 6",
+    "Lanayru Silent Realm - Relic 6",
+    "Eldin Silent Realm - Relic 6",
+    "Skyloft Silent Realm - Relic 5",
+    "Faron Silent Realm - Relic 5",
+    "Lanayru Silent Realm - Relic 5",
+    "Eldin Silent Realm - Relic 5",
+    "Skyloft Silent Realm - Relic 4",
+    "Faron Silent Realm - Relic 4",
+    "Lanayru Silent Realm - Relic 4",
+    "Eldin Silent Realm - Relic 4",
+    "Skyloft Silent Realm - Relic 3",
+    "Faron Silent Realm - Relic 3",
+    "Lanayru Silent Realm - Relic 3",
+    "Eldin Silent Realm - Relic 3",
+    "Skyloft Silent Realm - Relic 2",
+    "Faron Silent Realm - Relic 2",
+    "Lanayru Silent Realm - Relic 2",
+    "Eldin Silent Realm - Relic 2",
+    "Skyloft Silent Realm - Relic 1",
+    "Faron Silent Realm - Relic 1",
+    "Lanayru Silent Realm - Relic 1",
+    "Eldin Silent Realm - Relic 1",
+]
+
+SILENT_REALM_RELIC_CHECKS_n = lambda n: SILENT_REALM_RELIC_CHECKS[: 4 * n]
 
 GONDO_ITEMS = {
     number(PROGRESSIVE_BEETLE, 2),

@@ -184,7 +184,10 @@ class HintDistribution:
         # all always hints are always hinted
         for hint in always_hints:
             self.hinted_locations.append(hint)
-            if hint in TRIAL_CHECKS_REV:
+            if (
+                hint in TRIAL_CHECKS_REV
+                and not options["treasuresanity-in-silent-realms"]
+            ):
                 trial = TRIAL_CHECKS_REV[hint]
                 trial_gate = self.logic.randomized_trial_entrance[trial]
                 trial_item = self.logic.placement.locations[hint]
@@ -235,7 +238,10 @@ class HintDistribution:
 
         region_barren, nonprogress = self.logic.get_barren_regions()
         for zone in region_barren:
-            if "Silent Realm" in zone:
+            if (
+                "Silent Realm" in zone
+                and not options["treasuresanity-in-silent-realms"]
+            ):
                 continue  # don't hint barren silent realms since they are an always hint
             if options["empty-unrequired-dungeons"]:
                 # avoid placing barren hints for unrequired dungeons in race mode

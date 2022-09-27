@@ -32,6 +32,7 @@ def norm_vanilla(list: List[str]):
 
 
 SINGLE_CRYSTAL_PLACEMENT = norm_vanilla(SINGLE_CRYSTAL_CHECKS)
+SILENT_REALM_RELIC_PLACEMENT = lambda n: norm_vanilla(SILENT_REALM_RELIC_CHECKS_n(n))
 
 
 def norm_keys(dict: Dict[str, EIN]):

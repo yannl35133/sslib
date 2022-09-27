@@ -538,6 +538,13 @@ class Rando:
 
         self.placement |= SINGLE_CRYSTAL_PLACEMENT(self.norm, self.areas.checks)
 
+        nb_dusk_relic_unrandomised = 10 - self.options["trial-treasure-amount"]
+        if not self.options["treasuresanity-in-silent-realms"]:
+            nb_dusk_relic_unrandomised = 10
+        self.placement |= SILENT_REALM_RELIC_PLACEMENT(nb_dusk_relic_unrandomised)(
+            self.norm, self.areas.checks
+        )
+
         vanilla_map_transitions = {}
         vanilla_reverse_map_transitions = {}
         for exit, v in self.areas.map_exits.items():
