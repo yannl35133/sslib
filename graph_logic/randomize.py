@@ -589,16 +589,27 @@ class Rando:
             reverse_map_transitions=vanilla_reverse_map_transitions,
         )
 
-        if self.options["sword-dungeon-reward"]:
+        sword_reward_mode = self.options["sword-dungeon-reward"]
+        if sword_reward_mode != "None":
             swords_to_place = [
                 sword
                 for sword in PROGRESSIVE_SWORDS
                 if sword not in self.placement.items
             ]
+
+            if sword_reward_mode == "Heart Container":
+                checks_to_use = DUNGEON_HEART_CONTAINERS
+            elif sword_reward_mode == "Final Check":
+                checks_to_use = DUNGEON_FINAL_CHECK
+            else:
+                raise ValueError(
+                    f"Option sword-dungeon-reward has unknown value {sword_reward_mode}"
+                )
+
             dungeons = self.required_dungeons.copy()
             self.rng.shuffle(dungeons)
             for dungeon, sword in zip(dungeons, swords_to_place):
-                final_check = self.short_to_full(DUNGEON_FINAL_CHECK[dungeon])
+                final_check = self.short_to_full(checks_to_use[dungeon])
                 self.placement |= Placement(
                     items={sword: final_check},
                     locations={final_check: sword},

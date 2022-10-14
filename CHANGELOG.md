@@ -4,6 +4,7 @@
 ### Options
 - Added option to randomize progression in Flooded Faron Woods (by CovenEsme)
   - Added Faron SotH check that is obtained when completing the Tadtones story quest
+- Added option to make sword reward place swords on heart containers rather than final checks (by YourAverageLink)
 ### Changes
 - Presets (by cjs07)
   - Presets allow users to save and load their favorite settings quickly from the main page of the randomizer

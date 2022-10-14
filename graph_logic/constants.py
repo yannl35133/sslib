@@ -437,6 +437,11 @@ DUNGEON_FINAL_CHECK = {
     FS: FS + sep + "Din's Flame",
 }
 
+dungeon_heart_containers = lambda d: d + sep + HEART_CONTAINER
+DUNGEON_HEART_CONTAINERS = {
+    dun: dungeon_heart_containers(dun) for dun in REGULAR_DUNGEONS
+}
+
 GHIRAHIM_I = "Ghirahim 1"
 SCALDERA = "Scaldera"
 MOLDARACH = "Moldarach"
