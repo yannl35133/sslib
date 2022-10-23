@@ -274,15 +274,26 @@ class LogicUtils(Logic):
         return spheres
 
     def get_dowsing(self, dowsing_setting):
+        # Dowsing slots:
+        # 0: Main quest
+        # 1: Rupee
+        # 2: Key Piece / Scrapper Quest
+        # 3: Crystal
+        # 4: Heart
+        # 5: Goddess Cube
+        # 6: Look around (not usable afaik)
+        # 7: Treasure
+        # 8: None
         if dowsing_setting == "None":
-            dowse = lambda v: False
+            dowse = lambda v: 8
         elif dowsing_setting == "All":
-            dowse = lambda v: True
+            dowse = lambda v: 0
         else:
             assert dowsing_setting == "Matches Contents"
-            dowse = (
-                lambda v: v in EXTENDED_ITEM
-                and EXTENDED_ITEM[v] in self.truly_progress_item
-            )
+
+            def dowse(v) -> int:
+                if v in EXTENDED_ITEM and EXTENDED_ITEM[v] in self.truly_progress_item:
+                    return 0
+                return 8
 
         return {k: dowse(v) for k, v in self.placement.locations.items()}
