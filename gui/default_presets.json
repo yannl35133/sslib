@@ -47,6 +47,7 @@
         "cube-sots": false,
         "precise-item": false,
         "shuffle-trial-objects": "None",
+        "chest-dowsing": "None",
         "hint-distribution": "Balanced"
     },
     "3D Rupeesanity": {
@@ -97,6 +98,7 @@
         "cube-sots": false,
         "precise-item": false,
         "shuffle-trial-objects": "Full",
+        "chest-dowsing": "None",
         "hint-distribution": "S2 - 3D"
     },
     "Allsanity": {
@@ -141,6 +143,7 @@
         "cube-sots": true,
         "precise-item": false,
         "shuffle-trial-objects": "Full",
+        "chest-dowsing": "None",
         "hint-distribution": "S2 - 3D EUD Off"
     },
     "S2 - 3D Standard": {
@@ -192,6 +195,7 @@
         "cube-sots": false,
         "precise-item": false,
         "shuffle-trial-objects": "None",
+        "chest-dowsing": "None",
         "hint-distribution": "S2 - 3D"
     },
     "S2 - 2D Cubes": {
@@ -242,6 +246,7 @@
         "cube-sots": false,
         "precise-item": false,
         "shuffle-trial-objects": "None",
+        "chest-dowsing": "None",
         "hint-distribution": "S2 - 2D"
     },
     "S2 - 3D Open": {
@@ -292,6 +297,7 @@
         "cube-sots": false,
         "precise-item": false,
         "shuffle-trial-objects": "None",
+        "chest-dowsing": "None",
         "hint-distribution": "S2 - 3D"
     },
     "S2 - 3D Swordless": {
@@ -343,6 +349,7 @@
         "cube-sots": false,
         "precise-item": false,
         "shuffle-trial-objects": "None",
+        "chest-dowsing": "None",
         "hint-distribution": "S2 - 3D"
     },
     "S2 - 3D EUD Off": {
@@ -394,6 +401,7 @@
         "cube-sots": false,
         "precise-item": false,
         "shuffle-trial-objects": "None",
+        "chest-dowsing": "None",
         "hint-distribution": "S2 - 3D EUD Off"
     },
     "S2 - Keysanity": {
@@ -445,6 +453,7 @@
         "cube-sots": false,
         "precise-item": false,
         "shuffle-trial-objects": "None",
+        "chest-dowsing": "None",
         "hint-distribution": "S2 - 3D"
     }
 }

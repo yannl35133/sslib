@@ -232,6 +232,8 @@ class Randomizer(BaseRandomizer):
         )
         plcmt_file.trial_hints = self.logic.placement.song_hints
         plcmt_file.item_locations = self.logic.placement.locations
+        dowsing_setting = self.options["chest-dowsing"]
+        plcmt_file.chest_dowsing = self.logic.get_dowsing(dowsing_setting)
         plcmt_file.options = self.options
         plcmt_file.required_dungeons = self.logic.required_dungeons
         plcmt_file.starting_items = sorted(self.logic.placement.starting_items)

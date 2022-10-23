@@ -48,6 +48,9 @@ class LogicUtils(Logic):
         )
         super().__init__(areas, settings, placement, optim=False, requirements=reqs)
         self.full_inventory = Logic.get_everything_unbanned(self.requirements)
+        self.truly_progress_item = Logic.aggregate_requirements(
+            self.requirements, self.full_inventory, EVERYTHING_UNBANNED_BIT
+        )
         self.required_dungeons = additional_info.required_dungeons
         self.unrequired_dungeons = additional_info.unrequired_dungeons
         self.randomized_dungeon_entrance = additional_info.randomized_dungeon_entrance
@@ -269,3 +272,17 @@ class LogicUtils(Logic):
             else:
                 break
         return spheres
+
+    def get_dowsing(self, dowsing_setting):
+        if dowsing_setting == "None":
+            dowse = lambda v: False
+        elif dowsing_setting == "All":
+            dowse = lambda v: True
+        else:
+            assert dowsing_setting == "Matches Contents"
+            dowse = (
+                lambda v: v in EXTENDED_ITEM
+                and EXTENDED_ITEM[v] in self.truly_progress_item
+            )
+
+        return {k: dowse(v) for k, v in self.placement.locations.items()}
