@@ -1503,6 +1503,13 @@
          </layout>
         </item>
         <item>
+         <widget class="QCheckBox" name="option_dungeon_dowsing">
+          <property name="text">
+           <string>Allow Dowsing in Dungeons</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QCheckBox" name="option_fill_dowsing_on_white_sword">
           <property name="text">
            <string>Fill Dowsing on White Sword</string>

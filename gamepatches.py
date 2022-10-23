@@ -1242,6 +1242,8 @@ class GamePatcher:
             self.add_asm_patch("fix_bit_crashes")
         if self.placement_file.options["tunic-swap"]:
             self.add_asm_patch("tunic_swap")
+        if self.placement_file.options["dungeon-dowsing"]:
+            self.add_asm_patch("dungeon_dowsing")
 
         # GoT patch depends on required sword
         # cmpwi r0, (insert sword)

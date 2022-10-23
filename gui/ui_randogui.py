@@ -961,6 +961,11 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_41.addLayout(self.verticalLayout_43)
 
+        self.option_dungeon_dowsing = QCheckBox(self.verticalLayoutWidget_17)
+        self.option_dungeon_dowsing.setObjectName(u"option_dungeon_dowsing")
+
+        self.verticalLayout_41.addWidget(self.option_dungeon_dowsing)
+
         self.option_fill_dowsing_on_white_sword = QCheckBox(self.verticalLayoutWidget_17)
         self.option_fill_dowsing_on_white_sword.setObjectName(u"option_fill_dowsing_on_white_sword")
 
@@ -1381,6 +1386,7 @@ class Ui_MainWindow(object):
         self.groupBox_18.setTitle(QCoreApplication.translate("MainWindow", u"Dowsing Options", None))
         self.label_for_option_chest_dowsing.setText(QCoreApplication.translate("MainWindow", u"Chest Dowsing", None))
         self.option_chest_dowsing.setCurrentText("")
+        self.option_dungeon_dowsing.setText(QCoreApplication.translate("MainWindow", u"Allow Dowsing in Dungeons", None))
         self.option_fill_dowsing_on_white_sword.setText(QCoreApplication.translate("MainWindow", u"Fill Dowsing on White Sword", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_4), QCoreApplication.translate("MainWindow", u"Additional Settings", None))
         self.label_for_option_logic_mode.setText(QCoreApplication.translate("MainWindow", u"Logic Mode", None))
