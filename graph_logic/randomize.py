@@ -66,6 +66,9 @@ class LogicUtils(Logic):
         )
         super().__init__(areas, settings, placement, optim=False, requirements=reqs)
         self.full_inventory = Logic.get_everything_unbanned(self.requirements)
+        self.truly_progress_item = Logic.aggregate_requirements(
+            self.requirements, self.full_inventory, EVERYTHING_UNBANNED_BIT
+        )
         self.required_dungeons = additional_info.required_dungeons
         self.unrequired_dungeons = additional_info.unrequired_dungeons
         self.randomized_dungeon_entrance = additional_info.randomized_dungeon_entrance

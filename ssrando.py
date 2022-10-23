@@ -232,6 +232,23 @@ class Randomizer(BaseRandomizer):
         )
         plcmt_file.trial_hints = self.logic.placement.song_hints
         plcmt_file.item_locations = self.logic.placement.locations
+
+        dowsing_setting = self.options["chest-dowsing"]
+        if dowsing_setting == "None":
+            dowse = lambda _: False
+        elif dowsing_setting == "All":
+            dowse = lambda _: True
+        elif dowsing_setting == "Matches Contents":
+            dowse = (
+                lambda v: v in EXTENDED_ITEM
+                and EXTENDED_ITEM[v] in self.logic.truly_progress_item
+            )
+        else:
+            raise ValueError(f"Unknown value {dowsing_setting}for option chest-dowsing")
+        plcmt_file.chest_dowsing = {
+            k: dowse(v) for k, v in self.logic.placement.locations.items()
+        }
+
         plcmt_file.options = self.options
         plcmt_file.required_dungeons = self.logic.required_dungeons
         plcmt_file.starting_items = sorted(self.logic.placement.starting_items)
