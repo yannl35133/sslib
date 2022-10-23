@@ -234,14 +234,29 @@ class Randomizer(BaseRandomizer):
         plcmt_file.item_locations = self.logic.placement.locations
 
         dowsing_setting = self.options["chest-dowsing"]
+        # Dowsing slots:
+        # 0: Main quest
+        # 1: Rupee
+        # 2: Key Piece / Scrapper Quest
+        # 3: Crystal
+        # 4: Heart
+        # 5: Goddess Cube
+        # 6: Look around (not usable afaik)
+        # 7: Treasure
+        # 8: None
+
         if dowsing_setting == "None":
-            dowse = lambda _: False
+            dowse = lambda _: 8
         elif dowsing_setting == "All":
-            dowse = lambda _: True
+            dowse = lambda _: 0
         elif dowsing_setting == "Matches Contents":
             dowse = (
-                lambda v: v in EXTENDED_ITEM
-                and EXTENDED_ITEM[v] in self.logic.truly_progress_item
+                lambda v: 0
+                if (
+                    v in EXTENDED_ITEM
+                    and EXTENDED_ITEM[v] in self.logic.truly_progress_item
+                )
+                else 8
             )
         else:
             raise ValueError(f"Unknown value {dowsing_setting}for option chest-dowsing")
