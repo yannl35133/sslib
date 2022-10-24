@@ -289,7 +289,7 @@ class LogicUtils(Logic):
         elif dowsing_setting == "All":
             dowse = lambda v: 0
         else:
-            assert dowsing_setting == "Matches Contents"
+            assert dowsing_setting == "Progress Items"
 
             def dowse(v) -> int:
                 if v in EXTENDED_ITEM and EXTENDED_ITEM[v] in self.truly_progress_item:

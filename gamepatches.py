@@ -1162,6 +1162,7 @@ class GamePatcher:
         self.do_dol_patch()
         self.do_rel_patch()
         self.do_patch_title_screen_logo()
+        self.do_patch_propeller_dowsing_image()
 
         music_rando(self.placement_file, self.modified_extract_path)
 
@@ -2541,4 +2542,26 @@ class GamePatcher:
             / "US"
             / "Layout"
             / "Title2D.arc"
+        ).write_bytes(actual_arc.to_buffer())
+
+    def do_patch_propeller_dowsing_image(self):
+        # patch propeller dowsing image; used for chest dowsing
+        actual_data = (
+            self.actual_extract_path
+            / "DATA"
+            / "files"
+            / "US"
+            / "Layout"
+            / "DoButton.arc"
+        ).read_bytes()
+        actual_arc = U8File.parse_u8(BytesIO(actual_data))
+        chestdata = (self.rando_root_path / "assets" / "chest_image.tpl").read_bytes()
+        actual_arc.set_file_data("timg/tr_dauzTarget_10.tpl", chestdata)
+        (
+            self.modified_extract_path
+            / "DATA"
+            / "files"
+            / "US"
+            / "Layout"
+            / "DoButton.arc"
         ).write_bytes(actual_arc.to_buffer())
