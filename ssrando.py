@@ -249,7 +249,7 @@ class Randomizer(BaseRandomizer):
             dowse = lambda _: 8
         elif dowsing_setting == "All":
             dowse = lambda _: 0
-        elif dowsing_setting == "Matches Contents":
+        elif dowsing_setting == "Progress Items":
             dowse = (
                 lambda v: 0
                 if (
