@@ -84,15 +84,15 @@ let print_if = let counter = ref 0 in fun () -> incr counter; !counter mod 99997
 module IntMap = Map.Make (Int)
 
 module CONSTANTS = struct
-  let practice_sword = 400
-  let beetle = 406
-  let pouch = 415
-  let high_rupee_farm = 433
-  let empty_bottle = 436
-  let one_pack = 443
-  let lmf_back_exit = 1950
-  let lmf_entrance_desert = 1689
-  let last_macro = 482
+  let practice_sword = 437
+  let beetle = 443
+  let pouch = 453
+  let high_rupee_farm = 470
+  let empty_bottle = 473
+  let one_pack = 480
+  let lmf_back_exit = 1994
+  let lmf_entrance_desert = 1753
+  let last_macro = 519
 
 end
 
