@@ -2540,7 +2540,7 @@ class GamePatcher:
     def do_patch_propeller_dowsing_image(self):
         # patch propeller dowsing image; used for chest dowsing
         actual_data = (
-            self.rando.actual_extract_path
+            self.actual_extract_path
             / "DATA"
             / "files"
             / "US"
@@ -2549,11 +2549,11 @@ class GamePatcher:
         ).read_bytes()
         actual_arc = U8File.parse_u8(BytesIO(actual_data))
         chestdata = (
-            self.rando.rando_root_path / "assets" / "chest_image.tpl"
+            self.rando_root_path / "assets" / "chest_image.tpl"
         ).read_bytes()
         actual_arc.set_file_data("timg/tr_dauzTarget_10.tpl", chestdata)
         (
-            self.rando.modified_extract_path
+            self.modified_extract_path
             / "DATA"
             / "files"
             / "US"
