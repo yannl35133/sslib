@@ -102,11 +102,7 @@ START_CUTSCENES = [
     ("F405", 0, 0),
 ]
 
-START_ITEM_STORYFLAGS = {
-    EMERALD_TABLET: 46,
-    RUBY_TABLET: 47,
-    AMBER_TABLET: 48,
-}
+START_ITEM_STORYFLAGS = {EMERALD_TABLET: 46, RUBY_TABLET: 47, AMBER_TABLET: 48}
 
 # The stage name of each dungeon
 DUNGEON_STAGES = {
@@ -388,9 +384,7 @@ TRIAL_OBJECT_IDS = {
             (0xFC24, 0),
             (0xFC25, 0),
         ],
-        "Stamina Fruits": [
-            (0xFC55, 0),
-        ],
+        "Stamina Fruits": [(0xFC55, 0)],
     },
     "S100": {
         "Tears": [
@@ -446,10 +440,7 @@ TRIAL_OBJECT_IDS = {
             (0xFC80, 0),
             (0xFC81, 0),
         ],
-        "Stamina Fruits": [
-            (0xFC9A, 0),
-            (0xFC9B, 0),
-        ],
+        "Stamina Fruits": [(0xFC9A, 0), (0xFC9B, 0)],
     },
     "S200": {
         "Tears": [
@@ -513,11 +504,7 @@ TRIAL_OBJECT_IDS = {
             (0xFC08, 2),
             (0xFC09, 2),
         ],
-        "Stamina Fruits": [
-            (0xFC40, 2),
-            (0xFC4D, 2),
-            (0xFC05, 4),
-        ],
+        "Stamina Fruits": [(0xFC40, 2), (0xFC4D, 2), (0xFC05, 4)],
     },
     "S300": {
         "Tears": [
@@ -1662,11 +1649,9 @@ class GamePatcher:
                 "Din's Power - Trial Hint",
             ),
         }
-        for trial_check_name, (
-            obtain_text_name,
-            inventory_text_idx,
-            inventory_text,
-            hintname,
+        for (
+            trial_check_name,
+            (obtain_text_name, inventory_text_idx, inventory_text, hintname),
         ) in trial_checks.items():
             useful_text = self.placement_file.trial_hints[hintname]
             item_get_patch = find_event("003-ItemGet", obtain_text_name)
@@ -1920,12 +1905,7 @@ class GamePatcher:
             "Stamina Fruits": (0xFF0FFE2A, "Item"),
             "Relics": (0xFFFFFFF0, "AncJwls"),
         }
-        TEAR_ITEM_IDS = {
-            "S000": 0x2E,
-            "S100": 0x2B,
-            "S200": 0x2C,
-            "S300": 0x2D,
-        }
+        TEAR_ITEM_IDS = {"S000": 0x2E, "S100": 0x2B, "S200": 0x2C, "S300": 0x2D}
         for trial in TRIAL_OBJECT_IDS:
             params = []
             locs = []
@@ -1953,10 +1933,7 @@ class GamePatcher:
             rng.shuffle(locs)
             # print(locs)
 
-            for ((id, room), (params, actor_name)) in zip(
-                locs,
-                params,
-            ):
+            for ((id, room), (params, actor_name)) in zip(locs, params):
                 self.add_patch_to_stage(
                     trial,
                     {
@@ -2257,10 +2234,7 @@ class GamePatcher:
                     )
                     continue
                 value = index
-            new_entry = OrderedDict(
-                name=command["entry"]["name"],
-                value=value,
-            )
+            new_entry = OrderedDict(name=command["entry"]["name"], value=value)
             bucket = entrypoint_hash(command["entry"]["name"], len(msbf["FEN1"]))
             msbf["FEN1"][bucket].append(new_entry)
             # print(f'added flow entry {command["entry"]["name"]}, {filename}')
@@ -2347,10 +2321,7 @@ class GamePatcher:
             # the game doesn't care about the name, but it has to exist and be unique
             # only unique within a file but whatever
             entry_name = "%s:%d" % (filename[-3:], index)
-            new_entry = OrderedDict(
-                name=entry_name,
-                value=index,
-            )
+            new_entry = OrderedDict(name=entry_name, value=index)
             bucket = entrypoint_hash(entry_name, len(msbt["LBL1"]))
             msbt["LBL1"][bucket].append(new_entry)
             # print(f'added text {index}, {filename}')
@@ -2448,26 +2419,11 @@ class GamePatcher:
         # shopsanity patches
         # 24, 17, 18 is patched extra wallet chain
         # patches the next value in the shop item chain
-        shop_item_next_patches = {
-            24: 17,
-            17: 18,
-        }
-        shop_price_patches = {
-            17: 100,
-            18: 100,
-        }
-        shop_entrypoint_patches = {
-            17: 10539,
-            18: 10540,
-        }
-        shop_present_scale_patches = {
-            17: 1.2,
-            18: 1.2,
-        }
-        shop_target_height_patches = {
-            17: 100,
-            18: 100,
-        }
+        shop_item_next_patches = {24: 17, 17: 18}
+        shop_price_patches = {17: 100, 18: 100}
+        shop_entrypoint_patches = {17: 10539, 18: 10540}
+        shop_present_scale_patches = {17: 1.2, 18: 1.2}
+        shop_target_height_patches = {17: 100, 18: 100}
         sold_out_storyflag_patches = {
             24: 937,
             17: 938,
@@ -2548,9 +2504,7 @@ class GamePatcher:
             / "DoButton.arc"
         ).read_bytes()
         actual_arc = U8File.parse_u8(BytesIO(actual_data))
-        chestdata = (
-            self.rando_root_path / "assets" / "chest_image.tpl"
-        ).read_bytes()
+        chestdata = (self.rando_root_path / "assets" / "chest_image.tpl").read_bytes()
         actual_arc.set_file_data("timg/tr_dauzTarget_10.tpl", chestdata)
         (
             self.modified_extract_path
