@@ -23,21 +23,16 @@ class GossipStoneHint:
         raise NotImplementedError("abstract")
 
 
-@dataclass
 class GossipStoneHintWrapper:
-    primary_hint: GossipStoneHint
-    secondary_hint: GossipStoneHint
+    def __init__(self, hints):
+        self.hints = hints
 
     def to_gossip_stone_text(self, norm) -> List[str]:
-        primary_text = self.primary_hint.to_gossip_stone_text(norm)
-        secondary_text = self.secondary_hint.to_gossip_stone_text(norm)
-        return primary_text + secondary_text
+        hints_as_lists = [hint.to_gossip_stone_text(norm) for hint in self.hints]
+        return [hint for hint_list in hints_as_lists for hint in hint_list]
 
     def to_spoiler_log_json(self):
-        return [
-            self.primary_hint.to_spoiler_log_json(),
-            self.secondary_hint.to_spoiler_log_json(),
-        ]
+        return [hint.to_spoiler_log_json() for hint in self.hints]
 
 
 @dataclass
