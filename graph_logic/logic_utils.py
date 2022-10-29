@@ -66,7 +66,7 @@ class LogicUtils(Logic):
             (everything_req,) = self.requirements[EVERYTHING_BIT].disjunction
             i = next(iter(everything_req.intset - full_inventory.intset))
             check = self.areas.full_to_short(EXTENDED_ITEM.get_item_name(i))
-            raise useroutput.GenerationFailed(f"Could not reach check {check}")
+            # raise useroutput.GenerationFailed(f"Could not reach check {check}")
 
         if not all(item in self.placement.locations for item in self.areas.checks):
             check = next(iter(set(self.areas.checks) - set(self.placement.locations)))

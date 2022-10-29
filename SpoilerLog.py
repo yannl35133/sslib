@@ -36,7 +36,7 @@ def write(
     required_dungeons,
     sots_items,
     barren_nonprogress,
-    randomized_dungeon_entrance,
+    randomized_entrances,
     randomized_trial_entrance,
 ):
     write_header(file, options, hash)
@@ -169,13 +169,21 @@ def write(
 
     file.write("\n\n\n")
 
-    # Write dungeon entrances.
-    file.write("Entrances:\n")
-    for (
-        entrance_name,
-        dungeon,
-    ) in randomized_dungeon_entrance.items():
-        file.write(f"  {entrance_name+':':48} {dungeon}\n")
+    # Write down exits.
+    sorted_checks = list(areas.map_exits)
+    sorted_randomized_entrances = sorted(
+        randomized_entrances.items(), key=lambda c: sorted_checks.index(c[0])
+    )
+    prettified_randomized_entrances = [
+        (norm(exit_name), norm(entrance_name))
+        for exit_name, entrance_name in sorted_randomized_entrances
+    ]
+    max_exit_name_length = 1 + max(
+        len(loc) for loc, _ in prettified_randomized_entrances
+    )
+    file.write("Exits:\n")
+    for (exit_name, entrance_name) in prettified_randomized_entrances:
+        file.write(f"  {exit_name + ':':{max_exit_name_length}} {entrance_name}\n")
 
     file.write("\n\n")
 

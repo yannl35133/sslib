@@ -200,7 +200,7 @@ class Randomizer(BaseRandomizer):
                     required_dungeons=self.logic.required_dungeons,
                     sots_items=sots_items,
                     barren_nonprogress=self.logic.get_barren_regions(),
-                    randomized_dungeon_entrance=self.logic.randomized_dungeon_entrance,
+                    randomized_entrances=self.logic.placement.map_transitions,
                     randomized_trial_entrance=self.logic.randomized_trial_entrance,
                 )
         if not self.dry_run:
@@ -223,7 +223,7 @@ class Randomizer(BaseRandomizer):
         # temporary placement file stuff
 
         plcmt_file = PlacementFile()
-        plcmt_file.dungeon_connections = self.logic.randomized_dungeon_entrance
+        plcmt_file.map_connections = self.logic.placement.map_transitions
         plcmt_file.trial_connections = self.logic.randomized_trial_entrance
         plcmt_file.hash_str = self.randomizer_hash
         plcmt_file.hints = {

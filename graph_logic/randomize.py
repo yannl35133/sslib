@@ -144,6 +144,8 @@ class Rando:
 
         self.randomize_dungeons_trials()
 
+        self.hacky_entrance_rando()
+
     def randomize_required_dungeons(self):
         """
         Selects the required dungeons randomly based on options
@@ -502,7 +504,7 @@ class Rando:
         if ALL_DUNGEONS[pre_LMF_index] != LMF:
             dungeons[pre_LMF_index].append(self.norm(LMF_SECOND_EXIT))
 
-        self.reassign_entrances(dungeon_entrances, dungeons)
+        # self.reassign_entrances(dungeon_entrances, dungeons)
 
         ter = self.options["randomize-trials"]
         pool = ALL_SILENT_REALMS.copy()
@@ -516,4 +518,31 @@ class Rando:
 
         trial_entrances = [self.norm(TRIAL_GATE_EXITS[k]) for k in gates]
         trials = [self.norm(SILENT_REALM_EXITS[k]) for k in pool]
-        self.reassign_entrances(trial_entrances, trials)
+        # self.reassign_entrances(trial_entrances, trials)
+
+    def hacky_entrance_rando(self):
+        entrances = list(k for k, v in self.areas.map_entrances.items() if "stage" in v)
+        exits = list(
+            k
+            for k, v in self.areas.map_exits.items()
+            if "stage" in v
+            if "vanilla" in v
+            if "Pillar" not in k
+        )
+        self.placement.reverse_map_transitions = {}
+        self.placement.map_transitions = {
+            k: self.norm(v["vanilla"])
+            for k, v in self.areas.map_exits.items()
+            if "stage" not in v
+            if "vanilla" in v or "Pillar" in k
+        }
+        self.rng.shuffle(entrances)
+
+        while len(entrances) < len(exits):
+            l = entrances.copy()
+            self.rng.shuffle(l)
+            entrances.extend(l)
+
+        for exit, entrance in zip(exits, entrances):
+            self.placement.map_transitions[exit] = entrance
+            self.placement.reverse_map_transitions[entrance] = exit
