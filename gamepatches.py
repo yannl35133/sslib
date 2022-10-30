@@ -909,7 +909,7 @@ def rando_patch_warpobj(
     patch_trial_flags(obj, trial_storyflag)
 
 
-def rando_patch_tbox(bzs: OrderedDict, itemid: int, id: str, dowsing: bool):
+def rando_patch_tbox(bzs: OrderedDict, itemid: int, id: str, dowsing: int):
     id = int(id)
     tboxs = list(
         filter(lambda x: x["name"] == "TBox" and (x["anglez"] >> 9) == id, bzs["OBJS"])
