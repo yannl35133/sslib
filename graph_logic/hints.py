@@ -98,8 +98,10 @@ class Hints:
         self.randomize(hints)
 
         return {
-            stone: GossipStoneHintWrapper([hints[name] for name in hintnames])
-            for stone, hintnames in self.logic.placement.stones.items()
+            stone: GossipStoneHintWrapper(
+                [hints[name] for name in self.logic.placement.stones[stone]]
+            )
+            for stone in self.areas.gossip_stones
         }
 
     def randomize(self, hints: Dict[EIN, GossipStoneHint]):
