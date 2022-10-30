@@ -1162,7 +1162,7 @@ class GamePatcher:
         self.do_dol_patch()
         self.do_rel_patch()
         self.do_patch_title_screen_logo()
-        self.do_patch_propeller_dowsing_image()
+        self.do_patch_custom_dowsing_images()
 
         music_rando(self.placement_file, self.modified_extract_path)
 
@@ -1243,6 +1243,8 @@ class GamePatcher:
             self.add_asm_patch("fix_bit_crashes")
         if self.placement_file.options["tunic-swap"]:
             self.add_asm_patch("tunic_swap")
+        if self.placement_file.options["chest-dowsing"] != "None":
+            self.add_asm_patch("chest_dowsing")
         if self.placement_file.options["dungeon-dowsing"]:
             self.add_asm_patch("dungeon_dowsing")
 
@@ -2544,7 +2546,7 @@ class GamePatcher:
             / "Title2D.arc"
         ).write_bytes(actual_arc.to_buffer())
 
-    def do_patch_propeller_dowsing_image(self):
+    def do_patch_custom_dowsing_images(self):
         # patch propeller dowsing image; used for chest dowsing
         actual_data = (
             self.actual_extract_path
@@ -2557,6 +2559,10 @@ class GamePatcher:
         actual_arc = U8File.parse_u8(BytesIO(actual_data))
         chestdata = (self.rando_root_path / "assets" / "chest_image.tpl").read_bytes()
         actual_arc.set_file_data("timg/tr_dauzTarget_10.tpl", chestdata)
+        sandshipdata = (
+            self.rando_root_path / "assets" / "sandship_image.tpl"
+        ).read_bytes()
+        actual_arc.set_file_data("timg/tr_dauzTarget_18.tpl", sandshipdata)
         (
             self.modified_extract_path
             / "DATA"
