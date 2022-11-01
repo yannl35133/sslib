@@ -163,12 +163,88 @@ def post_optimize():
         f.write("[\n" + ",\n".join(f"{req!r}" for req in requirements) + "]")
 
 
+def user_friendly_reqs(areas, reqs, file):
+    item_repr = EXTENDED_ITEM.__repr__
+    inv_repr = Inventory.__repr__
+    dnfinv_repr = DNFInventory.__repr__
+
+    def item_repr(self):
+        return self.replace(" #", "_#").replace("\\", "/")
+
+    EXTENDED_ITEM.__repr__ = lambda self: item_repr(EXTENDED_ITEM.get_item_name(self))
+    Inventory.__repr__ = (
+        lambda self: " & ".join(map(repr, sorted(self.intset)))
+        if self.intset
+        else "Nothing"
+    )
+    DNFInventory.__repr__ = (
+        lambda self: " | ".join(
+            map(
+                lambda d: f"({d!r})" if len(d.intset) > 1 else f"{d!r}",
+                self.disjunction,
+            )
+        )
+        if self.disjunction
+        else "Impossible"
+    )
+
+    with open(file, mode="w") as f:
+        f.write(
+            "\n\n".join(
+                f"{EXTENDED_ITEM(i)!r}:\n  {req!r}"
+                if len(req.disjunction) < 80
+                else f"{EXTENDED_ITEM(i)!r}:\n  Too complex"
+                for i, req in enumerate(reqs)
+            )
+        )
+
+    EXTENDED_ITEM.__repr__ = item_repr
+    Inventory.__repr__ = inv_repr
+    DNFInventory.__repr__ = dnfinv_repr
+
+
+def print_pure_reqs():
+    areas = Areas(graph_requirements, checks, hints, map_exits)
+    user_friendly_reqs(
+        areas,
+        areas.requirements,
+        RANDO_ROOT_PATH / "graph_logic" / "optimisations" / "pure_reqs.yaml",
+    )
+
+
 @cache
 def get_requirements():
     with open(
         RANDO_ROOT_PATH / "graph_logic" / "optimisations" / "requirements_out2.txt"
     ) as f:
         return eval(f.read())
+
+
+def print_optimised_reqs():
+    areas = Areas(graph_requirements, checks, hints, map_exits)
+    reqs = get_requirements()
+    user_friendly_reqs(
+        areas,
+        reqs,
+        RANDO_ROOT_PATH / "graph_logic" / "optimisations" / "optimised_reqs.yaml",
+    )
+
+
+def print_semi_optimised_reqs():
+    areas = Areas(graph_requirements, checks, hints, map_exits)
+    with open(
+        RANDO_ROOT_PATH / "graph_logic" / "optimisations" / "requirements_out.txt"
+    ) as f:
+        requirements = eval(f.read())
+    for i, e in enumerate(requirements):
+        if e is None:
+            requirements[i] = areas.requirements[i]
+
+    user_friendly_reqs(
+        areas,
+        requirements,
+        RANDO_ROOT_PATH / "graph_logic" / "optimisations" / "semi_optimised_reqs.yaml",
+    )
 
 
 if __name__ == "__main__":
