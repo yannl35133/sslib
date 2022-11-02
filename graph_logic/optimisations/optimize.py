@@ -177,16 +177,57 @@ def user_friendly_reqs(areas, reqs, file):
         if self.intset
         else "Nothing"
     )
-    DNFInventory.__repr__ = (
-        lambda self: " | ".join(
-            map(
-                lambda d: f"({d!r})" if len(d.intset) > 1 else f"{d!r}",
-                self.disjunction,
+
+    def dnf_repr(self: DNFInventory):
+        if not self.disjunction:
+            return "Impossible"
+        d = iter(self.disjunction)
+        i = next(d)
+
+        if len(self.disjunction) == 1:
+            return f"{i!r}"
+        i |= next(d)
+
+        normal_print = (
+            lambda disjunction: ("(" if len(disjunction) > 1 else "")
+            + " | ".join(
+                map(
+                    lambda d: f"({d!r})" if len(d.intset) > 1 else f"{d!r}",
+                    disjunction,
+                )
             )
+            + (")" if len(disjunction) > 1 else "")
         )
-        if self.disjunction
-        else "Impossible"
-    )
+
+        length = len(self.disjunction)
+        commons = Inventory()
+        for item in i:
+            l = len([0 for ii in self.disjunction if item in ii])
+            if l == length:
+                self.disjunction = {ii.remove(item) for ii in self.disjunction}
+                commons |= item
+        semi_commons = Inventory()
+        uncommons = []
+        for item in i:
+            l = len([0 for ii in self.disjunction if item in ii])
+            if l > 0.6 * length:
+                uncommons.extend(ii for ii in self.disjunction if item not in ii)
+                self.disjunction = {ii for ii in self.disjunction if item in ii}
+                semi_commons |= item
+        length = len(self.disjunction)
+        for item in semi_commons:
+            l = len([0 for ii in self.disjunction if item in ii])
+            assert l == length
+            self.disjunction = {ii.remove(item) for ii in self.disjunction}
+
+        result = normal_print(self.disjunction)
+        if semi_commons.bitset:
+            result = f"({normal_print(uncommons)} | ({semi_commons} & {result}))"
+        if commons.bitset:
+            result = f"{commons} & {result}"
+        return result
+
+    DNFInventory.__repr__ = dnf_repr
 
     with open(file, mode="w") as f:
         f.write(
