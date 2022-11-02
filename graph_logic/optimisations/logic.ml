@@ -17,6 +17,8 @@ module Inventory = struct
 
   let union : inventory -> inventory -> inventory = fun (s, n) (t, m) -> IntSet.union s t, Z.( m lor n )
 
+  let mem : int -> inventory -> bool = fun n (m, _) -> IntSet.mem n m
+
   let fold : _ -> inventory -> _ = fun f (s, _) -> IntSet.fold f s
 
   let pp : inventory CCSet.printer = fun fmt (s, _) -> Fmt.pf fmt "Inventory(%a)" (if IntSet.is_empty s then Fmt.nop else Fmt.braces @@ IntSet.pp ei_pp) s
@@ -90,37 +92,49 @@ module CONSTANTS = struct
   let high_rupee_farm = 470
   let empty_bottle = 473
   let one_pack = 480
-  let lmf_back_exit = 1994
-  let lmf_entrance_desert = 1753
-  let last_macro = 519
+  let sword = 500
+  let clawshots = 65
+  let bomb_bag = 62
+  let lmf_back_exit = 2002
+  let lmf_entrance_desert = 1709
+  let last_macro = 520
 
 end
 
 let opaque_additions =
   let open CONSTANTS in
   let (--$) from length = List.init (length+1) ((+) from) in
+  let distance_activator = sword+4 :: sword+7 --$ 2 in
+  let sword_ = sword :: sword+2 :: sword+5 --$ 15 in
+  let beetle_ = sword+3 :: distance_activator in
+  let bomb_bag_ = sword+2 :: sword+5 :: sword+7 :: sword+8 :: sword+9 :: sword+12 :: sword+17 :: [] in
+  let clawshots_ = sword+6 :: distance_activator in
   IntMap.of_list
   [
-    (practice_sword + 1, (DNFInventory.of_list2 [practice_sword --$ 1], None));
-    (practice_sword + 2, (DNFInventory.of_list2 [practice_sword --$ 2], None));
-    (practice_sword + 3, (DNFInventory.of_list2 [practice_sword --$ 3], None));
-    (practice_sword + 4, (DNFInventory.of_list2 [practice_sword --$ 4], None));
-    (beetle + 1, (DNFInventory.of_list2 [beetle --$ 1], None));
-    (beetle + 2, (DNFInventory.of_list2 [beetle --$ 2], None));
-    (beetle + 3, (DNFInventory.of_list2 [beetle + 3 :: beetle --$ 1], None));
-    (beetle + 4, (DNFInventory.of_list2 [beetle --$ 4], None));
-    (one_pack + 1, (DNFInventory.of_list2 [one_pack --$ 1], None));
-    (one_pack + 2, (DNFInventory.of_list2 [one_pack --$ 2], None));
-    (one_pack + 3, (DNFInventory.of_list2 [one_pack --$ 3], None));
-    (one_pack + 4, (DNFInventory.of_list2 [one_pack --$ 4], None));
-    (one_pack + 5, (DNFInventory.of_list2 [one_pack --$ 5], None));
-    (one_pack + 6, (DNFInventory.of_list2 [one_pack --$ 6], None));
-    (one_pack + 7, (DNFInventory.of_list2 [one_pack --$ 7], None));
-    (one_pack + 8, (DNFInventory.of_list2 [one_pack --$ 8], None));
-    (one_pack + 9, (DNFInventory.of_list2 [one_pack --$ 9], None));
-    (one_pack + 10, (DNFInventory.of_list2 [one_pack --$ 10], None));
-    (one_pack + 11, (DNFInventory.of_list2 [one_pack --$ 11], None));
-    (lmf_back_exit, (DNFInventory.of_list2 [[lmf_back_exit]], Some lmf_entrance_desert));
+    (practice_sword, (sword_, None));
+    (practice_sword + 1, (practice_sword --$ 1 @ sword_, None));
+    (practice_sword + 2, (practice_sword --$ 2 @ sword_, None));
+    (practice_sword + 3, (practice_sword --$ 3 @ sword_, None));
+    (practice_sword + 4, (practice_sword --$ 4 @ sword_, None));
+    (beetle, (beetle_, None));
+    (beetle + 1, (beetle --$ 1 @ beetle_, None));
+    (beetle + 2, (beetle --$ 2 @ beetle_, None));
+    (beetle + 3, (beetle + 3 :: beetle --$ 1 @ beetle_, None));
+    (beetle + 4, (beetle --$ 4 @ beetle_, None));
+    (clawshots, (clawshots_, None));
+    (bomb_bag, (bomb_bag_, None));
+    (one_pack + 1, (one_pack --$ 1, None));
+    (one_pack + 2, (one_pack --$ 2, None));
+    (one_pack + 3, (one_pack --$ 3, None));
+    (one_pack + 4, (one_pack --$ 4, None));
+    (one_pack + 5, (one_pack --$ 5, None));
+    (one_pack + 6, (one_pack --$ 6, None));
+    (one_pack + 7, (one_pack --$ 7, None));
+    (one_pack + 8, (one_pack --$ 8, None));
+    (one_pack + 9, (one_pack --$ 9, None));
+    (one_pack + 10, (one_pack --$ 10, None));
+    (one_pack + 11, (one_pack --$ 11, None));
+    (lmf_back_exit, ([lmf_back_exit], Some lmf_entrance_desert));
   ]
 
 let deep_simplify reqs opaques =
@@ -134,11 +148,11 @@ let deep_simplify reqs opaques =
       DNFInventory.of_list2 [[item]], IntSet.singleton item
     else if opaques.(item) then
       match IntMap.find_opt item opaque_additions with None -> DNFInventory.of_list2 [[item]], IntSet.empty
-      | Some (add, None) -> add, IntSet.empty
+      | Some (add, None) -> DNFInventory.of_list2 [item :: add], IntSet.empty
       | Some (add, Some req_item) ->
           let visited = IntSet.add item visited in
           let item_req, h_a_v = simplify visited req_item in
-          let req = DNFInventory.and_simplify DNFInventory.empty [add; DNFInventory.remove_item item item_req] in
+          let req = DNFInventory.and_simplify DNFInventory.empty [DNFInventory.of_list2 [item :: add]; DNFInventory.remove_item item item_req] in
           req, IntSet.remove item (IntSet.union hit_a_visited h_a_v)
     else if simplified.(item) then
       reqs.(item), IntSet.empty
@@ -172,12 +186,29 @@ let deep_simplify reqs opaques =
     simplify IntSet.empty (let item = Stack.pop todo in Fmt.pr ">%d (stack size %d)@." item (Stack.length todo); item) |> ignore
   done
 
+let erase_additions reqs =
+  let len = Array.length reqs in
+  for i = 0 to len -1 do
+    reqs.(i) <- Fun.flip List.map reqs.(i) (fun inv ->
+      (fun f -> IntMap.fold f opaque_additions inv) (fun i (m, _) inv ->
+        if Inventory.mem i inv then
+          let (s, _) = inv in
+          let l = IntSet.to_list s in
+          let l' = List.filter (fun i' -> not (List.mem i' m)) l in
+          Inventory.of_list (i :: l')
+        else
+          inv
+      )
+    )
+  done
+
 let (* main *) () =
   let t = Yojson.Safe.from_file "requirements.json" in
   let reqs, opaque = read_requirements t in
   let opaque2 = Array.copy opaque in
   for i = 0 to CONSTANTS.last_macro do opaque2.(i) <- true done;
   deep_simplify reqs opaque2;
+  (* Fmt.pr "STEP 2 : -----------------------@.";
   let () =
   let open CONSTANTS in
   for i = practice_sword to practice_sword + 5 do opaque.(i) <- true done;
@@ -185,8 +216,8 @@ let (* main *) () =
   opaque.(pouch) <- true; opaque.(high_rupee_farm) <- true; opaque.(empty_bottle) <- true;
   for i = one_pack to one_pack + 12 do opaque.(i) <- true done;
   in
-  Fmt.pr "STEP 2 : -----------------------@.";
-  deep_simplify reqs opaque;
+  deep_simplify reqs opaque; *)
+  erase_additions reqs;
   let reqs_opt = Array.map2 (fun b r -> if not b then Some r else None) opaque reqs in
   (* DNFInventory.cmpt := -1; *)
   let c = open_out "requirements_out.txt" in
