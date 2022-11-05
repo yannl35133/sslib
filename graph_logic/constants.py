@@ -340,22 +340,20 @@ NONPROGRESS_ITEMS = (
     | LIFE_MEDALS
 )
 
-CONSUMABLE_ITEMS = (
-    GREEN_RUPEES
-    | BLUE_RUPEES
-    | RED_RUPEES
-    | SILVER_RUPEES
-    | GOLD_RUPEES
-    | SEMI_RARE_TREASURES
-    | GOLDEN_SKULLS
-    | RARE_TREASURES
-    | EVIL_CRYSTALS
+RUPEES = GREEN_RUPEES | BLUE_RUPEES | RED_RUPEES | SILVER_RUPEES | GOLD_RUPEES
+
+TREASURES = (
+    DUSK_RELICS
     | ELDIN_ORES
+    | EVIL_CRYSTALS
     | GODDESS_PLUMES
-    | DUSK_RELICS
+    | GOLDEN_SKULLS
     | TUMBLEWEEDS
-    | FIVE_BOMBS_GROUP
+    | SEMI_RARE_TREASURES
+    | RARE_TREASURES
 )
+
+CONSUMABLE_ITEMS = RUPEES | TREASURES | FIVE_BOMBS_GROUP
 
 # Once all the items that have a fixed number per seed are used up, this list is used.
 # Unlike the other lists, this one does not have items removed from it as they are placed.

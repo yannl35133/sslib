@@ -284,9 +284,9 @@ class LogicUtils(Logic):
         # 6: Look around (not usable afaik)
         # 7: Treasure
         # 8: None
-        if dowsing_setting == "None":
+        if dowsing_setting == "Vanilla":
             dowse = lambda v: 8
-        elif dowsing_setting == "All":
+        elif dowsing_setting == "All Chests":
             dowse = lambda v: 0
         else:
             assert dowsing_setting == "Progress Items"
@@ -294,6 +294,10 @@ class LogicUtils(Logic):
             def dowse(v) -> int:
                 if v in EXTENDED_ITEM and EXTENDED_ITEM[v] in self.truly_progress_item:
                     return 0
+                if v in RUPEES:
+                    return 1
+                if v in TREASURES:
+                    return 7
                 return 8
 
         return {k: dowse(v) for k, v in self.placement.locations.items()}
