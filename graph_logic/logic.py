@@ -280,6 +280,8 @@ class Logic:
                         new_req |= DNFInventory(new_conj)
                 else:
                     new_req |= conj
+
+            new_req.opaque = req.opaque
             requirements[item] = new_req
 
     @staticmethod

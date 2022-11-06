@@ -3,7 +3,7 @@ from functools import cache
 from graph_logic.constants import *
 from graph_logic.inventory import Inventory, EXTENDED_ITEM
 from graph_logic.logic import Logic, LogicSettings, Placement
-from graph_logic.logic_expression import DNFInventory
+from graph_logic.logic_expression import DNFInventory, UnknownReq, CounterThreshold
 from graph_logic.logic_input import Areas
 from graph_logic.placements import SINGLE_CRYSTAL_PLACEMENT
 from paths import RANDO_ROOT_PATH
@@ -134,27 +134,39 @@ def post_optimize():
     become_useless.discard(
         EXTENDED_ITEM[make_day(areas.short_to_full("Skyloft - Central"))]
     )
+    become_useless.discard(
+        EXTENDED_ITEM[make_night(areas.short_to_full("Skyloft - Central"))]
+    )
+    become_useless.discard(
+        EXTENDED_ITEM[
+            (
+                areas.short_to_full(
+                    "Lanayru Mining Facility - Entrance from Temple of Time"
+                )
+            )
+        ]
+    )
 
-    impossible = DNFInventory()
+    impossible = UnknownReq()
     for i in become_useless:
         print(str(i))
         requirements[i] = impossible
 
-    Logic.deep_simplify(requirements)
+    # Logic.deep_simplify(requirements)
 
-    useful2 = Logic.aggregate_requirements(requirements, None)
-    become_useless = useful1.intset - useful2.intset
-    for v in areas.checks.values():
-        become_useless.discard(v["req_index"])
-    become_useless.discard(
-        EXTENDED_ITEM[make_day(areas.short_to_full("Skyloft - Near Temple Entrance"))]
-    )
-    become_useless.discard(
-        EXTENDED_ITEM[make_day(areas.short_to_full("Skyloft - Central"))]
-    )
-    for i in become_useless:
-        print(str(i))
-        requirements[i] = impossible
+    # useful2 = Logic.aggregate_requirements(requirements, None)
+    # become_useless = useful1.intset - useful2.intset
+    # for v in areas.checks.values():
+    #     become_useless.discard(v["req_index"])
+    # become_useless.discard(
+    #     EXTENDED_ITEM[make_day(areas.short_to_full("Skyloft - Near Temple Entrance"))]
+    # )
+    # become_useless.discard(
+    #     EXTENDED_ITEM[make_day(areas.short_to_full("Skyloft - Central"))]
+    # )
+    # for i in become_useless:
+    #     print(str(i))
+    #     requirements[i] = impossible
 
     with open(
         RANDO_ROOT_PATH / "graph_logic" / "optimisations" / "requirements_out2.txt",
@@ -233,7 +245,7 @@ def user_friendly_reqs(areas, reqs, file):
         f.write(
             "\n\n".join(
                 f"{EXTENDED_ITEM(i)!r}:\n  {req!r}"
-                if len(req.disjunction) < 80
+                if not isinstance(req, DNFInventory) or len(req.disjunction) < 80
                 else f"{EXTENDED_ITEM(i)!r}:\n  Too complex"
                 for i, req in enumerate(reqs)
             )

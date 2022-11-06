@@ -5,7 +5,7 @@ from typing import List, Literal  # Only for typing purposes
 
 from .logic import Logic, Placement, LogicSettings
 from .logic_input import Areas
-from .logic_expression import CounterThreshold, DNFInventory, Requirement
+from .logic_expression import CounterThreshold, DNFInventory, Requirement, UnknownReq
 from .inventory import (
     Inventory,
     EXTENDED_ITEM,
@@ -144,6 +144,8 @@ class LogicUtils(Logic):
             req = self.requirements[item]
             if isinstance(req, CounterThreshold):
                 return handle_counters(item, visited)
+            if isinstance(req, UnknownReq):
+                return False, hit_a_visited
             assert isinstance(req, DNFInventory)
             visited_ = visited | shifted_item
             aggregate = False
@@ -216,9 +218,9 @@ class LogicUtils(Logic):
                     aggregate = False
                 else:
                     nb_times_sots = defaultdict(int)
-                    for avail_targ in avail.values():
+                    for j, avail_targ in avail.items():
                         for sots_item in avail_targ:
-                            nb_times_sots[sots_item] += item_counter.targets[sots_item]
+                            nb_times_sots[sots_item] += item_counter.targets[j]
 
                     sots = {it for it, n in nb_times_sots.items() if n > margin}
                     aggregate = Inventory(sots)

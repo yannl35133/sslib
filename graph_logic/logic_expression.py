@@ -7,7 +7,7 @@ import re
 from itertools import product, combinations
 
 from .inventory import EXTENDED_ITEM, Inventory, EMPTY_INV, DAY_BIT, NIGHT_BIT
-from .constants import EXTENDED_ITEM_NAME, number, ITEM_COUNTS, RAW_ITEM_NAMES
+from .constants import EIN, EXTENDED_ITEM_NAME, number, ITEM_COUNTS, RAW_ITEM_NAMES
 
 
 class LogicExpression(ABC):
@@ -172,6 +172,7 @@ class CounterThreshold(Requirement):
             raise ValueError
 
 
+@dataclass
 class UnknownReq(Requirement):
     def eval(self, inventory: Inventory):
         return False
@@ -356,6 +357,7 @@ class MakeExpression(Transformer):
 
     def mk_counter_atom(self, count, item):
         count = int(count)
+        item = str(item)
         if item not in RAW_ITEM_NAMES and item not in EXTENDED_ITEM:
             raise ValueError(f"Unknown item {item}")
         if item in EXTENDED_ITEM:
@@ -372,7 +374,7 @@ class MakeExpression(Transformer):
         return Counter(counter)
 
     def mk_counter_threshold(self, counter_name, threshold):
-        c = CounterThreshold(counter_name, int(threshold))
+        c = CounterThreshold(EIN(str(counter_name)), int(threshold))
         c.opaque = True
         return c
 

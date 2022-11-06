@@ -407,6 +407,14 @@ class Areas:
         DNFInv = DNFInventory
 
         for area_name, area in self.areas.items():
+            if area.abstract:
+                pass
+            elif area.allowed_time_of_day == Both:
+                reqs[EXTENDED_ITEM[make_day(area_name)]] |= DNFInv()
+                reqs[EXTENDED_ITEM[make_night(area_name)]] |= DNFInv()
+            else:
+                reqs[EXTENDED_ITEM[area.name]] |= DNFInv()
+
             if area.can_sleep:
                 # If one day we allow sleeping to be randomized, change the following to regular connections
                 assert area.allowed_time_of_day == Both

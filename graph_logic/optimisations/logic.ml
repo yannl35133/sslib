@@ -91,13 +91,13 @@ module CONSTANTS = struct
   let pouch = 453
   let high_rupee_farm = 470
   let empty_bottle = 473
-  let one_pack = 480
-  let sword = 500
+  let one_pack = 477
+  let sword = 491
   let clawshots = 65
   let bomb_bag = 62
-  let lmf_back_exit = 2002
-  let lmf_entrance_desert = 1709
-  let last_macro = 520
+  let lmf_back_exit = 1998
+  let lmf_entrance_desert = 1705
+  let last_macro = 511
 
 end
 
@@ -105,8 +105,8 @@ let opaque_additions =
   let open CONSTANTS in
   let (--$) from length = List.init (length+1) ((+) from) in
   let distance_activator = sword+4 :: sword+7 --$ 2 in
-  let sword_ = sword :: sword+2 :: sword+5 --$ 15 in
-  let beetle_ = sword+3 :: distance_activator in
+  let sword_ = [] in (* sword :: sword+2 :: sword+5 --$ 15 in *)
+  let beetle_ = [] in (* sword+3 :: distance_activator in *)
   let bomb_bag_ = sword+2 :: sword+5 :: sword+7 :: sword+8 :: sword+9 :: sword+12 :: sword+17 :: [] in
   let clawshots_ = sword+6 :: distance_activator in
   IntMap.of_list
@@ -121,19 +121,14 @@ let opaque_additions =
     (beetle + 2, (beetle --$ 2 @ beetle_, None));
     (beetle + 3, (beetle + 3 :: beetle --$ 1 @ beetle_, None));
     (beetle + 4, (beetle --$ 4 @ beetle_, None));
-    (clawshots, (clawshots_, None));
+    (* (clawshots, (clawshots_, None));
     (bomb_bag, (bomb_bag_, None));
     (one_pack + 1, (one_pack --$ 1, None));
     (one_pack + 2, (one_pack --$ 2, None));
     (one_pack + 3, (one_pack --$ 3, None));
     (one_pack + 4, (one_pack --$ 4, None));
     (one_pack + 5, (one_pack --$ 5, None));
-    (one_pack + 6, (one_pack --$ 6, None));
-    (one_pack + 7, (one_pack --$ 7, None));
-    (one_pack + 8, (one_pack --$ 8, None));
-    (one_pack + 9, (one_pack --$ 9, None));
-    (one_pack + 10, (one_pack --$ 10, None));
-    (one_pack + 11, (one_pack --$ 11, None));
+    (one_pack + 6, (one_pack --$ 6, None)); *)
     (lmf_back_exit, ([lmf_back_exit], Some lmf_entrance_desert));
   ]
 
@@ -208,15 +203,14 @@ let (* main *) () =
   let opaque2 = Array.copy opaque in
   for i = 0 to CONSTANTS.last_macro do opaque2.(i) <- true done;
   deep_simplify reqs opaque2;
-  (* Fmt.pr "STEP 2 : -----------------------@.";
+  Fmt.pr "STEP 2 : -----------------------@.";
   let () =
   let open CONSTANTS in
   for i = practice_sword to practice_sword + 5 do opaque.(i) <- true done;
   for i = beetle to beetle + 3 do opaque.(i) <- true done;
   opaque.(pouch) <- true; opaque.(high_rupee_farm) <- true; opaque.(empty_bottle) <- true;
-  for i = one_pack to one_pack + 12 do opaque.(i) <- true done;
   in
-  deep_simplify reqs opaque; *)
+  deep_simplify reqs opaque;
   erase_additions reqs;
   let reqs_opt = Array.map2 (fun b r -> if not b then Some r else None) opaque reqs in
   (* DNFInventory.cmpt := -1; *)
