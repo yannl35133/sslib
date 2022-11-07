@@ -126,6 +126,24 @@ def post_optimize():
     useful0 = Logic.aggregate_requirements(areas.requirements, None)
     useful1 = Logic.aggregate_requirements(requirements, None)
     become_useless = useful0.intset - useful1.intset
+    for v in areas.map_exits.values():
+        become_useless.add(v["req_index"])
+
+    for l in DUNGEON_ENTRANCE_EXITS.values():
+        for e in l:
+            become_useless.discard(EXTENDED_ITEM[areas.short_to_full(e)])
+
+    for e in DUNGEON_MAIN_EXITS.values():
+        become_useless.discard(EXTENDED_ITEM[areas.short_to_full(e)])
+
+    become_useless.discard(EXTENDED_ITEM[areas.short_to_full(LMF_SECOND_EXIT)])
+
+    for e in TRIAL_GATE_EXITS.values():
+        become_useless.discard(EXTENDED_ITEM[areas.short_to_full(e)])
+
+    for e in SILENT_REALM_EXITS.values():
+        become_useless.discard(EXTENDED_ITEM[areas.short_to_full(e)])
+
     for v in areas.checks.values():
         become_useless.discard(v["req_index"])
     become_useless.discard(
@@ -168,11 +186,15 @@ def post_optimize():
     #     print(str(i))
     #     requirements[i] = impossible
 
+    unknown_repr = UnknownReq.__repr__
+    UnknownReq.__repr__ = lambda self: "unknown_req"
+
     with open(
         RANDO_ROOT_PATH / "graph_logic" / "optimisations" / "requirements_out2.txt",
         mode="w",
     ) as f:
         f.write("[\n" + ",\n".join(f"{req!r}" for req in requirements) + "]")
+    UnknownReq.__repr__ = unknown_repr
 
 
 def user_friendly_reqs(areas, reqs, file):
@@ -267,6 +289,8 @@ def print_pure_reqs():
 
 @cache
 def get_requirements():
+    from graph_logic.logic_expression import unknown_req
+
     with open(
         RANDO_ROOT_PATH / "graph_logic" / "optimisations" / "requirements_out2.txt"
     ) as f:

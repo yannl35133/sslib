@@ -417,7 +417,7 @@ class Logic:
 
     def fill_inventory_i(self, monotonic=False):
         # self.shallow_simplify()
-        self.free_simplify(self.requirements, self.frees)
+        # self.free_simplify(self.requirements, self.frees)
         inventory = self.full_inventory if monotonic else self.inventory
         self.full_inventory = self.fill_inventory(self.requirements, inventory)
 
