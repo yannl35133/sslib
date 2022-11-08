@@ -1772,6 +1772,13 @@
          </widget>
         </item>
         <item>
+         <widget class="QCheckBox" name="option_npc_hints">
+          <property name="text">
+           <string>NPC Hints</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <spacer name="verticalSpacer_10">
           <property name="orientation">
            <enum>Qt::Vertical</enum>

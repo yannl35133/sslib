@@ -29,7 +29,7 @@ class Hints:
             self.dist = HintDistribution()
             self.dist.read_from_file(f)
 
-    def do_hint_per_status(self, hintmodes, does_hint, hintcls, get_check, hintpack):
+    def do_hint_per_status(self, hintmodes, does_hint, get_check, hintpack):
         for (hintname, raw_check) in hintpack.items():
             check = get_check(raw_check)
             item = self.logic.placement.locations[check]
@@ -45,6 +45,7 @@ class Hints:
             else:
                 status = STATUS.useless
 
+            hintcls = HINT_CONSTRUCTOR[hintname]
             self.hints[hintname] = hintcls(hintmodes[status], hintname, item)
 
     def do_non_hintstone_hints(self):
@@ -56,29 +57,45 @@ class Hints:
         hintmodes: Dict[Enum, Enum]
         if hint_mode == "None":
             hintmodes = {k: HINT_MODES.Empty for k in STATUS}
+            does_hint = False
         elif hint_mode == "Direct":
             hintmodes = {k: HINT_MODES.Direct for k in STATUS}
+            does_hint = True
         elif hint_mode == "Basic":
             hintmodes = {
                 STATUS.required: HINT_MODES.Useful,
                 STATUS.useful: HINT_MODES.Useful,
                 STATUS.useless: HINT_MODES.Useless,
             }
+            does_hint = True
         elif hint_mode == "Advanced":
             hintmodes = {
                 STATUS.required: HINT_MODES.Required,
                 STATUS.useful: HINT_MODES.Useful,
                 STATUS.useless: HINT_MODES.Useless,
             }
+            does_hint = True
         else:
             raise ValueError(f'Unknown value for setting "song-hints": "{hint_mode}"')
 
-        does_hint = hint_mode != "None"
         get_check = lambda trial_gate: self.norm(
             SILENT_REALM_CHECKS[self.logic.randomized_trial_entrance[trial_gate]]
         )
 
-        self.do_hint_per_status(hintmodes, does_hint, SongHint, get_check, SONG_HINTS)
+        self.do_hint_per_status(hintmodes, does_hint, get_check, SONG_HINTS)
+
+        if self.options["npc-hints"]:
+            hintmodes = {
+                STATUS.required: HINT_MODES.Required,
+                STATUS.useful: HINT_MODES.Useful,
+                STATUS.useless: HINT_MODES.Useless,
+            }
+            does_hint = True
+        else:
+            hintmodes = {k: HINT_MODES.Empty for k in STATUS}
+            does_hint = False
+
+        self.do_hint_per_status(hintmodes, does_hint, self.norm, NPC_HINTS)
 
         return self.hints, self.hinted_checks
 

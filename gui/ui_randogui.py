@@ -1153,6 +1153,11 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_26.addWidget(self.option_impa_sot_hint)
 
+        self.option_npc_hints = QCheckBox(self.verticalLayoutWidget_6)
+        self.option_npc_hints.setObjectName(u"option_npc_hints")
+
+        self.verticalLayout_26.addWidget(self.option_npc_hints)
+
         self.verticalSpacer_10 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
 
         self.verticalLayout_26.addItem(self.verticalSpacer_10)
@@ -1404,6 +1409,7 @@ class Ui_MainWindow(object):
         self.groupBox_11.setTitle(QCoreApplication.translate("MainWindow", u"Other Hints", None))
         self.label_6.setText(QCoreApplication.translate("MainWindow", u"Song Hints", None))
         self.option_impa_sot_hint.setText(QCoreApplication.translate("MainWindow", u"Impa Stone of Trials Hint", None))
+        self.option_npc_hints.setText(QCoreApplication.translate("MainWindow", u"NPC Hints", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_7), QCoreApplication.translate("MainWindow", u"Hints", None))
         self.randomize_item.setText(QCoreApplication.translate("MainWindow", u"<--", None))
         self.start_with_item.setText(QCoreApplication.translate("MainWindow", u"-->", None))

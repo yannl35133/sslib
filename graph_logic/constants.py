@@ -591,6 +591,10 @@ SONG_OF_THE_HERO_TRIAL_HINT = EIN("Song of the Hero - Trial Hint")
 FARORES_COURAGE_TRIAL_HINT = EIN("Farore's Courage - Trial Hint")
 NAYRUS_WISDOM_TRIAL_HINT = EIN("Nayru's Wisdom - Trial Hint")
 DINS_POWER_TRIAL_HINT = EIN("Din's Power - Trial Hint")
+WATER_DRAGONS_HINT = EIN("Water Dragon's Hint")
+OWLANS_HINT = EIN("Owlan's Hint")
+KINAS_HINT = EIN("Kina's Hint")
+PUMMS_HINT = EIN("Pumm's Hint")
 
 
 SONG_HINTS = {
@@ -598,6 +602,13 @@ SONG_HINTS = {
     FARORES_COURAGE_TRIAL_HINT: FARON_TRIAL_GATE,
     NAYRUS_WISDOM_TRIAL_HINT: LANAYRU_TRIAL_GATE,
     DINS_POWER_TRIAL_HINT: ELDIN_TRIAL_GATE,
+}
+
+NPC_HINTS = {
+    WATER_DRAGONS_HINT: "Flooded Faron Woods - Water Dragon's Reward",
+    OWLANS_HINT: "Knight Academy - Owlan's Crystals",
+    KINAS_HINT: "Sky - Kina's Crystals",
+    PUMMS_HINT: "Thunderhead - Song from Levias",
 }
 
 TRIAL_GATE_EXITS: dict[str, str] = {
