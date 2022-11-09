@@ -1142,8 +1142,7 @@ class GamePatcher:
         self.add_required_dungeon_patches()
         if (self.placement_file.options["song-hints"]) != "None":
             self.add_trial_hint_patches()
-        if self.placement_file.options["impa-sot-hint"]:
-            self.add_impa_hint()
+        self.add_impa_hint()
         self.add_npc_hints()
         self.add_stone_hint_patches()
         self.add_race_integrity_patches()
@@ -1693,22 +1692,56 @@ class GamePatcher:
             )
 
     def add_impa_hint(self):
-        sot_region = "Stone of Trials not placed monkaS"
-        for location in self.placement_file.item_locations.keys():
-            item = self.placement_file.item_locations[location]
-            if item == "Stone of Trials":
-                sot_region = Logic.split_location_name_by_zone(location)[0]
-        self.eventpatches["502-CenterFieldBack"].append(
-            {
-                "name": "Past Impa SoT Hint",
-                "type": "textpatch",
-                "index": 6,
-                "text": break_lines(
-                    f"Do not fear for <b<Zelda>>. I will watch over her here. Go now to "
-                    f"<b<{sot_region}>>. The <r<item you need to fulfill your destiny>> is there."
-                ),
-            }
-        )
+        patches = []
+        if self.placement_file.options["impa-hint"] == "Triforce":
+            patches.append(
+                {
+                    "name": "To Impa Hint Switch",
+                    "type": "flowpatch",
+                    "index": 28,  # text after getting TMS check
+                    "flow": {
+                        "next": "Check If Has Triforce of Courage"  # start of switch cascade that calls the texts below
+                    },
+                }
+            )
+            for item, name in [
+                (TRIFORCE_OF_COURAGE, "Courage"),
+                (TRIFORCE_OF_WISDOM, "Wisdom"),
+                (TRIFORCE_OF_POWER, "Power"),
+            ]:
+                clean_name = self.areas.prettify(item)
+                loc = {k: v for (v, k) in self.placement_file.item_locations.items()}[
+                    item
+                ]
+                region = self.areas.checks[loc]["hint_region"]
+                patches.append(
+                    {
+                        "name": f"{name} Hint Text",
+                        "type": "textadd",
+                        "text": break_lines(
+                            f"You seek the <y+<{clean_name}>>, yes? "
+                            f"Return to <b<{region}>>. There is work to\nbe done there."
+                        ),
+                    }
+                )
+        elif self.placement_file.options["impa-hint"] == "Stone of Trials":
+            item = STONE_OF_TRIALS
+            clean_name = self.areas.prettify(item)
+            loc = {k: v for (v, k) in self.placement_file.item_locations.items()}[item]
+            region = self.areas.checks[loc]["hint_region"]
+            patches.append(
+                {
+                    "name": f"Past Impa {clean_name} Hint",
+                    "type": "textpatch",
+                    "index": 6,
+                    "text": break_lines(
+                        f"Do not fear for <b<Zelda>>. I will watch over her here. Go now to "
+                        f"<b<{region}>>. The <r<item you need to fulfill your destiny>> is there."
+                    ),
+                }
+            )
+        if patches:
+            self.eventpatches["502-CenterFieldBack"].extend(patches)
 
     def add_npc_hints(self):
         [wd_hint] = self.placement_file.hints[WATER_DRAGONS_HINT]
