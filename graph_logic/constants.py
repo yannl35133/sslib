@@ -614,6 +614,9 @@ SILENT_REALM_EXITS: dict[str, str] = {
     LANAYRU_SILENT_REALM: "Lanayru - Silent Realm - Exit",
 }
 
+SKYLOFT_SILENT_REALM_ENTRANCE_DAY = "Skyloft - Silent Realm - Entrance_DAY"
+SKYLOFT_SILENT_REALM_ENTRANCE_NIGHT = "Skyloft - Silent Realm - Entrance_NIGHT"
+
 SILENT_REALM_CHECKS: dict[str, str] = {
     SKYLOFT_SILENT_REALM: "Skyloft - Silent Realm - Stone of Trials",
     FARON_SILENT_REALM: "Faron - Silent Realm - Water Scale",

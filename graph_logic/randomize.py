@@ -209,6 +209,16 @@ class Rando:
             ):
                 self.banned.append(self.norm(entrance_of_exit(DUNGEON_MAIN_EXITS[SK])))
 
+        if "silent realm" in banned_types:
+            non_skyloft_silent_realms = ALL_SILENT_REALMS.copy()
+            non_skyloft_silent_realms.remove(SKYLOFT_SILENT_REALM)
+            self.banned.extend(
+                self.norm(entrance_of_exit(SILENT_REALM_EXITS[silent_realm]))
+                for silent_realm in non_skyloft_silent_realms
+            )
+            self.banned.append(self.norm(SKYLOFT_SILENT_REALM_ENTRANCE_DAY))
+            self.banned.append(self.norm(SKYLOFT_SILENT_REALM_ENTRANCE_NIGHT))
+
     def get_endgame_requirements(self):
         # needs to be able to open GoT and open it, requires required dungeons
         got_raising_requirement = (
