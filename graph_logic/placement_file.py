@@ -113,7 +113,7 @@ class PlacementFile:
         )
 
         check_sets_equal(
-            set(areas.gossip_stones.keys()) | set(SONG_HINTS),
+            set(areas.gossip_stones.keys()) | set(SONG_HINTS) | set(NPC_HINTS),
             set(self.hints.keys()),
             "Gossip Stone Hints",
         )

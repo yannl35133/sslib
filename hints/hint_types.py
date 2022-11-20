@@ -3,7 +3,7 @@ from dataclasses import dataclass, field
 from enum import Enum
 from typing import List, Optional
 
-from graph_logic.constants import EXTENDED_ITEM_NAME
+from graph_logic.constants import *
 
 
 @dataclass
@@ -80,6 +80,66 @@ class SongHint(NonStoneHint):
         HINT_MODES.Useful: "You might need what it reveals...",
         HINT_MODES.Required: "Your spirit will grow by completing this trial",
     }
+
+
+@dataclass
+class WaterDragonHint(NonStoneHint):
+    base_type = "water-dragon"
+    raw_texts = {
+        HINT_MODES.Empty: "",
+        HINT_MODES.Direct: "<TODO> {}",
+        HINT_MODES.Useless: "Admittedly, I don't have a very enticing reward...",
+        HINT_MODES.Useful: "You <g+<might find my reward useful>>...",
+        HINT_MODES.Required: "You're <b<going to need my reward>> to complete your quest!",
+    }
+
+
+@dataclass
+class OwlanHint(NonStoneHint):
+    base_type = "owlan"
+    raw_texts = {
+        HINT_MODES.Empty: "",
+        HINT_MODES.Direct: "This trial holds {}",
+        HINT_MODES.Useless: "I'm sorry, I don't have anything very good to reward you with...",
+        HINT_MODES.Useful: "I'll give you <g+<something you might find useful>> in return!",
+        HINT_MODES.Required: "I promise I will return the favor with an <b<item you need>>!",
+    }
+
+
+@dataclass
+class KinaHint(NonStoneHint):
+    base_type = "kina"
+    raw_texts = {
+        HINT_MODES.Empty: "",
+        HINT_MODES.Direct: "This trial holds {}",
+        HINT_MODES.Useless: "Sorry, kid, I can't give you anything useful, but I'd still appreciate help!",
+        HINT_MODES.Useful: "I could give you a <g+<possibly useful item>> if you help me...",
+        HINT_MODES.Required: "I'll bet I can give you <b<something you really need>> for helping me!",
+    }
+
+
+@dataclass
+class PummHint(NonStoneHint):
+    base_type = "pumm"
+    raw_texts = {
+        HINT_MODES.Empty: "",
+        HINT_MODES.Direct: "This trial holds {}",
+        HINT_MODES.Useless: "I doubt helping Levias will do you much good...",
+        HINT_MODES.Useful: "Levias <g+<might have something useful>> if you help him come to his senses.",
+        HINT_MODES.Required: "I think you'll <b<need to deliver my soup>> to Levias!",
+    }
+
+
+HINT_CONSTRUCTOR = {
+    SONG_OF_THE_HERO_TRIAL_HINT: SongHint,
+    FARORES_COURAGE_TRIAL_HINT: SongHint,
+    NAYRUS_WISDOM_TRIAL_HINT: SongHint,
+    DINS_POWER_TRIAL_HINT: SongHint,
+    WATER_DRAGONS_HINT: WaterDragonHint,
+    OWLANS_HINT: OwlanHint,
+    KINAS_HINT: KinaHint,
+    PUMMS_HINT: PummHint,
+}
 
 
 @dataclass
