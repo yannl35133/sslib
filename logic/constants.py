@@ -12,7 +12,7 @@ SV_ENTRANCE = "Dungeon Entrance in Deep Woods"
 ET_ENTRANCE = "Dungeon Entrance in Eldin Volcano"
 LMF_ENTRANCE = "Dungeon Entrance in Lanayru Desert"
 AC_ENTRANCE = "Dungeon Entrance in Lake Floria"
-SSH_ENTRANCE = "Dungeon Entrance in Sand Sea"
+SSH_ENTRANCE = "Dungeon Entrance in Lanayru Sand Sea"
 FS_ENTRANCE = "Dungeon Entrance in Volcano Summit"
 SK_ENTRANCE = "Dungeon Entrance on Skyloft"
 
