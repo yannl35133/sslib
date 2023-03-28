@@ -8,6 +8,23 @@ from ssrando import Randomizer, StartupException
 from witmanager import WitManager, WitException, WrongChecksumException
 from urllib.error import HTTPError, URLError
 
+def ensure_wit_installed_checked(wit_manager, error_abort):
+    try:
+        wit_manager.ensure_wit_installed()
+        return True
+    except (HTTPError, URLError) as e:
+        import html
+
+        qt_message = html.escape(str(e)).replace("\n", "<br/>")
+
+        qt_message = "Couldn't install wit; please install it from https://wit.wiimm.de/download.html<br/>details:<br/>" + qt_message
+
+        error_abort.emit(qt_message)
+        print(str(e))
+        import traceback
+
+        print(traceback.format_exc())
+        return False
 
 class RandomizerThread(QThread):
     update_progress = Signal(str, int)
@@ -51,22 +68,7 @@ class RandomizerThread(QThread):
             print(traceback.format_exc())
             return
         if not dry_run:
-            try:
-                self.wit_manager.ensure_wit_installed()
-            except (HTTPError, URLError) as e:
-                error_message = (
-                    f"Couldn't install wit; error: {e}\n"
-                    + "Please install wit manually"
-                )
-                import html
-
-                qt_message = html.escape(error_message).replace("\n", "<br/>")
-
-                self.error_abort.emit(qt_message)
-                print(error_message)
-                import traceback
-
-                print(traceback.format_exc())
+            if not ensure_wit_installed_checked(self.wit_manager, self.error_abort):
                 return
             default_ui_progress_callback("repacking game...")
             repack_progress_cb = self.create_ui_progress_callback(
@@ -114,20 +116,7 @@ class ExtractSetupThread(QThread):
         self.update_total_steps.emit(total_steps)
         default_ui_progress_callback = self.create_ui_progress_callback(0)
         default_ui_progress_callback("setting up wiimms ISO tools...")
-        try:
-            self.wit_manager.ensure_wit_installed()
-        except (HTTPError, URLError) as e:
-            error_message = (
-                f"Couldn't install wit; error: {e}\n" "Please install wit manually"
-            )
-            import html
-
-            qt_message = html.escape(error_message).replace("\n", "<br/>")
-            self.error_abort.emit(qt_message)
-            print(error_message)
-            import traceback
-
-            print(traceback.format_exc())
+        if not ensure_wit_installed_checked(self.wit_manager, self.error_abort):
             return
 
         default_ui_progress_callback("extracting game...")
