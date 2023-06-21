@@ -8,6 +8,8 @@ from .logic import Logic
 from .inventory import BANNED_BIT, EVERYTHING_UNBANNED_BIT, EXTENDED_ITEM
 from .fill_algo_common import RandomizationSettings, UserOutput
 
+PRINT_NONPROGRESS = False
+
 
 class AssumedFill:
     def __init__(
@@ -68,17 +70,19 @@ class AssumedFill:
         self.logic.add_item(BANNED_BIT)
         for item in self.must_be_placed_items:
             self.useroutput.progress_callback("placing nonprogress items...")
-            assert self.place_item(item)
+            assert self.place_item(item, is_progress=False)
         self.useroutput.progress_callback("placing remaining items...")
 
         unplaced = set()
         for item in self.may_be_placed_items:
             if not unplaced:
-                if not self.place_item(item, force=False):
+                if not self.place_item(item, force=False, is_progress=False):
                     unplaced.add(item)
             else:
                 unplaced.add(item)
         self.logic.placement.add_unplaced_items(unplaced)
+        if PRINT_NONPROGRESS:
+            print(f"Unplaced items: {list(unplaced)}")
 
         self.fill_with_junk(self.randosettings.duplicable_items)
 
@@ -94,7 +98,9 @@ class AssumedFill:
             result = self.logic.place_item(location, self.rng.choice(junk), fill=False)
             assert result
 
-    def place_item(self, item: EXTENDED_ITEM_NAME, depth=0, force=True) -> bool:
+    def place_item(
+        self, item: EXTENDED_ITEM_NAME, depth=0, force=True, is_progress=True
+    ) -> bool:
         if item in EXTENDED_ITEM:
             self.logic.remove_item(EXTENDED_ITEM[item])
         placement_limit: EIN = self.logic.placement.item_placement_limit.get(
@@ -111,6 +117,11 @@ class AssumedFill:
         if empty_locations:
             location = self.rng.choice(empty_locations)
             result = self.logic.place_item(location, item, fill=force)
+            if PRINT_NONPROGRESS or is_progress:
+                print(
+                    f"Placed {self.logic.areas.prettify(item)}"
+                    f" in {self.logic.areas.prettify(location)}"
+                )
             assert result  # Undefined if False
             return True
 
@@ -126,7 +137,14 @@ class AssumedFill:
 
         if had_banned := self.logic.inventory[BANNED_BIT]:
             self.logic.remove_item(BANNED_BIT)
-        new_item = self.logic.replace_item(self.rng.choice(accessible_locations), item)
+        location = self.rng.choice(accessible_locations)
+        new_item = self.logic.replace_item(location, item)
+        if PRINT_NONPROGRESS or is_progress:
+            print(
+                f"No empty location, placed {self.logic.areas.prettify(item)}"
+                f" in {self.logic.areas.prettify(location)}"
+                f" removing {self.logic.areas.prettify(new_item)}"
+            )
         if new_item not in self.progress_items and had_banned:
             self.logic.add_item(BANNED_BIT)
         ret = self.place_item(new_item, depth + 1)
