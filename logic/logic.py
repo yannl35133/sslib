@@ -90,15 +90,17 @@ class Placement:
         # locations
         for location, item in other.locations.items():
             if location in self.locations and item != self.locations[location]:
-                raise ValueError(
-                    f"Found location '{location}' in self.locations. Expected item '{item}' but found item '{self.locations[location]}'."
-                )
+                pass
+                # raise ValueError(
+                #     f"Found location '{location}' in self.locations. Expected item '{item}' but found item '{self.locations[location]}'."
+                # )
         # items
         for item, location in other.items.items():
             if item in self.items and location != self.items[item]:
-                raise ValueError(
-                    f"Found item '{item}' in self.items. Expected location '{location}' but found location '{self.items[item]}'."
-                )
+                pass
+                # raise ValueError(
+                #     f"Found item '{item}' in self.items. Expected location '{location}' but found location '{self.items[item]}'."
+                # )
         # stones
         for k, v in other.stones.items():
             if k in self.stones and v != self.stones[k]:
@@ -505,7 +507,7 @@ class Logic:
                 name = ""
             else:
                 name = "Item "
-            raise ValueError(f"{name}{item} is already placed.")
+            # raise ValueError(f"{name}{item} is already placed.")
 
         if item in self.placement.item_placement_limit and not location.startswith(
             self.placement.item_placement_limit[item]

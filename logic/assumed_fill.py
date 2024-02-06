@@ -72,6 +72,8 @@ class AssumedFill:
 
         self.rng.shuffle(self.must_be_placed_items)
         self.rng.shuffle(self.may_be_placed_items)
+        self.may_be_placed_items += self.must_be_placed_items
+        self.must_be_placed_items = []
 
         self.logic.add_item(BANNED_BIT)
         for item in self.must_be_placed_items:

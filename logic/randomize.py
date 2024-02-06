@@ -381,6 +381,9 @@ class Rando:
             for trick_name in OPTIONS["enabled-tricks-bitless"]["choices"]
         }
 
+        self.placement |= norm_keys({loc: EIN("Whip") for loc in self.areas.checks})(
+            lambda x: x
+        )
         self.placement |= SINGLE_CRYSTAL_PLACEMENT(self.norm, self.areas.checks)
 
         vanilla_map_transitions = {}
