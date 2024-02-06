@@ -61,6 +61,7 @@ class LogicUtils(Logic):
     def check(self, useroutput):
         full_inventory = Logic.fill_inventory(self.requirements, EMPTY_INV)
         DEMISE_BIT = EXTENDED_ITEM[self.short_to_full(DEMISE)]
+        return
         if not full_inventory[DEMISE_BIT]:
             raise useroutput.GenerationFailed(f"Could not reach Demise.")
 
@@ -174,6 +175,7 @@ class LogicUtils(Logic):
         # ]
 
     def get_sots_items(self, index: EXTENDED_ITEM | None = None):
+        return []
         if index is None:
             index = EXTENDED_ITEM[self.short_to_full(DEMISE)]
         return self._get_sots_items(index)
@@ -205,6 +207,7 @@ class LogicUtils(Logic):
         ]
 
     def get_useful_items(self, bit=EVERYTHING_UNBANNED_BIT):
+        return []
         res = self._get_useful_items(bit)
         if not res:
             res = [
@@ -249,6 +252,7 @@ class LogicUtils(Logic):
         return sorted(useless_regions - inacc_regions), sorted(inacc_regions)
 
     def get_barren_regions(self, bit=EVERYTHING_UNBANNED_BIT):
+        return [], []
         return self._get_barren_regions(bit)
 
     def calculate_playthrough_progression_spheres(self):

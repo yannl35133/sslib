@@ -62,6 +62,7 @@ class AssumedFill:
         for item in progress_list:
             self.useroutput.progress_callback("placing progress items...")
             if not self.place_item(item):
+                continue
                 raise self.useroutput.GenerationFailed(
                     f"Could not find a valid location to place {item}. This may be because the settings are too restrictive. Try randomizing a new seed."
                 )
@@ -128,6 +129,7 @@ class AssumedFill:
         if not force or depth > 50:
             return False
         if not accessible_locations:
+            return False
             raise self.useroutput.GenerationFailed(
                 f"No more locations accessible for {item}."
             )

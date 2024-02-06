@@ -265,6 +265,7 @@ class HintDistribution:
             if self.distribution[hint_type]["fixed"] > 0:
                 needed_fixed.append(hint_type)
         needed_fixed.sort(key=lambda hint_type: self.distribution[hint_type]["order"])
+        needed_fixed = []
 
         self.hints = []
         for hint_type in needed_fixed:
@@ -289,6 +290,7 @@ class HintDistribution:
         hints = self.hints
         count = self.nb_hints
         while len(hints) < count:
+            break
             [hint_type] = self.rng.choices(self.weighted_types, self.weights)
             func = self.hintfuncs[hint_type]
             limit = self.distribution[hint_type].get("max")
