@@ -1,5 +1,5 @@
 from logic.constants import *
-
+from logic.inventory import EXTENDED_ITEM
 
 def dump_constants(short_to_full):
     """
@@ -18,6 +18,13 @@ def dump_constants(short_to_full):
         "dungeon_completion_requirements": {
             k: short_to_full(v) for k, v in DUNGEON_FINAL_CHECK.items()
         },
+        "well_known_requirements": {
+            "open_got": short_to_full(GOT_OPENING_REQUIREMENT),
+            "raise_got": short_to_full(GOT_RAISING_REQUIREMENT),
+            "horde_door": short_to_full(HORDE_DOOR_REQUIREMENT),
+            "impa_song_check": short_to_full(SONG_IMPA_CHECK),
+            "complete_triforce": short_to_full(COMPLETE_TRIFORCE),
+        }
     }
 
 
@@ -41,3 +48,7 @@ def dungeon(pool, short_to_full):
         ),
         "exit_from_inside": short_to_full(exit_from_dungeon),
     }
+
+
+def dump_counters_and_options():
+    return { "options": EXTENDED_ITEM.options, "counters": EXTENDED_ITEM.counters }

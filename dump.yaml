@@ -12957,3 +12957,803 @@ dungeon_completion_requirements:
   Ancient Cistern: \Ancient Cistern\Flame Room\Farore's Flame
   Sandship: \Sandship\Boss Room\Nayru's Flame
   Fire Sanctuary: \Fire Sanctuary\Flame Room\Din's Flame
+well_known_requirements:
+  open_got: \GoT Opening Requirement
+  raise_got: \GoT Raising Requirement
+  horde_door: \Horde Door Requirement
+  impa_song_check: \Faron\Sealed Grounds\Sealed Temple\Song from Impa
+  complete_triforce: \Complete Triforce
+options:
+  Open Thunderhead option:
+    type: query
+    option: open-thunderhead
+    op: eq
+    value: Open
+    negation: false
+  Open ET option:
+    type: query
+    option: open-et
+    op: eq
+    value: true
+    negation: false
+  Open LMF option:
+    type: query
+    option: open-lmf
+    op: eq
+    value: Open
+    negation: false
+  LMF Nodes On option:
+    type: query
+    option: open-lmf
+    op: eq
+    value: Main Node
+    negation: false
+  Floria Gates option:
+    type: query
+    option: open-lake-floria
+    op: eq
+    value: Floria Gates
+    negation: false
+  Talk to Yerbal option:
+    type: query
+    option: open-lake-floria
+    op: eq
+    value: Talk to Yerbal
+    negation: false
+  Vanilla Lake Floria option:
+    type: query
+    option: open-lake-floria
+    op: eq
+    value: Vanilla
+    negation: false
+  Open Lake Floria option:
+    type: query
+    option: open-lake-floria
+    op: eq
+    value: Open
+    negation: false
+  Randomized Beedle option:
+    type: query
+    option: shopsanity
+    op: eq
+    value: true
+    negation: false
+  Gondo Upgrades On option:
+    type: query
+    option: gondo-upgrades
+    op: eq
+    value: true
+    negation: true
+  FS Lava Flow option:
+    type: query
+    option: fs-lava-flow
+    op: eq
+    value: true
+    negation: false
+  BiT patches:
+    type: query
+    option: bit-patches
+    op: eq
+    value: Fix BiT Crashes
+    negation: false
+  Nonlethal Hot Cave:
+    type: query
+    option: damage-multiplier
+    op: lt
+    value: 12
+    negation: false
+  Upgraded Skyward Strike option:
+    type: query
+    option: upgraded-skyward-strike
+    op: eq
+    value: true
+    negation: false
+  Bomb Throws Trick:
+    type: query
+    option: enabled-tricks-bitless
+    op: in
+    value: Bomb Throws
+    negation: false
+  Long Range Skyward Strike Jumpslash Trick:
+    type: query
+    option: enabled-tricks-bitless
+    op: in
+    value: Long Range Skyward Strike Jumpslash
+    negation: false
+  Advanced Lizalfos Combat Trick:
+    type: query
+    option: enabled-tricks-bitless
+    op: in
+    value: Advanced Lizalfos Combat
+    negation: false
+  Waterfall Cave Jump Trick:
+    type: query
+    option: enabled-tricks-bitless
+    op: in
+    value: Waterfall Cave Jump
+    negation: false
+  Beedle's Shop With Bombs Trick:
+    type: query
+    option: enabled-tricks-bitless
+    op: in
+    value: Beedle's Shop With Bombs
+    negation: false
+  Baby Rattle from Beedle's Shop Trick:
+    type: query
+    option: enabled-tricks-bitless
+    op: in
+    value: Baby Rattle from Beedle's Shop
+    negation: false
+  Sky Keep Entrance Jump Trick:
+    type: query
+    option: enabled-tricks-bitless
+    op: in
+    value: Sky Keep Entrance Jump
+    negation: false
+  Gravestone Jump Trick:
+    type: query
+    option: enabled-tricks-bitless
+    op: in
+    value: Gravestone Jump
+    negation: false
+  Sky - Volcanic Island Dive Trick:
+    type: query
+    option: enabled-tricks-bitless
+    op: in
+    value: Sky - Volcanic Island Dive
+    negation: false
+  Sky - Beedle's Island Cage Chest Dive Trick:
+    type: query
+    option: enabled-tricks-bitless
+    op: in
+    value: Sky - Beedle's Island Cage Chest Dive
+    negation: false
+  Thunderhead - East Island Dive Trick:
+    type: query
+    option: enabled-tricks-bitless
+    op: in
+    value: Thunderhead - East Island Dive
+    negation: false
+  Gym's Rope Jump Trick:
+    type: query
+    option: enabled-tricks-bitless
+    op: in
+    value: Gym's Rope Jump
+    negation: false
+  Early Lake Floria - Fence Hop Trick:
+    type: query
+    option: enabled-tricks-bitless
+    op: in
+    value: Early Lake Floria - Fence Hop
+    negation: false
+  Early Lake Floria - Swordless Rope Floria Trick:
+    type: query
+    option: enabled-tricks-bitless
+    op: in
+    value: Early Lake Floria - Swordless Rope Floria
+    negation: false
+  Faron - Bokoblin Luring Trick:
+    type: query
+    option: enabled-tricks-bitless
+    op: in
+    value: Faron - Bokoblin Luring
+    negation: false
+  Stuttersprint Trick:
+    type: query
+    option: enabled-tricks-bitless
+    op: in
+    value: Stuttersprint
+    negation: false
+  Itemless First Timeshift Stone Trick:
+    type: query
+    option: enabled-tricks-bitless
+    op: in
+    value: Itemless First Timeshift Stone
+    negation: false
+  Lanayru Mine - Quick Bomb Trick:
+    type: query
+    option: enabled-tricks-bitless
+    op: in
+    value: Lanayru Mine - Quick Bomb
+    negation: false
+  Brakeslide Trick:
+    type: query
+    option: enabled-tricks-bitless
+    op: in
+    value: Brakeslide
+    negation: false
+  Lanayru Desert - Ampilus Bomb Toss Trick:
+    type: query
+    option: enabled-tricks-bitless
+    op: in
+    value: Lanayru Desert - Ampilus Bomb Toss
+    negation: false
+  Temple of Time - Slingshot Shot Trick:
+    type: query
+    option: enabled-tricks-bitless
+    op: in
+    value: Temple of Time - Slingshot Shot
+    negation: false
+  Temple of Time Skip - Brakeslide Trick:
+    type: query
+    option: enabled-tricks-bitless
+    op: in
+    value: Temple of Time Skip - Brakeslide
+    negation: false
+  Secret Passageway Hook Beetle Opening Trick:
+    type: query
+    option: enabled-tricks-bitless
+    op: in
+    value: Secret Passageway Hook Beetle Opening
+    negation: false
+  Lightning Node End with Bombs Trick:
+    type: query
+    option: enabled-tricks-bitless
+    op: in
+    value: Lightning Node End with Bombs
+    negation: false
+  Cactus Bomb Whip Trick:
+    type: query
+    option: enabled-tricks-bitless
+    op: in
+    value: Cactus Bomb Whip
+    negation: false
+  Skipper's Retreat Fast Clawshots Trick:
+    type: query
+    option: enabled-tricks-bitless
+    op: in
+    value: Skipper's Retreat Fast Clawshots
+    negation: false
+  Pirate Stronghold - Beetle Pillar Checks Trick:
+    type: query
+    option: enabled-tricks-bitless
+    op: in
+    value: Pirate Stronghold - Beetle Pillar Checks
+    negation: false
+  Skyview - Spider Roll Trick:
+    type: query
+    option: enabled-tricks-bitless
+    op: in
+    value: Skyview - Spider Roll
+    negation: false
+  Skyview Slingshot Shot Trick:
+    type: query
+    option: enabled-tricks-bitless
+    op: in
+    value: Skyview Slingshot Shot
+    negation: false
+  Earth Temple - Keese Yeet Trick:
+    type: query
+    option: enabled-tricks-bitless
+    op: in
+    value: Earth Temple - Keese Yeet
+    negation: false
+  Earth Temple - Slope Stuttersprint Trick:
+    type: query
+    option: enabled-tricks-bitless
+    op: in
+    value: Earth Temple - Slope Stuttersprint
+    negation: false
+  Earth Temple - Bomb Flower Scaldera Trick:
+    type: query
+    option: enabled-tricks-bitless
+    op: in
+    value: Earth Temple - Bomb Flower Scaldera
+    negation: false
+  LMF - Whip First Room Switch Trick:
+    type: query
+    option: enabled-tricks-bitless
+    op: in
+    value: LMF - Whip First Room Switch
+    negation: false
+  LMF - Keylocked Slingshot Trickshot Trick:
+    type: query
+    option: enabled-tricks-bitless
+    op: in
+    value: LMF - Keylocked Slingshot Trickshot
+    negation: false
+  LMF - Whip Armos Room Timeshift Stone Trick:
+    type: query
+    option: enabled-tricks-bitless
+    op: in
+    value: LMF - Whip Armos Room Timeshift Stone
+    negation: false
+  LMF - Minecart Jump Trick:
+    type: query
+    option: enabled-tricks-bitless
+    op: in
+    value: LMF - Minecart Jump
+    negation: false
+  LMF - Moldarach without Gust Bellows Trick:
+    type: query
+    option: enabled-tricks-bitless
+    op: in
+    value: LMF - Moldarach without Gust Bellows
+    negation: false
+  Ancient Cistern - Cistern Clip Trick:
+    type: query
+    option: enabled-tricks-bitless
+    op: in
+    value: Ancient Cistern - Cistern Clip
+    negation: false
+  Ancient Cistern - Cistern Whip Room Clip Trick:
+    type: query
+    option: enabled-tricks-bitless
+    op: in
+    value: Ancient Cistern - Cistern Whip Room Clip
+    negation: false
+  Ancient Cistern - Map Chest Jump Trick:
+    type: query
+    option: enabled-tricks-bitless
+    op: in
+    value: Ancient Cistern - Map Chest Jump
+    negation: false
+  Ancient Cistern - Lever Jump Trick:
+    type: query
+    option: enabled-tricks-bitless
+    op: in
+    value: Ancient Cistern - Lever Jump
+    negation: false
+  Ancient Cistern - Basement Highflip Trick:
+    type: query
+    option: enabled-tricks-bitless
+    op: in
+    value: Ancient Cistern - Basement Highflip
+    negation: false
+  Sandship - No Combination Hint Trick:
+    type: query
+    option: enabled-tricks-bitless
+    op: in
+    value: Sandship - No Combination Hint
+    negation: false
+  Sandship - Itemless Spume Skip Trick:
+    type: query
+    option: enabled-tricks-bitless
+    op: in
+    value: Sandship - Itemless Spume Skip
+    negation: false
+  Sandship - Mast Jump Trick:
+    type: query
+    option: enabled-tricks-bitless
+    op: in
+    value: Sandship - Mast Jump
+    negation: false
+  Fire Sanctuary - Pillar Jump Trick:
+    type: query
+    option: enabled-tricks-bitless
+    op: in
+    value: Fire Sanctuary - Pillar Jump
+    negation: false
+  Fire Sanctuary - Swordless Pillar Jump Trick:
+    type: query
+    option: enabled-tricks-bitless
+    op: in
+    value: Fire Sanctuary - Swordless Pillar Jump
+    negation: false
+  Fire Sanctuary - No Bombable Wall Hint Trick:
+    type: query
+    option: enabled-tricks-bitless
+    op: in
+    value: Fire Sanctuary - No Bombable Wall Hint
+    negation: false
+  Sky Keep - Shooting LMF Bow Switches in Present Trick:
+    type: query
+    option: enabled-tricks-bitless
+    op: in
+    value: Sky Keep - Shooting LMF Bow Switches in Present
+    negation: false
+  Sky Keep - FS Room Clawshots Vine Clip Trick:
+    type: query
+    option: enabled-tricks-bitless
+    op: in
+    value: Sky Keep - FS Room Clawshots Vine Clip
+    negation: false
+counters:
+  Gratitude Crystals: !!python/object:logic.logic_expression.Counter
+    targets:
+    - !!python/tuple
+      - !!set
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 110
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 111
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 112
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 113
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 114
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 115
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 116
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 117
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 118
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 119
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 120
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 121
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 122
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 123
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 124
+        : null
+      - !!python/name:logic.logic_expression.%3Clambda%3E ''
+    - !!python/tuple
+      - !!set
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 128
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 129
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 130
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 131
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 132
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 133
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 134
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 135
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 136
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 137
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 125
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 126
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 127
+        : null
+      - !!python/name:logic.logic_expression.%3Clambda%3E ''
+    limit: .inf
+  Wallet Capacity: !!python/object:logic.logic_expression.Counter
+    targets:
+    - !!python/tuple
+      - !!set
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 232
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 233
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 234
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 235
+        : null
+      - !!python/name:logic.logic_expression.%3Clambda%3E ''
+    - !!python/tuple
+      - !!set
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 85
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 86
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 87
+        : null
+      - !!python/name:logic.logic_expression.%3Clambda%3E ''
+    limit: .inf
+  Unique Rupees: !!python/object:logic.logic_expression.Counter
+    targets:
+    - !!python/tuple
+      - !!set
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 138
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 139
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 140
+        : null
+      - !!python/name:logic.logic_expression.%3Clambda%3E ''
+    - !!python/tuple
+      - !!set
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 14
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 15
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 16
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 17
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 18
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 19
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 20
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 21
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 22
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 23
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 24
+        : null
+      - !!python/name:logic.logic_expression.%3Clambda%3E ''
+    - !!python/tuple
+      - !!set
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 256
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 257
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 258
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 259
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 260
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 261
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 262
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 263
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 264
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 265
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 266
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 267
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 268
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 269
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 270
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 271
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 272
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 273
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 274
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 275
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 276
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 277
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 278
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 279
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 280
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 281
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 282
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 283
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 284
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 285
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 286
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 287
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 288
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 289
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 248
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 249
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 250
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 251
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 252
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 253
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 254
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 255
+        : null
+      - !!python/name:logic.logic_expression.%3Clambda%3E ''
+    - !!python/tuple
+      - !!set
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 309
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 310
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 311
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 312
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 313
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 314
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 315
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 316
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 317
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 318
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 319
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 320
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 321
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 322
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 323
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 324
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 325
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 326
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 327
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 328
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 329
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 330
+        : null
+      - !!python/name:logic.logic_expression.%3Clambda%3E ''
+    - !!python/tuple
+      - !!set
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 98
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 99
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 100
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 101
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 102
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 103
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 104
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 105
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 106
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 107
+        : null
+        ? !!python/object/new:logic.inventory.EXTENDED_ITEM
+        - 108
+        : null
+      - !!python/name:logic.logic_expression.%3Clambda%3E ''
+    limit: .inf

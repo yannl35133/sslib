@@ -3,7 +3,7 @@ import sys
 import argparse
 import yaml
 import json
-from logic.dump import dump_constants
+from logic.dump import dump_constants, dump_counters_and_options
 from logic.logic_input import Areas
 from yaml_files import requirements, checks, hints, map_exits
 
@@ -132,7 +132,7 @@ def main():
         with open(dest, mode="w") as f:
             yaml.Dumper.ignore_aliases = lambda *args: True
             yaml.dump(
-                {**areas.to_dict(), **dump_constants(areas.short_to_full)},
+                {**areas.to_dict(), **dump_constants(areas.short_to_full), **dump_counters_and_options()},
                 f,
                 sort_keys=False,
             )

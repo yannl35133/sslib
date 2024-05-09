@@ -51,6 +51,9 @@ class QueryExpression:
     @staticmethod
     def parse(text: str) -> QueryExpression:
         raise NotImplementedError
+    
+    def represent(self):
+        raise NotImplementedError
 
 
 def QueryElseBanned(query: QueryExpression) -> QueryExpression:
@@ -80,6 +83,9 @@ class QueryBoolOption(QueryExpression):
         if self.negation:
             return not options[self.option]
         return options[self.option]
+    
+    def represent(self):
+        return { "type": "query", "option": self.option, "op": "eq", "value": True, "negation": self.negation }
 
 
 @dataclass
@@ -92,6 +98,9 @@ class QueryOption(QueryExpression):
         if self.negation:
             return options[self.option] != self.value
         return options[self.option] == self.value
+    
+    def represent(self):
+        return { "type": "query", "option": self.option, "op": "eq", "value": self.value, "negation": self.negation }
 
 
 @dataclass
@@ -104,6 +113,9 @@ class QueryLessThanOption(QueryExpression):
         if self.negation:
             return options[self.option] >= self.threshold
         return options[self.option] < self.threshold
+    
+    def represent(self):
+        return { "type": "query", "option": self.option, "op": "lt", "value": self.threshold, "negation": self.negation }
 
 
 @dataclass
@@ -116,6 +128,9 @@ class QueryGreaterThanOption(QueryExpression):
         if self.negation:
             return options[self.option] <= self.threshold
         return options[self.option] > self.threshold
+    
+    def represent(self):
+        return { "type": "query", "option": self.option, "op": "gt", "value": self.threshold, "negation": self.negation }
 
 
 @dataclass
@@ -128,6 +143,9 @@ class QueryContainerOption(QueryExpression):
         if self.negation:
             return self.value not in options[self.option]
         return self.value in options[self.option]
+    
+    def represent(self):
+        return { "type": "query", "option": self.option, "op": "in", "value": self.value, "negation": self.negation }
 
 
 @dataclass
@@ -139,6 +157,9 @@ class QueryRequiredDungeon(QueryExpression):
         if self.negation:
             return self.dungeon not in required_dungeons
         return self.dungeon in required_dungeons
+    
+    def represent(self):
+        return { "type": "req_dungeon", "dungeon": self.dungeon, "negation": self.negation }
 
 
 @dataclass
@@ -147,6 +168,9 @@ class QueryAndCombination(QueryExpression):
 
     def eval(self, options: Options, required_dungeons: List[str]) -> bool:
         return all(arg.eval(options, required_dungeons) for arg in self.arguments)
+    
+    def represent(self):
+        return { "type": "combination", "op": "and", "args": [arg.represent() for arg in self.arguments] }
 
 
 @dataclass
@@ -155,6 +179,9 @@ class QueryOrCombination(QueryExpression):
 
     def eval(self, options: Options, required_dungeons: List[str]) -> bool:
         return any(arg.eval(options, required_dungeons) for arg in self.arguments)
+    
+    def represent(self):
+        return { "type": "combination", "op": "and", "args": [arg.represent() for arg in self.arguments] }
 
 
 # Parsing
@@ -885,6 +912,9 @@ def unknown_atom_representer(dumper, data):
 def combination_representer(dumper, data):
     return dumper.represent_scalar("tag:yaml.org,2002:str", str(data), "folded")
 
+def option_representer(dumper: yaml.Dumper, data):
+    return dumper.represent_dict(data.represent())
+
 
 yaml.add_representer(BasicTextAtom, text_atom_representer)
 yaml.add_representer(EmptyReq, true_atom_representer)
@@ -892,3 +922,10 @@ yaml.add_representer(ImpossibleReq, false_atom_representer)
 yaml.add_representer(UnknownReq, unknown_atom_representer)
 yaml.add_representer(AndCombination, combination_representer)
 yaml.add_representer(OrCombination, combination_representer)
+yaml.add_representer(QueryBoolOption, option_representer)
+yaml.add_representer(QueryOption, option_representer)
+yaml.add_representer(QueryLessThanOption, option_representer)
+yaml.add_representer(QueryGreaterThanOption, option_representer)
+yaml.add_representer(QueryContainerOption, option_representer)
+yaml.add_representer(QueryAndCombination, option_representer)
+yaml.add_representer(QueryOrCombination, option_representer)
