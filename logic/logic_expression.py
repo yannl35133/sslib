@@ -52,6 +52,9 @@ class QueryExpression:
     def parse(text: str) -> QueryExpression:
         raise NotImplementedError
 
+    def dump(self):
+        raise NotImplementedError
+
 
 def QueryElseBanned(query: QueryExpression) -> QueryExpression:
     query.else_banned = True
@@ -81,6 +84,15 @@ class QueryBoolOption(QueryExpression):
             return not options[self.option]
         return options[self.option]
 
+    def dump(self):
+        return {
+            "type": "query",
+            "option": self.option,
+            "op": "eq",
+            "value": True,
+            "negation": self.negation,
+        }
+
 
 @dataclass
 class QueryOption(QueryExpression):
@@ -92,6 +104,15 @@ class QueryOption(QueryExpression):
         if self.negation:
             return options[self.option] != self.value
         return options[self.option] == self.value
+
+    def dump(self):
+        return {
+            "type": "query",
+            "option": self.option,
+            "op": "eq",
+            "value": self.value,
+            "negation": self.negation,
+        }
 
 
 @dataclass
@@ -105,6 +126,15 @@ class QueryLessThanOption(QueryExpression):
             return options[self.option] >= self.threshold
         return options[self.option] < self.threshold
 
+    def dump(self):
+        return {
+            "type": "query",
+            "option": self.option,
+            "op": "lt",
+            "value": self.threshold,
+            "negation": self.negation,
+        }
+
 
 @dataclass
 class QueryGreaterThanOption(QueryExpression):
@@ -116,6 +146,15 @@ class QueryGreaterThanOption(QueryExpression):
         if self.negation:
             return options[self.option] <= self.threshold
         return options[self.option] > self.threshold
+
+    def dump(self):
+        return {
+            "type": "query",
+            "option": self.option,
+            "op": "gt",
+            "value": self.threshold,
+            "negation": self.negation,
+        }
 
 
 @dataclass
@@ -129,6 +168,15 @@ class QueryContainerOption(QueryExpression):
             return self.value not in options[self.option]
         return self.value in options[self.option]
 
+    def dump(self):
+        return {
+            "type": "query",
+            "option": self.option,
+            "op": "in",
+            "value": self.value,
+            "negation": self.negation,
+        }
+
 
 @dataclass
 class QueryRequiredDungeon(QueryExpression):
@@ -140,6 +188,13 @@ class QueryRequiredDungeon(QueryExpression):
             return self.dungeon not in required_dungeons
         return self.dungeon in required_dungeons
 
+    def dump(self):
+        return {
+            "type": "req_dungeon",
+            "dungeon": self.dungeon,
+            "negation": self.negation,
+        }
+
 
 @dataclass
 class QueryAndCombination(QueryExpression):
@@ -148,6 +203,13 @@ class QueryAndCombination(QueryExpression):
     def eval(self, options: Options, required_dungeons: List[str]) -> bool:
         return all(arg.eval(options, required_dungeons) for arg in self.arguments)
 
+    def dump(self):
+        return {
+            "type": "combination",
+            "op": "and",
+            "args": [arg.dump() for arg in self.arguments],
+        }
+
 
 @dataclass
 class QueryOrCombination(QueryExpression):
@@ -155,6 +217,13 @@ class QueryOrCombination(QueryExpression):
 
     def eval(self, options: Options, required_dungeons: List[str]) -> bool:
         return any(arg.eval(options, required_dungeons) for arg in self.arguments)
+
+    def dump(self):
+        return {
+            "type": "combination",
+            "op": "or",
+            "args": [arg.dump() for arg in self.arguments],
+        }
 
 
 # Parsing
@@ -824,6 +893,8 @@ class MakeCounter(Transformer):
     def mk_counter_atom(self, item, c):
         if item not in RAW_ITEM_NAMES and item not in EXTENDED_ITEM:
             raise ValueError(f"Unknown item {item}")
+        if GLOBAL_DUMP_MODE:
+            return [{"item": str(item), "expression": c}]
         if item in EXTENDED_ITEM:
             return [({EXTENDED_ITEM[item]}, c)]
         s = {EXTENDED_ITEM[number(item, index)] for index in range(ITEM_COUNTS[item])}
@@ -832,11 +903,15 @@ class MakeCounter(Transformer):
     def mk_counter_multiplier(self, count, item):
         count = int(count)
         c = lambda n: count * n
+        if GLOBAL_DUMP_MODE:
+            c = {"type": "mul", "factor": count}
         return self.mk_counter_atom(item, c)
 
     def mk_counter_value_list(self, item, *counts):
         counts_dict = {i: int(count) for i, count in enumerate(counts)}
         c = lambda n: counts_dict[n]
+        if GLOBAL_DUMP_MODE:
+            c = {"type": "lookup", "dict": counts_dict}
         return self.mk_counter_atom(item, c)
 
     def mk_counter_add(self, left, right):
@@ -886,9 +961,19 @@ def combination_representer(dumper, data):
     return dumper.represent_scalar("tag:yaml.org,2002:str", str(data), "folded")
 
 
+def option_representer(dumper: yaml.Dumper, data):
+    return dumper.represent_dict(data.dump())
+
+
+def counter_representer(dumper: yaml.Dumper, data: Counter):
+    return dumper.represent_dict({"targets": data.targets})
+
+
 yaml.add_representer(BasicTextAtom, text_atom_representer)
 yaml.add_representer(EmptyReq, true_atom_representer)
 yaml.add_representer(ImpossibleReq, false_atom_representer)
 yaml.add_representer(UnknownReq, unknown_atom_representer)
 yaml.add_representer(AndCombination, combination_representer)
 yaml.add_representer(OrCombination, combination_representer)
+yaml.add_multi_representer(QueryExpression, option_representer)
+yaml.add_representer(Counter, counter_representer)
