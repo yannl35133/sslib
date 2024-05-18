@@ -221,7 +221,7 @@ class QueryOrCombination(QueryExpression):
     def dump(self):
         return {
             "type": "combination",
-            "op": "and",
+            "op": "or",
             "args": [arg.dump() for arg in self.arguments],
         }
 
