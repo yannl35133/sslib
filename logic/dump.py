@@ -1,6 +1,7 @@
 from logic.constants import *
 from logic.inventory import EXTENDED_ITEM
 
+
 def dump_constants(short_to_full):
     """
     Some things aren't defined in the YAML files but instead hardcoded in the rando source files.
@@ -24,7 +25,7 @@ def dump_constants(short_to_full):
             "horde_door": short_to_full(HORDE_DOOR_REQUIREMENT),
             "impa_song_check": short_to_full(SONG_IMPA_CHECK),
             "complete_triforce": short_to_full(COMPLETE_TRIFORCE),
-        }
+        },
     }
 
 
@@ -51,4 +52,4 @@ def dungeon(pool, short_to_full):
 
 
 def dump_counters_and_options():
-    return { "options": EXTENDED_ITEM.options, "counters": EXTENDED_ITEM.counters }
+    return {"options": EXTENDED_ITEM.options, "counters": EXTENDED_ITEM.counters}
