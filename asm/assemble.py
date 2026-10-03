@@ -61,10 +61,10 @@ print()
 custom_symbols = OrderedDict()
 custom_symbols["main.dol"] = OrderedDict()
 
-with open("original_symbols.txt", "r") as f:
+with open("original_symbols.txt", "r", encoding="utf-8") as f:
     original_symbols = yaml.safe_load(f)
 
-with open("free_space_start_offsets.txt", "r") as f:
+with open("free_space_start_offsets.txt", "r", encoding="utf-8") as f:
     free_space_start_offsets = yaml.safe_load(f)
 
 next_free_space_offsets = {}
@@ -192,14 +192,14 @@ def handle_sda_instr(line: str) -> str:
 
 
 try:
-    with open("linker.ld") as f:
+    with open("linker.ld", encoding="utf-8") as f:
         linker_script = f.read()
 
     # add main dol symbols
     for dol_sym, addr in original_symbols["main.dol"].items():
         linker_script += f"{dol_sym} = 0x{addr:X};\n"
 
-    with open("asm_macros.asm") as f:
+    with open("asm_macros.asm", encoding="utf-8") as f:
         asm_macros = f.read()
 
     all_asm_file_paths = glob.glob("./patches/*.asm")
@@ -215,7 +215,7 @@ try:
     for patch_filename in all_asm_files:
         print("Assembling " + patch_filename)
         patch_path = os.path.join(".", "patches", patch_filename)
-        with open(patch_path) as f:
+        with open(patch_path, encoding="utf-8") as f:
             asm = f.read()
 
         patch_name = os.path.splitext(patch_filename)[0]
@@ -384,13 +384,13 @@ try:
                         org_offset = custom_symbols_for_file[org_symbol]
 
                 temp_linker_name = os.path.join(temp_dir, "tmp_linker.ld")
-                with open(temp_linker_name, "w") as f:
+                with open(temp_linker_name, "w", encoding="utf-8") as f:
                     f.write(temp_linker_script)
 
                 temp_asm_name = os.path.join(
                     temp_dir, "tmp_" + patch_name + "_%08X.asm" % org_offset
                 )
-                with open(temp_asm_name, "w") as f:
+                with open(temp_asm_name, "w", encoding="utf-8") as f:
                     f.write(
                         asm_macros
                     )  # Add our custom asm macros to all asm at the start.
@@ -465,7 +465,7 @@ try:
                 if result != 0:
                     raise Exception("Linker call failed.")
                 # Keep track of custom symbols so they can be passed in the linker script to future assembler calls.
-                with open(map_name) as f:
+                with open(map_name, encoding="utf-8") as f:
                     for line in f.read().splitlines():
                         match = re.search(
                             r" +0x(?:00000000)?([0-9a-f]{8}) +([a-zA-Z]\S+)$", line
@@ -525,7 +525,7 @@ try:
                     diffs[file_path][org_offset]["Relocations"] = relocations
 
         diff_path = os.path.join(".", "patch_diffs", patch_name + "_diff.txt")
-        with open(diff_path, "w") as f:
+        with open(diff_path, "w", encoding="utf-8") as f:
             f.write(
                 yaml.dump(
                     diffs,
@@ -544,7 +544,7 @@ try:
 
         output_custom_symbols[file_path] = custom_symbols_for_file
 
-    with open("./custom_symbols.txt", "w") as f:
+    with open("./custom_symbols.txt", "w", encoding="utf-8") as f:
         f.write(
             yaml.dump(
                 output_custom_symbols,

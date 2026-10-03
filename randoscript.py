@@ -129,7 +129,7 @@ def main():
         if dest is True:
             print(areas)
             exit(0)
-        with open(dest, mode="w") as f:
+        with open(dest, mode="w", encoding="utf-8") as f:
             yaml.Dumper.ignore_aliases = lambda *args: True
             yaml.dump(
                 {**areas.to_dict(), **dump_constants(areas.short_to_full)},
@@ -143,7 +143,7 @@ def main():
     plcmt_file_name = parsed_args.placement_file
     if plcmt_file_name is not None:
         plcmt_file = PlacementFile()
-        with open(plcmt_file_name) as f:
+        with open(plcmt_file_name, encoding="utf-8") as f:
             plcmt_file.read_from_file(f)
         plcmt_file.check_valid(areas)
 

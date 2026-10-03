@@ -74,10 +74,10 @@ def calculate_rando_hash(seed: int, options: Options):
             raise Exception(
                 "Custom hint distribution file not found. Make sure custom_hint_distribution.json exists at the same location as the randomizer"
             )
-        with CUSTOM_HINT_DISTRIBUTION_PATH.open("r") as f:
+        with CUSTOM_HINT_DISTRIBUTION_PATH.open("r", encoding="utf-8") as f:
             normalized_json = json.dumps(json.load(f))
             current_hash.update(normalized_json.encode("ASCII"))
-    with open(RANDO_ROOT_PATH / "names.txt") as f:
+    with open(RANDO_ROOT_PATH / "names.txt", encoding="utf-8") as f:
         names = [s.strip() for s in f.readlines()]
     hash_random = random.Random()
     hash_random.seed(current_hash.digest())
@@ -184,10 +184,10 @@ class ArchipelagoRandomizer(BaseRandomizer):
                 randomized_start_statues=self.placement_file.start_statues,
                 puzzles=self.placement_file.puzzles,
             )
-            with log_address.open("w") as f:
+            with log_address.open("w", encoding="utf-8") as f:
                 json.dump(dump, f, indent=2)
         else:
-            with log_address.open("w") as f:
+            with log_address.open("w", encoding="utf-8") as f:
                 SpoilerLog.write(
                     f,
                     self.placement_file.options,
@@ -345,10 +345,10 @@ class Randomizer(BaseRandomizer):
                 randomized_start_statues=self.logic.randomized_start_statues,
                 puzzles=self.logic.puzzles,
             )
-            with log_address.open("w") as f:
+            with log_address.open("w", encoding="utf-8") as f:
                 json.dump(dump, f, indent=2)
         else:
-            with log_address.open("w") as f:
+            with log_address.open("w", encoding="utf-8") as f:
                 SpoilerLog.write(
                     f,
                     self.logic.placement,

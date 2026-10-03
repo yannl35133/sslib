@@ -5,7 +5,7 @@ from pathlib import Path
 if IS_RUNNING_FROM_SOURCE:
     import toml
 
-    with open("pyproject.toml") as f:
+    with open("pyproject.toml", encoding="utf-8") as f:
         proj = toml.load(f)
     VERSION = proj["tool"]["poetry"]["version"]
     VERSION_WITHOUT_COMMIT = VERSION
@@ -30,5 +30,7 @@ if IS_RUNNING_FROM_SOURCE:
 
     VERSION += version_suffix
 else:
-    VERSION = (RANDO_ROOT_PATH / "version-with-git.txt").read_text().strip()
+    VERSION = (
+        (RANDO_ROOT_PATH / "version-with-git.txt").read_text(encoding="utf-8").strip()
+    )
     VERSION_WITHOUT_COMMIT = VERSION

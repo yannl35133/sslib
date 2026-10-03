@@ -54,17 +54,17 @@ for relpath in rel_arc.get_all_paths():
     free_start_offsets[relname] = free_start_offset
     rel_ids[relname] = rel.id
 
-with open("rel_info.yaml", "w") as f:
+with open("rel_info.yaml", "w", encoding="utf-8") as f:
     yaml.dump(
         all_rel_info, f, Dumper=yaml.CDumper, default_flow_style=False, sort_keys=False
     )
 
-with open("rel_ids.yaml", "w") as f:
+with open("rel_ids.yaml", "w", encoding="utf-8") as f:
     yaml.dump(
         rel_ids, f, Dumper=yaml.CDumper, default_flow_style=False, sort_keys=False
     )
 
-with open("free_space_start_offsets2.txt", "w") as f:
+with open("free_space_start_offsets2.txt", "w", encoding="utf-8") as f:
     yaml.dump(
         free_start_offsets,
         f,

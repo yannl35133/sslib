@@ -94,7 +94,7 @@ class RandoGUI(QMainWindow):
         self.options = options
         self.settings_path = "apsettings.txt"
         if os.path.isfile(self.settings_path):
-            with open(self.settings_path) as f:
+            with open(self.settings_path, encoding="utf-8") as f:
                 try:
                     self.options.update_from_dict(json.load(f))
                 except Exception as e:
@@ -162,9 +162,9 @@ class RandoGUI(QMainWindow):
                 )
 
         if not os.path.isfile(self.custom_theme_path):
-            with open(self.default_theme_path) as f:
+            with open(self.default_theme_path, encoding="utf-8") as f:
                 default_theme_json = json.load(f)
-            with open(self.custom_theme_path, "w") as f:
+            with open(self.custom_theme_path, "w", encoding="utf-8") as f:
                 json.dump(default_theme_json, f)
 
         self.ui.custom_theme_button.clicked.connect(self.open_custom_theme_picker)
@@ -257,7 +257,7 @@ class RandoGUI(QMainWindow):
             self.ask_for_clean_iso()
 
     def save_settings(self):
-        with open(self.settings_path, "w") as f:
+        with open(self.settings_path, "w", encoding="utf-8") as f:
             json.dump(self.options.to_dict(), f)
 
     def ask_for_clean_iso(self):
@@ -471,10 +471,10 @@ class RandoGUI(QMainWindow):
 
     def update_theme(self):
         if self.options["use-custom-theme"]:
-            with open(self.custom_theme_path) as f:
+            with open(self.custom_theme_path, encoding="utf-8") as f:
                 theme = json.load(f)
         else:
-            with open(self.default_theme_path) as f:
+            with open(self.default_theme_path, encoding="utf-8") as f:
                 theme = json.load(f)
 
         if self.options["use-sharp-corners"]:
@@ -507,7 +507,7 @@ class RandoGUI(QMainWindow):
         custom_theme_picker.exec()
 
     def update_custom_theme(self, theme: dict):
-        with open(self.custom_theme_path, "w") as f:
+        with open(self.custom_theme_path, "w", encoding="utf-8") as f:
             json.dump(theme, f)
 
         self.update_theme()
@@ -561,6 +561,7 @@ class RandoGUI(QMainWindow):
             / self.current_model_type
             / "metadata.json",
             "w",
+            encoding="utf-8",
         ) as metadata:
             if preset in self.default_color_presets:
                 json.dump(self.default_color_presets[preset], metadata)
@@ -683,7 +684,7 @@ class RandoGUI(QMainWindow):
         ok = iedialog.exec_()
         data = iedialog.textValue()
         if ok:
-            with open(self.metadata_path, "w") as metadata_file:
+            with open(self.metadata_path, "w", encoding="utf-8") as metadata_file:
                 try:
                     json.dump(loaded_data := json.loads(data), metadata_file)
                     # manually load metadata to avoid loading an empty file with self.read_metadata()
@@ -709,7 +710,7 @@ class RandoGUI(QMainWindow):
                         self.update_model_customisation()
 
     def write_presets(self, presets_path, presets_dict):
-        with open(presets_path, "w") as f:
+        with open(presets_path, "w", encoding="utf-8") as f:
             json.dump(presets_dict, f)
 
     # Custom model customisation funcs
@@ -786,11 +787,11 @@ class RandoGUI(QMainWindow):
             default_metadata_path = (
                 LINK_MODEL_DATA_PATH / self.current_model_type / "defaultMetadata.json"
             )
-            with open(default_metadata_path) as f:
+            with open(default_metadata_path, encoding="utf-8") as f:
                 default_metadata = json.load(f)
                 self.metadata = default_metadata
             if self.metadata_path.is_file():
-                with open(self.metadata_path) as f:
+                with open(self.metadata_path, encoding="utf-8") as f:
                     self.metadata = json.load(f)
                     self.metadata["Colors"] = (
                         default_metadata["Colors"] | self.metadata["Colors"]
@@ -808,7 +809,7 @@ class RandoGUI(QMainWindow):
                 return
 
         try:
-            with open(self.metadata_path, "r") as f:
+            with open(self.metadata_path, "r", encoding="utf-8") as f:
                 self.metadata = json.load(f)
         except Exception as e:
             if self.current_model_pack == "Default":
@@ -820,9 +821,10 @@ class RandoGUI(QMainWindow):
                     / self.current_model_type
                     / "defaultMetadata.json",
                     "r",
+                    encoding="utf-8",
                 ) as default_metadata:
                     self.metadata = json.load(default_metadata)
-                with open(self.metadata_path, "w") as metadata_file:
+                with open(self.metadata_path, "w", encoding="utf-8") as metadata_file:
                     json.dump(self.metadata, metadata_file)
             else:
                 print(
@@ -833,7 +835,7 @@ class RandoGUI(QMainWindow):
     def model_color_changed(self, color: str, name: str):
         self.metadata["Colors"][name] = color
 
-        with open(self.metadata_path, "w") as f:
+        with open(self.metadata_path, "w", encoding="utf-8") as f:
             json.dump(self.metadata, f)
 
         self.update_model_preview()
@@ -917,7 +919,7 @@ class RandoGUI(QMainWindow):
         for color_group in self.metadata["Colors"]:
             self.metadata["Colors"][color_group] = "Default"
 
-        with open(self.metadata_path, "w") as f:
+        with open(self.metadata_path, "w", encoding="utf-8") as f:
             json.dump(self.metadata, f)
 
         self.update_model_preview()
@@ -935,7 +937,7 @@ class RandoGUI(QMainWindow):
         for i, color_group in enumerate(self.metadata["Colors"]):
             self.metadata["Colors"][color_group] = colors[i]
 
-        with open(self.metadata_path, "w") as f:
+        with open(self.metadata_path, "w", encoding="utf-8") as f:
             json.dump(self.metadata, f)
 
         self.update_model_preview()
@@ -1004,7 +1006,7 @@ class RandoGUI(QMainWindow):
         presets_list.addItem(NEW_PRESET)
         sep_idx = 1
         if default_presets_path.is_file():
-            with (default_presets_path).open("r") as f:
+            with (default_presets_path).open("r", encoding="utf-8") as f:
                 try:
                     load_default_presets = json.load(f)
                     for preset in load_default_presets:
@@ -1015,7 +1017,7 @@ class RandoGUI(QMainWindow):
                     print("couldn't load default presets", e)
         presets_list.insertSeparator(sep_idx)
         if user_presets_path.is_file():
-            with open(user_presets_path) as f:
+            with open(user_presets_path, encoding="utf-8") as f:
                 try:
                     load_user_presets = json.load(f)
                     for preset in load_user_presets:

@@ -1712,20 +1712,26 @@ class GamePatcher:
             patch[7] = bk_angle_bytes[3]
 
         # for asm, custom symbols
-        with (RANDO_ROOT_PATH / "asm" / "custom_symbols.txt").open("r") as f:
+        with (RANDO_ROOT_PATH / "asm" / "custom_symbols.txt").open(
+            "r", encoding="utf-8"
+        ) as f:
             self.custom_symbols = yaml.safe_load(f)
         self.main_custom_symbols = self.custom_symbols.get("main.dol", {})
-        with (RANDO_ROOT_PATH / "asm" / "original_symbols.txt").open("r") as f:
+        with (RANDO_ROOT_PATH / "asm" / "original_symbols.txt").open(
+            "r", encoding="utf-8"
+        ) as f:
             self.original_symbols = yaml.safe_load(f)
         self.main_original_symbols = self.original_symbols.get("main.dol", {})
 
         # for asm, free space start offset
-        with (RANDO_ROOT_PATH / "asm" / "free_space_start_offsets.txt").open("r") as f:
+        with (RANDO_ROOT_PATH / "asm" / "free_space_start_offsets.txt").open(
+            "r", encoding="utf-8"
+        ) as f:
             self.free_space_start_offsets = yaml.safe_load(f)
 
     def add_asm_patch(self, name):
         with (RANDO_ROOT_PATH / "asm" / "patch_diffs" / f"{name}_diff.txt").open(
-            "r"
+            "r", encoding="utf-8"
         ) as f:
             asm_patch_file_data = yaml.safe_load(f)
         for exec_file, patches in asm_patch_file_data.items():

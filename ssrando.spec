@@ -21,7 +21,7 @@ def build_datas_recursive(paths):
 
   return datas
 
-with open('pyproject.toml') as f:
+with open('pyproject.toml', encoding='utf-8') as f:
     proj = toml.load(f)
 VERSION = proj["tool"]["poetry"]["version"]
 
@@ -30,14 +30,14 @@ if os.path.isdir(".git"):
 
   git_commit_head_file = os.path.join(".git", "HEAD")
   if os.path.isfile(git_commit_head_file):
-    with open(git_commit_head_file, "r") as f:
+    with open(git_commit_head_file, "r", encoding='utf-8') as f:
       head_file_contents = f.read().strip()
     if head_file_contents.startswith("ref: "):
       # Normal head, HEAD file has a reference to a branch which contains the commit hash
       relative_path_to_hash_file = head_file_contents[len("ref: "):]
       path_to_hash_file = os.path.join(".git", relative_path_to_hash_file)
       if os.path.isfile(path_to_hash_file):
-        with open(path_to_hash_file, "r") as f:
+        with open(path_to_hash_file, "r", encoding='utf-8') as f:
           hash_file_contents = f.read()
         version_suffix = "_" + hash_file_contents[:7]
     elif re.search(r"^[0-9a-f]{40}$", head_file_contents):
@@ -48,7 +48,7 @@ else:
   raise Exception('can only build distribution if running from git!')
 
 # save it so it can be included in the binary
-with open('version-with-git.txt','w') as f:
+with open('version-with-git.txt','w', encoding='utf-8') as f:
   f.write(VERSION)
 
 a = Analysis(['randoscript.py'],

@@ -27,7 +27,7 @@ def check_logs():
         rando.rando.randomize(useroutput)
         print(time.process_time() - old_time)
         prog_spheres = rando.logic.calculate_playthrough_progression_spheres()
-        with open(f"testlogs/log_{i:02}.json", "r") as f:
+        with open(f"testlogs/log_{i:02}.json", "r", encoding="utf-8") as f:
             should_prog_spheres = json.load(f)
         assert prog_spheres == should_prog_spheres
 
@@ -44,7 +44,7 @@ def write_logs():
         print(time.process_time() - old_time)
         prog_spheres = rando.logic.calculate_playthrough_progression_spheres()
         # prog_spheres = rando.calculate_playthrough_progression_spheres()
-        # with open(f'testlogs/log2_{i:02}.json','w') as f:
+        # with open(f'testlogs/log2_{i:02}.json','w', encoding='utf-8') as f:
         #     json.dump(prog_spheres, f, indent=2, sort_keys=True)
 
 
@@ -66,7 +66,7 @@ def test_woth():
                     not_woth_prog[loc] = item
                 else:
                     woth_items[loc] = item
-        # with open(f'testlogs/log3_{i:02}.json','w') as f:
+        # with open(f'testlogs/log3_{i:02}.json','w', encoding='utf-8') as f:
         #     json.dump({'not':not_woth_prog, 'woth': woth_items}, f, indent=2)
 
 
@@ -79,5 +79,5 @@ def test_barren():
         rando = Randomizer(areas, opts)
         rando.rando.randomize(useroutput)
         rando.logic.get_barren_regions()
-        # with open(f'testlogs/log4_{i:02}.json','w') as f:
+        # with open(f'testlogs/log4_{i:02}.json','w', encoding='utf-8') as f:
         #     json.dump(rando.logic.get_barren_regions(), f, indent=2)

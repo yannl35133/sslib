@@ -289,7 +289,7 @@ class AllPatcher:
                 CUSTOM_MODELS_PATH / model_pack_name / model / "metadata.json"
             )
             if meta_data_path.is_file():
-                with open(meta_data_path) as f:
+                with open(meta_data_path, encoding="utf-8") as f:
                     meta_data = json.load(f)
             else:
                 meta_data = None
